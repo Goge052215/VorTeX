@@ -1987,3 +1987,34 @@ ValueError: MATLAB Error: Unrecognized function or variable 'l'.
 2024-12-23 14:21:59,289 - matlab_interface.evaluate_expression - DEBUG - Cleared 'temp_result' from MATLAB workspace.
 2024-12-23 14:21:59,291 - __main__ - DEBUG - Result: (x*(ln(x) - 1))/ln(10)
 2024-12-23 14:21:59,293 - __main__ - DEBUG - Cleared 'temp_result' from MATLAB workspace.
+2024-12-23 14:35:55,305 - __main__ - INFO - Initializing Calculator Application
+2024-12-23 14:36:06,828 - __main__ - INFO - MATLAB engine started successfully
+2024-12-23 14:42:35,292 - __main__ - DEBUG - Processing expression: int log10(x) dx
+2024-12-23 14:42:35,294 - __main__ - DEBUG - Processing integral: int log10(x) dx
+2024-12-23 14:42:35,294 - __main__ - DEBUG - Converted integral to MATLAB expression: int(log10(x), x)
+2024-12-23 14:42:35,294 - __main__ - DEBUG - Final MATLAB Expression: int(log10(x), x)
+2024-12-23 14:42:35,870 - __main__ - DEBUG - Result: (x*(ln(x) - 1))/ln(10)
+2024-12-23 14:42:35,872 - __main__ - DEBUG - Cleared 'temp_result' from MATLAB workspace.
+2024-12-23 14:46:46,820 - __main__ - INFO - Initializing Calculator Application
+2024-12-23 14:46:58,787 - __main__ - INFO - MATLAB engine started successfully
+2024-12-23 14:48:11,031 - __main__ - INFO - Initializing Calculator Application
+2024-12-23 14:48:23,338 - __main__ - INFO - MATLAB engine started successfully
+2024-12-23 14:53:38,867 - __main__ - INFO - Initializing Calculator Application
+2024-12-23 14:53:51,545 - __main__ - INFO - MATLAB engine started successfully
+2024-12-23 14:54:22,651 - __main__ - INFO - Initializing Calculator Application
+2024-12-23 14:54:33,589 - __main__ - INFO - MATLAB engine started successfully
+2024-12-23 14:55:36,069 - __main__ - INFO - Initializing Calculator Application
+2024-12-23 14:55:46,997 - __main__ - INFO - MATLAB engine started successfully
+2024-12-23 14:56:52,073 - __main__ - INFO - Initializing Calculator Application
+2024-12-23 14:57:02,622 - __main__ - INFO - MATLAB engine started successfully
+2024-12-23 14:57:08,966 - __main__ - DEBUG - Processing expression: int 1/x dx
+2024-12-23 14:57:08,966 - __main__ - DEBUG - Processing integral: int 1/x dx
+2024-12-23 14:57:08,966 - __main__ - DEBUG - Converted integral to MATLAB expression: int(1/x, x)
+2024-12-23 14:57:08,966 - __main__ - DEBUG - Final MATLAB Expression: int(1/x, x)
+2024-12-23 14:57:09,129 - __main__ - DEBUG - Result: ln(x)
+2024-12-23 14:57:09,130 - __main__ - DEBUG - Cleared 'temp_result' from MATLAB workspace.
+2024-12-23 14:57:12,261 - __main__ - DEBUG - Processing expression: 1+1
+2024-12-23 14:57:12,264 - __main__ - DEBUG - Final MATLAB Expression: 1+1
+2024-12-23 14:57:12,264 - __main__ - DEBUG - Final MATLAB Expression: 1+1
+2024-12-23 14:57:12,278 - __main__ - DEBUG - Result: 2.0
+2024-12-23 14:57:12,280 - __main__ - DEBUG - Cleared 'temp_result' from MATLAB workspace.

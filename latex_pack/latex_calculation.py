@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtGui import QFont
-from expression_parser.shortcut import ExpressionShortcuts
+from latex_pack.shortcut import ExpressionShortcuts
 import re
 import matlab.engine
 from matlab_interface.evaluate_expression import EvaluateExpression

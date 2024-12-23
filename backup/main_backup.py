@@ -6,7 +6,7 @@ from themes.theme_manager import ThemeManager, get_tokyo_night_theme, get_aura_t
 from ui.legend_window import LegendWindow
 from ui.ui_config import UiConfig
 from modules.modules_import import PackageImporter
-from expression_parser.shortcut import ExpressionShortcuts
+from latex_pack.shortcut import ExpressionShortcuts
 from matlab_interface.sympy_to_matlab import SympyToMatlab
 
 try:
