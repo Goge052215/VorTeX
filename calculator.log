@@ -2018,3 +2018,193 @@ ValueError: MATLAB Error: Unrecognized function or variable 'l'.
 2024-12-23 14:57:12,264 - __main__ - DEBUG - Final MATLAB Expression: 1+1
 2024-12-23 14:57:12,278 - __main__ - DEBUG - Result: 2.0
 2024-12-23 14:57:12,280 - __main__ - DEBUG - Cleared 'temp_result' from MATLAB workspace.
+2024-12-23 15:04:24,129 - __main__ - INFO - Initializing Calculator Application
+2024-12-23 15:04:37,621 - __main__ - INFO - MATLAB engine started successfully
+2024-12-23 15:05:26,259 - __main__ - DEBUG - Processing expression: int log10(x) dx
+2024-12-23 15:05:26,259 - __main__ - DEBUG - Processing integral: int log10(x) dx
+2024-12-23 15:05:26,259 - __main__ - DEBUG - Converted integral to MATLAB expression: int(log10(x), x)
+2024-12-23 15:05:26,260 - __main__ - DEBUG - Final MATLAB Expression: int(log10(x), x)
+2024-12-23 15:05:26,666 - __main__ - DEBUG - Result: (x*(ln(x) - 1))/ln(10)
+2024-12-23 15:05:26,668 - __main__ - DEBUG - Cleared 'temp_result' from MATLAB workspace.
+2024-12-23 15:15:03,063 - __main__ - INFO - Initializing Calculator Application
+2024-12-23 15:15:15,708 - __main__ - INFO - Initializing Calculator Application
+2024-12-23 15:15:24,032 - __main__ - INFO - MATLAB engine started successfully
+2024-12-23 15:15:31,676 - __main__ - DEBUG - MATLAB Expression for evaluation: int log10(x) dx
+2024-12-23 15:15:31,768 - __main__ - ERROR - Error in LaTeX calculation: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 791, in handle_latex_calculation
+    matlab_result = self.handle_integral(matlab_expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 854, in handle_integral
+    self.eng.eval(f"result = {matlab_expression};", nargout=0)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/matlabengine.py", line 70, in __call__
+    return FutureResult(self._engine(), future, nargs, _stdout,
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/futureresult.py", line 62, in result
+    return self.__future.result(timeout)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/fevalfuture.py", line 76, in result
+    self._result = pythonengine.getFEvalResult(self._future,self._nargout, None, out=self._out, err=self._err)
+SyntaxError: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2024-12-23 15:15:52,629 - __main__ - INFO - Initializing Calculator Application
+2024-12-23 15:16:00,826 - __main__ - INFO - MATLAB engine started successfully
+2024-12-23 15:16:22,964 - __main__ - DEBUG - MATLAB Expression for evaluation: int 1/x dx
+2024-12-23 15:16:23,060 - __main__ - ERROR - Error in LaTeX calculation: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 791, in handle_latex_calculation
+    matlab_result = self.handle_integral(matlab_expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 882, in handle_integral
+    self.eng.eval(f"result = {matlab_expression};", nargout=0)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/matlabengine.py", line 70, in __call__
+    return FutureResult(self._engine(), future, nargs, _stdout,
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/futureresult.py", line 62, in result
+    return self.__future.result(timeout)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/fevalfuture.py", line 76, in result
+    self._result = pythonengine.getFEvalResult(self._future,self._nargout, None, out=self._out, err=self._err)
+SyntaxError: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2024-12-23 15:17:38,239 - __main__ - INFO - Initializing Calculator Application
+2024-12-23 15:17:46,301 - __main__ - INFO - MATLAB engine started successfully
+2024-12-23 15:18:09,985 - __main__ - DEBUG - MATLAB Expression for evaluation: int 1/x dx
+2024-12-23 15:18:10,037 - __main__ - ERROR - Error in LaTeX calculation: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 791, in handle_latex_calculation
+    matlab_result = self.handle_integral(matlab_expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 892, in handle_integral
+    self.eng.eval(matlab_cmd, nargout=0)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/matlabengine.py", line 70, in __call__
+    return FutureResult(self._engine(), future, nargs, _stdout,
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/futureresult.py", line 62, in result
+    return self.__future.result(timeout)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/fevalfuture.py", line 76, in result
+    self._result = pythonengine.getFEvalResult(self._future,self._nargout, None, out=self._out, err=self._err)
+SyntaxError: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2024-12-23 15:18:48,465 - __main__ - INFO - Initializing Calculator Application
+2024-12-23 15:18:56,728 - __main__ - INFO - MATLAB engine started successfully
+2024-12-23 15:19:04,506 - __main__ - DEBUG - MATLAB Expression for evaluation: int 1/x dx
+2024-12-23 15:19:04,564 - __main__ - ERROR - Error in LaTeX calculation: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 791, in handle_latex_calculation
+    matlab_result = self.handle_integral(matlab_expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 892, in handle_integral
+    self.eng.eval(matlab_cmd, nargout=0)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/matlabengine.py", line 70, in __call__
+    return FutureResult(self._engine(), future, nargs, _stdout,
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/futureresult.py", line 62, in result
+    return self.__future.result(timeout)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/fevalfuture.py", line 76, in result
+    self._result = pythonengine.getFEvalResult(self._future,self._nargout, None, out=self._out, err=self._err)
+SyntaxError: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2024-12-23 15:20:53,722 - __main__ - INFO - Initializing Calculator Application
+2024-12-23 15:21:03,181 - __main__ - INFO - MATLAB engine started successfully
+2024-12-23 15:22:33,802 - __main__ - DEBUG - MATLAB Expression for evaluation: 1+1
+2024-12-23 15:22:33,863 - __main__ - DEBUG - Executing MATLAB command: result = 1+1;
+2024-12-23 15:22:33,874 - __main__ - DEBUG - Displayed Result: 
+2024-12-23 15:24:20,939 - __main__ - INFO - Initializing Calculator Application
+2024-12-23 15:24:29,613 - __main__ - INFO - MATLAB engine started successfully
+2024-12-23 15:25:42,262 - __main__ - DEBUG - MATLAB Expression for evaluation: int 1/x dx
+2024-12-23 15:25:42,329 - __main__ - DEBUG - Executing MATLAB command: result = int(1/x, x);
+2024-12-23 15:25:42,457 - __main__ - DEBUG - Raw result: log(x)
+2024-12-23 15:25:42,457 - __main__ - DEBUG - Final displayed result: ln(x)
+2024-12-23 15:25:42,457 - __main__ - DEBUG - Displayed Result: ln(x)
+2024-12-23 15:25:47,819 - __main__ - DEBUG - MATLAB Expression for evaluation: 1+1
+2024-12-23 15:25:47,863 - __main__ - DEBUG - Executing MATLAB command: result = 1+1;
+2024-12-23 15:25:47,868 - __main__ - DEBUG - Raw result: 2.0
+2024-12-23 15:25:47,868 - __main__ - DEBUG - Final displayed result: 2.0
+2024-12-23 15:25:47,868 - __main__ - DEBUG - Displayed Result: 2.0
+2024-12-23 15:25:53,384 - __main__ - DEBUG - MATLAB Expression for evaluation: sin(30)
+2024-12-23 15:25:53,400 - __main__ - DEBUG - Executing MATLAB command: result = sin(30);
+2024-12-23 15:25:53,407 - __main__ - DEBUG - Raw result: -0.9880316240928618
+2024-12-23 15:25:53,407 - __main__ - DEBUG - Final displayed result: -0.9880316240928618
+2024-12-23 15:25:53,407 - __main__ - DEBUG - Displayed Result: -0.9880316240928618
+2024-12-23 15:27:46,094 - __main__ - DEBUG - MATLAB Expression for evaluation: 2x + 1 = 0
+2024-12-23 15:27:46,135 - __main__ - DEBUG - Executing MATLAB command: result = 2x + 1 = 0;
+2024-12-23 15:27:46,277 - __main__ - ERROR - Error in handle_integral: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2024-12-23 15:27:46,277 - __main__ - ERROR - Error in LaTeX calculation: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 791, in handle_latex_calculation
+    matlab_result = self.handle_integral(matlab_expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 899, in handle_integral
+    self.eng.eval(matlab_cmd, nargout=0)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/matlabengine.py", line 70, in __call__
+    return FutureResult(self._engine(), future, nargs, _stdout,
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/futureresult.py", line 62, in result
+    return self.__future.result(timeout)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/fevalfuture.py", line 76, in result
+    self._result = pythonengine.getFEvalResult(self._future,self._nargout, None, out=self._out, err=self._err)
+SyntaxError: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2024-12-23 15:28:23,414 - __main__ - INFO - Initializing Calculator Application
+2024-12-23 15:28:32,251 - __main__ - INFO - MATLAB engine started successfully
+2024-12-23 15:28:36,962 - __main__ - DEBUG - MATLAB Expression for evaluation: sin(30)
+2024-12-23 15:28:37,000 - __main__ - DEBUG - Executing MATLAB command: result = sind(30);
+2024-12-23 15:28:37,006 - __main__ - DEBUG - Raw result: 0.5
+2024-12-23 15:28:37,006 - __main__ - DEBUG - Final displayed result: 0.5
+2024-12-23 15:28:37,006 - __main__ - DEBUG - Displayed Result: 0.5
+2024-12-23 15:28:42,982 - __main__ - DEBUG - MATLAB Expression for evaluation: sin(pi/6)
+2024-12-23 15:28:43,002 - __main__ - DEBUG - Executing MATLAB command: result = sin(pi/6);
+2024-12-23 15:28:43,008 - __main__ - DEBUG - Raw result: 0.49999999999999994
+2024-12-23 15:28:43,008 - __main__ - DEBUG - Final displayed result: 0.49999999999999994
+2024-12-23 15:28:43,008 - __main__ - DEBUG - Displayed Result: 0.49999999999999994
+2024-12-23 15:29:12,579 - __main__ - INFO - Initializing Calculator Application
+2024-12-23 15:29:20,678 - __main__ - INFO - MATLAB engine started successfully
+2024-12-23 15:29:47,148 - __main__ - DEBUG - MATLAB Expression for evaluation: int sin(x) dx
+2024-12-23 15:29:47,213 - __main__ - ERROR - Error in handle_integral: Invalid integral format
+2024-12-23 15:29:47,214 - __main__ - ERROR - Error in LaTeX calculation: Invalid integral format
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 791, in handle_latex_calculation
+    matlab_result = self.handle_integral(matlab_expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 894, in handle_integral
+    raise ValueError("Invalid integral format")
+ValueError: Invalid integral format
+2024-12-23 15:29:55,880 - __main__ - DEBUG - MATLAB Expression for evaluation: int log10(x) dx
+2024-12-23 15:29:55,898 - __main__ - DEBUG - Executing MATLAB command: result = int(log10(x), x);
+2024-12-23 15:29:56,066 - __main__ - DEBUG - Raw result: (x*(log(x) - 1))/log(10)
+2024-12-23 15:29:56,067 - __main__ - DEBUG - Final displayed result: (x*(ln(x) - 1))/ln(10)
+2024-12-23 15:29:56,067 - __main__ - DEBUG - Displayed Result: (x*(ln(x) - 1))/ln(10)
+2024-12-23 15:31:45,716 - __main__ - INFO - Initializing Calculator Application
+2024-12-23 15:31:54,647 - __main__ - INFO - MATLAB engine started successfully
+2024-12-23 15:32:47,727 - __main__ - DEBUG - MATLAB Expression for evaluation: int log10(x) dx
+2024-12-23 15:32:47,954 - __main__ - DEBUG - Executing MATLAB command: result = int(log10(x), x);
+2024-12-23 15:32:48,193 - __main__ - DEBUG - Raw result: (x*(log(x) - 1))/log(10)
+2024-12-23 15:32:48,193 - __main__ - DEBUG - Final displayed result: (x*(ln(x) - 1))/ln(10)
+2024-12-23 15:32:48,193 - __main__ - DEBUG - Displayed Result: (x*(ln(x) - 1))/ln(10)
+2024-12-23 15:32:53,179 - __main__ - DEBUG - MATLAB Expression for evaluation: int sin(x) dx
+2024-12-23 15:32:53,223 - __main__ - DEBUG - Executing MATLAB command: result = int(sind(x), x);
+2024-12-23 15:32:53,454 - __main__ - DEBUG - Raw result: -(180*cos((x*pi)/180))/pi
+2024-12-23 15:32:53,454 - __main__ - DEBUG - Final displayed result: -(180*cos((x*pi)/180))/pi
+2024-12-23 15:32:53,454 - __main__ - DEBUG - Displayed Result: -(180*cos((x*pi)/180))/pi
+2024-12-23 15:35:48,287 - __main__ - INFO - Initializing Calculator Application
+2024-12-23 15:35:58,839 - __main__ - INFO - MATLAB engine started successfully
+2024-12-23 15:40:00,049 - __main__ - DEBUG - MATLAB Expression for evaluation: log10(2)
+2024-12-23 15:40:00,108 - __main__ - DEBUG - Executing MATLAB command: result = log10(2);
+2024-12-23 15:40:00,121 - __main__ - DEBUG - Raw result: 0.3010299956639812
+2024-12-23 15:40:00,122 - __main__ - DEBUG - Final displayed result: 0.3010299956639812
+2024-12-23 15:40:00,122 - __main__ - DEBUG - Displayed Result: 0.3010299956639812
+2024-12-23 15:43:06,059 - __main__ - INFO - Initializing Calculator Application
+2024-12-23 15:43:14,586 - __main__ - INFO - MATLAB engine started successfully
+2024-12-23 15:44:24,655 - __main__ - DEBUG - MATLAB Expression for evaluation: log10(2)
+2024-12-23 15:44:24,725 - __main__ - DEBUG - Executing MATLAB command: result = log10(2);
+2024-12-23 15:44:24,735 - __main__ - DEBUG - Raw result: 0.3010299956639812
+2024-12-23 15:44:24,735 - __main__ - DEBUG - Final displayed result: 0.3010299956639812
+2024-12-23 15:44:24,735 - __main__ - DEBUG - Displayed Result: 0.3010299956639812
+2024-12-23 15:44:35,174 - __main__ - DEBUG - MATLAB Expression for evaluation: log10(2)
+2024-12-23 15:44:35,189 - __main__ - DEBUG - Executing MATLAB command: result = log10(2);
+2024-12-23 15:44:35,193 - __main__ - DEBUG - Raw result: 0.3010299956639812
+2024-12-23 15:44:35,194 - __main__ - DEBUG - Final displayed result: 0.3010299956639812
+2024-12-23 15:44:35,194 - __main__ - DEBUG - Displayed Result: 0.3010299956639812
+2024-12-23 15:46:22,067 - __main__ - INFO - Initializing Calculator Application
+2024-12-23 15:46:30,030 - __main__ - INFO - MATLAB engine started successfully
+2024-12-23 15:49:09,883 - __main__ - DEBUG - MATLAB Expression for evaluation: log10(2)
+2024-12-23 15:49:09,949 - __main__ - DEBUG - Executing MATLAB command: result = log10(2);
+2024-12-23 15:49:09,957 - __main__ - DEBUG - Raw result: 0.3010299956639812
+2024-12-23 15:49:09,957 - __main__ - DEBUG - Final displayed result: 0.3010299956639812
+2024-12-23 15:49:09,957 - __main__ - DEBUG - Displayed Result: 0.3010299956639812
+2024-12-23 15:49:42,610 - __main__ - INFO - Initializing Calculator Application
+2024-12-23 15:49:51,026 - __main__ - INFO - MATLAB engine started successfully
+2024-12-23 15:50:01,811 - __main__ - DEBUG - MATLAB Expression for evaluation: log10(2)
+2024-12-23 15:50:01,860 - __main__ - DEBUG - Executing MATLAB command: result = log10(2);
+2024-12-23 15:50:01,872 - __main__ - DEBUG - Raw result: 0.3010299956639812
+2024-12-23 15:50:01,872 - __main__ - DEBUG - Final displayed result: 0.3010299956639812
+2024-12-23 15:50:01,872 - __main__ - DEBUG - Displayed Result: 0.3010299956639812

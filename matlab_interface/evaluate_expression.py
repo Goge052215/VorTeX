@@ -1,5 +1,6 @@
 import matlab.engine
 import logging
+import re
 
 class EvaluateExpression:
     def __init__(self, eng):
@@ -26,6 +27,53 @@ class EvaluateExpression:
             self.logger.addHandler(handler)
             self.logger.setLevel(logging.DEBUG)
 
+    def _preprocess_expression(self, expression):
+        """
+        Preprocess the expression before MATLAB evaluation.
+        
+        Args:
+            expression (str): The input expression.
+            
+        Returns:
+            str: The preprocessed expression.
+        """
+        # Convert ln to log for MATLAB processing
+        expression = re.sub(r'\bln\s*\(', 'log(', expression)
+        
+        # Convert log without base to log10
+        expression = re.sub(r'\blog\s*\((?![_\d])', 'log10(', expression)
+        
+        # Handle special cases of log with base
+        expression = re.sub(r'log_e\s*\((.*?)\)', r'log(\1)', expression)
+        expression = re.sub(r'log_(\d+)\s*\((.*?)\)', r'log(\2)/log(\1)', expression)
+        
+        return expression
+
+    def _postprocess_result(self, result_str, is_numeric=False):
+        """
+        Format the result string for display.
+        
+        Args:
+            result_str (str): The result string from MATLAB.
+            is_numeric (bool): Whether the result is numeric.
+            
+        Returns:
+            str: The formatted result string.
+        """
+        if is_numeric:
+            return result_str
+            
+        # Convert natural log back to ln
+        result_str = re.sub(r'\blog\s*\(([^,)]+)\)', r'ln(\1)', result_str)
+        
+        # Format log10 as log
+        result_str = re.sub(r'\blog10\s*\(([^)]+)\)', r'log(\1)', result_str)
+        
+        # Clean up other notations
+        result_str = result_str.replace('.^', '^').replace('.*', '*')
+        
+        return result_str
+
     def evaluate_matlab_expression(self, matlab_expression):
         """
         Evaluate a MATLAB expression and return the result.
@@ -34,15 +82,17 @@ class EvaluateExpression:
             matlab_expression (str): The MATLAB expression to evaluate.
         
         Returns:
-            str or float or list: The evaluated result as a formatted string, float, or list.
-        
-        Raises:
-            ValueError: If MATLAB execution fails or the expression is invalid.
+            str or float or list: The evaluated result.
         """
         self.logger.debug(f"Starting evaluation of MATLAB expression: '{matlab_expression}'")
+        
         try:
-            # Execute the MATLAB expression and assign it to temp_result
-            self.eng.eval(f"temp_result = {matlab_expression};", nargout=0)
+            # Preprocess the expression
+            processed_expr = self._preprocess_expression(matlab_expression)
+            self.logger.debug(f"Preprocessed expression: '{processed_expr}'")
+            
+            # Execute the MATLAB expression
+            self.eng.eval(f"temp_result = {processed_expr};", nargout=0)
             self.logger.info("Expression executed successfully in MATLAB.")
 
             # Check if the result is numeric
@@ -50,25 +100,22 @@ class EvaluateExpression:
             self.logger.debug(f"Is the result numeric? {is_numeric}")
 
             if is_numeric:
-                # Directly retrieve the numeric result
                 result = self.eng.eval("temp_result", nargout=1)
                 self.logger.debug(f"Numeric result obtained: {result}")
-                return result
+                return str(float(result))  # Convert to string for consistent handling
 
-            # If not numeric, check for symbolic variables
+            # Check for symbolic variables
             has_symbols = self.eng.eval("~isempty(symvar(temp_result))", nargout=1)
             self.logger.debug(f"Does the result have symbolic variables? {has_symbols}")
 
             if has_symbols:
-                # Retrieve the symbolic result as a string
                 result_str = self.eng.eval("char(temp_result)", nargout=1)
                 self.logger.debug(f"Symbolic result obtained: {result_str}")
-                return self._format_result_string(result_str)
+                return self._postprocess_result(result_str, is_numeric=False)
             else:
-                # Retrieve the result as a double if no symbols are present
                 result = self.eng.eval("double(temp_result)", nargout=1)
                 self.logger.debug(f"Double result obtained: {result}")
-                return result
+                return str(float(result))
 
         except matlab.engine.MatlabExecutionError as me:
             self.logger.error(f"MATLAB Execution Error: {me}", exc_info=True)
@@ -77,28 +124,8 @@ class EvaluateExpression:
             self.logger.error(f"Unexpected Error: {e}", exc_info=True)
             raise ValueError(f"Unexpected Error: {e}") from e
         finally:
-            # Clear the temporary result from MATLAB workspace
             try:
                 self.eng.eval("clear temp_result", nargout=0)
                 self.logger.debug("Cleared 'temp_result' from MATLAB workspace.")
-            except matlab.engine.MatlabExecutionError as me:
-                self.logger.warning(f"Failed to clear 'temp_result': {me}")
             except Exception as e:
-                self.logger.warning(f"Unexpected error during cleanup: {e}")
-
-    def _format_result_string(self, result_str):
-        """
-        Format the MATLAB symbolic result string for user-friendly display.
-        
-        Args:
-            result_str (str): The symbolic result string from MATLAB.
-        
-        Returns:
-            str: The formatted result string.
-        """
-        self.logger.debug("Formatting the result string.")
-        # Replace 'log(' with 'ln(' for natural logarithm display
-        # Also replace MATLAB's power and multiplication notations with standard ones
-        formatted = result_str.replace('log(', 'ln(').replace('.^', '^').replace('.*', '*')
-        self.logger.debug(f"Formatted string: '{formatted}'")
-        return formatted
+                self.logger.warning(f"Error during cleanup: {e}")

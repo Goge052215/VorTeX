@@ -99,6 +99,9 @@ class CalculatorApp(QWidget, LatexCalculation):
             self.logger.error(f"Failed to start MATLAB engine: {e}")
 
         self.sympy_converter = SympyToMatlab()
+        
+        # Add this line to store the current logarithm type
+        self.current_log_type = None
 
     def _init_theme(self):
         """Initialize and set default theme."""
@@ -564,13 +567,28 @@ class CalculatorApp(QWidget, LatexCalculation):
         
         return expr_str
 
-    def _convert_logarithms(self, expr_str):
-        """Convert different types of logarithms."""
-        if 'log(x, E)' in expr_str or 'log(x)' in expr_str:
-            expr_str = expr_str.replace('log(x, E)', 'ln(x)')
-            expr_str = expr_str.replace('log(x)', 'ln(x)')
-        elif 'log(x, 10)' in expr_str:
-            expr_str = expr_str.replace('log(x, 10)', 'log10(x)')
+    def _convert_logarithms(self, expr_str, for_display=False):
+        """
+        Convert different types of logarithms between display and MATLAB formats.
+        
+        Args:
+            expr_str (str): The mathematical expression string.
+            for_display (bool): If True, convert 'log' to 'ln' for user display.
+                                 If False, convert 'ln' to 'log' for MATLAB evaluation.
+                                 
+        Returns:
+            str: The converted expression string.
+        """
+        if for_display:
+            # Convert MATLAB 'log(x)' (natural log) to 'ln(x)' for display
+            expr_str = re.sub(r'\blog\s*\(', 'ln(', expr_str)
+            # Ensure 'log10(x)' remains unchanged for display
+        else:
+            # Convert 'ln(x)' to 'log(x)' for MATLAB evaluation
+            expr_str = re.sub(r'\bln\s*\(', 'log(', expr_str)
+            # Convert 'log(x, 10)' or similar to 'log10(x)' if necessary
+            expr_str = re.sub(r'\blog\s*\(\s*x\s*,\s*10\s*\)', 'log10(x)', expr_str)
+        
         return expr_str
 
     def _apply_function_replacements(self, expr_str):
@@ -756,18 +774,35 @@ class CalculatorApp(QWidget, LatexCalculation):
             QMessageBox.information(self, "Operation Cancelled", "Differentiation was cancelled.")
             return None
     
-    def _convert_logarithms(self, expr_str):
-        """Convert different types of logarithms."""
-        # Don't convert to ln() - keep as log() for MATLAB compatibility
-        if 'log(x, E)' in expr_str or 'log(x)' in expr_str:
-            expr_str = expr_str.replace('log(x, E)', 'log(x)')
-        elif 'log(x, 10)' in expr_str:
-            expr_str = expr_str.replace('log(x, 10)', 'log10(x)')
-        return expr_str
-
     def handle_latex_calculation(self, angle_mode):
-        """Wrapper method to call the _handle_latex_calculation method"""
-        self._handle_latex_calculation(angle_mode)
+        """Handle LaTeX input and ensure correct MATLAB processing."""
+        expression = self.entry_formula.toPlainText().strip()
+        if not expression:
+            QMessageBox.warning(self, "Input Error", "Please enter an expression.")
+            return
+        
+        try:
+            # Preprocess LaTeX to MATLAB expression
+            matlab_expression = self._preprocess_latex_functions(expression)
+            
+            # Convert 'ln(x)' to 'log(x)' for MATLAB
+            matlab_expression = self._convert_logarithms(matlab_expression, for_display=False)
+            
+            self.logger.debug(f"MATLAB Expression for evaluation: {matlab_expression}")
+            
+            # Evaluate the expression in MATLAB
+            matlab_result = self.handle_integral(matlab_expression)
+            
+            # Convert 'log(x)' back to 'ln(x)' for display
+            displayed_result = self._convert_logarithms(str(matlab_result), for_display=True)
+            self.logger.debug(f"Displayed Result: {displayed_result}")
+            
+            self.result_label.setText(f"Result: {displayed_result}")
+            self.result_label.setFont(QFont("Arial", 13, QFont.Bold))
+        
+        except Exception as e:
+            self.logger.error(f"Error in LaTeX calculation: {e}", exc_info=True)
+            QMessageBox.critical(self, "Calculation Error", f"An error occurred: {str(e)}")
 
     def _add_multiplication_operators(self, expr, skip_functions=False):
         """
@@ -842,25 +877,85 @@ class CalculatorApp(QWidget, LatexCalculation):
             raise ValueError(f"MATLAB Error: {me}")
 
     def handle_integral(self, matlab_expression):
+        """Handle integration expressions for MATLAB evaluation."""
         try:
-            # Convert any remaining 'ln' to 'log' before sending to MATLAB
-            matlab_expression = matlab_expression.replace('ln(', 'log(')
+            # First, ensure x is defined as a symbolic variable
+            self.eng.eval("syms x", nargout=0)
             
-            # Assign the integral to a MATLAB variable
-            self.eng.eval(f"result = {matlab_expression};", nargout=0)
+            # Convert ln to log for MATLAB processing
+            matlab_expression = re.sub(r'\bln\s*\(', 'log(', matlab_expression)
+            
+            # Convert trig functions based on angle mode
+            is_degree_mode = self.combo_angle.currentText() == 'Degree'
+            if is_degree_mode:
+                matlab_expression = self._convert_trig_functions(matlab_expression, to_degree=True)
+            
+            # Check if this is an integration expression
+            if matlab_expression.startswith('int'):
+                # Remove 'int' and trim whitespace
+                expression = matlab_expression[3:].strip()
+                
+                # Find the integrand and variable using regex
+                match = re.match(r'(.*?)\s*d([a-zA-Z])', expression)
+                if match:
+                    integrand = match.group(1).strip()
+                    var = match.group(2).strip()
+                    
+                    # For degree mode integrals of trig functions, convert back to radians
+                    if is_degree_mode:
+                        integrand = self._convert_trig_functions(integrand, to_degree=False)
+                        matlab_cmd = f"result = (pi/180) * int({integrand}, {var});"
+                    else:
+                        matlab_cmd = f"result = int({integrand}, {var});"
+                else:
+                    # If no 'd' is found, assume the entire expression is the integrand
+                    integrand = expression
+                    if is_degree_mode:
+                        integrand = self._convert_trig_functions(integrand, to_degree=False)
+                        matlab_cmd = f"result = (pi/180) * int({integrand}, x);"
+                    else:
+                        matlab_cmd = f"result = int({integrand}, x);"
+            else:
+                # For non-integral expressions, evaluate directly
+                matlab_cmd = f"result = {matlab_expression};"
 
-            # Simplify the result and convert to string
-            self.eng.eval("result = simplify(result);", nargout=0)
+            self.logger.debug(f"Executing MATLAB command: {matlab_cmd}")
             
-            # Get the result as a string and replace all instances of log with ln
-            result_str = self.eng.eval("char(result)", nargout=1)
-            result = result_str.replace('log(', 'ln(')
+            # Evaluate in MATLAB
+            self.eng.eval(matlab_cmd, nargout=0)
+            
+            # Check if result is numeric or symbolic
+            is_numeric = self.eng.eval("isnumeric(result)", nargout=1)
+            
+            if is_numeric:
+                # Get numeric result directly
+                result = str(float(self.eng.eval("result", nargout=1)))
+                # Convert logarithms to display format with is_numeric flag
+                result = self._convert_logarithm_display(result, is_numeric=True)
+            else:
+                # Get symbolic result as string
+                result = self.eng.eval("char(simplify(result))", nargout=1)
+                
+                # Convert result to a more readable form
+                if is_degree_mode:
+                    # Convert any remaining radian expressions to degree form
+                    result = result.replace('pi/180', '1')
+                    result = self._convert_trig_functions(result, to_degree=True)
+                
+                # Convert logarithms to display format for symbolic expressions
+                result = self._convert_logarithm_display(result, is_numeric=False)
+            
+            self.logger.debug(f"Raw result: {result}")
+            self.logger.debug(f"Final displayed result: {result}")
             
             return result
 
         except matlab.engine.MatlabExecutionError as me:
-            QMessageBox.critical(self, "MATLAB Error", f"MATLAB Error: {me}")
-            return "Error in integration."
+            self.logger.error(f"MATLAB Error: {me}")
+            raise
+        except Exception as e:
+            self.logger.error(f"Error in handle_integral: {e}")
+            raise
 
     def handle_derivative(self, matlab_expression, angle_mode):
         try:
@@ -1063,6 +1158,66 @@ class CalculatorApp(QWidget, LatexCalculation):
             expr = re.sub(pattern, replacement, expr, flags=re.IGNORECASE)
         
         return expr
+
+    def _convert_trig_functions(self, expr_str, to_degree=False):
+        """
+        Convert trigonometric functions between radian and degree modes.
+        
+        Args:
+            expr_str (str): The mathematical expression string
+            to_degree (bool): If True, convert to degree functions (sind, cosd, etc.)
+                             If False, convert to radian functions (sin, cos, etc.)
+        Returns:
+            str: The converted expression string
+        """
+        # Dictionary of trig function mappings
+        trig_functions = {
+            'sin': 'sind',
+            'cos': 'cosd',
+            'tan': 'tand',
+            'asin': 'asind',
+            'acos': 'acosd',
+            'atan': 'atand',
+            'csc': 'cscd',
+            'sec': 'secd',
+            'cot': 'cotd'
+        }
+        
+        result = expr_str
+        if to_degree:
+            # Convert to degree mode (sin -> sind)
+            for rad, deg in trig_functions.items():
+                result = re.sub(fr'\b{rad}\(', f'{deg}(', result)
+        else:
+            # Convert to radian mode (sind -> sin)
+            for rad, deg in trig_functions.items():
+                result = re.sub(fr'\b{deg}\(', f'{rad}(', result)
+        
+        return result
+
+    def _convert_logarithm_display(self, expr_str, is_numeric=False):
+        """
+        Convert logarithmic expressions between different notations.
+        
+        Args:
+            expr_str (str): The expression string to convert
+            is_numeric (bool): Whether the expression is a numeric result
+        Returns:
+            str: Converted expression string
+        """
+        if is_numeric:
+            return expr_str  # Don't modify numeric results
+        
+        # First convert MATLAB's log to ln for natural logarithms
+        expr_str = re.sub(r'\blog\(([^,)]+)\)', r'ln(\1)', expr_str)
+        
+        # Handle log10 specifically
+        expr_str = re.sub(r'\blog10\(([^)]+)\)', r'log(\1)', expr_str)
+        
+        # Handle special cases of log with base
+        expr_str = re.sub(r'log_(\d+)\((.*?)\)', r'log_{{\1}}(\2)', expr_str)
+        
+        return expr_str
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

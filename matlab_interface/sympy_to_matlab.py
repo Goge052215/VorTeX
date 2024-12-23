@@ -135,7 +135,7 @@ class SympyToMatlab:
                 'sin': lambda args: f"sind({args[0]})" if self._is_degree_mode() else f"sin({args[0]})",
                 'cos': lambda args: f"cosd({args[0]})" if self._is_degree_mode() else f"cos({args[0]})",
                 'tan': lambda args: f"tand({args[0]})" if self._is_degree_mode() else f"tan({args[0]})",
-                'log': lambda args: f"log({args[0]})",  # MATLAB's natural log
+                'ln': lambda args: f"log({args[0]})",  # MATLAB's natural log
                 'sqrt': lambda args: f"sqrt({args[0]})",
                 'Abs': lambda args: f"abs({args[0]})",
                 'factorial': lambda args: f"factorial({args[0]})",
