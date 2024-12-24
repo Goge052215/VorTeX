@@ -8,6 +8,8 @@ from ui.ui_config import UiConfig
 from modules.modules_import import PackageImporter
 from matlab_interface.sympy_to_matlab import SympyToMatlab
 from latex_pack.latex_calculation import LatexCalculation
+from matlab_interface.evaluate_expression import EvaluateExpression
+import sympy as sy
 
 try:
     from PyQt5.QtWidgets import (
@@ -102,6 +104,8 @@ class CalculatorApp(QWidget, LatexCalculation):
         
         # Add this line to store the current logarithm type
         self.current_log_type = None
+
+        self.evaluator = EvaluateExpression(self.eng)
 
     def _init_theme(self):
         """Initialize and set default theme."""
@@ -782,301 +786,109 @@ class CalculatorApp(QWidget, LatexCalculation):
             return
         
         try:
-            # Preprocess LaTeX to MATLAB expression
-            matlab_expression = self._preprocess_latex_functions(expression)
+            self.logger.debug(f"Original expression: '{expression}'")
             
-            # Convert 'ln(x)' to 'log(x)' for MATLAB
-            matlab_expression = self._convert_logarithms(matlab_expression, for_display=False)
+            # Parse the expression using SymPy with preprocessing
+            sympy_expr = self._parse_expression(expression)
+            self.logger.debug(f"SymPy parsed expression: '{sympy_expr}'")
             
-            self.logger.debug(f"MATLAB Expression for evaluation: {matlab_expression}")
+            # Convert SymPy expression to MATLAB syntax
+            matlab_expression = self.sympy_converter.sympy_to_matlab(sympy_expr)
+            self.logger.debug(f"Converted to MATLAB expression: '{matlab_expression}'")
             
             # Evaluate the expression in MATLAB
-            matlab_result = self.handle_integral(matlab_expression)
+            matlab_result = self.evaluate_expression(matlab_expression)
             
-            # Convert 'log(x)' back to 'ln(x)' for display
-            displayed_result = self._convert_logarithms(str(matlab_result), for_display=True)
+            # Determine if the original expression was numeric
+            is_numeric = self._is_numeric_expression(sympy_expr)
+            self.logger.debug(f"Expression is numeric? {is_numeric}")
+            
+            # Postprocess the result
+            displayed_result = self.evaluator._postprocess_result(matlab_result, is_numeric=is_numeric)
             self.logger.debug(f"Displayed Result: {displayed_result}")
             
-            self.result_label.setText(f"Result: {displayed_result}")
+            # Optionally format the display with the original function
+            if is_numeric:
+                func, arg = self._extract_function_argument(expression)
+                if func and arg:
+                    self.result_label.setText(f"{func}({arg}) = {displayed_result}")
+                else:
+                    self.result_label.setText(f"Result: {displayed_result}")
+            else:
+                self.result_label.setText(f"Result: {displayed_result}")
+            
             self.result_label.setFont(QFont("Arial", 13, QFont.Bold))
         
         except Exception as e:
             self.logger.error(f"Error in LaTeX calculation: {e}", exc_info=True)
             QMessageBox.critical(self, "Calculation Error", f"An error occurred: {str(e)}")
 
-    def _add_multiplication_operators(self, expr, skip_functions=False):
-        """
-        Add multiplication operators where needed while preserving function placeholders.
+    def evaluate_expression(self, matlab_expression):
+        """Evaluate the expression using the MATLAB engine."""
+        # This method calls the EvaluateExpression class
+        return self.evaluator.evaluate_matlab_expression(matlab_expression)
 
+    def _is_numeric_expression(self, sympy_expr):
+        """Determine if the SymPy expression is numeric."""
+        return sympy_expr.is_number
+
+    def _extract_function_argument(self, expression):
+        """Extract the function name and its argument."""
+        match = re.match(r'([a-zA-Z]+)\s*\(\s*([^\)]+)\s*\)', expression)
+        if match:
+            func, arg = match.groups()
+            return func, arg
+        return '', ''
+
+    def _parse_expression(self, expression):
+        """
+        Parse the input expression using SymPy with preprocessing for calculus commands.
+        
         Args:
-            expr (str): The mathematical expression to process.
-            skip_functions (bool): If True, don't add operators within function names.
+            expression (str): Input expression as string.
+            
+        Returns:
+            sympy.Expr: Parsed SymPy expression.
         """
-        # List of functions to protect
-        functions = ['sin', 'cos', 'tan', 'log', 'ln', 'exp', 'sqrt', 'abs', 'factorial']
-        placeholders = {}
-
-        # Clean up the expression
-        expr = expr.strip()
-
-        # Protect function names by replacing them with unique placeholders
-        for i, func in enumerate(functions):
-            placeholder = f"__FUNC_{i}__"
-            pattern = re.compile(rf'\b{func}\s*\(', re.IGNORECASE)
-            if pattern.search(expr):
-                expr = pattern.sub(f"{placeholder}(", expr)
-                placeholders[placeholder] = func
-
-        # Add multiplication operators between numbers and variables/parentheses
-        expr = re.sub(r'(\d+)([a-zA-Z\(])', r'\1.*\2', expr)
-        # Between closing parentheses and numbers/variables
-        expr = re.sub(r'\)(\d+|\w+)', r').*\1', expr)
-        # Between variables and numbers
-        expr = re.sub(r'([a-zA-Z])(\d+)', r'\1.*\2', expr)
-
-        # Add multiplication between consecutive variables if not skipping functions
-        if not skip_functions:
-            # Split the expression into parts: placeholders and non-placeholders
-            parts = re.split(r'(__FUNC_\d+__)', expr)
-            for index, part in enumerate(parts):
-                if not part.startswith('__FUNC_'):
-                    # Insert multiplication between consecutive letters
-                    parts[index] = re.sub(r'([a-zA-Z])([a-zA-Z])', r'\1.*\2', part)
-            expr = ''.join(parts)
-
-        # Restore the original function names from placeholders
-        for placeholder, func in placeholders.items():
-            expr = expr.replace(placeholder, func)
-
-        # Remove any duplicate multiplication operators
-        expr = expr.replace('.*.*', '.*')
-
-        # Remove all whitespace characters
-        expr = re.sub(r'\s+', '', expr)
-
-        return expr
-
-    def handle_regular_expression(self, matlab_expression):
-        """Handle non-derivative expressions."""
         try:
-            # Expression is already cleaned up by _prepare_matlab_expression
-            result = self.eng.eval(f"simplify({matlab_expression})", nargout=1)
+            # Replace LaTeX commands if necessary before parsing
+            # For example, convert \ln to ln, \int to int, etc.
+            # This can be expanded based on actual input format
+            expression = expression.replace('\\ln', 'ln').replace('\\int', 'int').replace('\\diff', 'diff')
             
-            # Format the result
-            if isinstance(result, matlab.double):
-                if len(result) == 1:
-                    return f"{float(result):.4f}"
-                return str(list(result))
-            elif isinstance(result, matlab.object):
-                result_str = self.eng.eval("char(simplify(result))", nargout=1)
-                return result_str.replace('.^', '^').replace('.*', '*')
-            else:
-                return str(result)
-                
-        except matlab.engine.MatlabExecutionError as me:
-            raise ValueError(f"MATLAB Error: {me}")
-
-    def handle_integral(self, matlab_expression):
-        """Handle integration expressions for MATLAB evaluation."""
-        try:
-            # First, ensure x is defined as a symbolic variable
-            self.eng.eval("syms x", nargout=0)
-            
-            # Convert ln to log for MATLAB processing
-            matlab_expression = re.sub(r'\bln\s*\(', 'log(', matlab_expression)
-            
-            # Convert trig functions based on angle mode
-            is_degree_mode = self.combo_angle.currentText() == 'Degree'
-            if is_degree_mode:
-                matlab_expression = self._convert_trig_functions(matlab_expression, to_degree=True)
-            
-            # Check if this is an integration expression
-            if matlab_expression.startswith('int'):
-                # Remove 'int' and trim whitespace
-                expression = matlab_expression[3:].strip()
-                
-                # Find the integrand and variable using regex
-                match = re.match(r'(.*?)\s*d([a-zA-Z])', expression)
-                if match:
-                    integrand = match.group(1).strip()
-                    var = match.group(2).strip()
-                    
-                    # For degree mode integrals of trig functions, convert back to radians
-                    if is_degree_mode:
-                        integrand = self._convert_trig_functions(integrand, to_degree=False)
-                        matlab_cmd = f"result = (pi/180) * int({integrand}, {var});"
-                    else:
-                        matlab_cmd = f"result = int({integrand}, {var});"
+            # Handle integrals: int <expr> d<var> [from <a> to <b>]
+            integral_pattern = r'int\s+(.+?)\s+d([a-zA-Z])(?:\s+from\s+(.+?)\s+to\s+(.+))?$'
+            match = re.match(integral_pattern, expression)
+            if match:
+                integrand = match.group(1)
+                variable = match.group(2)
+                lower_limit = match.group(3)
+                upper_limit = match.group(4)
+                if lower_limit and upper_limit:
+                    sympy_expr = f'Integral({integrand}, ({variable}, {lower_limit}, {upper_limit}))'
                 else:
-                    # If no 'd' is found, assume the entire expression is the integrand
-                    integrand = expression
-                    if is_degree_mode:
-                        integrand = self._convert_trig_functions(integrand, to_degree=False)
-                        matlab_cmd = f"result = (pi/180) * int({integrand}, x);"
-                    else:
-                        matlab_cmd = f"result = int({integrand}, x);"
-            else:
-                # For non-integral expressions, evaluate directly
-                matlab_cmd = f"result = {matlab_expression};"
-
-            self.logger.debug(f"Executing MATLAB command: {matlab_cmd}")
+                    sympy_expr = f'Integral({integrand}, {variable})'
+                return sy.sympify(sympy_expr)
             
-            # Evaluate in MATLAB
-            self.eng.eval(matlab_cmd, nargout=0)
-            
-            # Check if result is numeric or symbolic
-            is_numeric = self.eng.eval("isnumeric(result)", nargout=1)
-            
-            if is_numeric:
-                # Get numeric result directly
-                result = str(float(self.eng.eval("result", nargout=1)))
-                # Convert logarithms to display format with is_numeric flag
-                result = self._convert_logarithm_display(result, is_numeric=True)
-            else:
-                # Get symbolic result as string
-                result = self.eng.eval("char(simplify(result))", nargout=1)
-                
-                # Convert result to a more readable form
-                if is_degree_mode:
-                    # Convert any remaining radian expressions to degree form
-                    result = result.replace('pi/180', '1')
-                    result = self._convert_trig_functions(result, to_degree=True)
-                
-                # Convert logarithms to display format for symbolic expressions
-                result = self._convert_logarithm_display(result, is_numeric=False)
-            
-            self.logger.debug(f"Raw result: {result}")
-            self.logger.debug(f"Final displayed result: {result}")
-            
-            return result
-
-        except matlab.engine.MatlabExecutionError as me:
-            self.logger.error(f"MATLAB Error: {me}")
-            raise
-        except Exception as e:
-            self.logger.error(f"Error in handle_integral: {e}")
-            raise
-
-    def handle_derivative(self, matlab_expression, angle_mode):
-        try:
-            matlab_expression = matlab_expression.replace('ln(', 'log(')
-            
-            # Assign the derivative to a MATLAB variable
-            self.eng.eval(f"result = {matlab_expression};", nargout=0)
-
-            # Simplify the result
-            self.eng.eval("result = simplify(result);", nargout=0)
-            result = self.eng.eval("result", nargout=1)
-
-            # Convert symbolic result to string
-            if isinstance(result, matlab.object):
-                result_str = self.eng.eval("char(result)", nargout=1)
-                result = result_str
-            else:
-                result = str(result)
-            
-            result = result.replace('log(', 'ln(')
-
-            return result
-
-        except matlab.engine.MatlabExecutionError as me:
-            QMessageBox.critical(self, "MATLAB Error", f"MATLAB Error: {me}")
-            return "Error in differentiation."
-
-    def handle_equation(self, matlab_expression, angle_mode):
-        try:
-            # Determine if it's a trigonometric equation
-            is_trig = any(func in matlab_expression for func in ['sin', 'cos', 'tan', 'sind', 'cosd', 'tand'])
-            is_equation = '==' in matlab_expression
-
-            if is_trig and is_equation:
-                if angle_mode.lower() == 'degree':
-                    # Replace trig functions with degree counterparts if not already done
-                    matlab_expression = re.sub(r'\bsin\(', 'sind(', matlab_expression, flags=re.IGNORECASE)
-                    matlab_expression = re.sub(r'\bcos\(', 'cosd(', matlab_expression, flags=re.IGNORECASE)
-                    matlab_expression = re.sub(r'\btan\(', 'tand(', matlab_expression, flags=re.IGNORECASE)
-                    solve_command = f"vpasolve({matlab_expression}, x, [0, 360])"
-                
-                    # Get the result
-                    result = self.eng.eval(solve_command, nargout=1)
-                
-                    # Convert result to degrees
-                    if isinstance(result, matlab.double):
-                        result = np.array(result).flatten().tolist()
-                        # Round to 2 decimal places
-                        result = [f"{x:.2f}°" for x in result]
-                        result = f"x = {', '.join(result)}"
-                    else:
-                        result_str = self.eng.eval(f"char({solve_command})", nargout=1)
-                        result = f"x = {result_str}°"
-
+            # Handle derivatives: diff <expr> d<var> [, <order>]
+            derivative_pattern = r'diff\s+(.+?)\s+d([a-zA-Z])(?:\s*,\s*(\d+))?$'
+            match = re.match(derivative_pattern, expression)
+            if match:
+                func = match.group(1)
+                variable = match.group(2)
+                order = match.group(3)
+                if order:
+                    sympy_expr = f'Derivative({func}, ({variable}, {order}))'
                 else:
-                    # For radian mode
-                    solve_command = f"vpasolve({matlab_expression}, x, [0, 2*pi])"
-                    result = self.eng.eval(solve_command, nargout=1)
-                    
-                    if isinstance(result, matlab.double):
-                        result = np.array(result).flatten().tolist()
-                        result = [f"{x/np.pi:.4f}π" if x != 0 else "0" for x in result]
-                        result = f"x = {', '.join(result)}"
-                    else:
-                        result_str = self.eng.eval(f"char({solve_command})", nargout=1)
-                        result = f"x = {result_str} rad"
-
-                # Handle case when no solution is found
-                if result in ["x = []", "x = []°", "x = [] rad"]:
-                    result = "No real solutions found"
+                    sympy_expr = f'Derivative({func}, {variable})'
+                return sy.sympify(sympy_expr)
             
-                return result
-
-            else:
-                # Handle non-trigonometric equations
-                solve_command = f"solve({matlab_expression}, x)"
-                result = self.eng.eval(solve_command, nargout=1)
-
-                # Convert result to a more readable format
-                if isinstance(result, matlab.double):
-                    result = np.array(result).flatten().tolist()
-                    result = [f"{x:.4f}" for x in result]
-                    result = f"x = {', '.join(result)}"
-                elif isinstance(result, matlab.object):
-                    result_str = self.eng.eval(f"char(solve({matlab_expression}, x))", nargout=1)
-                    result_str = result_str.replace('==', '=')
-                    result = f"x = {result_str}"
-                else:
-                    result = str(result)
-
-                return result
-
-        except matlab.engine.MatlabExecutionError as me:
-            QMessageBox.critical(self, "MATLAB Error", f"MATLAB Error: {me}")
-            return "Error in solving equation."
-
-    def handle_regular_expression(self, matlab_expression):
-        try:
-            # Assign the expression to a MATLAB variable
-            self.eng.eval(f"result = {matlab_expression};", nargout=0)
-
-            # Evaluate the expression
-            result = self.eng.eval("result", nargout=1)
-
-            # Convert symbolic result to string if necessary
-            if isinstance(result, matlab.object):
-                result_str = self.eng.eval("char(result)", nargout=1)
-                # Remove the "Symbolic expression:" prefix
-                result = result_str.strip()
-            elif isinstance(result, (int, float)):
-                result = f"{result:.4f}"
-            else:
-                result = str(result)
-            
-            result = result.replace('log(', 'ln(')
-
-            return result
-
-        except matlab.engine.MatlabExecutionError as me:
-            QMessageBox.critical(self, "MATLAB Error", f"MATLAB Error: {me}")
-            return "Error in evaluating expression."
+            # If not a calculus expression, sympify normally
+            sympy_expr = sy.sympify(expression, evaluate=False)
+            return sympy_expr
+        except sy.SympifyError as e:
+            self.logger.error(f"SymPy parsing error: {e}")
+            raise ValueError(f"Invalid expression format: {e}") from e
 
     def handle_matlab_calculation(self):
         input_text = self.entry_formula.toPlainText().strip()
@@ -1127,97 +939,15 @@ class CalculatorApp(QWidget, LatexCalculation):
         self.eng.quit()
         event.accept()
 
-    def _preprocess_latex_functions(self, expr):
-        """Preprocess LaTeX function notation to MATLAB notation."""
-        # Dictionary of common LaTeX functions and their MATLAB equivalents
-        latex_funcs = {
-            r'\\sin': 'sin',
-            r'\\cos': 'cos',
-            r'\\tan': 'tan',
-            r'\\ln': 'log',     # LaTeX \ln -> MATLAB log (natural logarithm)
-            r'\\log': 'log10',  # LaTeX \log -> MATLAB log10 (base 10 logarithm)
-            r'\\sqrt': 'sqrt',
-            r'\\abs': 'abs',
-            r'\\exp': 'exp'
-        }
-        
-        # Replace LaTeX function notation with MATLAB notation
-        for latex_func, matlab_func in latex_funcs.items():
-            # Handle both {...} and (...) style arguments with backslash
-            expr = re.sub(f"{latex_func}\\s*{{(.*?)}}", f"{matlab_func}(\\1)", expr)
-            expr = re.sub(f"{latex_func}\\s*\\((.*?)\\)", f"{matlab_func}(\\1)", expr)
-        
-        # Handle functions without backslash (e.g., ln(x))
-        # Changed to correctly map ln to natural logarithm (log in MATLAB)
-        additional_funcs = {
-            r'\bln\s*\(': 'log(',    # ln(x) -> log(x) (natural logarithm)
-            r'\blog\s*\(': 'log10('  # log(x) -> log10(x) (base 10 logarithm)
-        }
-        
-        for pattern, replacement in additional_funcs.items():
-            expr = re.sub(pattern, replacement, expr, flags=re.IGNORECASE)
-        
-        return expr
+    def _preprocess_expression(self, expression):
+        """Delegate preprocessing to EvaluateExpression for consistency."""
+        # Assuming preprocessing is handled in EvaluateExpression
+        return expression  # No action needed here
 
-    def _convert_trig_functions(self, expr_str, to_degree=False):
-        """
-        Convert trigonometric functions between radian and degree modes.
-        
-        Args:
-            expr_str (str): The mathematical expression string
-            to_degree (bool): If True, convert to degree functions (sind, cosd, etc.)
-                             If False, convert to radian functions (sin, cos, etc.)
-        Returns:
-            str: The converted expression string
-        """
-        # Dictionary of trig function mappings
-        trig_functions = {
-            'sin': 'sind',
-            'cos': 'cosd',
-            'tan': 'tand',
-            'asin': 'asind',
-            'acos': 'acosd',
-            'atan': 'atand',
-            'csc': 'cscd',
-            'sec': 'secd',
-            'cot': 'cotd'
-        }
-        
-        result = expr_str
-        if to_degree:
-            # Convert to degree mode (sin -> sind)
-            for rad, deg in trig_functions.items():
-                result = re.sub(fr'\b{rad}\(', f'{deg}(', result)
-        else:
-            # Convert to radian mode (sind -> sin)
-            for rad, deg in trig_functions.items():
-                result = re.sub(fr'\b{deg}\(', f'{rad}(', result)
-        
-        return result
-
-    def _convert_logarithm_display(self, expr_str, is_numeric=False):
-        """
-        Convert logarithmic expressions between different notations.
-        
-        Args:
-            expr_str (str): The expression string to convert
-            is_numeric (bool): Whether the expression is a numeric result
-        Returns:
-            str: Converted expression string
-        """
-        if is_numeric:
-            return expr_str  # Don't modify numeric results
-        
-        # First convert MATLAB's log to ln for natural logarithms
-        expr_str = re.sub(r'\blog\(([^,)]+)\)', r'ln(\1)', expr_str)
-        
-        # Handle log10 specifically
-        expr_str = re.sub(r'\blog10\(([^)]+)\)', r'log(\1)', expr_str)
-        
-        # Handle special cases of log with base
-        expr_str = re.sub(r'log_(\d+)\((.*?)\)', r'log_{{\1}}(\2)', expr_str)
-        
-        return expr_str
+    def _postprocess_result(self, result_str, is_numeric=False):
+        """Delegate postprocessing to EvaluateExpression for consistency."""
+        # Assuming postprocessing is handled in EvaluateExpression
+        return result_str  # No action needed here
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

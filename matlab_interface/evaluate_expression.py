@@ -37,16 +37,17 @@ class EvaluateExpression:
         Returns:
             str: The preprocessed expression.
         """
-        # Convert ln to log for MATLAB processing
+        original_expr = expression
+        # Convert ln(x) to log(x) for MATLAB processing
         expression = re.sub(r'\bln\s*\(', 'log(', expression)
         
-        # Convert log without base to log10
-        expression = re.sub(r'\blog\s*\((?![_\d])', 'log10(', expression)
+        # Convert log(E, x) to log(x) for natural logarithm
+        expression = re.sub(r'log\s*\(\s*E\s*,\s*([^,)]+)\)', r'log(\1)', expression)
         
-        # Handle special cases of log with base
-        expression = re.sub(r'log_e\s*\((.*?)\)', r'log(\1)', expression)
-        expression = re.sub(r'log_(\d+)\s*\((.*?)\)', r'log(\2)/log(\1)', expression)
+        # Handle log with different bases, e.g., log(b, x) -> log(x)/log(b)
+        expression = re.sub(r'log\s*\(\s*(\d+)\s*,\s*([^,)]+)\)', r'log(\2)/log(\1)', expression)
         
+        self.logger.debug(f"Converted '{original_expr}' to '{expression}'")
         return expression
 
     def _postprocess_result(self, result_str, is_numeric=False):
@@ -61,6 +62,7 @@ class EvaluateExpression:
             str: The formatted result string.
         """
         if is_numeric:
+            self.logger.debug(f"Numeric result returned: {result_str}")
             return result_str
             
         # Convert natural log back to ln
@@ -72,6 +74,7 @@ class EvaluateExpression:
         # Clean up other notations
         result_str = result_str.replace('.^', '^').replace('.*', '*')
         
+        self.logger.debug(f"Symbolic result after postprocessing: {result_str}")
         return result_str
 
     def evaluate_matlab_expression(self, matlab_expression):
@@ -92,7 +95,9 @@ class EvaluateExpression:
             self.logger.debug(f"Preprocessed expression: '{processed_expr}'")
             
             # Execute the MATLAB expression
-            self.eng.eval(f"temp_result = {processed_expr};", nargout=0)
+            matlab_cmd = f"temp_result = {processed_expr};"
+            self.logger.debug(f"Executing MATLAB command: {matlab_cmd}")
+            self.eng.eval(matlab_cmd, nargout=0)
             self.logger.info("Expression executed successfully in MATLAB.")
 
             # Check if the result is numeric
@@ -102,7 +107,7 @@ class EvaluateExpression:
             if is_numeric:
                 result = self.eng.eval("temp_result", nargout=1)
                 self.logger.debug(f"Numeric result obtained: {result}")
-                return str(float(result))  # Convert to string for consistent handling
+                return str(float(result))  # Return as string for consistency
 
             # Check for symbolic variables
             has_symbols = self.eng.eval("~isempty(symvar(temp_result))", nargout=1)
@@ -119,7 +124,7 @@ class EvaluateExpression:
 
         except matlab.engine.MatlabExecutionError as me:
             self.logger.error(f"MATLAB Execution Error: {me}", exc_info=True)
-            raise ValueError(f"MATLAB Error: {me}") from me
+            raise ValueError(f"Unexpected Error: {me}") from me
         except Exception as e:
             self.logger.error(f"Unexpected Error: {e}", exc_info=True)
             raise ValueError(f"Unexpected Error: {e}") from e

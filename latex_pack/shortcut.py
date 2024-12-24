@@ -5,7 +5,7 @@ class ExpressionShortcuts:
     A class containing mappings for mathematical expression shortcuts to their LaTeX equivalents.
     """
     
-    # Derivative shortcuts - Updated with more precise patterns
+    # Derivative shortcuts
     DERIVATIVE_SHORTCUTS = {
         'd/dx': r'\frac{d}{dx}',
         'd/dy': r'\frac{d}{dy}',
@@ -18,8 +18,8 @@ class ExpressionShortcuts:
     
     # Integral shortcuts
     INTEGRAL_SHORTCUTS = {
-        'integral': r'\int',
         'int': r'\int',
+        'integral': r'\int',
         'iint': r'\iint',  # Double integral
         'iiint': r'\iiint',  # Triple integral
         'oint': r'\oint',  # Contour integral
@@ -42,6 +42,8 @@ class ExpressionShortcuts:
         'ln': r'\ln',
         'lg': r'\log',
         'log': r'\log',
+        'log10': r'\log_{10}',  # Added for explicit base-10 log
+        'log2': r'\log_{2}'     # Added for base-2 log
     }
     
     # Fraction shortcuts
