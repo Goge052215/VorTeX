@@ -110,3 +110,369 @@ AttributeError: 'Integral' object has no attribute 'expr'
 2024-12-24 13:17:53,488 - __main__ - DEBUG - Converted to MATLAB expression: 'log10(2)'
 2024-12-24 13:17:53,515 - __main__ - DEBUG - Expression is numeric? True
 2024-12-24 13:17:53,516 - __main__ - DEBUG - Displayed Result: 0.3010299956639812
+2024-12-24 15:45:56,685 - __main__ - INFO - Initializing Calculator Application
+2024-12-24 15:46:09,193 - __main__ - INFO - MATLAB engine started successfully
+2024-12-24 15:46:25,954 - __main__ - DEBUG - Original expression: 'int x^2 dx'
+2024-12-24 15:46:26,020 - __main__ - DEBUG - SymPy parsed expression: 'Integral(x**2, x)'
+2024-12-24 15:46:26,020 - __main__ - DEBUG - Converted to MATLAB expression: 'int(x**2, 'x')'
+2024-12-24 15:46:26,095 - __main__ - ERROR - Error in LaTeX calculation: Unexpected Error: Invalid use of operator.
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/matlab_interface/evaluate_expression.py", line 100, in evaluate_matlab_expression
+    self.eng.eval(matlab_cmd, nargout=0)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/matlabengine.py", line 70, in __call__
+    return FutureResult(self._engine(), future, nargs, _stdout,
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/futureresult.py", line 62, in result
+    return self.__future.result(timeout)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/fevalfuture.py", line 76, in result
+    self._result = pythonengine.getFEvalResult(self._future,self._nargout, None, out=self._out, err=self._err)
+SyntaxError: Invalid use of operator.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 800, in handle_latex_calculation
+    matlab_result = self.evaluate_expression(matlab_expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 829, in evaluate_expression
+    return self.evaluator.evaluate_matlab_expression(matlab_expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/matlab_interface/evaluate_expression.py", line 130, in evaluate_matlab_expression
+    raise ValueError(f"Unexpected Error: {e}") from e
+ValueError: Unexpected Error: Invalid use of operator.
+
+2024-12-24 15:46:30,514 - __main__ - DEBUG - Original expression: '1+1'
+2024-12-24 15:46:30,520 - __main__ - DEBUG - SymPy parsed expression: '1 + 1'
+2024-12-24 15:46:30,521 - __main__ - DEBUG - Converted to MATLAB expression: '1 + 1'
+2024-12-24 15:46:30,537 - __main__ - DEBUG - Expression is numeric? True
+2024-12-24 15:46:30,537 - __main__ - DEBUG - Displayed Result: 2.0
+2024-12-24 15:46:35,597 - __main__ - DEBUG - Original expression: 'sin(30)'
+2024-12-24 15:46:35,599 - __main__ - DEBUG - SymPy parsed expression: 'sin(30)'
+2024-12-24 15:46:35,600 - __main__ - DEBUG - Converted to MATLAB expression: 'sind(30)'
+2024-12-24 15:46:35,609 - __main__ - DEBUG - Expression is numeric? True
+2024-12-24 15:46:35,609 - __main__ - DEBUG - Displayed Result: 0.5
+2024-12-24 15:56:23,222 - __main__ - INFO - Initializing Calculator Application
+2024-12-24 15:56:33,271 - __main__ - INFO - MATLAB engine started successfully
+2024-12-24 15:56:48,769 - __main__ - DEBUG - Original expression: 'int x^2 dx'
+2024-12-24 15:56:48,832 - __main__ - DEBUG - SymPy parsed expression: 'Integral(x**2, x)'
+2024-12-24 15:56:48,832 - __main__ - DEBUG - Converted to MATLAB expression: 'int(x**2, 'x')'
+2024-12-24 15:56:48,896 - __main__ - ERROR - Error in LaTeX calculation: Unexpected Error: Invalid use of operator.
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/matlab_interface/evaluate_expression.py", line 100, in evaluate_matlab_expression
+    self.eng.eval(matlab_cmd, nargout=0)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/matlabengine.py", line 70, in __call__
+    return FutureResult(self._engine(), future, nargs, _stdout,
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/futureresult.py", line 62, in result
+    return self.__future.result(timeout)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/fevalfuture.py", line 76, in result
+    self._result = pythonengine.getFEvalResult(self._future,self._nargout, None, out=self._out, err=self._err)
+SyntaxError: Invalid use of operator.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 800, in handle_latex_calculation
+    matlab_result = self.evaluate_expression(matlab_expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 829, in evaluate_expression
+    return self.evaluator.evaluate_matlab_expression(matlab_expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/matlab_interface/evaluate_expression.py", line 130, in evaluate_matlab_expression
+    raise ValueError(f"Unexpected Error: {e}") from e
+ValueError: Unexpected Error: Invalid use of operator.
+
+2024-12-24 15:58:34,062 - __main__ - INFO - Initializing Calculator Application
+2024-12-24 15:58:43,284 - __main__ - INFO - MATLAB engine started successfully
+2024-12-24 15:58:54,901 - __main__ - DEBUG - Original expression: 'int x^2 dx'
+2024-12-24 15:58:54,973 - __main__ - DEBUG - SymPy parsed expression: 'Integral(x**2, x)'
+2024-12-24 15:58:54,974 - __main__ - DEBUG - Converted to MATLAB expression: 'int(x**2, x)'
+2024-12-24 15:58:55,042 - __main__ - ERROR - Error in LaTeX calculation: Unexpected Error: Invalid use of operator.
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/matlab_interface/evaluate_expression.py", line 100, in evaluate_matlab_expression
+    self.eng.eval(matlab_cmd, nargout=0)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/matlabengine.py", line 70, in __call__
+    return FutureResult(self._engine(), future, nargs, _stdout,
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/futureresult.py", line 62, in result
+    return self.__future.result(timeout)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/fevalfuture.py", line 76, in result
+    self._result = pythonengine.getFEvalResult(self._future,self._nargout, None, out=self._out, err=self._err)
+SyntaxError: Invalid use of operator.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 800, in handle_latex_calculation
+    matlab_result = self.evaluate_expression(matlab_expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 829, in evaluate_expression
+    return self.evaluator.evaluate_matlab_expression(matlab_expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/matlab_interface/evaluate_expression.py", line 130, in evaluate_matlab_expression
+    raise ValueError(f"Unexpected Error: {e}") from e
+ValueError: Unexpected Error: Invalid use of operator.
+
+2024-12-24 16:01:33,047 - __main__ - INFO - Initializing Calculator Application
+2024-12-24 16:01:42,240 - __main__ - INFO - MATLAB engine started successfully
+2024-12-24 16:01:47,320 - __main__ - DEBUG - Original expression: 'int x^2 dx'
+2024-12-24 16:01:47,375 - __main__ - DEBUG - SymPy parsed expression: 'Integral(x**2, x)'
+2024-12-24 16:01:47,375 - __main__ - DEBUG - Converted to MATLAB expression: 'int(x**2, x)'
+2024-12-24 16:01:47,477 - __main__ - ERROR - Error in LaTeX calculation: Unexpected Error: Invalid use of operator.
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/matlab_interface/evaluate_expression.py", line 108, in evaluate_matlab_expression
+    self.eng.eval(matlab_cmd, nargout=0)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/matlabengine.py", line 70, in __call__
+    return FutureResult(self._engine(), future, nargs, _stdout,
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/futureresult.py", line 62, in result
+    return self.__future.result(timeout)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/fevalfuture.py", line 76, in result
+    self._result = pythonengine.getFEvalResult(self._future,self._nargout, None, out=self._out, err=self._err)
+SyntaxError: Invalid use of operator.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 800, in handle_latex_calculation
+    matlab_result = self.evaluate_expression(matlab_expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 829, in evaluate_expression
+    return self.evaluator.evaluate_matlab_expression(matlab_expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/matlab_interface/evaluate_expression.py", line 130, in evaluate_matlab_expression
+    raise ValueError(f"Unexpected Error: {e}") from e
+ValueError: Unexpected Error: Invalid use of operator.
+
+2024-12-24 17:28:58,415 - __main__ - INFO - Initializing Calculator Application
+2024-12-24 17:29:10,198 - __main__ - INFO - MATLAB engine started successfully
+2024-12-24 17:30:08,561 - __main__ - DEBUG - Original expression: 'int x^2 dx'
+2024-12-24 17:30:08,628 - __main__ - ERROR - SymPy parsing error: Sympify of expression 'could not parse 'int x^2 dx'' failed, because of exception being raised:
+SyntaxError: invalid syntax (<unknown>, line 1)
+2024-12-24 17:30:08,629 - __main__ - ERROR - Error in LaTeX calculation: Invalid expression format: Sympify of expression 'could not parse 'int x^2 dx'' failed, because of exception being raised:
+SyntaxError: invalid syntax (<unknown>, line 1)
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/core/sympify.py", line 481, in sympify
+    expr = parse_expr(a, local_dict=locals, transformations=transformations, evaluate=evaluate)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/parsing/sympy_parser.py", line 1078, in parse_expr
+    code = compile(evaluateFalse(code), '<string>', 'eval') # type: ignore
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/parsing/sympy_parser.py", line 1097, in evaluateFalse
+    node = ast.parse(s)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/ast.py", line 50, in parse
+    return compile(source, filename, mode, flags,
+  File "<unknown>", line 1
+    Symbol ('int' )Symbol ('x' )**Integer (2 )Symbol ('dx' )
+                   ^
+SyntaxError: invalid syntax
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 858, in _parse_expression
+    sympy_expr = sy.sympify(expression, evaluate=False)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/core/sympify.py", line 483, in sympify
+    raise SympifyError('could not parse %r' % a, exc)
+sympy.core.sympify.SympifyError: Sympify of expression 'could not parse 'int x^2 dx'' failed, because of exception being raised:
+SyntaxError: invalid syntax (<unknown>, line 1)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 792, in handle_latex_calculation
+    sympy_expr = self._parse_expression(expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 862, in _parse_expression
+    raise ValueError(f"Invalid expression format: {e}") from e
+ValueError: Invalid expression format: Sympify of expression 'could not parse 'int x^2 dx'' failed, because of exception being raised:
+SyntaxError: invalid syntax (<unknown>, line 1)
+2024-12-24 17:36:28,521 - __main__ - INFO - Initializing Calculator Application
+2024-12-24 17:36:38,649 - __main__ - INFO - MATLAB engine started successfully
+2024-12-24 17:36:45,808 - __main__ - DEBUG - Original expression: 'int x dx'
+2024-12-24 17:36:45,812 - __main__ - DEBUG - Processed expression for SymPy: Integral(x, x)
+2024-12-24 17:36:45,871 - __main__ - DEBUG - SymPy parsed expression: 'Integral(x, x)'
+2024-12-24 17:36:45,871 - __main__ - DEBUG - Converted to MATLAB expression: 'int(x, 'x')'
+2024-12-24 17:36:46,079 - __main__ - DEBUG - Expression is numeric? False
+2024-12-24 17:36:46,079 - __main__ - DEBUG - Displayed Result: x^2/2
+2024-12-24 17:36:49,435 - __main__ - DEBUG - Original expression: 'int x^2 dx'
+2024-12-24 17:36:49,435 - __main__ - DEBUG - Processed expression for SymPy: Integral(x^2, x)
+2024-12-24 17:36:49,436 - __main__ - DEBUG - SymPy parsed expression: 'Integral(x**2, x)'
+2024-12-24 17:36:49,437 - __main__ - DEBUG - Converted to MATLAB expression: 'int(x**2, 'x')'
+2024-12-24 17:36:49,569 - __main__ - ERROR - Error in LaTeX calculation: Unexpected Error: Invalid use of operator.
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/matlab_interface/evaluate_expression.py", line 100, in evaluate_matlab_expression
+    self.eng.eval(matlab_cmd, nargout=0)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/matlabengine.py", line 70, in __call__
+    return FutureResult(self._engine(), future, nargs, _stdout,
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/futureresult.py", line 62, in result
+    return self.__future.result(timeout)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/fevalfuture.py", line 76, in result
+    self._result = pythonengine.getFEvalResult(self._future,self._nargout, None, out=self._out, err=self._err)
+SyntaxError: Invalid use of operator.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 823, in handle_latex_calculation
+    matlab_result = self.evaluate_expression(matlab_expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 852, in evaluate_expression
+    return self.evaluator.evaluate_matlab_expression(matlab_expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/matlab_interface/evaluate_expression.py", line 130, in evaluate_matlab_expression
+    raise ValueError(f"Unexpected Error: {e}") from e
+ValueError: Unexpected Error: Invalid use of operator.
+
+2024-12-24 17:48:30,126 - __main__ - INFO - Initializing Calculator Application
+2024-12-24 17:48:39,465 - __main__ - INFO - MATLAB engine started successfully
+2024-12-24 17:49:38,418 - __main__ - INFO - Initializing Calculator Application
+2024-12-24 17:49:47,547 - __main__ - INFO - MATLAB engine started successfully
+2024-12-24 17:49:52,097 - __main__ - DEBUG - Original expression: 'int x dx'
+2024-12-24 17:49:52,105 - __main__ - DEBUG - Processed expression for SymPy: Integral(x, x)
+2024-12-24 17:49:52,174 - __main__ - DEBUG - SymPy parsed expression: 'Integral(x, x)'
+2024-12-24 17:49:52,174 - __main__ - DEBUG - SymPy parsed expression: 'Integral(x, x)'
+2024-12-24 17:49:52,174 - __main__ - DEBUG - Converted to MATLAB expression: 'int(x, ''x'')'
+2024-12-24 17:49:52,289 - __main__ - ERROR - Error in LaTeX calculation: Unexpected Error: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/matlab_interface/evaluate_expression.py", line 42, in evaluate_matlab_expression
+    self.eng.eval(matlab_cmd, nargout=0)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/matlabengine.py", line 70, in __call__
+    return FutureResult(self._engine(), future, nargs, _stdout,
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/futureresult.py", line 62, in result
+    return self.__future.result(timeout)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/fevalfuture.py", line 76, in result
+    self._result = pythonengine.getFEvalResult(self._future,self._nargout, None, out=self._out, err=self._err)
+SyntaxError: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 823, in handle_latex_calculation
+    matlab_result = self.evaluate_expression(matlab_expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 852, in evaluate_expression
+    return self.evaluator.evaluate_matlab_expression(matlab_expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/matlab_interface/evaluate_expression.py", line 64, in evaluate_matlab_expression
+    raise ValueError(f"Unexpected Error: {e}") from e
+ValueError: Unexpected Error: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2024-12-24 17:50:35,165 - __main__ - INFO - Initializing Calculator Application
+2024-12-24 17:50:42,007 - __main__ - INFO - MATLAB engine started successfully
+2024-12-24 17:51:25,631 - __main__ - INFO - Initializing Calculator Application
+2024-12-24 17:51:32,673 - __main__ - INFO - MATLAB engine started successfully
+2024-12-24 17:51:59,624 - __main__ - INFO - Initializing Calculator Application
+2024-12-24 17:52:07,470 - __main__ - INFO - MATLAB engine started successfully
+2024-12-24 17:53:32,315 - __main__ - INFO - Initializing Calculator Application
+2024-12-24 17:53:42,057 - __main__ - INFO - MATLAB engine started successfully
+2024-12-25 12:58:29,252 - __main__ - INFO - Initializing Calculator Application
+2024-12-25 12:58:41,506 - __main__ - INFO - MATLAB engine started successfully
+2024-12-25 12:58:53,578 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-25 12:58:53,582 - __main__ - DEBUG - Processed expression for SymPy: Integral(1/x, x)
+2024-12-25 12:58:53,651 - __main__ - DEBUG - SymPy parsed expression: 'Integral(1/x, x)'
+2024-12-25 12:58:53,651 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/x, 'x')'
+2024-12-25 12:58:53,916 - __main__ - DEBUG - Expression is numeric? False
+2024-12-25 12:58:53,916 - __main__ - DEBUG - Displayed Result: log(x)
+2024-12-25 13:00:54,862 - __main__ - INFO - Initializing Calculator Application
+2024-12-25 13:01:04,924 - __main__ - INFO - MATLAB engine started successfully
+2024-12-25 13:08:15,815 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-25 13:08:15,823 - __main__ - DEBUG - Processed expression for SymPy: Integral(1/x, x)
+2024-12-25 13:08:15,904 - __main__ - DEBUG - SymPy parsed expression: 'Integral(1/x, x)'
+2024-12-25 13:08:15,904 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/x, 'x')'
+2024-12-25 13:08:16,410 - __main__ - DEBUG - Expression is numeric? False
+2024-12-25 13:08:16,410 - __main__ - DEBUG - Displayed Result: ln(x)
+2024-12-25 13:08:21,956 - __main__ - DEBUG - Original expression: 'int x^3 dx'
+2024-12-25 13:08:21,957 - __main__ - DEBUG - Processed expression for SymPy: Integral(x^3, x)
+2024-12-25 13:08:21,965 - __main__ - DEBUG - SymPy parsed expression: 'Integral(x**3, x)'
+2024-12-25 13:08:21,965 - __main__ - DEBUG - Converted to MATLAB expression: 'int(x**3, 'x')'
+2024-12-25 13:08:22,276 - __main__ - ERROR - Error in LaTeX calculation: Unexpected Error: Invalid use of operator.
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/matlab_interface/evaluate_expression.py", line 105, in evaluate_matlab_expression
+    self.eng.eval(matlab_cmd, nargout=0)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/matlabengine.py", line 70, in __call__
+    return FutureResult(self._engine(), future, nargs, _stdout,
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/futureresult.py", line 62, in result
+    return self.__future.result(timeout)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/fevalfuture.py", line 76, in result
+    self._result = pythonengine.getFEvalResult(self._future,self._nargout, None, out=self._out, err=self._err)
+SyntaxError: Invalid use of operator.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 823, in handle_latex_calculation
+    matlab_result = self.evaluate_expression(matlab_expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 856, in evaluate_expression
+    return self.evaluator.evaluate_matlab_expression(matlab_expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/matlab_interface/evaluate_expression.py", line 135, in evaluate_matlab_expression
+    raise ValueError(f"Unexpected Error: {e}") from e
+ValueError: Unexpected Error: Invalid use of operator.
+
+2024-12-25 13:12:06,707 - __main__ - INFO - Initializing Calculator Application
+2024-12-25 13:12:17,020 - __main__ - INFO - MATLAB engine started successfully
+2024-12-25 13:12:22,534 - __main__ - DEBUG - Original expression: 'int x^2 dx'
+2024-12-25 13:12:22,535 - __main__ - DEBUG - Preprocessed MATLAB expression: 'int x^2 dx'
+2024-12-25 13:12:22,658 - __main__ - ERROR - Error in LaTeX calculation: Unexpected Error: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/matlab_interface/evaluate_expression.py", line 105, in evaluate_matlab_expression
+    self.eng.eval(matlab_cmd, nargout=0)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/matlabengine.py", line 70, in __call__
+    return FutureResult(self._engine(), future, nargs, _stdout,
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/futureresult.py", line 62, in result
+    return self.__future.result(timeout)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/fevalfuture.py", line 76, in result
+    self._result = pythonengine.getFEvalResult(self._future,self._nargout, None, out=self._out, err=self._err)
+SyntaxError: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 819, in handle_latex_calculation
+    matlab_result = self.evaluate_expression(matlab_expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 853, in evaluate_expression
+    return self.evaluator.evaluate_matlab_expression(matlab_expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/matlab_interface/evaluate_expression.py", line 135, in evaluate_matlab_expression
+    raise ValueError(f"Unexpected Error: {e}") from e
+ValueError: Unexpected Error: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2024-12-25 13:16:40,636 - __main__ - INFO - Initializing Calculator Application
+2024-12-25 13:16:49,336 - __main__ - INFO - MATLAB engine started successfully
+2024-12-25 13:18:11,332 - __main__ - DEBUG - Original expression: 'int x^2 dx'
+2024-12-25 13:18:11,336 - __main__ - DEBUG - Converted to MATLAB expression: 'int(x.^2, x)'
+2024-12-25 13:18:11,706 - __main__ - DEBUG - Displayed Result: x^3/3
+2024-12-25 13:18:17,857 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2024-12-25 13:18:17,858 - __main__ - DEBUG - Converted to MATLAB expression: 'int(ln(x), x)'
+2024-12-25 13:18:18,066 - __main__ - ERROR - Error in LaTeX calculation: MATLAB Error: 
+  File /Applications/MATLAB_R2024b.app/toolbox/symbolic/symbolic/@sym/sym.m, line 912, in sym.subsindex
+
+  File /Applications/MATLAB_R2024b.app/toolbox/symbolic/symbolic/@sym/sym.m, line 956, in sym.subsref
+Invalid MATLAB indexing or symbolic function definition. Symbolic function arguments must be symbolic variables and function body must be convertible to sym expression.
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/matlab_interface/evaluate_expression.py", line 105, in evaluate_matlab_expression
+    self.eng.eval(matlab_cmd, nargout=0)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/matlabengine.py", line 70, in __call__
+    return FutureResult(self._engine(), future, nargs, _stdout,
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/futureresult.py", line 62, in result
+    return self.__future.result(timeout)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/fevalfuture.py", line 76, in result
+    self._result = pythonengine.getFEvalResult(self._future,self._nargout, None, out=self._out, err=self._err)
+matlab.engine.MatlabExecutionError: 
+  File /Applications/MATLAB_R2024b.app/toolbox/symbolic/symbolic/@sym/sym.m, line 912, in sym.subsindex
+
+  File /Applications/MATLAB_R2024b.app/toolbox/symbolic/symbolic/@sym/sym.m, line 956, in sym.subsref
+Invalid MATLAB indexing or symbolic function definition. Symbolic function arguments must be symbolic variables and function body must be convertible to sym expression.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 821, in handle_latex_calculation
+    matlab_result = self.evaluate_expression(matlab_expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 841, in evaluate_expression
+    return self.evaluator.evaluate_matlab_expression(matlab_expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/matlab_interface/evaluate_expression.py", line 132, in evaluate_matlab_expression
+    raise ValueError(f"MATLAB Error: {me}") from me
+ValueError: MATLAB Error: 
+  File /Applications/MATLAB_R2024b.app/toolbox/symbolic/symbolic/@sym/sym.m, line 912, in sym.subsindex
+
+  File /Applications/MATLAB_R2024b.app/toolbox/symbolic/symbolic/@sym/sym.m, line 956, in sym.subsref
+Invalid MATLAB indexing or symbolic function definition. Symbolic function arguments must be symbolic variables and function body must be convertible to sym expression.
+
+2024-12-25 13:26:48,902 - __main__ - INFO - Initializing Calculator Application
+2024-12-25 13:26:59,233 - __main__ - INFO - MATLAB engine started successfully
+2024-12-25 13:30:04,050 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2024-12-25 13:30:04,057 - __main__ - DEBUG - Converted to MATLAB expression: 'int(ln(x), x)'
+2024-12-25 13:30:04,526 - __main__ - DEBUG - Displayed Result: x*(ln(x) - 1)
+2024-12-25 13:30:14,407 - __main__ - DEBUG - Original expression: 'sin(30)'
+2024-12-25 13:30:14,407 - __main__ - DEBUG - Converted to MATLAB expression: 'sin(30)'
+2024-12-25 13:30:14,419 - __main__ - DEBUG - Displayed Result: -0.9880316240928618

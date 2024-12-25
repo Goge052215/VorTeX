@@ -38,8 +38,22 @@ class EvaluateExpression:
             str: The preprocessed expression.
         """
         original_expr = expression
+        
         # Convert ln(x) to log(x) for MATLAB processing
         expression = re.sub(r'\bln\s*\(', 'log(', expression)
+        
+        # Convert trigonometric functions to degree mode
+        trig_functions = {
+            r'\bsin\s*\(': 'sind(',
+            r'\bcos\s*\(': 'cosd(',
+            r'\btan\s*\(': 'tand(',
+            r'\barcsin\s*\(': 'asind(',
+            r'\barccos\s*\(': 'acosd(',
+            r'\barctan\s*\(': 'atand('
+        }
+        
+        for trig_func, degree_func in trig_functions.items():
+            expression = re.sub(trig_func, degree_func, expression)
         
         # Convert log(E, x) to log(x) for natural logarithm
         expression = re.sub(r'log\s*\(\s*E\s*,\s*([^,)]+)\)', r'log(\1)', expression)
@@ -68,7 +82,7 @@ class EvaluateExpression:
         # Convert natural log back to ln
         result_str = re.sub(r'\blog\s*\(([^,)]+)\)', r'ln(\1)', result_str)
         
-        # Format log10 as log
+        # Format log10 as log (only if you want to represent log10 as log)
         result_str = re.sub(r'\blog10\s*\(([^)]+)\)', r'log(\1)', result_str)
         
         # Clean up other notations
@@ -90,7 +104,12 @@ class EvaluateExpression:
         self.logger.debug(f"Starting evaluation of MATLAB expression: '{matlab_expression}'")
         
         try:
-            # Preprocess the expression
+            # Declare symbolic variables present in the expression
+            variables = self._extract_variables(matlab_expression)
+            for var in variables:
+                self._declare_symbolic_variable(var)
+            
+            # Preprocess the expression (if needed)
             processed_expr = self._preprocess_expression(matlab_expression)
             self.logger.debug(f"Preprocessed expression: '{processed_expr}'")
             
@@ -107,7 +126,7 @@ class EvaluateExpression:
             if is_numeric:
                 result = self.eng.eval("temp_result", nargout=1)
                 self.logger.debug(f"Numeric result obtained: {result}")
-                return str(float(result))  # Return as string for consistency
+                return str(float(result))
 
             # Check for symbolic variables
             has_symbols = self.eng.eval("~isempty(symvar(temp_result))", nargout=1)
@@ -124,13 +143,104 @@ class EvaluateExpression:
 
         except matlab.engine.MatlabExecutionError as me:
             self.logger.error(f"MATLAB Execution Error: {me}", exc_info=True)
-            raise ValueError(f"Unexpected Error: {me}") from me
+            raise ValueError(f"MATLAB Error: {me}") from me
         except Exception as e:
             self.logger.error(f"Unexpected Error: {e}", exc_info=True)
             raise ValueError(f"Unexpected Error: {e}") from e
         finally:
             try:
+                # Clean up workspace
                 self.eng.eval("clear temp_result", nargout=0)
                 self.logger.debug("Cleared 'temp_result' from MATLAB workspace.")
             except Exception as e:
                 self.logger.warning(f"Error during cleanup: {e}")
+
+    def _extract_variables(self, expression):
+        """
+        Extract variable names from the MATLAB expression.
+        
+        Args:
+            expression (str): The MATLAB expression.
+        
+        Returns:
+            set: A set of variable names.
+        """
+        # Regular expression to find variable names (one or more letters)
+        # This can be enhanced based on requirements
+        variables = set(re.findall(r'\b([a-zA-Z]+)\b', expression))
+        # Remove MATLAB reserved keywords and function names if necessary
+        reserved_keywords = {'int', 'diff', 'syms', 'log', 'sin', 'cos', 'tan', 'exp', 'sqrt', 'abs'}
+        variables = variables - reserved_keywords
+        self.logger.debug(f"Extracted variables from expression: {variables}")
+        return variables
+
+    def _declare_symbolic_variable(self, var):
+        """
+        Declare a variable as symbolic in MATLAB.
+        
+        Args:
+            var (str): Variable name.
+        """
+        declaration_cmd = f"syms {var}"
+        self.logger.debug(f"Declaring symbolic variable in MATLAB: {declaration_cmd}")
+        self.eng.eval(declaration_cmd, nargout=0)
+        self.logger.debug(f"Declared symbolic variable: {var}")
+
+    def _preprocess_expression(self, expression):
+        """
+        Preprocess the expression before sending to MATLAB.
+        
+        Args:
+            expression (str): The MATLAB expression.
+        
+        Returns:
+            str: Preprocessed expression.
+        """
+        original_expr = expression
+        # Convert ln(x) to log(x) for MATLAB processing
+        expression = re.sub(r'\bln\s*\(', 'log(', expression)
+        
+        # Convert trigonometric functions to degree mode
+        trig_functions = {
+            r'\bsin\s*\(': 'sind(',
+            r'\bcos\s*\(': 'cosd(',
+            r'\btan\s*\(': 'tand(',
+            r'\barcsin\s*\(': 'asind(',
+            r'\barccos\s*\(': 'acosd(',
+            r'\barctan\s*\(': 'atand('
+        }
+        
+        for trig_func, degree_func in trig_functions.items():
+            expression = re.sub(trig_func, degree_func, expression)
+        
+        # Convert log(E, x) to log(x) for natural logarithm
+        expression = re.sub(r'log\s*\(\s*E\s*,\s*([^,)]+)\)', r'log(\1)', expression)
+        
+        # Handle log with different bases, e.g., log(b, x) -> log(x)/log(b)
+        expression = re.sub(r'log\s*\(\s*(\d+)\s*,\s*([^,)]+)\)', r'log(\2)/log(\1)', expression)
+        
+        self.logger.debug(f"Converted '{original_expr}' to '{expression}'")
+        return expression
+
+    def _postprocess_result(self, result_str, is_numeric):
+        """
+        Postprocess the MATLAB result.
+        
+        Args:
+            result_str (str): The result obtained from MATLAB.
+            is_numeric (bool): Indicates if the result is numeric.
+        
+        Returns:
+            str or float: The postprocessed result.
+        """
+        if is_numeric:
+            return str(float(result_str))
+        else:
+            return result_str
+
+    def __del__(self):
+        try:
+            self.eng.quit()
+            self.logger.info("MATLAB engine terminated")
+        except:
+            pass

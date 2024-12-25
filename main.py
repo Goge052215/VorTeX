@@ -41,6 +41,31 @@ from themes.theme_manager import (
 )
 from ui.legend_window import LegendWindow
 
+def preprocess_expression(expression):
+    """
+    Transform integral expressions from 'int expr dvar' to 'int(expr, var)'
+    
+    Args:
+        expression (str): The input expression, e.g., 'int x^2 dx'
+    
+    Returns:
+        str: The transformed expression, e.g., 'int(x^2, x)'
+    """
+    # Regular expression to match 'int expression dvariable'
+    integral_pattern = r'int\s+(.+)\s+d([a-zA-Z])'
+
+    # Function to replace the matched pattern
+    def replace_integral(match):
+        expr = match.group(1).strip()
+        var = match.group(2).strip()
+        # Replace '^' with '.^' for MATLAB compatibility
+        expr = expr.replace('^', '.^')
+        return f'int({expr}, {var})'
+
+    # Substitute all occurrences of the pattern
+    transformed_expression = re.sub(integral_pattern, replace_integral, expression)
+    
+    return transformed_expression
 
 class CalculatorApp(QWidget, LatexCalculation):
     """
@@ -788,35 +813,22 @@ class CalculatorApp(QWidget, LatexCalculation):
         try:
             self.logger.debug(f"Original expression: '{expression}'")
             
-            # Parse the expression using SymPy with preprocessing
-            sympy_expr = self._parse_expression(expression)
-            self.logger.debug(f"SymPy parsed expression: '{sympy_expr}'")
-            
-            # Convert SymPy expression to MATLAB syntax
-            matlab_expression = self.sympy_converter.sympy_to_matlab(sympy_expr)
+            # Preprocess the expression directly for MATLAB
+            matlab_expression = preprocess_expression(expression)
             self.logger.debug(f"Converted to MATLAB expression: '{matlab_expression}'")
             
             # Evaluate the expression in MATLAB
             matlab_result = self.evaluate_expression(matlab_expression)
             
-            # Determine if the original expression was numeric
-            is_numeric = self._is_numeric_expression(sympy_expr)
-            self.logger.debug(f"Expression is numeric? {is_numeric}")
-            
             # Postprocess the result
-            displayed_result = self.evaluator._postprocess_result(matlab_result, is_numeric=is_numeric)
+            displayed_result = self.evaluator._postprocess_result(matlab_result, is_numeric=False)
+            
+            # Convert 'log(x)' to 'ln(x)' for display
+            displayed_result = displayed_result.replace('log(', 'ln(')
+            
             self.logger.debug(f"Displayed Result: {displayed_result}")
             
-            # Optionally format the display with the original function
-            if is_numeric:
-                func, arg = self._extract_function_argument(expression)
-                if func and arg:
-                    self.result_label.setText(f"{func}({arg}) = {displayed_result}")
-                else:
-                    self.result_label.setText(f"Result: {displayed_result}")
-            else:
-                self.result_label.setText(f"Result: {displayed_result}")
-            
+            self.result_label.setText(f"Result: {displayed_result}")
             self.result_label.setFont(QFont("Arial", 13, QFont.Bold))
         
         except Exception as e:
@@ -842,51 +854,24 @@ class CalculatorApp(QWidget, LatexCalculation):
 
     def _parse_expression(self, expression):
         """
-        Parse the input expression using SymPy with preprocessing for calculus commands.
+        Parse the input expression into a SymPy expression.
         
         Args:
-            expression (str): Input expression as string.
-            
+            expression (str): The input expression string.
+        
         Returns:
-            sympy.Expr: Parsed SymPy expression.
+            sympy.Expr: The parsed SymPy expression.
         """
         try:
-            # Replace LaTeX commands if necessary before parsing
-            # For example, convert \ln to ln, \int to int, etc.
-            # This can be expanded based on actual input format
-            expression = expression.replace('\\ln', 'ln').replace('\\int', 'int').replace('\\diff', 'diff')
+            # Preprocess the expression
+            processed_expr = preprocess_expression(expression)
+            self.logger.debug(f"Processed expression for SymPy: {processed_expr}")
             
-            # Handle integrals: int <expr> d<var> [from <a> to <b>]
-            integral_pattern = r'int\s+(.+?)\s+d([a-zA-Z])(?:\s+from\s+(.+?)\s+to\s+(.+))?$'
-            match = re.match(integral_pattern, expression)
-            if match:
-                integrand = match.group(1)
-                variable = match.group(2)
-                lower_limit = match.group(3)
-                upper_limit = match.group(4)
-                if lower_limit and upper_limit:
-                    sympy_expr = f'Integral({integrand}, ({variable}, {lower_limit}, {upper_limit}))'
-                else:
-                    sympy_expr = f'Integral({integrand}, {variable})'
-                return sy.sympify(sympy_expr)
-            
-            # Handle derivatives: diff <expr> d<var> [, <order>]
-            derivative_pattern = r'diff\s+(.+?)\s+d([a-zA-Z])(?:\s*,\s*(\d+))?$'
-            match = re.match(derivative_pattern, expression)
-            if match:
-                func = match.group(1)
-                variable = match.group(2)
-                order = match.group(3)
-                if order:
-                    sympy_expr = f'Derivative({func}, ({variable}, {order}))'
-                else:
-                    sympy_expr = f'Derivative({func}, {variable})'
-                return sy.sympify(sympy_expr)
-            
-            # If not a calculus expression, sympify normally
-            sympy_expr = sy.sympify(expression, evaluate=False)
+            # Sympify the transformed expression
+            sympy_expr = sy.sympify(processed_expr, evaluate=False)
             return sympy_expr
-        except sy.SympifyError as e:
+
+        except Exception as e:
             self.logger.error(f"SymPy parsing error: {e}")
             raise ValueError(f"Invalid expression format: {e}") from e
 
