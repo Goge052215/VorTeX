@@ -19,6 +19,7 @@ class ExpressionShortcuts:
     # Integral shortcuts
     INTEGRAL_SHORTCUTS = {
         'int': r'\int',
+        'int (a to b)': r'\int_{a}^{b}',
         'integral': r'\int',
         'iint': r'\iint',  # Double integral
         'iiint': r'\iiint',  # Triple integral
@@ -151,3 +152,38 @@ class ExpressionShortcuts:
                 result = result.replace(shortcut, latex)
         
         return result
+    
+    @classmethod
+    def convert_integral_expression(cls, text):
+        """
+        Convert integral expressions to a format suitable for parsing.
+        
+        Args:
+            text (str): Input text containing integral expressions.
+            
+        Returns:
+            str: Text with integral expressions converted.
+        """
+        # Convert definite integrals like 'int (2 to 3) x dx' to 'int(x, x, 2, 3)'
+        definite_integral_pattern = r'int\s*\(([^)]+)\s*to\s*([^)]+)\)\s+(.+?)\s+d([a-zA-Z])'
+        
+        def replace_definite_integral(match):
+            lower = match.group(1)
+            upper = match.group(2)
+            expr = match.group(3).strip()
+            var = match.group(4).strip()
+            return f'int({expr}, {var}, {lower}, {upper})'
+        
+        text = re.sub(definite_integral_pattern, replace_definite_integral, text)
+        
+        # Convert indefinite integrals like 'int x dx' to 'int(x, x)'
+        indefinite_integral_pattern = r'int\s+(.+?)\s+d([a-zA-Z])'
+        
+        def replace_indefinite_integral(match):
+            expr = match.group(1).strip()
+            var = match.group(2).strip()
+            return f'int({expr}, {var})'
+        
+        text = re.sub(indefinite_integral_pattern, replace_indefinite_integral, text)
+        
+        return text

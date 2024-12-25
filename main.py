@@ -10,6 +10,7 @@ from matlab_interface.sympy_to_matlab import SympyToMatlab
 from latex_pack.latex_calculation import LatexCalculation
 from matlab_interface.evaluate_expression import EvaluateExpression
 import sympy as sy
+from latex_pack.shortcut import ExpressionShortcuts
 
 try:
     from PyQt5.QtWidgets import (
@@ -77,6 +78,9 @@ def parse_latex_expression(latex_expr):
     Returns:
         sympy.Expr: The parsed SymPy expression.
     """
+    # Preprocess integral expressions
+    latex_expr = ExpressionShortcuts.convert_integral_expression(latex_expr)
+    
     # Ensure multiplication is explicit
     latex_expr = re.sub(r'(\d)([a-zA-Z])', r'\1*\2', latex_expr)
     
@@ -91,16 +95,6 @@ def parse_latex_expression(latex_expr):
         return str(sy.Derivative(sympy_expr, sy.Symbol(var), order))
 
     latex_expr = re.sub(derivative_pattern, lambda m: replace_derivative(m), latex_expr)
-
-    # Handle integral expressions
-    integral_pattern = r'int\s+(.+)\s+d([a-zA-Z])'
-    def replace_integral(match):
-        expr = match.group(1)
-        var = match.group(2)
-        sympy_expr = sy.sympify(expr.replace('^', '**'))
-        return str(sy.Integral(sympy_expr, sy.Symbol(var)))
-
-    latex_expr = re.sub(integral_pattern, lambda m: replace_integral(m), latex_expr)
 
     # Return the final SymPy expression
     return sy.sympify(latex_expr)

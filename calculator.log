@@ -796,3 +796,253 @@ Index exceeds the number of array elements. Index must not exceed 1.
 2024-12-25 15:17:43,235 - __main__ - DEBUG - Converted to SymPy expression: 'sin(30)'
 2024-12-25 15:17:43,236 - __main__ - DEBUG - Converted to MATLAB expression: 'sin(30)'
 2024-12-25 15:17:43,245 - __main__ - DEBUG - Displayed Result: 0.5
+2024-12-25 15:32:52,875 - __main__ - INFO - Initializing Calculator Application
+2024-12-25 15:33:04,667 - __main__ - INFO - MATLAB engine started successfully
+2024-12-25 15:48:00,156 - __main__ - DEBUG - Original expression: 'int_{2}^{3} x dx'
+2024-12-25 15:48:00,226 - __main__ - ERROR - Error in LaTeX calculation: Sympify of expression 'could not parse 'int_{2}^{3} x dx'' failed, because of exception being raised:
+SyntaxError: invalid syntax (<string>, line 1)
+ValueError: Error from parse_expr with transformed code: "Symbol ('int_' ){Integer (2 )}**{Integer (3 )}Symbol ('x' )Symbol ('dx' )"
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/core/sympify.py", line 481, in sympify
+    expr = parse_expr(a, local_dict=locals, transformations=transformations, evaluate=evaluate)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/parsing/sympy_parser.py", line 1090, in parse_expr
+    raise e from ValueError(f"Error from parse_expr with transformed code: {code!r}")
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/parsing/sympy_parser.py", line 1081, in parse_expr
+    rv = eval_expr(code, local_dict, global_dict)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/parsing/sympy_parser.py", line 909, in eval_expr
+    expr = eval(
+  File "<string>", line 1
+    Symbol ('int_' ){Integer (2 )}**{Integer (3 )}Symbol ('x' )Symbol ('dx' )
+                    ^
+SyntaxError: invalid syntax
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 855, in handle_latex_calculation
+    sympy_expr = parse_latex_expression(expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 106, in parse_latex_expression
+    return sy.sympify(latex_expr)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/core/sympify.py", line 483, in sympify
+    raise SympifyError('could not parse %r' % a, exc)
+sympy.core.sympify.SympifyError: Sympify of expression 'could not parse 'int_{2}^{3} x dx'' failed, because of exception being raised:
+SyntaxError: invalid syntax (<string>, line 1)
+2024-12-25 15:50:43,196 - __main__ - INFO - Initializing Calculator Application
+2024-12-25 15:50:53,951 - __main__ - INFO - MATLAB engine started successfully
+2024-12-25 15:51:06,196 - __main__ - DEBUG - Original expression: 'int 2 to 3 x dx'
+2024-12-25 15:51:06,255 - __main__ - ERROR - Error in LaTeX calculation: Sympify of expression 'could not parse '2 to 3 x'' failed, because of exception being raised:
+SyntaxError: invalid syntax (<string>, line 1)
+ValueError: Error from parse_expr with transformed code: "Integer (2 )Symbol ('to' )Integer (3 )Symbol ('x' )"
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/core/sympify.py", line 481, in sympify
+    expr = parse_expr(a, local_dict=locals, transformations=transformations, evaluate=evaluate)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/parsing/sympy_parser.py", line 1090, in parse_expr
+    raise e from ValueError(f"Error from parse_expr with transformed code: {code!r}")
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/parsing/sympy_parser.py", line 1081, in parse_expr
+    rv = eval_expr(code, local_dict, global_dict)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/parsing/sympy_parser.py", line 909, in eval_expr
+    expr = eval(
+  File "<string>", line 1
+    Integer (2 )Symbol ('to' )Integer (3 )Symbol ('x' )
+                ^
+SyntaxError: invalid syntax
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 855, in handle_latex_calculation
+    sympy_expr = parse_latex_expression(expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 103, in parse_latex_expression
+    latex_expr = re.sub(integral_pattern, lambda m: replace_integral(m), latex_expr)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/re.py", line 210, in sub
+    return _compile(pattern, flags).sub(repl, string, count)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 103, in <lambda>
+    latex_expr = re.sub(integral_pattern, lambda m: replace_integral(m), latex_expr)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 100, in replace_integral
+    sympy_expr = sy.sympify(expr.replace('^', '**'))
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/core/sympify.py", line 483, in sympify
+    raise SympifyError('could not parse %r' % a, exc)
+sympy.core.sympify.SympifyError: Sympify of expression 'could not parse '2 to 3 x'' failed, because of exception being raised:
+SyntaxError: invalid syntax (<string>, line 1)
+2024-12-25 15:51:37,323 - __main__ - INFO - Initializing Calculator Application
+2024-12-25 15:51:47,273 - __main__ - INFO - MATLAB engine started successfully
+2024-12-25 15:52:19,219 - __main__ - DEBUG - Original expression: 'int x dx'
+2024-12-25 15:52:19,300 - __main__ - DEBUG - Converted to SymPy expression: 'Integral(x, x)'
+2024-12-25 15:52:19,300 - __main__ - DEBUG - Converted to MATLAB expression: 'int(x, 'x')'
+2024-12-25 15:52:20,514 - __main__ - DEBUG - Displayed Result: x^2/2
+2024-12-25 15:52:29,597 - __main__ - DEBUG - Original expression: 'int (2 to 3) x dx'
+2024-12-25 15:52:29,606 - __main__ - ERROR - Error in LaTeX calculation: Sympify of expression 'could not parse '(2 to 3) x'' failed, because of exception being raised:
+SyntaxError: invalid syntax (<string>, line 1)
+ValueError: Error from parse_expr with transformed code: "(Integer (2 )Symbol ('to' )Integer (3 ))Symbol ('x' )"
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/core/sympify.py", line 481, in sympify
+    expr = parse_expr(a, local_dict=locals, transformations=transformations, evaluate=evaluate)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/parsing/sympy_parser.py", line 1090, in parse_expr
+    raise e from ValueError(f"Error from parse_expr with transformed code: {code!r}")
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/parsing/sympy_parser.py", line 1081, in parse_expr
+    rv = eval_expr(code, local_dict, global_dict)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/parsing/sympy_parser.py", line 909, in eval_expr
+    expr = eval(
+  File "<string>", line 1
+    (Integer (2 )Symbol ('to' )Integer (3 ))Symbol ('x' )
+                 ^
+SyntaxError: invalid syntax
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 855, in handle_latex_calculation
+    sympy_expr = parse_latex_expression(expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 103, in parse_latex_expression
+    latex_expr = re.sub(integral_pattern, lambda m: replace_integral(m), latex_expr)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/re.py", line 210, in sub
+    return _compile(pattern, flags).sub(repl, string, count)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 103, in <lambda>
+    latex_expr = re.sub(integral_pattern, lambda m: replace_integral(m), latex_expr)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 100, in replace_integral
+    sympy_expr = sy.sympify(expr.replace('^', '**'))
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/core/sympify.py", line 483, in sympify
+    raise SympifyError('could not parse %r' % a, exc)
+sympy.core.sympify.SympifyError: Sympify of expression 'could not parse '(2 to 3) x'' failed, because of exception being raised:
+SyntaxError: invalid syntax (<string>, line 1)
+2024-12-25 16:07:16,718 - __main__ - INFO - Initializing Calculator Application
+2024-12-25 16:07:26,751 - __main__ - INFO - MATLAB engine started successfully
+2024-12-25 16:08:41,822 - __main__ - DEBUG - Original expression: 'int (2 to 3) x dx'
+2024-12-25 16:08:41,889 - __main__ - ERROR - Error in LaTeX calculation: Sympify of expression 'could not parse '(2 to 3) x'' failed, because of exception being raised:
+SyntaxError: invalid syntax (<string>, line 1)
+ValueError: Error from parse_expr with transformed code: "(Integer (2 )Symbol ('to' )Integer (3 ))Symbol ('x' )"
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/core/sympify.py", line 481, in sympify
+    expr = parse_expr(a, local_dict=locals, transformations=transformations, evaluate=evaluate)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/parsing/sympy_parser.py", line 1090, in parse_expr
+    raise e from ValueError(f"Error from parse_expr with transformed code: {code!r}")
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/parsing/sympy_parser.py", line 1081, in parse_expr
+    rv = eval_expr(code, local_dict, global_dict)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/parsing/sympy_parser.py", line 909, in eval_expr
+    expr = eval(
+  File "<string>", line 1
+    (Integer (2 )Symbol ('to' )Integer (3 ))Symbol ('x' )
+                 ^
+SyntaxError: invalid syntax
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 855, in handle_latex_calculation
+    sympy_expr = parse_latex_expression(expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 103, in parse_latex_expression
+    latex_expr = re.sub(integral_pattern, lambda m: replace_integral(m), latex_expr)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/re.py", line 210, in sub
+    return _compile(pattern, flags).sub(repl, string, count)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 103, in <lambda>
+    latex_expr = re.sub(integral_pattern, lambda m: replace_integral(m), latex_expr)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 100, in replace_integral
+    sympy_expr = sy.sympify(expr.replace('^', '**'))
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/core/sympify.py", line 483, in sympify
+    raise SympifyError('could not parse %r' % a, exc)
+sympy.core.sympify.SympifyError: Sympify of expression 'could not parse '(2 to 3) x'' failed, because of exception being raised:
+SyntaxError: invalid syntax (<string>, line 1)
+2024-12-25 16:19:04,825 - __main__ - INFO - Initializing Calculator Application
+2024-12-25 16:19:16,369 - __main__ - INFO - MATLAB engine started successfully
+2024-12-25 16:19:20,515 - __main__ - DEBUG - Original expression: 'int x dx'
+2024-12-25 16:19:20,577 - __main__ - ERROR - Error in LaTeX calculation: Sympify of expression 'could not parse 'int x dx'' failed, because of exception being raised:
+SyntaxError: invalid syntax (<string>, line 1)
+ValueError: Error from parse_expr with transformed code: "Symbol ('int' )Symbol ('x' )Symbol ('dx' )"
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/core/sympify.py", line 481, in sympify
+    expr = parse_expr(a, local_dict=locals, transformations=transformations, evaluate=evaluate)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/parsing/sympy_parser.py", line 1090, in parse_expr
+    raise e from ValueError(f"Error from parse_expr with transformed code: {code!r}")
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/parsing/sympy_parser.py", line 1081, in parse_expr
+    rv = eval_expr(code, local_dict, global_dict)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/parsing/sympy_parser.py", line 909, in eval_expr
+    expr = eval(
+  File "<string>", line 1
+    Symbol ('int' )Symbol ('x' )Symbol ('dx' )
+                   ^
+SyntaxError: invalid syntax
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 869, in handle_latex_calculation
+    sympy_expr = parse_latex_expression(expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 120, in parse_latex_expression
+    return sy.sympify(latex_expr)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/core/sympify.py", line 483, in sympify
+    raise SympifyError('could not parse %r' % a, exc)
+sympy.core.sympify.SympifyError: Sympify of expression 'could not parse 'int x dx'' failed, because of exception being raised:
+SyntaxError: invalid syntax (<string>, line 1)
+2024-12-25 16:20:35,929 - __main__ - INFO - Initializing Calculator Application
+2024-12-25 16:20:45,390 - __main__ - INFO - MATLAB engine started successfully
+2024-12-25 16:21:28,401 - __main__ - DEBUG - Original expression: 'int x dx'
+2024-12-25 16:21:28,469 - __main__ - DEBUG - Converted to SymPy expression: 'Integral(x, x)'
+2024-12-25 16:21:28,469 - __main__ - DEBUG - Converted to MATLAB expression: 'int(x, 'x')'
+2024-12-25 16:21:28,916 - __main__ - DEBUG - Displayed Result: x^2/2
+2024-12-25 16:21:36,224 - __main__ - DEBUG - Original expression: 'int (2 to 3) x dx'
+2024-12-25 16:21:36,226 - __main__ - ERROR - Error in LaTeX calculation: Sympify of expression 'could not parse '(2 to 3) x'' failed, because of exception being raised:
+SyntaxError: invalid syntax (<string>, line 1)
+ValueError: Error from parse_expr with transformed code: "(Integer (2 )Symbol ('to' )Integer (3 ))Symbol ('x' )"
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/core/sympify.py", line 481, in sympify
+    expr = parse_expr(a, local_dict=locals, transformations=transformations, evaluate=evaluate)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/parsing/sympy_parser.py", line 1090, in parse_expr
+    raise e from ValueError(f"Error from parse_expr with transformed code: {code!r}")
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/parsing/sympy_parser.py", line 1081, in parse_expr
+    rv = eval_expr(code, local_dict, global_dict)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/parsing/sympy_parser.py", line 909, in eval_expr
+    expr = eval(
+  File "<string>", line 1
+    (Integer (2 )Symbol ('to' )Integer (3 ))Symbol ('x' )
+                 ^
+SyntaxError: invalid syntax
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 869, in handle_latex_calculation
+    sympy_expr = parse_latex_expression(expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 117, in parse_latex_expression
+    latex_expr = re.sub(indefinite_integral_pattern, lambda m: replace_indefinite_integral(m), latex_expr)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/re.py", line 210, in sub
+    return _compile(pattern, flags).sub(repl, string, count)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 117, in <lambda>
+    latex_expr = re.sub(indefinite_integral_pattern, lambda m: replace_indefinite_integral(m), latex_expr)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 114, in replace_indefinite_integral
+    sympy_expr = sy.sympify(expr.replace('^', '**'))
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/core/sympify.py", line 483, in sympify
+    raise SympifyError('could not parse %r' % a, exc)
+sympy.core.sympify.SympifyError: Sympify of expression 'could not parse '(2 to 3) x'' failed, because of exception being raised:
+SyntaxError: invalid syntax (<string>, line 1)
+2024-12-25 16:28:53,466 - __main__ - INFO - Initializing Calculator Application
+2024-12-25 16:29:03,707 - __main__ - INFO - MATLAB engine started successfully
+2024-12-25 16:29:11,057 - __main__ - DEBUG - Original expression: 'int x dx'
+2024-12-25 16:29:11,112 - __main__ - DEBUG - Converted to SymPy expression: 'int(x, x)'
+2024-12-25 16:29:11,112 - __main__ - DEBUG - Converted to MATLAB expression: 'int(x, x)'
+2024-12-25 16:29:11,330 - __main__ - DEBUG - Displayed Result: x^2/2
+2024-12-25 16:29:21,889 - __main__ - DEBUG - Original expression: 'int (2 to 3) x dx'
+2024-12-25 16:29:21,892 - __main__ - DEBUG - Converted to SymPy expression: 'int(x, x, 2, 3)'
+2024-12-25 16:29:21,893 - __main__ - DEBUG - Converted to MATLAB expression: 'int(x, x, 2, 3)'
+2024-12-25 16:29:21,967 - __main__ - DEBUG - Displayed Result: 2.5
+2024-12-25 16:30:13,606 - __main__ - DEBUG - Original expression: 'int (2 to 3) ln(x) dx'
+2024-12-25 16:30:13,623 - __main__ - DEBUG - Converted to SymPy expression: 'int(log(x), x, 2, 3)'
+2024-12-25 16:30:13,624 - __main__ - DEBUG - Converted to MATLAB expression: 'int(log(x), x, 2, 3)'
+2024-12-25 16:30:13,998 - __main__ - DEBUG - Displayed Result: 0.9095425048844384

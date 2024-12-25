@@ -1,10 +1,12 @@
 # MATLAB-Scientific Calculator on Py
 
-A PyQt5-based scientific calculator that supports LaTeX input, integrates with MATLAB for symbolic computation, and offers various mathematical functionalities including differentiation, integration, and matrix operations.
+![legend img](legend_img.png)
+
+A PyQt5-based scientific calculator that supports $\LaTeX$ input, integrates with MATLAB for symbolic computation, and offers various mathematical functionalities including differentiation, integration, and matrix operations.
 
 ## Features
 
-- **LaTeX Input:** Enter mathematical expressions in LaTeX format for easy readability and input.
+- **$\LaTeX$ Input:** Enter mathematical expressions in LaTeX format for easy readability and input.
 - **MATLAB Integration:** Utilize MATLAB's symbolic toolbox for advanced computations, ensuring high precision and reliability.
 - **Trigonometric Functions:** Supports both Degree and Radian modes for trigonometric calculations.
 - **Symbolic Computation:** Handle derivatives and integrals symbolically, providing exact results where possible.
@@ -28,6 +30,8 @@ A PyQt5-based scientific calculator that supports LaTeX input, integrates with M
    pip install -r requirements.txt
    ```
 
+   This method is deprecated. The automatic installation method is recommended, see [install_modules.py](modules/install_modules.py), which will automatically install the necessary modules.
+
 3. **Run the Application:**
 
    ```bash
@@ -37,7 +41,7 @@ A PyQt5-based scientific calculator that supports LaTeX input, integrates with M
 ## Usage
 
 1. **Select Input Mode:**
-   - **LaTeX:** Enter expressions in LaTeX format for symbolic computation.
+   - **$\LaTeX$:** Enter expressions in LaTeX format for symbolic computation.
    - **MATLAB:** Enter raw MATLAB expressions for direct evaluation.
    - **Matrix:** Perform matrix operations (e.g., determinant, inverse).
 
@@ -56,19 +60,41 @@ A PyQt5-based scientific calculator that supports LaTeX input, integrates with M
 
 ## Example Expressions
 
-- **LaTeX Mode:**
-  - **Differentiation:** `d/dx(x^2)`
-  - **Integration:** `int e^(x) dx`, `int ln(x) dx`, `int x^2 dx`
-  - **Trigonometric:** `sin{30}`
+- **Simplified $\LaTeX$ Mode:**
+  - **Differentiation:** `d/dx(x^2)`, `d2/dx2(x^2)`, etc.
+  - **Integration:** `int e^(x) dx`, `int ln(x) dx`, `int x^2 dx`, etc.
+  - **Trigonometric:** `sin(30)`, `cos(30)`, `tan(30)`, etc.
 
 - **MATLAB Mode:**
-  - **Differentiation:** `diff(x^2, x)`
-  - **Integration:** `int(exp(x), x)`
-  - **Trigonometric:** `sin(30)`
+  - **Differentiation:** `diff(x^2, x)`, `diff(x^2, x, 2)`, etc.
+  - **Integration:** `int(exp(x), x)`, `int(ln(x), x)`, `int(x^2, x)`, etc.
+  - **Trigonometric:** `sin(30)`, `cos(30)`, `tan(30)`, etc.
 
 - **Matrix Mode:**
   - **Determinant:** `[1 2; 3 4]`
   - **Inverse:** `[1 0; 0 1]`
+
+*Note:* Simplified $\LaTeX$ input is recommended, for a guide of simplified $\LaTeX$ input, see the table below:
+
+| $\LaTeX$ Input | Simplified $\LaTeX$ Input |
+| ------------- | ----------------------- |
+| `\frac{d}{dx}(x^2)` |   `d/dx (x^2)`    |
+| `\int e^{x} dx`| `int e^x dx`           |
+| `\int_{a}^{b} f(x) dx` | `int a to b f(x) dx` |
+| `\frac{d^2}{dx^2}(x^2)` | `d2/dx2 (x^2)` (works for rest of higher order derivatives) |
+| `\sin{30}`     | `sin(30)` (works for rest of trigonometric functions)             |
+| `\sqrt{x}`     |      `sqrt(x)`         |
+| `\abs{x}`      |       `abs(x)`         |
+| `\ln(x)`       | `ln(x)`                |
+| `\log_{10}(x)` | `log10(x)`             |
+| `\log_{n}(x)`  | `logn(x)`              |
+| `\alpha`       | `alpha` (works for rest of greek letters)            |
+| `\sum`         | `sum`                  |
+| `\prod`        | `prod`                 |
+| `\lim`         | `lim`                  |
+| `\infty`       | `infty`                |
+
+for more shortcuts, see [shortcut.py](latex_pack/shortcut.py)
 
 ## Troubleshooting
 
@@ -78,7 +104,7 @@ A PyQt5-based scientific calculator that supports LaTeX input, integrates with M
   - Check environment variables and MATLAB's path settings.
 
 - **Invalid Expression Errors:**
-  - Ensure that your LaTeX or MATLAB expressions are correctly formatted.
+  - Ensure that your $\LaTeX$ or MATLAB expressions are correctly formatted.
   - Verify that all necessary functions are supported and properly replaced.
 
 ## Contributing
