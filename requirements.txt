@@ -1,0 +1,6 @@
+PyQt5
+matlab
+matlabengine
+sympy
+numpy
+latex2sympy2

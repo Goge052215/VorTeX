@@ -61,6 +61,19 @@ class EvaluateExpression:
         # Handle log with different bases, e.g., log(b, x) -> log(x)/log(b)
         expression = re.sub(r'log\s*\(\s*(\d+)\s*,\s*([^,)]+)\)', r'log(\2)/log(\1)', expression)
         
+        # Ensure multiplication is explicit, e.g., '4x' becomes '4*x'
+        expression = re.sub(r'(\d)([a-zA-Z])', r'\1*\2', expression)
+        
+        # Handle higher-order derivatives, e.g., 'd2/dx2 expr' -> 'diff(expr, x, 2)'
+        derivative_pattern = r'd(\d*)/d([a-zA-Z])(\d*)\s+(.+)'
+        def replace_derivative(match):
+            order = match.group(1) or '1'
+            var = match.group(2)
+            expr = match.group(4)
+            return f"diff({expr}, {var}, {order})"
+        
+        expression = re.sub(derivative_pattern, replace_derivative, expression)
+        
         self.logger.debug(f"Converted '{original_expr}' to '{expression}'")
         return expression
 
@@ -157,19 +170,22 @@ class EvaluateExpression:
 
     def _extract_variables(self, expression):
         """
-        Extract variable names from the MATLAB expression.
-        
+        Extract variable names from the MATLAB expression while ignoring function names.
+
         Args:
             expression (str): The MATLAB expression.
-        
+
         Returns:
             set: A set of variable names.
         """
+        # Remove derivative operators
+        expression_clean = re.sub(r'd\^?\d*/d[a-zA-Z]+', '', expression)
+        expression_clean = re.sub(r'\b(sin|cos|tan|log|exp|sqrt|abs|sind|cosd|tand)\b', '', expression_clean)
+
         # Regular expression to find variable names (one or more letters)
-        # This can be enhanced based on requirements
-        variables = set(re.findall(r'\b([a-zA-Z]+)\b', expression))
+        variables = set(re.findall(r'\b([a-zA-Z]+)\b', expression_clean))
         # Remove MATLAB reserved keywords and function names if necessary
-        reserved_keywords = {'int', 'diff', 'syms', 'log', 'sin', 'cos', 'tan', 'exp', 'sqrt', 'abs'}
+        reserved_keywords = {'int', 'diff', 'syms', 'log', 'sin', 'cos', 'tan', 'exp', 'sqrt', 'abs', 'sind', 'cosd', 'tand'}
         variables = variables - reserved_keywords
         self.logger.debug(f"Extracted variables from expression: {variables}")
         return variables
@@ -218,6 +234,9 @@ class EvaluateExpression:
         
         # Handle log with different bases, e.g., log(b, x) -> log(x)/log(b)
         expression = re.sub(r'log\s*\(\s*(\d+)\s*,\s*([^,)]+)\)', r'log(\2)/log(\1)', expression)
+        
+        # Ensure multiplication is explicit, e.g., '4x' becomes '4*x'
+        expression = re.sub(r'(\d)([a-zA-Z])', r'\1*\2', expression)
         
         self.logger.debug(f"Converted '{original_expr}' to '{expression}'")
         return expression

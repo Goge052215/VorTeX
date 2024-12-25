@@ -476,3 +476,323 @@ Invalid MATLAB indexing or symbolic function definition. Symbolic function argum
 2024-12-25 13:30:14,407 - __main__ - DEBUG - Original expression: 'sin(30)'
 2024-12-25 13:30:14,407 - __main__ - DEBUG - Converted to MATLAB expression: 'sin(30)'
 2024-12-25 13:30:14,419 - __main__ - DEBUG - Displayed Result: -0.9880316240928618
+2024-12-25 13:44:16,033 - __main__ - INFO - Initializing Calculator Application
+2024-12-25 13:44:26,513 - __main__ - INFO - MATLAB engine started successfully
+2024-12-25 13:46:37,060 - __main__ - DEBUG - Original expression: 'sin(30)'
+2024-12-25 13:46:37,066 - __main__ - DEBUG - Converted to MATLAB expression: 'sin(30)'
+2024-12-25 13:46:37,125 - __main__ - DEBUG - Displayed Result: 0.5
+2024-12-25 13:46:43,671 - __main__ - DEBUG - Original expression: 'tan(90)'
+2024-12-25 13:46:43,671 - __main__ - DEBUG - Converted to MATLAB expression: 'tan(90)'
+2024-12-25 13:46:43,678 - __main__ - DEBUG - Displayed Result: inf
+2024-12-25 13:47:59,487 - __main__ - INFO - Initializing Calculator Application
+2024-12-25 13:48:07,494 - __main__ - INFO - MATLAB engine started successfully
+2024-12-25 13:48:13,318 - __main__ - DEBUG - Original expression: 'tan(90)'
+2024-12-25 13:48:13,321 - __main__ - DEBUG - Converted to MATLAB expression: 'tan(90)'
+2024-12-25 13:48:13,344 - __main__ - DEBUG - Displayed Result: inf
+2024-12-25 13:50:46,774 - __main__ - INFO - Initializing Calculator Application
+2024-12-25 13:50:56,115 - __main__ - INFO - MATLAB engine started successfully
+2024-12-25 13:51:01,701 - __main__ - DEBUG - Original expression: 'tan(90)'
+2024-12-25 13:51:01,703 - __main__ - DEBUG - Converted to MATLAB expression: 'tan(90)'
+2024-12-25 13:51:01,725 - __main__ - DEBUG - Displayed Result: inf
+2024-12-25 14:10:10,676 - __main__ - INFO - Initializing Calculator Application
+2024-12-25 14:10:20,986 - __main__ - INFO - MATLAB engine started successfully
+2024-12-25 14:10:41,571 - __main__ - DEBUG - Original expression: 'int (x^2)/(x^3 - 1) dx'
+2024-12-25 14:10:41,575 - __main__ - DEBUG - Converted to MATLAB expression: 'int((x.^2)/(x.^3 - 1), x)'
+2024-12-25 14:10:41,853 - __main__ - DEBUG - Displayed Result: ln(x^3 - 1)/3
+2024-12-25 14:10:52,960 - __main__ - DEBUG - Original expression: 'int log(x) dx'
+2024-12-25 14:10:52,961 - __main__ - DEBUG - Converted to MATLAB expression: 'int(log(x), x)'
+2024-12-25 14:10:53,070 - __main__ - DEBUG - Displayed Result: x*(ln(x) - 1)
+2024-12-25 14:10:58,493 - __main__ - DEBUG - Original expression: 'int log10(x) dx'
+2024-12-25 14:10:58,493 - __main__ - DEBUG - Converted to MATLAB expression: 'int(log10(x), x)'
+2024-12-25 14:10:58,564 - __main__ - DEBUG - Displayed Result: (x*(ln(x) - 1))/ln(10)
+2024-12-25 14:11:56,782 - __main__ - DEBUG - Original expression: 'd2/dx2 4x^10'
+2024-12-25 14:11:56,788 - __main__ - DEBUG - Converted to MATLAB expression: 'd2/dx2 4x^10'
+2024-12-25 14:11:57,135 - __main__ - ERROR - Error in LaTeX calculation: Unexpected Error: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/matlab_interface/evaluate_expression.py", line 119, in evaluate_matlab_expression
+    self.eng.eval(matlab_cmd, nargout=0)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/matlabengine.py", line 70, in __call__
+    return FutureResult(self._engine(), future, nargs, _stdout,
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/futureresult.py", line 62, in result
+    return self.__future.result(timeout)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/fevalfuture.py", line 76, in result
+    self._result = pythonengine.getFEvalResult(self._future,self._nargout, None, out=self._out, err=self._err)
+SyntaxError: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 821, in handle_latex_calculation
+    matlab_result = self.evaluate_expression(matlab_expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 841, in evaluate_expression
+    return self.evaluator.evaluate_matlab_expression(matlab_expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/matlab_interface/evaluate_expression.py", line 149, in evaluate_matlab_expression
+    raise ValueError(f"Unexpected Error: {e}") from e
+ValueError: Unexpected Error: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2024-12-25 14:19:29,368 - __main__ - INFO - Initializing Calculator Application
+2024-12-25 14:19:38,660 - __main__ - INFO - MATLAB engine started successfully
+2024-12-25 14:19:58,286 - __main__ - DEBUG - Original expression: 'd2/dx2 4x^10'
+2024-12-25 14:19:58,290 - __main__ - DEBUG - Converted to MATLAB expression: 'd2/dx2 4x^10'
+2024-12-25 14:19:58,376 - __main__ - ERROR - Error in LaTeX calculation: Unexpected Error: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/matlab_interface/evaluate_expression.py", line 132, in evaluate_matlab_expression
+    self.eng.eval(matlab_cmd, nargout=0)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/matlabengine.py", line 70, in __call__
+    return FutureResult(self._engine(), future, nargs, _stdout,
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/futureresult.py", line 62, in result
+    return self.__future.result(timeout)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/fevalfuture.py", line 76, in result
+    self._result = pythonengine.getFEvalResult(self._future,self._nargout, None, out=self._out, err=self._err)
+SyntaxError: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 821, in handle_latex_calculation
+    matlab_result = self.evaluate_expression(matlab_expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 841, in evaluate_expression
+    return self.evaluator.evaluate_matlab_expression(matlab_expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/matlab_interface/evaluate_expression.py", line 162, in evaluate_matlab_expression
+    raise ValueError(f"Unexpected Error: {e}") from e
+ValueError: Unexpected Error: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2024-12-25 14:26:53,542 - __main__ - INFO - Initializing Calculator Application
+2024-12-25 14:27:02,942 - __main__ - INFO - MATLAB engine started successfully
+2024-12-25 14:31:53,381 - __main__ - DEBUG - Original expression: 'd/dx x^2'
+2024-12-25 14:31:53,388 - __main__ - ERROR - Error in LaTeX calculation: parse_latex_expression() takes 1 positional argument but 2 were given
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 854, in handle_latex_calculation
+    sympy_expr = self.parse_latex_expression(expression)
+TypeError: parse_latex_expression() takes 1 positional argument but 2 were given
+2024-12-25 14:32:49,575 - __main__ - INFO - Initializing Calculator Application
+2024-12-25 14:32:58,470 - __main__ - INFO - MATLAB engine started successfully
+2024-12-25 14:33:33,484 - __main__ - DEBUG - Original expression: 'd/dx 2x'
+2024-12-25 14:33:33,490 - __main__ - DEBUG - Converted to MATLAB expression: 'd/dx 2x'
+2024-12-25 14:33:33,926 - __main__ - ERROR - Error in LaTeX calculation: Unexpected Error: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/matlab_interface/evaluate_expression.py", line 132, in evaluate_matlab_expression
+    self.eng.eval(matlab_cmd, nargout=0)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/matlabengine.py", line 70, in __call__
+    return FutureResult(self._engine(), future, nargs, _stdout,
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/futureresult.py", line 62, in result
+    return self.__future.result(timeout)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/fevalfuture.py", line 76, in result
+    self._result = pythonengine.getFEvalResult(self._future,self._nargout, None, out=self._out, err=self._err)
+SyntaxError: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 821, in handle_latex_calculation
+    matlab_result = self.evaluate_expression(matlab_expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 841, in evaluate_expression
+    return self.evaluator.evaluate_matlab_expression(matlab_expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/matlab_interface/evaluate_expression.py", line 162, in evaluate_matlab_expression
+    raise ValueError(f"Unexpected Error: {e}") from e
+ValueError: Unexpected Error: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2024-12-25 14:39:32,535 - __main__ - INFO - Initializing Calculator Application
+2024-12-25 14:39:45,170 - __main__ - INFO - MATLAB engine started successfully
+2024-12-25 14:39:56,763 - __main__ - DEBUG - Original expression: 'd/dx 2x'
+2024-12-25 14:39:56,818 - __main__ - ERROR - Error in LaTeX calculation: Sympify of expression 'could not parse '2x'' failed, because of exception being raised:
+SyntaxError: invalid syntax (<string>, line 1)
+ValueError: Error from parse_expr with transformed code: "Integer (2 )Symbol ('x' )"
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/core/sympify.py", line 481, in sympify
+    expr = parse_expr(a, local_dict=locals, transformations=transformations, evaluate=evaluate)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/parsing/sympy_parser.py", line 1090, in parse_expr
+    raise e from ValueError(f"Error from parse_expr with transformed code: {code!r}")
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/parsing/sympy_parser.py", line 1081, in parse_expr
+    rv = eval_expr(code, local_dict, global_dict)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/parsing/sympy_parser.py", line 909, in eval_expr
+    expr = eval(
+  File "<string>", line 1
+    Integer (2 )Symbol ('x' )
+                ^
+SyntaxError: invalid syntax
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 841, in handle_latex_calculation
+    sympy_expr = parse_latex_expression(expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 91, in parse_latex_expression
+    parsed_expr = re.sub(derivative_pattern, lambda m: replace_derivative(m), latex_expr)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/re.py", line 210, in sub
+    return _compile(pattern, flags).sub(repl, string, count)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 91, in <lambda>
+    parsed_expr = re.sub(derivative_pattern, lambda m: replace_derivative(m), latex_expr)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 87, in replace_derivative
+    sympy_expr = sy.sympify(expr.replace('^', '**'))
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/core/sympify.py", line 483, in sympify
+    raise SympifyError('could not parse %r' % a, exc)
+sympy.core.sympify.SympifyError: Sympify of expression 'could not parse '2x'' failed, because of exception being raised:
+SyntaxError: invalid syntax (<string>, line 1)
+2024-12-25 14:40:04,750 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-25 14:40:04,755 - __main__ - ERROR - Error in LaTeX calculation: Sympify of expression 'could not parse 'int 1/x dx'' failed, because of exception being raised:
+SyntaxError: invalid syntax (<string>, line 1)
+ValueError: Error from parse_expr with transformed code: "Symbol ('int' )Integer (1 )/Symbol ('x' )Symbol ('dx' )"
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/core/sympify.py", line 481, in sympify
+    expr = parse_expr(a, local_dict=locals, transformations=transformations, evaluate=evaluate)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/parsing/sympy_parser.py", line 1090, in parse_expr
+    raise e from ValueError(f"Error from parse_expr with transformed code: {code!r}")
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/parsing/sympy_parser.py", line 1081, in parse_expr
+    rv = eval_expr(code, local_dict, global_dict)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/parsing/sympy_parser.py", line 909, in eval_expr
+    expr = eval(
+  File "<string>", line 1
+    Symbol ('int' )Integer (1 )/Symbol ('x' )Symbol ('dx' )
+                   ^
+SyntaxError: invalid syntax
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 841, in handle_latex_calculation
+    sympy_expr = parse_latex_expression(expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 92, in parse_latex_expression
+    return sy.sympify(parsed_expr)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/core/sympify.py", line 483, in sympify
+    raise SympifyError('could not parse %r' % a, exc)
+sympy.core.sympify.SympifyError: Sympify of expression 'could not parse 'int 1/x dx'' failed, because of exception being raised:
+SyntaxError: invalid syntax (<string>, line 1)
+2024-12-25 14:48:04,353 - __main__ - INFO - Initializing Calculator Application
+2024-12-25 14:48:14,362 - __main__ - INFO - MATLAB engine started successfully
+2024-12-25 14:49:20,450 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-25 14:49:20,534 - __main__ - ERROR - Error in LaTeX calculation: sequence item 0: expected str instance, Integral found
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 855, in handle_latex_calculation
+    sympy_expr = parse_latex_expression(expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 103, in parse_latex_expression
+    latex_expr = re.sub(integral_pattern, lambda m: replace_integral(m), latex_expr)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/re.py", line 210, in sub
+    return _compile(pattern, flags).sub(repl, string, count)
+TypeError: sequence item 0: expected str instance, Integral found
+2024-12-25 14:49:39,167 - __main__ - DEBUG - Original expression: 'sin(30)'
+2024-12-25 14:49:39,178 - __main__ - DEBUG - Converted to SymPy expression: 'sin(30)'
+2024-12-25 14:49:39,178 - __main__ - DEBUG - Converted to MATLAB expression: 'sin(30)'
+2024-12-25 14:49:39,351 - __main__ - DEBUG - Displayed Result: 0.5
+2024-12-25 14:49:45,617 - __main__ - DEBUG - Original expression: 'ln(2)'
+2024-12-25 14:49:45,626 - __main__ - DEBUG - Converted to SymPy expression: 'log(2)'
+2024-12-25 14:49:45,627 - __main__ - DEBUG - Converted to MATLAB expression: 'log(2)'
+2024-12-25 14:49:45,865 - __main__ - DEBUG - Displayed Result: 0.6931471805599453
+2024-12-25 14:53:46,994 - __main__ - INFO - Initializing Calculator Application
+2024-12-25 14:53:58,551 - __main__ - INFO - MATLAB engine started successfully
+2024-12-25 14:55:30,969 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-25 14:55:31,029 - __main__ - DEBUG - Converted to SymPy expression: 'Integral(1/x, x)'
+2024-12-25 14:55:31,030 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/x, 'x')'
+2024-12-25 14:55:31,442 - __main__ - DEBUG - Displayed Result: ln(x)
+2024-12-25 14:55:38,847 - __main__ - DEBUG - Original expression: 'd/dx 2x^3'
+2024-12-25 14:55:38,858 - __main__ - DEBUG - Converted to SymPy expression: 'Derivative(2*x**3, x)'
+2024-12-25 14:55:38,859 - __main__ - DEBUG - Converted to MATLAB expression: 'diff(2*x^3, 'x')'
+2024-12-25 14:55:38,991 - __main__ - DEBUG - Displayed Result: 6*x^2
+2024-12-25 14:55:46,295 - __main__ - DEBUG - Original expression: 'd2/dx2 4x^10'
+2024-12-25 14:55:46,299 - __main__ - DEBUG - Converted to SymPy expression: 'Derivative(4*x**10, (x, 2))'
+2024-12-25 14:55:46,300 - __main__ - DEBUG - Converted to MATLAB expression: 'diff(4*x^10, 'x')'
+2024-12-25 14:55:46,347 - __main__ - DEBUG - Displayed Result: 40*x^9
+2024-12-25 14:59:32,867 - __main__ - INFO - Initializing Calculator Application
+2024-12-25 14:59:43,362 - __main__ - INFO - MATLAB engine started successfully
+2024-12-25 15:00:38,696 - __main__ - DEBUG - Original expression: 'd2/dx2 4x^10'
+2024-12-25 15:00:38,760 - __main__ - DEBUG - Converted to SymPy expression: 'Derivative(4*x**10, (x, 2))'
+2024-12-25 15:00:38,760 - __main__ - DEBUG - Converted to MATLAB expression: 'diff(4*x^10, 'x', 2)'
+2024-12-25 15:00:38,956 - __main__ - DEBUG - Displayed Result: 360*x^8
+2024-12-25 15:00:56,366 - __main__ - DEBUG - Original expression: 'd3/dx3 4x^10'
+2024-12-25 15:00:56,376 - __main__ - DEBUG - Converted to SymPy expression: 'Derivative(4*x**10, (x, 3))'
+2024-12-25 15:00:56,377 - __main__ - DEBUG - Converted to MATLAB expression: 'diff(4*x^10, 'x', 3)'
+2024-12-25 15:00:56,492 - __main__ - DEBUG - Displayed Result: 2880*x^7
+2024-12-25 15:01:06,633 - __main__ - DEBUG - Original expression: 'iint xy'
+2024-12-25 15:01:06,635 - __main__ - ERROR - Error in LaTeX calculation: Sympify of expression 'could not parse 'iint xy'' failed, because of exception being raised:
+SyntaxError: invalid syntax (<string>, line 1)
+ValueError: Error from parse_expr with transformed code: "Symbol ('iint' )Symbol ('xy' )"
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/core/sympify.py", line 481, in sympify
+    expr = parse_expr(a, local_dict=locals, transformations=transformations, evaluate=evaluate)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/parsing/sympy_parser.py", line 1090, in parse_expr
+    raise e from ValueError(f"Error from parse_expr with transformed code: {code!r}")
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/parsing/sympy_parser.py", line 1081, in parse_expr
+    rv = eval_expr(code, local_dict, global_dict)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/parsing/sympy_parser.py", line 909, in eval_expr
+    expr = eval(
+  File "<string>", line 1
+    Symbol ('iint' )Symbol ('xy' )
+                    ^
+SyntaxError: invalid syntax
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 855, in handle_latex_calculation
+    sympy_expr = parse_latex_expression(expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 106, in parse_latex_expression
+    return sy.sympify(latex_expr)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/sympy/core/sympify.py", line 483, in sympify
+    raise SympifyError('could not parse %r' % a, exc)
+sympy.core.sympify.SympifyError: Sympify of expression 'could not parse 'iint xy'' failed, because of exception being raised:
+SyntaxError: invalid syntax (<string>, line 1)
+2024-12-25 15:01:20,570 - __main__ - INFO - Initializing Calculator Application
+2024-12-25 15:01:29,117 - __main__ - INFO - MATLAB engine started successfully
+2024-12-25 15:01:45,180 - __main__ - DEBUG - Original expression: 'int sin(x) dx'
+2024-12-25 15:01:45,245 - __main__ - DEBUG - Converted to SymPy expression: 'Integral(sin(x), x)'
+2024-12-25 15:01:45,245 - __main__ - DEBUG - Converted to MATLAB expression: 'int(sin(x), 'x')'
+2024-12-25 15:01:45,728 - __main__ - DEBUG - Displayed Result: -(180*cos((x*pi)/180))/pi
+2024-12-25 15:07:38,687 - __main__ - INFO - Initializing Calculator Application
+2024-12-25 15:07:48,615 - __main__ - INFO - MATLAB engine started successfully
+2024-12-25 15:07:59,058 - __main__ - DEBUG - Original expression: 'int sin(x) dx'
+2024-12-25 15:07:59,127 - __main__ - DEBUG - Converted to SymPy expression: 'Integral(sin(x), x)'
+2024-12-25 15:07:59,127 - __main__ - DEBUG - Converted to MATLAB expression: 'int(sin(x), 'x')'
+2024-12-25 15:07:59,665 - __main__ - DEBUG - Displayed Result: -(180*cos((x*pi)/180))/pi
+2024-12-25 15:09:13,614 - __main__ - INFO - Initializing Calculator Application
+2024-12-25 15:09:22,729 - __main__ - INFO - MATLAB engine started successfully
+2024-12-25 15:09:27,558 - __main__ - DEBUG - Original expression: 'sin(30)'
+2024-12-25 15:09:27,626 - __main__ - DEBUG - Converted to SymPy expression: 'sin(30)'
+2024-12-25 15:09:27,626 - __main__ - DEBUG - Converted to MATLAB expression: 'sin(30)'
+2024-12-25 15:09:27,776 - __main__ - ERROR - Error in LaTeX calculation: MATLAB Error: 
+  File /Applications/MATLAB_R2024b.app/toolbox/symbolic/symbolic/@sym/sym.m, line 956, in sym.subsref
+Index exceeds the number of array elements. Index must not exceed 1.
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/matlab_interface/evaluate_expression.py", line 132, in evaluate_matlab_expression
+    self.eng.eval(matlab_cmd, nargout=0)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/matlabengine.py", line 70, in __call__
+    return FutureResult(self._engine(), future, nargs, _stdout,
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/futureresult.py", line 62, in result
+    return self.__future.result(timeout)
+  File "/Users/goge/PycharmProjects/calculator_mat/venv/lib/python3.9/site-packages/matlab/engine/fevalfuture.py", line 76, in result
+    self._result = pythonengine.getFEvalResult(self._future,self._nargout, None, out=self._out, err=self._err)
+matlab.engine.MatlabExecutionError: 
+  File /Applications/MATLAB_R2024b.app/toolbox/symbolic/symbolic/@sym/sym.m, line 956, in sym.subsref
+Index exceeds the number of array elements. Index must not exceed 1.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 871, in handle_latex_calculation
+    matlab_result = self.evaluate_expression(matlab_expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/main.py", line 896, in evaluate_expression
+    return self.evaluator.evaluate_matlab_expression(matlab_expression)
+  File "/Users/goge/PycharmProjects/calculator_mat/matlab_interface/evaluate_expression.py", line 159, in evaluate_matlab_expression
+    raise ValueError(f"MATLAB Error: {me}") from me
+ValueError: MATLAB Error: 
+  File /Applications/MATLAB_R2024b.app/toolbox/symbolic/symbolic/@sym/sym.m, line 956, in sym.subsref
+Index exceeds the number of array elements. Index must not exceed 1.
+
+2024-12-25 15:17:26,500 - __main__ - INFO - Initializing Calculator Application
+2024-12-25 15:17:37,436 - __main__ - INFO - MATLAB engine started successfully
+2024-12-25 15:17:43,167 - __main__ - DEBUG - Original expression: 'sin(30)'
+2024-12-25 15:17:43,235 - __main__ - DEBUG - Converted to SymPy expression: 'sin(30)'
+2024-12-25 15:17:43,236 - __main__ - DEBUG - Converted to MATLAB expression: 'sin(30)'
+2024-12-25 15:17:43,245 - __main__ - DEBUG - Displayed Result: 0.5

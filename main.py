@@ -67,6 +67,44 @@ def preprocess_expression(expression):
     
     return transformed_expression
 
+def parse_latex_expression(latex_expr):
+    """
+    Parse a LaTeX-like expression and convert it to a SymPy expression.
+
+    Args:
+        latex_expr (str): The LaTeX-like expression.
+
+    Returns:
+        sympy.Expr: The parsed SymPy expression.
+    """
+    # Ensure multiplication is explicit
+    latex_expr = re.sub(r'(\d)([a-zA-Z])', r'\1*\2', latex_expr)
+    
+    # Handle derivative expressions
+    derivative_pattern = r'd(\d*)/d([a-zA-Z])(\d*)\s+(.+)'
+    
+    def replace_derivative(match):
+        order = int(match.group(1)) if match.group(1) else 1
+        var = match.group(2)
+        expr = match.group(4)
+        sympy_expr = sy.sympify(expr.replace('^', '**'))
+        return str(sy.Derivative(sympy_expr, sy.Symbol(var), order))
+
+    latex_expr = re.sub(derivative_pattern, lambda m: replace_derivative(m), latex_expr)
+
+    # Handle integral expressions
+    integral_pattern = r'int\s+(.+)\s+d([a-zA-Z])'
+    def replace_integral(match):
+        expr = match.group(1)
+        var = match.group(2)
+        sympy_expr = sy.sympify(expr.replace('^', '**'))
+        return str(sy.Integral(sympy_expr, sy.Symbol(var)))
+
+    latex_expr = re.sub(integral_pattern, lambda m: replace_integral(m), latex_expr)
+
+    # Return the final SymPy expression
+    return sy.sympify(latex_expr)
+
 class CalculatorApp(QWidget, LatexCalculation):
     """
     Main calculator application window with support for LaTeX, MATLAB, and Matrix operations.
@@ -809,28 +847,45 @@ class CalculatorApp(QWidget, LatexCalculation):
         if not expression:
             QMessageBox.warning(self, "Input Error", "Please enter an expression.")
             return
-        
+
         try:
             self.logger.debug(f"Original expression: '{expression}'")
-            
-            # Preprocess the expression directly for MATLAB
-            matlab_expression = preprocess_expression(expression)
+
+            # Parse the LaTeX-like expression to SymPy
+            sympy_expr = parse_latex_expression(expression)
+            self.logger.debug(f"Converted to SymPy expression: '{sympy_expr}'")
+
+            # Convert the SymPy expression to MATLAB
+            sympy_to_matlab_converter = SympyToMatlab()
+            matlab_expression = sympy_to_matlab_converter.sympy_to_matlab(sympy_expr)
             self.logger.debug(f"Converted to MATLAB expression: '{matlab_expression}'")
-            
+
+            # Handle trigonometric functions based on angle mode
+            if angle_mode == 'Degree':
+                # Convert trig functions to degree versions
+                matlab_expression = re.sub(r'\bsin\((.*?)\)', lambda m: f"sind({m.group(1)})", matlab_expression)
+                matlab_expression = re.sub(r'\bcos\((.*?)\)', lambda m: f"cosd({m.group(1)})", matlab_expression)
+                matlab_expression = re.sub(r'\btan\((.*?)\)', lambda m: f"tand({m.group(1)})", matlab_expression)
+
             # Evaluate the expression in MATLAB
             matlab_result = self.evaluate_expression(matlab_expression)
-            
+
             # Postprocess the result
             displayed_result = self.evaluator._postprocess_result(matlab_result, is_numeric=False)
-            
+
             # Convert 'log(x)' to 'ln(x)' for display
             displayed_result = displayed_result.replace('log(', 'ln(')
-            
+
+            # Convert 'cosd(x)' back to 'cos(x)' for display
+            displayed_result = displayed_result.replace('cosd(', 'cos(')
+            displayed_result = displayed_result.replace('sind(', 'sin(')
+            displayed_result = displayed_result.replace('tand(', 'tan(')
+
             self.logger.debug(f"Displayed Result: {displayed_result}")
-            
+
             self.result_label.setText(f"Result: {displayed_result}")
             self.result_label.setFont(QFont("Arial", 13, QFont.Bold))
-        
+
         except Exception as e:
             self.logger.error(f"Error in LaTeX calculation: {e}", exc_info=True)
             QMessageBox.critical(self, "Calculation Error", f"An error occurred: {str(e)}")
@@ -901,12 +956,15 @@ class CalculatorApp(QWidget, LatexCalculation):
 
             # Convert symbolic result to string if necessary
             if isinstance(result, matlab.object):
-                result_str = self.eng.eval("char(result)", nargout=1)
-                result = result_str
+                result = self.eng.eval("char(result)", nargout=1)
             elif isinstance(result, (int, float)):
                 result = f"{result:.4f}"
             else:
                 result = str(result)
+
+            # Replace 'inf' with the infinity symbol '∞'
+            if 'inf' in result:
+                result = result.replace('inf', '∞')
 
             # Post-process the result: replace all instances of log with ln
             result = result.replace('log(', 'ln(')

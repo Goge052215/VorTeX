@@ -23,9 +23,9 @@ class SympyToMatlab:
                 result = self._handle_derivative(expr)
                 self.logger.debug(f"Handled Derivative expression. Result: {result}")
                 return result
-            elif isinstance(expr, sy.Eq):
+            elif isinstance(expr, sy.Equality):
                 result = self._handle_equation(expr)
-                self.logger.debug(f"Handled Eq expression. Result: {result}")
+                self.logger.debug(f"Handled Equality expression. Result: {result}")
                 return result
             elif isinstance(expr, sy.Function):
                 result = self._handle_function(expr)
@@ -85,14 +85,8 @@ class SympyToMatlab:
         func_expr = expr.expr
         
         # Extract the variable and order of differentiation
-        var_info = expr.variables[0]
-        
-        # Check if var_info is a tuple (indicating higher-order derivative)
-        if isinstance(var_info, tuple):
-            var, order = var_info
-        else:
-            var = var_info
-            order = expr.derivative_count  # Use derivative_count for the order
+        var = expr.variables[0]
+        order = expr.derivative_count if hasattr(expr, 'derivative_count') else 1
         
         # Convert the function part
         func_str = self.sympy_to_matlab(func_expr)
