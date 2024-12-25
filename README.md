@@ -6,7 +6,7 @@ A PyQt5-based scientific calculator that supports $\LaTeX$ input, integrates wit
 
 ## Features
 
-- **$\LaTeX$ Input:** Enter mathematical expressions in LaTeX format for easy readability and input.
+- **$\LaTeX$ Input:** Enter mathematical expressions in $\LaTeX$ format for easy readability and input.
 - **MATLAB Integration:** Utilize MATLAB's symbolic toolbox for advanced computations, ensuring high precision and reliability.
 - **Trigonometric Functions:** Supports both Degree and Radian modes for trigonometric calculations.
 - **Symbolic Computation:** Handle derivatives and integrals symbolically, providing exact results where possible.
@@ -30,7 +30,7 @@ A PyQt5-based scientific calculator that supports $\LaTeX$ input, integrates wit
    pip install -r requirements.txt
    ```
 
-   This method is deprecated. The automatic installation method is recommended, see [install_modules.py](modules/install_modules.py), which will automatically install the necessary modules.
+   This method is deprecated. The automatic installation method is recommended, see [modules_import.py](modules/modules_import.py), which will automatically install the necessary modules.
 
 3. **Run the Application:**
 
@@ -41,7 +41,7 @@ A PyQt5-based scientific calculator that supports $\LaTeX$ input, integrates wit
 ## Usage
 
 1. **Select Input Mode:**
-   - **$\LaTeX$:** Enter expressions in LaTeX format for symbolic computation.
+   - **$\LaTeX$:** Enter expressions in $\LaTeX$ format for symbolic computation.
    - **MATLAB:** Enter raw MATLAB expressions for direct evaluation.
    - **Matrix:** Perform matrix operations (e.g., determinant, inverse).
 

@@ -164,19 +164,19 @@ class ExpressionShortcuts:
         Returns:
             str: Text with integral expressions converted.
         """
-        # Convert definite integrals like 'int (2 to 3) x dx' to 'int(x, x, 2, 3)'
+        # Convert definite integrals like 'int (a to b) expr dx' to 'int(expr, x, a, b)'
         definite_integral_pattern = r'int\s*\(([^)]+)\s*to\s*([^)]+)\)\s+(.+?)\s+d([a-zA-Z])'
         
         def replace_definite_integral(match):
-            lower = match.group(1)
-            upper = match.group(2)
+            lower = match.group(1).strip()
+            upper = match.group(2).strip()
             expr = match.group(3).strip()
             var = match.group(4).strip()
             return f'int({expr}, {var}, {lower}, {upper})'
         
         text = re.sub(definite_integral_pattern, replace_definite_integral, text)
         
-        # Convert indefinite integrals like 'int x dx' to 'int(x, x)'
+        # Convert indefinite integrals like 'int expr dx' to 'int(expr, x)'
         indefinite_integral_pattern = r'int\s+(.+?)\s+d([a-zA-Z])'
         
         def replace_indefinite_integral(match):

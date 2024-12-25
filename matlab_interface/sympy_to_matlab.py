@@ -1,17 +1,16 @@
 import re
 import sympy as sy
+import logging
 
 class SympyToMatlab:
     def __init__(self):
-        import logging
         self.logger = logging.getLogger(__name__)
-
+    
     def sympy_to_matlab(self, expr):
         """Convert SymPy expression to MATLAB format."""
         self.logger.debug(f"Converting SymPy expression to MATLAB: {expr}")
         
         try:
-            # Handle list expressions
             expr = self._handle_list_expression(expr)
             
             # Handle special expression types
@@ -35,20 +34,29 @@ class SympyToMatlab:
             # For other expressions, convert to string and process
             result = self._process_expression_string(expr)
             self.logger.debug(f"Processed expression string. Result: {result}")
-            return str(result)  # Ensure the result is a string
+            return str(result)
         
         except Exception as e:
             self.logger.error(f"Error in sympy_to_matlab conversion: {e}", exc_info=True)
             raise
 
     def _handle_list_expression(self, expr):
-        """Handle list expressions."""
-        if isinstance(expr, list):
-            if not expr:
-                raise ValueError("Empty expression list")
-            return expr[0]
-        return expr
-        
+        """
+        Handle list or tuple expressions, converting them to MATLAB array syntax.
+
+        Args:
+            expr (sympy.Expr or list or tuple): The expression or list to handle.
+
+        Returns:
+            str: MATLAB-formatted string.
+        """
+        if isinstance(expr, (list, tuple)):
+            matlab_list = '[' + ', '.join([self.sympy_to_matlab(e) for e in expr]) + ']'
+            self.logger.debug(f"Converted list expression to MATLAB array: {matlab_list}")
+            return matlab_list
+        else:
+            return self._process_expression_string(expr)
+
     def _handle_integral(self, expr):
         """Handle integral expressions."""
         self.logger.debug(f"Handling integral expression: {expr}")
@@ -68,14 +76,43 @@ class SympyToMatlab:
         if len(var_info) == 1:
             # Indefinite integral
             var = var_info[0]
-            matlab_integral = f"int({integrand_str}, '{var}')"
+            matlab_integral = f"int({integrand_str}, {var})"
         else:
             # Definite integral
             var, lower, upper = var_info
-            matlab_integral = f"int({integrand_str}, '{var}', {lower}, {upper})"
+            lower_str = self.sympy_to_matlab(lower)
+            upper_str = self.sympy_to_matlab(upper)
+            matlab_integral = f"int({integrand_str}, {var}, {lower_str}, {upper_str})"
         
         self.logger.debug(f"Converted integral to MATLAB syntax: {matlab_integral}")
         return matlab_integral
+
+    def sympy_to_str(self, expr):
+        """Convert SymPy expression to string, handling constants."""
+        expr_str = str(expr)
+        # Replace 'E' with 'exp(1)' for MATLAB compatibility
+        expr_str = expr_str.replace('E', 'exp(1)')
+        return expr_str
+
+    def _process_expression_string(self, expr):
+        """Process a general expression string."""
+        self.logger.debug(f"Processing general expression: {expr}")
+        
+        # Convert the SymPy expression to a string
+        expr_str = self.sympy_to_str(expr)
+        
+        # Define a dictionary for replacements
+        replacements = {
+            '**': '^',  # Replace exponentiation
+            # Ensure other operators are correctly handled if needed
+        }
+        
+        # Apply replacements
+        for sympy_op, matlab_op in replacements.items():
+            expr_str = expr_str.replace(sympy_op, matlab_op)
+        
+        self.logger.debug(f"After replacements: {expr_str}")
+        return expr_str
 
     def _handle_derivative(self, expr):
         """Handle derivative expressions."""
@@ -93,9 +130,9 @@ class SympyToMatlab:
         
         # Create MATLAB derivative expression
         if order == 1:
-            matlab_derivative = f"diff({func_str}, '{var}')"
+            matlab_derivative = f"diff({func_str}, {var})"
         else:
-            matlab_derivative = f"diff({func_str}, '{var}', {order})"
+            matlab_derivative = f"diff({func_str}, {var}, {order})"
         
         self.logger.debug(f"Converted derivative to MATLAB syntax: {matlab_derivative}")
         return matlab_derivative
@@ -144,34 +181,4 @@ class SympyToMatlab:
         
         self.logger.debug(f"Converted function to MATLAB syntax: {matlab_expression}")
         return matlab_expression
-
-    def sympy_to_str(self, expr):
-        """Convert SymPy expression to string."""
-        return str(expr)
-
-    def _process_expression_string(self, expr):
-        """Process a general expression string."""
-        self.logger.debug(f"Processing general expression: {expr}")
-        
-        # Convert the SymPy expression to a string
-        expr_str = str(expr)
-        
-        # Define a dictionary for replacements
-        replacements = {
-            '**': '^',  # Replace exponentiation for symbolic expressions
-            # Do NOT replace '*' or '/' to avoid issues with symbolic expressions
-        }
-        
-        # Apply replacements
-        for sympy_op, matlab_op in replacements.items():
-            expr_str = expr_str.replace(sympy_op, matlab_op)
-        
-        self.logger.debug(f"After replacements: {expr_str}")
-        return expr_str
-        
-    def _is_degree_mode(self):
-        """Determine if the calculator is in degree mode."""
-        # This method should determine if the calculator is set to degree mode
-        # For now, we'll assume radian mode. You can modify this based on your application state.
-        return False
         

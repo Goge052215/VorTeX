@@ -12,6 +12,9 @@ from matlab_interface.evaluate_expression import EvaluateExpression
 import sympy as sy
 from latex_pack.shortcut import ExpressionShortcuts
 
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+
 try:
     from PyQt5.QtWidgets import (
         QApplication, QWidget, QVBoxLayout, QLabel, QPushButton,
@@ -78,15 +81,22 @@ def parse_latex_expression(latex_expr):
     Returns:
         sympy.Expr: The parsed SymPy expression.
     """
+    logger.debug(f"Original expression: '{latex_expr}'")
+
     # Preprocess integral expressions
     latex_expr = ExpressionShortcuts.convert_integral_expression(latex_expr)
-    
-    # Ensure multiplication is explicit
+    logger.debug(f"Converted integral expression: '{latex_expr}'")
+
+    # Ensure multiplication is explicit (e.g., '2x' -> '2*x')
     latex_expr = re.sub(r'(\d)([a-zA-Z])', r'\1*\2', latex_expr)
-    
+    logger.debug(f"After explicit multiplication: '{latex_expr}'")
+
+    # Convert 'ln' to 'log' for SymPy compatibility
+    latex_expr = latex_expr.replace('ln(', 'log(')
+
     # Handle derivative expressions
     derivative_pattern = r'd(\d*)/d([a-zA-Z])(\d*)\s+(.+)'
-    
+
     def replace_derivative(match):
         order = int(match.group(1)) if match.group(1) else 1
         var = match.group(2)
