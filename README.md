@@ -30,7 +30,7 @@ A PyQt5-based scientific calculator that supports $\LaTeX$ input, integrates wit
    pip install -r requirements.txt
    ```
 
-   This method is deprecated. The automatic installation method is recommended, see [install_modules.py](modules/install_modules.py), which will automatically install the necessary modules.
+   This method is deprecated. The automatic installation method is recommended, see [install_modules.py](modules/modules_import.py), which will automatically install the necessary modules.
 
 3. **Run the Application:**
 
