@@ -13,6 +13,7 @@ A PyQt5-based scientific calculator that supports $\LaTeX$ input, integrates wit
 - **Matrix Operations:** Perform operations such as determinant, inverse, eigenvalues, and more on matrices.
 - **Theming:** Multiple UI themes available to customize the appearance of the application.
 - **Logging:** Detailed logging of operations and errors for troubleshooting and analysis.
+- **Auto Simplify:** Automatically simplifies the result of the expression.
 
 ## Setup Instructions
 

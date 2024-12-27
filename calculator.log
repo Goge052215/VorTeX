@@ -1857,3 +1857,203 @@ AttributeError: 'CalculatorApp' object has no attribute 'result_label'
 2024-12-27 16:46:41,738 - __main__ - DEBUG - Displayed Result: x*(ln(x) - 1)
 2024-12-27 16:47:22,966 - __main__ - INFO - Initializing Calculator Application
 2024-12-27 16:47:32,474 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 17:32:01,234 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2024-12-27 17:32:01,236 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2024-12-27 17:32:01,239 - __main__ - DEBUG - Converted integral expression: 'int(e^x, x)'
+2024-12-27 17:32:01,240 - __main__ - DEBUG - After explicit multiplication: 'int(e^x, x)'
+2024-12-27 17:32:01,302 - __main__ - DEBUG - Converted to SymPy expression: 'int(e**x, x)'
+2024-12-27 17:32:01,302 - __main__ - DEBUG - Converted to MATLAB expression: 'int(e^x, x)'
+2024-12-27 17:32:02,056 - __main__ - DEBUG - Displayed Result: e^x/ln(e)
+2024-12-27 17:48:24,738 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 17:48:46,933 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 17:48:55,258 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2024-12-27 17:48:55,261 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2024-12-27 17:48:55,265 - __main__ - DEBUG - Converted integral expression: 'int(e^x, x)'
+2024-12-27 17:48:55,266 - __main__ - DEBUG - After explicit multiplication: 'int(e^x, x)'
+2024-12-27 17:48:55,320 - __main__ - DEBUG - Converted to SymPy expression: 'int(e**x, x)'
+2024-12-27 17:48:55,321 - __main__ - DEBUG - Converted to MATLAB expression: 'int(e^x, x)'
+2024-12-27 17:48:55,668 - __main__ - ERROR - Error in LaTeX calculation: Unexpected Error: 'EvaluateExpression' object has no attribute 'simplifier'
+2024-12-27 17:50:46,948 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 17:50:56,279 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 17:52:59,319 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2024-12-27 17:52:59,323 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2024-12-27 17:52:59,326 - __main__ - DEBUG - Converted integral expression: 'int(e^x, x)'
+2024-12-27 17:52:59,327 - __main__ - DEBUG - After explicit multiplication: 'int(e^x, x)'
+2024-12-27 17:52:59,383 - __main__ - DEBUG - Converted to SymPy expression: 'int(e**x, x)'
+2024-12-27 17:52:59,384 - __main__ - DEBUG - Converted to MATLAB expression: 'int(e^x, x)'
+2024-12-27 17:52:59,901 - __main__ - DEBUG - Displayed Result: e^x/ln(e)
+2024-12-27 17:57:03,327 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 17:57:15,709 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 17:57:21,500 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2024-12-27 17:57:21,501 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2024-12-27 17:57:21,504 - __main__ - DEBUG - Converted integral expression: 'int(e^x, x)'
+2024-12-27 17:57:21,504 - __main__ - DEBUG - After explicit multiplication: 'int(e^x, x)'
+2024-12-27 17:57:21,571 - __main__ - DEBUG - Converted to SymPy expression: 'int(e**x, x)'
+2024-12-27 17:57:21,572 - __main__ - DEBUG - Converted to MATLAB expression: 'int(e^x, x)'
+2024-12-27 17:57:21,930 - __main__ - DEBUG - Displayed Result: (6121026514868073/2251799813685248)^x
+2024-12-27 17:58:09,948 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 17:58:18,829 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 18:02:46,626 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 18:02:54,378 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 18:02:59,607 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2024-12-27 18:02:59,608 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2024-12-27 18:02:59,612 - __main__ - DEBUG - Converted integral expression: 'int(e^x, x)'
+2024-12-27 18:02:59,612 - __main__ - DEBUG - After explicit multiplication: 'int(e^x, x)'
+2024-12-27 18:02:59,675 - __main__ - DEBUG - Converted to SymPy expression: 'int(e**x, x)'
+2024-12-27 18:02:59,675 - __main__ - DEBUG - Converted to MATLAB expression: 'int(e^x, x)'
+2024-12-27 18:03:00,039 - __main__ - DEBUG - Displayed Result: (e)^x
+2024-12-27 18:03:07,234 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2024-12-27 18:03:07,234 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2024-12-27 18:03:07,235 - __main__ - DEBUG - Converted integral expression: 'int(ln(x), x)'
+2024-12-27 18:03:07,235 - __main__ - DEBUG - After explicit multiplication: 'int(ln(x), x)'
+2024-12-27 18:03:07,240 - __main__ - DEBUG - Converted to SymPy expression: 'int(log(x), x)'
+2024-12-27 18:03:07,241 - __main__ - DEBUG - Converted to MATLAB expression: 'int(log(x), x)'
+2024-12-27 18:03:07,409 - __main__ - DEBUG - Displayed Result: x*(ln(x) - 1)
+2024-12-27 18:20:55,122 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 18:21:02,079 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 18:22:05,500 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 18:23:46,313 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 18:23:57,669 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 18:24:09,083 - __main__ - DEBUG - Original expression: 'int x^2 dx'
+2024-12-27 18:24:09,086 - __main__ - DEBUG - Original expression: 'int x^2 dx'
+2024-12-27 18:24:09,089 - __main__ - DEBUG - Converted integral expression: 'int(x^2, x)'
+2024-12-27 18:24:09,090 - __main__ - DEBUG - After explicit multiplication: 'int(x^2, x)'
+2024-12-27 18:24:09,161 - __main__ - DEBUG - Converted to SymPy expression: 'int(x**2, x)'
+2024-12-27 18:24:09,162 - __main__ - DEBUG - Converted to MATLAB expression: 'int(x^2, x)'
+2024-12-27 18:24:09,542 - __main__ - DEBUG - Displayed Result: x^3/3
+2024-12-27 20:18:17,313 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 20:20:57,925 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 20:22:20,809 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 20:22:50,151 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-27 20:22:50,153 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-27 20:22:50,153 - __main__ - DEBUG - Converted integral expression: 'int(1/x, x)'
+2024-12-27 20:22:50,154 - __main__ - DEBUG - After explicit multiplication: 'int(1/x, x)'
+2024-12-27 20:22:50,193 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/x, x)'
+2024-12-27 20:22:50,194 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/x, x)'
+2024-12-27 20:22:50,195 - __main__ - ERROR - Error in LaTeX calculation: 'CalculatorApp' object has no attribute 'evaluator'
+2024-12-27 20:24:17,501 - __main__ - WARNING - Error terminating MATLAB engine: 'CalculatorApp' object has no attribute 'eng'
+2024-12-27 20:24:21,494 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 20:24:31,039 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-27 20:24:31,040 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-27 20:24:31,041 - __main__ - DEBUG - Converted integral expression: 'int(1/x, x)'
+2024-12-27 20:24:31,041 - __main__ - DEBUG - After explicit multiplication: 'int(1/x, x)'
+2024-12-27 20:24:31,086 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/x, x)'
+2024-12-27 20:24:31,086 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/x, x)'
+2024-12-27 20:24:31,086 - __main__ - ERROR - Error in LaTeX calculation: 'CalculatorApp' object has no attribute 'evaluator'
+2024-12-27 20:25:19,453 - __main__ - WARNING - Error terminating MATLAB engine: 'CalculatorApp' object has no attribute 'eng'
+2024-12-27 20:25:25,478 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 20:25:32,291 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-27 20:25:32,292 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-27 20:25:32,293 - __main__ - DEBUG - Converted integral expression: 'int(1/x, x)'
+2024-12-27 20:25:32,293 - __main__ - DEBUG - After explicit multiplication: 'int(1/x, x)'
+2024-12-27 20:25:32,345 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/x, x)'
+2024-12-27 20:25:32,345 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/x, x)'
+2024-12-27 20:25:32,346 - __main__ - ERROR - Error in LaTeX calculation: 'CalculatorApp' object has no attribute 'evaluator'
+2024-12-27 20:28:08,787 - __main__ - WARNING - Error terminating MATLAB engine: 'CalculatorApp' object has no attribute 'eng'
+2024-12-27 20:28:12,963 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 20:28:18,589 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-27 20:28:18,590 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-27 20:28:18,591 - __main__ - DEBUG - Converted integral expression: 'int(1/x, x)'
+2024-12-27 20:28:18,591 - __main__ - DEBUG - After explicit multiplication: 'int(1/x, x)'
+2024-12-27 20:28:18,629 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/x, x)'
+2024-12-27 20:28:18,629 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/x, x)'
+2024-12-27 20:28:18,630 - __main__ - ERROR - Error in LaTeX calculation: 'CalculatorApp' object has no attribute 'evaluator'
+2024-12-27 20:28:21,340 - __main__ - WARNING - Error terminating MATLAB engine: 'CalculatorApp' object has no attribute 'eng'
+2024-12-27 20:31:03,684 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 20:31:20,893 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 20:31:26,457 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-27 20:31:26,459 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-27 20:31:26,462 - __main__ - DEBUG - Converted integral expression: 'int(1/x, x)'
+2024-12-27 20:31:26,463 - __main__ - DEBUG - After explicit multiplication: 'int(1/x, x)'
+2024-12-27 20:31:26,529 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/x, x)'
+2024-12-27 20:31:26,530 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/x, x)'
+2024-12-27 20:31:26,731 - __main__ - DEBUG - Displayed Result: ln(x)
+2024-12-27 20:31:29,840 - __main__ - INFO - MATLAB engine terminated
+2024-12-27 20:31:48,636 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 20:31:55,617 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 20:32:22,069 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-27 20:32:22,071 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-27 20:32:22,073 - __main__ - DEBUG - Converted integral expression: 'int(1/x, x)'
+2024-12-27 20:32:22,073 - __main__ - DEBUG - After explicit multiplication: 'int(1/x, x)'
+2024-12-27 20:32:22,126 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/x, x)'
+2024-12-27 20:32:22,127 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/x, x)'
+2024-12-27 20:32:22,348 - __main__ - DEBUG - Displayed Result: ln(x)
+2024-12-27 20:34:16,902 - __main__ - INFO - MATLAB engine terminated
+2024-12-27 20:34:21,125 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 20:34:31,104 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 20:34:37,301 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-27 20:34:37,302 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-27 20:34:37,303 - __main__ - DEBUG - Converted integral expression: 'int(1/x, x)'
+2024-12-27 20:34:37,304 - __main__ - DEBUG - After explicit multiplication: 'int(1/x, x)'
+2024-12-27 20:34:37,363 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/x, x)'
+2024-12-27 20:34:37,363 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/x, x)'
+2024-12-27 20:34:37,623 - __main__ - DEBUG - Displayed Result: ln(x)
+2024-12-27 20:34:45,254 - __main__ - DEBUG - Original expression: 'sin(30)'
+2024-12-27 20:34:45,255 - __main__ - DEBUG - Original expression: 'sin(30)'
+2024-12-27 20:34:45,255 - __main__ - DEBUG - Converted integral expression: 'sin(30)'
+2024-12-27 20:34:45,256 - __main__ - DEBUG - After explicit multiplication: 'sin(30)'
+2024-12-27 20:34:45,261 - __main__ - DEBUG - Converted to SymPy expression: 'sin(30)'
+2024-12-27 20:34:45,261 - __main__ - DEBUG - Converted to MATLAB expression: 'sin(30)'
+2024-12-27 20:34:45,274 - __main__ - DEBUG - Displayed Result: 0.5
+2024-12-27 20:34:50,606 - __main__ - DEBUG - Original expression: 'ln(2)'
+2024-12-27 20:34:50,608 - __main__ - DEBUG - Original expression: 'ln(2)'
+2024-12-27 20:34:50,608 - __main__ - DEBUG - Converted integral expression: 'ln(2)'
+2024-12-27 20:34:50,609 - __main__ - DEBUG - After explicit multiplication: 'ln(2)'
+2024-12-27 20:34:50,616 - __main__ - DEBUG - Converted to SymPy expression: 'log(2)'
+2024-12-27 20:34:50,617 - __main__ - DEBUG - Converted to MATLAB expression: 'log(2)'
+2024-12-27 20:34:50,629 - __main__ - DEBUG - Displayed Result: 0.6931471805599453
+2024-12-27 20:34:57,123 - __main__ - DEBUG - Original expression: 'log10(2)'
+2024-12-27 20:34:57,124 - __main__ - DEBUG - Original expression: 'log10(2)'
+2024-12-27 20:34:57,124 - __main__ - DEBUG - Converted integral expression: 'log10(2)'
+2024-12-27 20:34:57,124 - __main__ - DEBUG - After explicit multiplication: 'log10(2)'
+2024-12-27 20:34:57,127 - __main__ - DEBUG - Converted to SymPy expression: 'log10(2)'
+2024-12-27 20:34:57,127 - __main__ - DEBUG - Converted to MATLAB expression: 'log10(2)'
+2024-12-27 20:34:57,140 - __main__ - DEBUG - Displayed Result: 0.3010299956639812
+2024-12-27 20:35:06,971 - __main__ - DEBUG - Original expression: 'log10(2) + log10(5)'
+2024-12-27 20:35:06,974 - __main__ - DEBUG - Original expression: 'log10(2) + log10(5)'
+2024-12-27 20:35:06,974 - __main__ - DEBUG - Converted integral expression: 'log10(2) + log10(5)'
+2024-12-27 20:35:06,974 - __main__ - DEBUG - After explicit multiplication: 'log10(2) + log10(5)'
+2024-12-27 20:35:07,027 - __main__ - DEBUG - Converted to SymPy expression: 'log10(2) + log10(5)'
+2024-12-27 20:35:07,028 - __main__ - DEBUG - Converted to MATLAB expression: 'log10(2) + log10(5)'
+2024-12-27 20:35:07,060 - __main__ - DEBUG - Displayed Result: 1.0
+2024-12-27 20:35:56,768 - __main__ - DEBUG - Original expression: 'log10(2) * log10(5)'
+2024-12-27 20:35:56,769 - __main__ - DEBUG - Original expression: 'log10(2) * log10(5)'
+2024-12-27 20:35:56,769 - __main__ - DEBUG - Converted integral expression: 'log10(2) * log10(5)'
+2024-12-27 20:35:56,770 - __main__ - DEBUG - After explicit multiplication: 'log10(2) * log10(5)'
+2024-12-27 20:35:56,790 - __main__ - DEBUG - Converted to SymPy expression: 'log10(2)*log10(5)'
+2024-12-27 20:35:56,791 - __main__ - DEBUG - Converted to MATLAB expression: 'log10(2)*log10(5)'
+2024-12-27 20:35:56,818 - __main__ - DEBUG - Displayed Result: 0.21041093737452468
+2024-12-27 20:39:09,149 - __main__ - INFO - MATLAB engine terminated
+2024-12-27 20:39:14,761 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 20:39:24,157 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 20:58:21,583 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-27 20:58:21,585 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-27 20:58:21,586 - __main__ - DEBUG - Converted integral expression: 'int(1/x, x)'
+2024-12-27 20:58:21,587 - __main__ - DEBUG - After explicit multiplication: 'int(1/x, x)'
+2024-12-27 20:58:21,651 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/x, x)'
+2024-12-27 20:58:21,651 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/x, x)'
+2024-12-27 20:58:22,122 - __main__ - DEBUG - Displayed Result: ln(x)
+2024-12-27 20:58:35,215 - __main__ - INFO - MATLAB engine terminated
+2024-12-27 20:58:47,876 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 20:58:57,352 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 20:59:25,077 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-27 20:59:25,078 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-27 20:59:25,080 - __main__ - DEBUG - Converted integral expression: 'int(1/x, x)'
+2024-12-27 20:59:25,081 - __main__ - DEBUG - After explicit multiplication: 'int(1/x, x)'
+2024-12-27 20:59:25,139 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/x, x)'
+2024-12-27 20:59:25,139 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/x, x)'
+2024-12-27 20:59:25,399 - __main__ - DEBUG - Displayed Result: ln(x)
+2024-12-27 20:59:29,898 - __main__ - DEBUG - Original expression: '1+2'
+2024-12-27 20:59:29,899 - __main__ - DEBUG - Original expression: '1+2'
+2024-12-27 20:59:29,899 - __main__ - DEBUG - Converted integral expression: '1+2'
+2024-12-27 20:59:29,899 - __main__ - DEBUG - After explicit multiplication: '1+2'
+2024-12-27 20:59:29,901 - __main__ - DEBUG - Converted to SymPy expression: '3'
+2024-12-27 20:59:29,901 - __main__ - DEBUG - Converted to MATLAB expression: '3'
+2024-12-27 20:59:29,911 - __main__ - DEBUG - Displayed Result: 3.0
+2024-12-27 21:00:55,683 - __main__ - INFO - MATLAB engine terminated
+2024-12-27 21:01:00,770 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 21:01:09,834 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 21:02:29,003 - __main__ - INFO - MATLAB engine terminated
+2024-12-27 21:03:17,678 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 21:03:27,723 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 21:03:56,623 - __main__ - INFO - MATLAB engine terminated

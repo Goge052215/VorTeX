@@ -11,6 +11,8 @@ from latex_pack.latex_calculation import LatexCalculation
 from matlab_interface.evaluate_expression import EvaluateExpression
 import sympy as sy
 from latex_pack.shortcut import ExpressionShortcuts
+from matlab_interface.auto_simplify import AutoSimplify
+from matlab_interface.display import Display
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -113,17 +115,6 @@ class CalculatorApp(QWidget, LatexCalculation):
     """
     Main calculator application window with support for LaTeX, MATLAB, and Matrix operations.
     """
-
-    # Class constants
-    FORMULA_FONT = QFont("Arial", 13, QFont.Bold)
-    PLACEHOLDER_TEXT = (
-        'Enter LaTeX expression, e.g., {latex_example}\n'
-        'Or MATLAB expression, e.g., {matlab_example}'
-    ).format(
-        latex_example=r'\binom{5}{2} + sin(pi/2)',
-        matlab_example='nchoosek(5,2) + sin(pi/2)'
-    )
-
     def __init__(self):
         """Initialize the calculator application."""
         super().__init__()
@@ -160,10 +151,23 @@ class CalculatorApp(QWidget, LatexCalculation):
         self.ui_components.init_ui()
         self._init_theme()
         self.matrix_memory = {}
+
+        # Set the font for result_display to Menlo
+        self.result_display.setFont(QFont("Monaspace Neon", 14))  # Change font to Menlo with size 14
+        self.result_display.setWordWrap(True)  # Enable word wrap
+        self.result_display.setTextInteractionFlags(Qt.TextSelectableByMouse)  # Make text selectable
+
+        self.display = Display(
+            self.result_display,
+            font_name="Monaspace Neon",
+            font_size=14,
+            bold=True
+        ) 
         
         try:
             self.eng = matlab.engine.start_matlab()
             self.eng.eval("syms x f(x)", nargout=0)
+            self.simplifier = AutoSimplify(self.eng)
             self.logger.info("MATLAB engine started successfully")
         except Exception as e:
             self.logger.error(f"Failed to start MATLAB engine: {e}")
@@ -832,7 +836,12 @@ class CalculatorApp(QWidget, LatexCalculation):
             QMessageBox.critical(self, "Unexpected Error", f"Unexpected Error: {str(e)}")
     
     def closeEvent(self, event):
-        self.eng.quit()
+        """Handle the application closing event."""
+        try:
+            self.eng.quit()
+            self.logger.info("MATLAB engine terminated")
+        except Exception as e:
+            self.logger.warning(f"Error terminating MATLAB engine: {e}")
         event.accept()
 
     def _preprocess_expression(self, expression):

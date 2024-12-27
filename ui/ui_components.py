@@ -124,7 +124,7 @@ class UIComponents:
             "Enter matrix in MATLAB format, e.g., [1 2; 3 4]\n"
             "Or [1, 2; 3, 4] for comma-separated values"
         )
-        self.parent.matrix_input.setFont(QFont("Arial", 13))
+        self.parent.matrix_input.setFont(QFont("Monaspace Neon", 14))
         self.parent.matrix_input.setFixedHeight(100)
         self.parent.matrix_input.hide()  # Initially hidden
         

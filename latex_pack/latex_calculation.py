@@ -4,6 +4,7 @@ from latex_pack.shortcut import ExpressionShortcuts
 import re
 import matlab.engine
 from matlab_interface.evaluate_expression import EvaluateExpression
+from matlab_interface.display import Display
 import logging
 
 class LatexCalculation:
@@ -17,12 +18,14 @@ class LatexCalculation:
         """Initialize the LatexCalculation class."""
         self.logger = logging.getLogger(__name__)
         self._configure_logger()
+        self.display = None  # Placeholder for Display instance
 
     def setup(self, eng, entry_formula, result_label):
         """Set up the calculator with required components."""
         self.eng = eng
         self.entry_formula = entry_formula
         self.result_label = result_label
+        self.display = Display(self.result_label)  # Initialize Display
         return self
 
     def _configure_logger(self):
@@ -41,7 +44,7 @@ class LatexCalculation:
             input_text = self._validate_and_prepare_input()
             matlab_expression = self._process_expression(input_text, angle_mode)
             result = self._evaluate_and_format_result(matlab_expression)
-            self._display_result(result)
+            self.display.display_result(result)  # Use Display class
         except Exception as e:
             self._handle_error(e)
         finally:
@@ -109,7 +112,7 @@ class LatexCalculation:
         expr = self._add_multiplication_operators(expr)
         
         # Convert trigonometric functions to handle degrees if needed
-        if angle_mode == 'degree':
+        if angle_mode.lower() == 'degree':
             expr = self._convert_trig_to_degrees(expr)
         
         self.logger.debug(f"Final MATLAB Expression: {expr}")
@@ -124,7 +127,7 @@ class LatexCalculation:
             raise ValueError("Invalid integral format. Use 'int expression dx'.")
         integrand = match.group(1)
         matlab_expr = f'int({integrand}, x)'
-        self.logger.debug(f"Converted integral to MATLAB expression: {matlab_expr}")
+        self.logger.debug(f"Converted integral to MATLAB expression: '{matlab_expr}'")
         return matlab_expr
 
     def _process_derivative(self, expr):
@@ -136,7 +139,7 @@ class LatexCalculation:
             raise ValueError("Invalid derivative format. Use 'd/dx expression'.")
         derivative_expr = match.group(1)
         matlab_expr = f'diff({derivative_expr}, x)'
-        self.logger.debug(f"Converted derivative to MATLAB expression: {matlab_expr}")
+        self.logger.debug(f"Converted derivative to MATLAB expression: '{matlab_expr}'")
         return matlab_expr
 
     def _add_multiplication_operators(self, expr):
@@ -156,7 +159,6 @@ class LatexCalculation:
         
         # Insert '*' between a closing parenthesis and a function or variable
         # Example: ')x' -> ')*x', ')sin(x)' -> ')*sin(x)'
-        # Fixed the regex by using a non-capturing group (?:)
         pattern = rf'(?<=(?:{functions_pattern})\))\s*(?=\w)'
         expr = re.sub(pattern, '*', expr, flags=re.IGNORECASE)
         

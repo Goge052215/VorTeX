@@ -41,10 +41,10 @@ class ExpressionShortcuts:
         'arccos': r'\arccos',
         'arctan': r'\arctan',
         'ln': r'\ln',
-        'lg': r'\log',
+        'lg': r'\log_{10}',  # Added 'lg' as a shortcut for log base 10
         'log': r'\log',
-        'log10': r'\log_{10}',  # Added for explicit base-10 log
-        'log2': r'\log_{2}'     # Added for base-2 log
+        'log10': r'\log_{10}',  # Explicit base-10 log
+        'log2': r'\log_{2}'     # Base-2 log
     }
     
     # Fraction shortcuts

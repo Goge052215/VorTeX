@@ -1,6 +1,7 @@
 import matlab.engine
 import logging
 import re
+from matlab_interface.auto_simplify import AutoSimplify
 
 class EvaluateExpression:
     def __init__(self, eng):
@@ -13,6 +14,7 @@ class EvaluateExpression:
         self.eng = eng
         self.logger = logging.getLogger(__name__)
         self._configure_logger()
+        self.simplifier = AutoSimplify(eng)
 
     def _configure_logger(self):
         """
@@ -117,10 +119,11 @@ class EvaluateExpression:
         self.logger.debug(f"Starting evaluation of MATLAB expression: '{matlab_expression}'")
         
         try:
-            # Declare symbolic variables present in the expression
+            # Extract variables, excluding 'e'
             variables = self._extract_variables(matlab_expression)
             for var in variables:
-                self._declare_symbolic_variable(var)
+                if var != 'e':  # Do not declare 'e' as symbolic
+                    self._declare_symbolic_variable(var)
             
             # Preprocess the expression (if needed)
             processed_expr = self._preprocess_expression(matlab_expression)
@@ -147,8 +150,9 @@ class EvaluateExpression:
 
             if has_symbols:
                 result_str = self.eng.eval("char(temp_result)", nargout=1)
-                self.logger.debug(f"Symbolic result obtained: {result_str}")
-                return self._postprocess_result(result_str, is_numeric=False)
+                # Attempt to simplify the symbolic result
+                simplified_result = self.simplifier.simplify_expression(result_str)
+                return simplified_result
             else:
                 result = self.eng.eval("double(temp_result)", nargout=1)
                 self.logger.debug(f"Double result obtained: {result}")
@@ -178,7 +182,7 @@ class EvaluateExpression:
         Returns:
             set: A set of variable names.
         """
-        # Remove derivative operators
+        # Remove derivative operators and function names
         expression_clean = re.sub(r'd\^?\d*/d[a-zA-Z]+', '', expression)
         expression_clean = re.sub(r'\b(sin|cos|tan|log|exp|sqrt|abs|sind|cosd|tand)\b', '', expression_clean)
 
