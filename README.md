@@ -1,6 +1,6 @@
 # MATLAB-Scientific Calculator on Py
 
-![legend img](legend_img.png)
+![legend img](imgs/legend_img.png)
 
 A PyQt5-based scientific calculator that supports $\LaTeX$ input, integrates with MATLAB for symbolic computation, and offers various mathematical functionalities including differentiation, integration, and matrix operations.
 
