@@ -2057,3 +2057,79 @@ AttributeError: 'CalculatorApp' object has no attribute 'result_label'
 2024-12-27 21:03:17,678 - __main__ - INFO - Initializing Calculator Application
 2024-12-27 21:03:27,723 - __main__ - INFO - MATLAB engine started successfully
 2024-12-27 21:03:56,623 - __main__ - INFO - MATLAB engine terminated
+2024-12-27 23:18:38,850 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 23:18:47,545 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 23:19:34,655 - __main__ - DEBUG - Original expression: 'int 1/(x^5+1) dx'
+2024-12-27 23:19:34,658 - __main__ - DEBUG - Original expression: 'int 1/(x^5+1) dx'
+2024-12-27 23:19:34,661 - __main__ - DEBUG - Converted integral expression: 'int(1/(x^5+1), x)'
+2024-12-27 23:19:34,662 - __main__ - DEBUG - After explicit multiplication: 'int(1/(x^5+1), x)'
+2024-12-27 23:19:34,752 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/(x**5 + 1), x)'
+2024-12-27 23:19:34,753 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/(x^5 + 1), x)'
+2024-12-27 23:19:35,544 - __main__ - DEBUG - Displayed Result: ln(x + 5^(1/2)/4 - (1/4 + 8566355544790273i/9007199254740992))*(4453404226298125/72057594037927936 - 3426542217916109i/18014398509481984) + ln(x + 5^(1/2)/4 - (1/4 - 8566355544790273i/9007199254740992))*(4453404226298125/72057594037927936 + 3426542217916109i/18014398509481984) + ln(x + 1)/5 - ln(x - 5^(1/2)/4 - (1/4 + 2647149443198255i/4503599627370496))*(1457395453761365/9007199254740992 + 529429888639651i/4503599627370496) - ln(x - 5^(1/2)/4 - (1/4 - 2647149443198255i/4503599627370496))*(1457395453761365/9007199254740992 - 529429888639651i/4503599627370496)
+2024-12-27 23:21:55,700 - __main__ - INFO - MATLAB engine terminated
+2024-12-27 23:22:43,711 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 23:22:53,121 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 23:23:03,655 - __main__ - DEBUG - Original expression: 'int x^2 dx'
+2024-12-27 23:23:03,656 - __main__ - DEBUG - Original expression: 'int x^2 dx'
+2024-12-27 23:23:03,659 - __main__ - DEBUG - Converted integral expression: 'int(x^2, x)'
+2024-12-27 23:23:03,660 - __main__ - DEBUG - After explicit multiplication: 'int(x^2, x)'
+2024-12-27 23:23:03,722 - __main__ - DEBUG - Converted to SymPy expression: 'int(x**2, x)'
+2024-12-27 23:23:03,723 - __main__ - DEBUG - Converted to MATLAB expression: 'int(x^2, x)'
+2024-12-27 23:23:03,962 - __main__ - ERROR - Error in LaTeX calculation: 'matlab.object' object has no attribute 'replace'
+2024-12-27 23:23:37,848 - __main__ - INFO - MATLAB engine terminated
+2024-12-27 23:25:36,807 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 23:25:46,813 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 23:26:07,739 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-27 23:26:07,740 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-27 23:26:07,742 - __main__ - DEBUG - Converted integral expression: 'int(1/x, x)'
+2024-12-27 23:26:07,742 - __main__ - DEBUG - After explicit multiplication: 'int(1/x, x)'
+2024-12-27 23:26:07,809 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/x, x)'
+2024-12-27 23:26:07,809 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/x, x)'
+2024-12-27 23:26:08,624 - __main__ - DEBUG - Displayed Result: ln(x)
+2024-12-27 23:26:14,851 - __main__ - DEBUG - Original expression: 'd/dx 2x^3'
+2024-12-27 23:26:14,853 - __main__ - DEBUG - Original expression: 'd/dx 2x^3'
+2024-12-27 23:26:14,853 - __main__ - DEBUG - Converted integral expression: 'd/dx 2x^3'
+2024-12-27 23:26:14,853 - __main__ - DEBUG - After explicit multiplication: 'd/dx 2*x^3'
+2024-12-27 23:26:14,872 - __main__ - DEBUG - Converted to SymPy expression: 'Derivative(2*x**3, x)'
+2024-12-27 23:26:14,872 - __main__ - DEBUG - Converted to MATLAB expression: 'Derivative(2*x^3, x)'
+2024-12-27 23:26:15,003 - __main__ - ERROR - Error in LaTeX calculation: MATLAB Error: 
+  File /Applications/MATLAB_R2024b.app/toolbox/symbolic/symbolic/@sym/sym.m, line 912, in sym.subsindex
+
+  File /Applications/MATLAB_R2024b.app/toolbox/symbolic/symbolic/@sym/sym.m, line 956, in sym.subsref
+Invalid MATLAB indexing or symbolic function definition. Symbolic function arguments must be symbolic variables and function body must be convertible to sym expression.
+
+2024-12-27 23:30:09,506 - __main__ - INFO - MATLAB engine terminated
+2024-12-27 23:31:04,151 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 23:31:13,892 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 23:31:27,655 - __main__ - DEBUG - Original expression: 'int x^2 dx'
+2024-12-27 23:31:27,656 - __main__ - DEBUG - Original expression: 'int x^2 dx'
+2024-12-27 23:31:27,658 - __main__ - DEBUG - Converted integral expression: 'int(x^2, x)'
+2024-12-27 23:31:27,658 - __main__ - DEBUG - After explicit multiplication: 'int(x^2, x)'
+2024-12-27 23:31:27,709 - __main__ - DEBUG - Converted to SymPy expression: 'int(x**2, x)'
+2024-12-27 23:31:27,709 - __main__ - DEBUG - Converted to MATLAB expression: 'int(x^2, x)'
+2024-12-27 23:31:28,389 - __main__ - DEBUG - Displayed Result: x^3/3
+2024-12-27 23:31:35,318 - __main__ - DEBUG - Original expression: 'd/dx 2x^4'
+2024-12-27 23:31:35,319 - __main__ - DEBUG - Original expression: 'd/dx 2x^4'
+2024-12-27 23:31:35,319 - __main__ - DEBUG - Converted integral expression: 'd/dx 2x^4'
+2024-12-27 23:31:35,319 - __main__ - DEBUG - After explicit multiplication: 'd/dx 2*x^4'
+2024-12-27 23:31:35,323 - __main__ - DEBUG - Converted to SymPy expression: 'Derivative(2*x**4, x)'
+2024-12-27 23:31:35,324 - __main__ - DEBUG - Converted to MATLAB expression: 'diff(2*x^4, x)'
+2024-12-27 23:31:35,480 - __main__ - DEBUG - Displayed Result: 8*x^3
+2024-12-27 23:32:06,461 - __main__ - INFO - MATLAB engine terminated
+2024-12-27 23:33:25,767 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 23:33:36,637 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 23:34:45,680 - __main__ - DEBUG - Original expression: 'd/dx 2x^4'
+2024-12-27 23:34:45,683 - __main__ - DEBUG - Original expression: 'd/dx 2x^4'
+2024-12-27 23:34:45,685 - __main__ - DEBUG - Converted integral expression: 'd/dx 2x^4'
+2024-12-27 23:34:45,686 - __main__ - DEBUG - After explicit multiplication: 'd/dx 2*x^4'
+2024-12-27 23:34:45,747 - __main__ - DEBUG - Converted to SymPy expression: 'Derivative(2*x**4, x)'
+2024-12-27 23:34:45,748 - __main__ - DEBUG - Converted to MATLAB expression: 'diff(2*x^4, x)'
+2024-12-27 23:34:46,757 - __main__ - DEBUG - Displayed Result: 8*x^3
+2024-12-27 23:35:00,604 - __main__ - DEBUG - Original expression: 'd2/dx2 4x^9'
+2024-12-27 23:35:00,605 - __main__ - DEBUG - Original expression: 'd2/dx2 4x^9'
+2024-12-27 23:35:00,605 - __main__ - DEBUG - Converted integral expression: 'd2/dx2 4x^9'
+2024-12-27 23:35:00,606 - __main__ - DEBUG - After explicit multiplication: 'd2/dx2 4*x^9'
+2024-12-27 23:35:00,618 - __main__ - DEBUG - Converted to SymPy expression: 'Derivative(4*x**9, (x, 2))'
+2024-12-27 23:35:00,620 - __main__ - DEBUG - Converted to MATLAB expression: 'diff(4*x^9, x, 2)'
+2024-12-27 23:35:00,948 - __main__ - DEBUG - Displayed Result: 288*x^7
+2024-12-27 23:38:17,339 - __main__ - INFO - MATLAB engine terminated

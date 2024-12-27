@@ -72,6 +72,8 @@ class EvaluateExpression:
             order = match.group(1) or '1'
             var = match.group(2)
             expr = match.group(4)
+            # Ensure multiplication is explicit within the derivative expression
+            expr = re.sub(r'(\d)([a-zA-Z])', r'\1*\2', expr)
             return f"diff({expr}, {var}, {order})"
         
         expression = re.sub(derivative_pattern, replace_derivative, expression)
@@ -174,15 +176,19 @@ class EvaluateExpression:
 
     def _extract_variables(self, expression):
         """
-        Extract variable names from the MATLAB expression while ignoring function names.
-
+        Extract variables from the expression for MATLAB evaluation.
+        
         Args:
-            expression (str): The MATLAB expression.
-
+            expression (str): The input expression.
+        
         Returns:
-            set: A set of variable names.
+            list: A list of variable names.
         """
-        # Remove derivative operators and function names
+        if not isinstance(expression, str):
+            self.logger.error("Expression is not a string")
+            raise TypeError("Expression must be a string")
+
+        # Clean the expression to remove derivative notation
         expression_clean = re.sub(r'd\^?\d*/d[a-zA-Z]+', '', expression)
         expression_clean = re.sub(r'\b(sin|cos|tan|log|exp|sqrt|abs|sind|cosd|tand)\b', '', expression_clean)
 

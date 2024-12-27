@@ -23,7 +23,17 @@ A PyQt5-based scientific calculator that supports $\LaTeX$ input, integrates wit
    git clone https://github.com/Goge052215/MATLAB-Calculator-on-py.git
    ```
 
-2. **Install Dependencies:**
+2. **Install Required Fonts**
+
+   Thanks for developers of Monaspace font family! We are using the font [**Monaspace Neon**](https://monaspace.githubnext.com/) for the UI (partially). The font will automatically be installed when you run the application (see [main.py](main.py)). But if it doesn't work, you can install it manually by downloading the font by running the scripts in [fonts](fonts) folder.
+
+   So far there are 2 scripts for following systems:
+   - [Windows](fonts/fonts_download.ps1)
+   - [MacOS](fonts/fonts_download.bash)
+
+   For Linux users, please see the instructions in the [GitHub Monaspace repository](https://github.com/githubnext/monaspace?tab=readme-ov-file).
+
+3. **Install Dependencies:**
 
    Ensure you have MATLAB installed and the MATLAB Engine API for Python set up.
 
@@ -33,7 +43,7 @@ A PyQt5-based scientific calculator that supports $\LaTeX$ input, integrates wit
 
    The requirement list is in [requirements.txt](requirements.txt)
 
-3. **Run the Application:**
+4. **Run the Application:**
 
    ```bash
    python main.py

@@ -1,5 +1,6 @@
 import sys
 import re
+import os
 import logging
 from themes.theme_manager import ThemeManager, get_tokyo_night_theme, get_aura_theme, get_light_theme
 from ui.legend_window import LegendWindow
@@ -46,6 +47,37 @@ from themes.theme_manager import (
     get_aura_theme, get_light_theme
 )
 from ui.legend_window import LegendWindow
+
+def download_fonts():
+    """
+    Download and install fonts based on the operating system.
+    Returns True if successful, False otherwise.
+    """
+    try:
+        if sys.platform == "darwin":  # macOS
+            result = os.system("bash fonts/fonts_download_macos.bash")
+            if result != 0:
+                logger.error("Failed to download fonts on macOS")
+                return False
+                
+        elif sys.platform in ["win32", "win64"]:  # Windows
+            result = os.system("powershell -ExecutionPolicy Bypass -File fonts/fonts_download_win.ps1")
+            if result != 0:
+                logger.error("Failed to download fonts on Windows")
+                return False
+                
+        else:
+            logger.error(f"Unsupported platform: {sys.platform}")
+            print(f"Unsupported platform: {sys.platform}. Please install the fonts manually.")
+            return False
+            
+        logger.info("Fonts downloaded successfully")
+        return True
+        
+    except Exception as e:
+        logger.error(f"Error downloading fonts: {str(e)}")
+        print(f"Error downloading fonts: {str(e)}")
+        return False
 
 def preprocess_expression(expression):
     """
@@ -828,7 +860,7 @@ class CalculatorApp(QWidget, LatexCalculation):
             result = result.replace('==', '=')
 
             self.result_label.setText(f"Result: {result}")
-            self.result_label.setFont(QFont("Arial", 13, QFont.Bold))
+            self.result_label.setFont(QFont("Monaspace Neon", 14))
 
         except matlab.engine.MatlabExecutionError as me:
             QMessageBox.critical(self, "MATLAB Error", f"MATLAB Error: {me}")
@@ -855,6 +887,7 @@ class CalculatorApp(QWidget, LatexCalculation):
         return result_str  # No action needed here
 
 if __name__ == '__main__':
+    download_fonts()
     app = QApplication(sys.argv)
     calculator = CalculatorApp()
     calculator.show()

@@ -22,7 +22,7 @@ class AutoSimplify:
         self._init_matlab_symbolic_vars()
 
     def _configure_logger(self):
-        """Configure logging for the AutoSimplify class."""
+        """Configure the logger for the AutoSimplify class."""
         if not self.logger.handlers:
             handler = logging.StreamHandler()
             formatter = logging.Formatter(
@@ -50,139 +50,90 @@ class AutoSimplify:
             self.logger.error(f"Error initializing symbolic variables: {e}")
             raise
 
-    def simplify_expression(self, expression: str, mode: str = 'basic') -> str:
+    def simplify_expression(self, expr_str):
         """
-        Simplify a mathematical expression using different simplification strategies.
+        Simplify a mathematical expression using MATLAB's symbolic toolbox.
         
         Args:
-            expression (str): The mathematical expression to simplify.
-            mode (str): Simplification mode ('basic', 'full', 'trig', 'rational').
-                       - 'basic': Basic algebraic simplification
-                       - 'full': Comprehensive simplification
-                       - 'trig': Focus on trigonometric simplification
-                       - 'rational': Simplify rational expressions
-        
+            expr_str (str): The expression to simplify.
+            
         Returns:
             str: The simplified expression.
         """
-        self.logger.debug(f"Simplifying expression: '{expression}' using mode: {mode}")
+        self.logger.debug(f"Simplifying expression: '{expr_str}' using mode: basic")
         
         try:
-            # Preprocess the expression
-            processed_expr = self._preprocess_expression(expression)
+            # Convert the expression to a symbolic form
+            self.eng.workspace['expr'] = expr_str
             
-            # Create MATLAB symbolic expression
-            self.eng.eval(f"expr = {processed_expr};", nargout=0)
+            # Try different simplification methods in sequence
+            simplification_commands = [
+                "simplify(expr, 'Steps', 50)",  # More steps for better simplification
+                "simplify(collect(expr, 'x'))",  # Collect terms with respect to x
+                "simplify(factor(expr))",        # Try factoring
+                "simplify(combine(expr, 'all'))" # Combine similar terms
+            ]
             
-            # Apply simplification based on mode
-            simplified = self._apply_simplification(mode)
+            for cmd in simplification_commands:
+                self.logger.debug(f"Applying simplification command: {cmd}")
+                self.eng.eval(f"result = {cmd};", nargout=0)
+                
+                # Check if the result is simpler
+                current_result = self.eng.eval("char(result)", nargout=1)
+                if len(current_result) < len(expr_str):
+                    expr_str = current_result
             
-            # Post-process the result
-            result = self._postprocess_result(simplified)
+            # Final cleanup of the expression
+            expr_str = expr_str.replace('log', 'ln')  # Convert back to ln notation
+            expr_str = re.sub(r'\s+', ' ', expr_str)  # Clean up whitespace
             
-            self.logger.debug(f"Simplified result: {result}")
-            return result
+            self.logger.debug(f"Simplified result: {expr_str}")
+            return expr_str
             
         except Exception as e:
             self.logger.error(f"Error during simplification: {e}")
-            raise ValueError(f"Simplification error: {str(e)}")
+            return expr_str  # Return original expression if simplification fails
+            
         finally:
             # Clean up workspace
-            self._cleanup_workspace()
-
-    def _preprocess_expression(self, expression: str) -> str:
-        """
-        Preprocess the expression before simplification.
-        
-        Args:
-            expression (str): The input expression.
-            
-        Returns:
-            str: Preprocessed expression.
-        """
-        # Replace common mathematical notations
-        replacements = {
-            'ln': 'log',
-            'arcsin': 'asin',
-            'arccos': 'acos',
-            'arctan': 'atan',
-            '²': '^2',
-            '³': '^3',
-            '⁴': '^4',
-        }
-        
-        processed = expression
-        for old, new in replacements.items():
-            processed = processed.replace(old, new)
-            
-        # Ensure proper multiplication syntax
-        processed = re.sub(r'(\d)([a-zA-Z])', r'\1*\2', processed)
-        
-        self.logger.debug(f"Preprocessed expression: {processed}")
-        return processed
-
-    def _apply_simplification(self, mode: str) -> str:
-        """
-        Apply the appropriate simplification strategy based on mode.
-        
-        Args:
-            mode (str): Simplification mode.
-            
-        Returns:
-            str: Simplified expression from MATLAB.
-        """
-        simplification_commands = {
-            'basic': "simplify(expr)",
-            'full': "simplify(expr, 'Steps', 50)",
-            'trig': "simplify(trigsimp(expr))",
-            'rational': "simplify(factor(expr))"
-        }
-        
-        command = simplification_commands.get(mode, simplification_commands['basic'])
-        self.logger.debug(f"Applying simplification command: {command}")
-        
-        # Execute simplification in MATLAB
-        self.eng.eval(f"result = {command};", nargout=0)
-        
-        # Get the result as a string
-        result = self.eng.eval("char(result)", nargout=1)
-        return result
-
-    def _postprocess_result(self, result: str) -> str:
-        """
-        Post-process the simplified result.
-        
-        Args:
-            result (str): The simplified expression from MATLAB.
-            
-        Returns:
-            str: The post-processed result.
-        """
-        # Replace MATLAB-specific notations with standard mathematical notations
-        # Add replacement for the specific numeric fraction representing 'e'
-        replacements = {
-            'log': 'ln',                 # Convert back to natural log notation
-            'exp(1)': 'e',               # Replace exp(1) with e
-            '6121026514868073/2251799813685248': 'e',  # Replace the specific fraction with e
-            '.*': '*',                   # Remove element-wise operators
-            '.^': '^',                   # Remove element-wise power
-            './': '/'                    # Remove element-wise division
-        }
-        
-        processed = result
-        for old, new in replacements.items():
-            processed = processed.replace(old, new)
-            
-        self.logger.debug(f"Postprocessed result: {processed}")
-        return processed
-
-    def _cleanup_workspace(self):
-        """Clean up temporary variables from MATLAB workspace."""
-        try:
             self.eng.eval("clear expr result", nargout=0)
             self.logger.debug("Cleaned up MATLAB workspace")
-        except Exception as e:
-            self.logger.warning(f"Error during workspace cleanup: {e}")
+
+    def _clean_expression(self, expr_str):
+        """
+        Clean up the expression by removing unnecessary symbols and improving readability.
+        
+        Args:
+            expr_str (str): The expression to clean.
+            
+        Returns:
+            str: The cleaned expression.
+        """
+        # Convert 'log' to 'ln'
+        expr_str = expr_str.replace('log', 'ln')
+
+        # Remove multiplication signs in specific cases
+        patterns = [
+            (r'(\d+)\*([a-zA-Z])', r'\1\2'),           # 2*x -> 2x
+            (r'([a-zA-Z])\*(\d+)', r'\1\2'),           # x*2 -> x2
+            (r'([a-zA-Z])\*([a-zA-Z])', r'\1\2'),      # x*y -> xy
+            (r'\)\*([a-zA-Z])', r')\1'),               # )*x -> )x
+            (r'\)\*(\d+)', r')\1'),                    # )*2 -> )2
+            (r'([a-zA-Z])\*\(', r'\1('),              # x*( -> x(
+            (r'(\d+)\*\(', r'\1('),                   # 2*( -> 2(
+            (r'\*\*', '^'),                           # ** -> ^
+        ]
+
+        for pattern, replacement in patterns:
+            expr_str = re.sub(pattern, replacement, expr_str)
+
+        # Clean up whitespace
+        expr_str = re.sub(r'\s+', ' ', expr_str).strip()
+
+        # Handle special cases for negative numbers
+        expr_str = re.sub(r'(\d+)\*-', r'\1(-', expr_str)
+
+        return expr_str
 
     def simplify_equation(self, equation: str) -> str:
         """

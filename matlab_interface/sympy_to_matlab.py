@@ -10,35 +10,24 @@ class SympyToMatlab:
         """Convert SymPy expression to MATLAB format."""
         self.logger.debug(f"Converting SymPy expression to MATLAB: {expr}")
         
-        try:
-            expr = self._handle_list_expression(expr)
-            
-            # Handle special expression types
-            if isinstance(expr, sy.Integral):
-                result = self._handle_integral(expr)
-                self.logger.debug(f"Handled Integral expression. Result: {result}")
-                return result
-            elif isinstance(expr, sy.Derivative):
-                result = self._handle_derivative(expr)
-                self.logger.debug(f"Handled Derivative expression. Result: {result}")
-                return result
-            elif isinstance(expr, sy.Equality):
-                result = self._handle_equation(expr)
-                self.logger.debug(f"Handled Equality expression. Result: {result}")
-                return result
-            elif isinstance(expr, sy.Function):
-                result = self._handle_function(expr)
-                self.logger.debug(f"Handled Function expression. Result: {result}")
-                return result
-            
-            # For other expressions, convert to string and process
-            result = self._process_expression_string(expr)
-            self.logger.debug(f"Processed expression string. Result: {result}")
-            return str(result)
+        if isinstance(expr, str):
+            return expr
         
-        except Exception as e:
-            self.logger.error(f"Error in sympy_to_matlab conversion: {e}", exc_info=True)
-            raise
+        # Handle derivatives
+        if expr.is_Derivative:
+            return self._handle_derivative(expr)
+        
+        # Convert the expression to a string
+        expr_str = str(expr)
+        
+        # Replace Python-style power operator with MATLAB-style
+        expr_str = expr_str.replace('**', '^')
+        
+        # Ensure proper multiplication syntax
+        expr_str = re.sub(r'(\d)([a-zA-Z])', r'\1*\2', expr_str)
+        
+        self.logger.debug(f"Processed expression string. Result: {expr_str}")
+        return expr_str
 
     def _handle_list_expression(self, expr):
         """
@@ -128,7 +117,7 @@ class SympyToMatlab:
         # Convert the function part
         func_str = self.sympy_to_matlab(func_expr)
         
-        # Create MATLAB derivative expression
+        # Create MATLAB derivative expression using diff instead of Derivative
         if order == 1:
             matlab_derivative = f"diff({func_str}, {var})"
         else:

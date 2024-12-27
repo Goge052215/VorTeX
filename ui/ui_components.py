@@ -21,7 +21,7 @@ class UIComponents:
 
         self.parent.PLACEHOLDER_TEXT = 'Enter LaTeX expression, e.g., \\binom{5}{2} + sin(pi/2)\n' \
             'Or MATLAB expression, e.g., nchoosek(5,2) + sin(pi/2)'
-        self.parent.FORMULA_FONT = QFont("Arial", 13)
+        self.parent.FORMULA_FONT = QFont("Monaspace Neon", 13)
 
     def init_ui(self):
         """Initialize the calculator's user interface."""
@@ -222,13 +222,13 @@ class UIComponents:
         # Create header layout for the "Result:" label
         header_layout = QHBoxLayout()
         self.parent.result_label = QLabel('Result:')
-        self.parent.result_label.setFont(QFont("Arial", 13, QFont.Bold))
+        self.parent.result_label.setFont(QFont("Arial", 14, QFont.Bold))
         header_layout.addWidget(self.parent.result_label)
         header_layout.addStretch()
         
         # Create and configure the result display label
         self.parent.result_display = QLabel()
-        self.parent.result_display.setFont(QFont("Arial", 13))
+        self.parent.result_display.setFont(QFont("Monaspace Neon", 14))
         self.parent.result_display.setWordWrap(True)  # Enable word wrap
         self.parent.result_display.setTextInteractionFlags(Qt.TextSelectableByMouse)  # Make text selectable
         self.parent.result_display.setStyleSheet("""
