@@ -1,10 +1,10 @@
 import sys
-import os
 import re
 import logging
 from themes.theme_manager import ThemeManager, get_tokyo_night_theme, get_aura_theme, get_light_theme
 from ui.legend_window import LegendWindow
 from ui.ui_config import UiConfig
+from ui.ui_components import UIComponents
 from modules.modules_import import PackageImporter
 from matlab_interface.sympy_to_matlab import SympyToMatlab
 from latex_pack.latex_calculation import LatexCalculation
@@ -120,7 +120,7 @@ class CalculatorApp(QWidget, LatexCalculation):
         'Enter LaTeX expression, e.g., {latex_example}\n'
         'Or MATLAB expression, e.g., {matlab_example}'
     ).format(
-        latex_example=r'\binom{5}{2} + \sin\left(\frac{\pi}{2}\right)',
+        latex_example=r'\binom{5}{2} + sin(pi/2)',
         matlab_example='nchoosek(5,2) + sin(pi/2)'
     )
 
@@ -156,7 +156,8 @@ class CalculatorApp(QWidget, LatexCalculation):
         
         self.theme_manager = ThemeManager()
         self.legend_window = None
-        self.init_ui()
+        self.ui_components = UIComponents(self)
+        self.ui_components.init_ui()
         self._init_theme()
         self.matrix_memory = {}
         
@@ -178,159 +179,6 @@ class CalculatorApp(QWidget, LatexCalculation):
         """Initialize and set default theme."""
         self.set_theme("aura")
 
-    def init_ui(self):
-        """Initialize the calculator's user interface."""
-        self._setup_window()
-        main_layout = QVBoxLayout()
-        
-        # Initialize all UI components using helper methods
-        layouts = {
-            'top': self._create_top_buttons(),
-            'mode': self._create_mode_selection(),
-            'angle': self._create_angle_selection(),
-            'matrix': self._create_matrix_components(),
-            'formula': self._create_formula_components(),
-            'result': self._create_result_components()
-        }
-        
-        # Add all layouts to main layout in order
-        for layout in layouts.values():
-            if isinstance(layout, (list, tuple)):
-                for item in layout:
-                    main_layout.addLayout(item) if isinstance(item, QHBoxLayout) else main_layout.addWidget(item)
-            else:
-                main_layout.addLayout(layout) if isinstance(layout, QHBoxLayout) else main_layout.addWidget(layout)
-        
-        self.setLayout(main_layout)
-
-    def _setup_window(self):
-        """Set up the main window properties."""
-        self.setWindowTitle('Scientific Calculator')
-        self.setGeometry(100, 100, 600, 450)
-
-    def _create_top_buttons(self):
-        """Create theme and legend buttons."""
-        top_layout = QHBoxLayout()
-        
-        # Create UiConfig instance and get configurations
-        ui_config = UiConfig()
-        ui_config.config_button(
-            theme_callback=self.show_theme_menu,
-            legend_callback=self.show_legend
-        )
-        
-        top_layout.addStretch()
-        for btn_name, config in ui_config.button_configs.items():
-            button = QPushButton(config['text'])
-            button.setFixedSize(*config['size'])
-            button.setStyleSheet(ui_config.button_style)
-            button.clicked.connect(config['callback'])
-            setattr(self, f"{btn_name}_button", button)
-            top_layout.addWidget(button)
-        
-        return top_layout
-
-    def _create_mode_selection(self):
-        """Create input mode selection components."""
-        mode_layout = QHBoxLayout()
-        self.label_mode = QLabel('Input Mode:')
-        self.label_mode.setFixedWidth(100)
-        
-        self.combo_mode = QComboBox()
-        self.combo_mode.addItems(['LaTeX', 'MATLAB', 'Matrix'])
-        self.combo_mode.setFixedWidth(100)
-        self.combo_mode.currentTextChanged.connect(self.on_mode_changed)
-        
-        mode_layout.addWidget(self.label_mode)
-        mode_layout.addWidget(self.combo_mode)
-        mode_layout.addStretch()
-        return mode_layout
-
-    def _create_angle_selection(self):
-        """Create angle mode selection components."""
-        angle_layout = QHBoxLayout()
-        self.label_angle = QLabel('Angle Mode:')
-        self.label_angle.setFixedWidth(100)
-        
-        self.combo_angle = QComboBox()
-        self.combo_angle.addItems(['Degree', 'Radian'])
-        self.combo_angle.setFixedWidth(100)
-        
-        angle_layout.addWidget(self.label_angle)
-        angle_layout.addWidget(self.combo_angle)
-        angle_layout.addStretch()
-        return angle_layout
-
-    def _create_matrix_components(self):
-        """Create matrix-related UI components."""
-        # Matrix input
-        self.matrix_input = QTextEdit()
-        self.matrix_input.setFixedHeight(100)
-        self.matrix_input.setPlaceholderText(
-            "Enter matrix in MATLAB format, e.g., [1 2; 3 4]\n"
-            "Or [1, 2; 3, 4] for comma-separated values"
-        )
-        self.matrix_input.hide()
-        
-        # Matrix operations
-        matrix_op_layout = QHBoxLayout()
-        self.label_matrix_op = QLabel('Matrix Operation:')
-        self.combo_matrix_op = QComboBox()
-        self.combo_matrix_op.addItems([
-            'Determinant', 'Inverse', 'Eigenvalues', 'Rank',
-            'Multiply', 'Add', 'Subtract', 'Divide', 'Differentiate'
-        ])
-        self.combo_matrix_op.setFixedWidth(130)
-        
-        matrix_op_layout.addWidget(self.label_matrix_op)
-        matrix_op_layout.addWidget(self.combo_matrix_op)
-        matrix_op_layout.addStretch()
-        
-        # Matrix memory buttons
-        matrix_memory_layout = QHBoxLayout()
-        self.store_matrix_button = QPushButton('Store Matrix')
-        self.recall_matrix_button = QPushButton('Recall Matrix')
-        
-        self.store_matrix_button.clicked.connect(self.store_matrix)
-        self.recall_matrix_button.clicked.connect(self.recall_matrix)
-        
-        matrix_memory_layout.addWidget(self.store_matrix_button)
-        matrix_memory_layout.addWidget(self.recall_matrix_button)
-        
-        # Hide matrix-related components initially
-        for widget in [self.label_matrix_op, self.combo_matrix_op,
-                      self.store_matrix_button, self.recall_matrix_button]:
-            widget.hide()
-        
-        return [self.matrix_input, matrix_op_layout, matrix_memory_layout]
-
-    def _create_formula_components(self):
-        """Create formula input components."""
-        components = []
-        
-        # Create label
-        self.label_formula = QLabel('Math Expression:')
-        self.label_formula.setFont(self.FORMULA_FONT)
-        components.append(self.label_formula)
-        
-        # Create text entry
-        self.entry_formula = QTextEdit()
-        self.entry_formula.setFixedHeight(100)
-        self.entry_formula.setPlaceholderText(self.PLACEHOLDER_TEXT)
-        components.append(self.entry_formula)
-        
-        # Create calculate button
-        self.calculate_button = QPushButton('Calculate')
-        self.calculate_button.clicked.connect(self.calculate)
-        components.append(self.calculate_button)
-        
-        return components
-
-    def _create_result_components(self):
-        """Create result display components."""
-        self.result_label = QLabel('Result: ')
-        self.result_label.setFont(QFont("Arial", 13, QFont.Bold))
-        return self.result_label
 
     def show_theme_menu(self):
         menu = QMenu(self)
@@ -885,14 +733,15 @@ class CalculatorApp(QWidget, LatexCalculation):
             displayed_result = displayed_result.replace('sind(', 'sin(')
             displayed_result = displayed_result.replace('tand(', 'tan(')
 
+            # Format the result for better readability
+            displayed_result = str(displayed_result)
+            
+            self.result_display.setText(displayed_result)
             self.logger.debug(f"Displayed Result: {displayed_result}")
-
-            self.result_label.setText(f"Result: {displayed_result}")
-            self.result_label.setFont(QFont("Arial", 13, QFont.Bold))
-
+            
         except Exception as e:
-            self.logger.error(f"Error in LaTeX calculation: {e}", exc_info=True)
-            QMessageBox.critical(self, "Calculation Error", f"An error occurred: {str(e)}")
+            self.logger.error(f"Error in LaTeX calculation: {e}")
+            QMessageBox.critical(self, "Error", f"An error occurred: {str(e)}")
 
     def evaluate_expression(self, matlab_expression):
         """Evaluate the expression using the MATLAB engine."""

@@ -1,6 +1,6 @@
 PyQt5
 matlab
-matlabengine
+matlabengine == 24.2.1
 sympy
 numpy
 latex2sympy2

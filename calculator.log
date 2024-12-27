@@ -1508,3 +1508,352 @@ sympy.core.sympify.SympifyError: Sympify of expression 'could not parse 'int() x
 SyntaxError: invalid syntax (<string>, line 1)
 2024-12-25 22:58:04,580 - __main__ - INFO - Initializing Calculator Application
 2024-12-25 22:58:13,765 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 10:18:13,420 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 10:18:23,710 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 10:18:32,274 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-27 10:18:32,274 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-27 10:18:32,276 - __main__ - DEBUG - Converted integral expression: 'int(1/x, x)'
+2024-12-27 10:18:32,277 - __main__ - DEBUG - After explicit multiplication: 'int(1/x, x)'
+2024-12-27 10:18:32,314 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/x, x)'
+2024-12-27 10:18:32,314 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/x, x)'
+2024-12-27 10:18:32,482 - __main__ - DEBUG - Displayed Result: ln(x)
+2024-12-27 10:18:40,856 - __main__ - DEBUG - Original expression: 'int (2 to 3) x^2 dx'
+2024-12-27 10:18:40,857 - __main__ - DEBUG - Original expression: 'int (2 to 3) x^2 dx'
+2024-12-27 10:18:40,857 - __main__ - DEBUG - Converted integral expression: 'int(x^2, x, 2, 3)'
+2024-12-27 10:18:40,857 - __main__ - DEBUG - After explicit multiplication: 'int(x^2, x, 2, 3)'
+2024-12-27 10:18:40,858 - __main__ - DEBUG - Converted to SymPy expression: 'int(x**2, x, 2, 3)'
+2024-12-27 10:18:40,859 - __main__ - DEBUG - Converted to MATLAB expression: 'int(x^2, x, 2, 3)'
+2024-12-27 10:18:40,926 - __main__ - DEBUG - Displayed Result: 6.333333333333333
+2024-12-27 12:02:17,419 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 12:02:27,159 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 12:02:37,593 - __main__ - DEBUG - Original expression: 'int (e to 3) 1/x dx'
+2024-12-27 12:02:37,593 - __main__ - DEBUG - Original expression: 'int (e to 3) 1/x dx'
+2024-12-27 12:02:37,597 - __main__ - DEBUG - Converted integral expression: 'int(1/x, x, e, 3)'
+2024-12-27 12:02:37,597 - __main__ - DEBUG - After explicit multiplication: 'int(1/x, x, e, 3)'
+2024-12-27 12:02:37,655 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/x, x, e, 3)'
+2024-12-27 12:02:37,656 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/x, x, e, 3)'
+2024-12-27 12:02:38,187 - __main__ - DEBUG - Displayed Result: piecewise(0 < e, ln(3) - ln(e), e <= 0, int(1/x, x, e, 3))
+2024-12-27 13:03:41,405 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 13:03:50,968 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 13:04:05,844 - __main__ - DEBUG - Original expression: 'int (4x^10+9x^9)/(x^2+3) dx'
+2024-12-27 13:04:05,844 - __main__ - DEBUG - Original expression: 'int (4x^10+9x^9)/(x^2+3) dx'
+2024-12-27 13:04:05,845 - __main__ - DEBUG - Converted integral expression: 'int((4x^10+9x^9)/(x^2+3), x)'
+2024-12-27 13:04:05,846 - __main__ - DEBUG - After explicit multiplication: 'int((4*x^10+9*x^9)/(x^2+3), x)'
+2024-12-27 13:04:05,912 - __main__ - DEBUG - Converted to SymPy expression: 'int((4*x**10 + 9*x**9)/(x**2 + 3), x)'
+2024-12-27 13:04:05,914 - __main__ - DEBUG - Converted to MATLAB expression: 'int((4*x^10 + 9*x^9)/(x^2 + 3), x)'
+2024-12-27 13:04:06,245 - __main__ - DEBUG - Displayed Result: 324*x + (729*ln(x^2 + 3))/2 - 324*3^(1/2)*atan((3^(1/2)*x)/3) - (243*x^2)/2 - 36*x^3 + (81*x^4)/4 + (36*x^5)/5 - (9*x^6)/2 - (12*x^7)/7 + (9*x^8)/8 + (4*x^9)/9
+2024-12-27 13:04:23,225 - __main__ - DEBUG - Original expression: 'int 1/(x^5+1) dx'
+2024-12-27 13:04:23,226 - __main__ - DEBUG - Original expression: 'int 1/(x^5+1) dx'
+2024-12-27 13:04:23,227 - __main__ - DEBUG - Converted integral expression: 'int(1/(x^5+1), x)'
+2024-12-27 13:04:23,227 - __main__ - DEBUG - After explicit multiplication: 'int(1/(x^5+1), x)'
+2024-12-27 13:04:23,231 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/(x**5 + 1), x)'
+2024-12-27 13:04:23,232 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/(x^5 + 1), x)'
+2024-12-27 13:04:23,550 - __main__ - DEBUG - Displayed Result: ln(x + 1)/5 - ln(x - 5^(1/2)/4 - (2^(1/2)*(5^(1/2) - 5)^(1/2))/4 - 1/4)*(5^(1/2)/20 + (2^(1/2)*(5^(1/2) - 5)^(1/2))/20 + 1/20) - ln(x - 5^(1/2)/4 + (2^(1/2)*(5^(1/2) - 5)^(1/2))/4 - 1/4)*(5^(1/2)/20 - (2^(1/2)*(5^(1/2) - 5)^(1/2))/20 + 1/20) - ln(x - (2^(1/2)*(- 5^(1/2) - 5)^(1/2))/4 + 5^(1/2)/4 - 1/4)*((2^(1/2)*(- 5^(1/2) - 5)^(1/2))/20 - 5^(1/2)/20 + 1/20) + ln(x + (2^(1/2)*(- 5^(1/2) - 5)^(1/2))/4 + 5^(1/2)/4 - 1/4)*((2^(1/2)*(- 5^(1/2) - 5)^(1/2))/20 + 5^(1/2)/20 - 1/20)
+2024-12-27 13:25:16,764 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 13:25:26,258 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 13:25:33,505 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-27 13:25:33,505 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-27 13:25:33,506 - __main__ - DEBUG - Converted integral expression: 'int(1/x, x)'
+2024-12-27 13:25:33,507 - __main__ - DEBUG - After explicit multiplication: 'int(1/x, x)'
+2024-12-27 13:25:33,548 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/x, x)'
+2024-12-27 13:25:33,548 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/x, x)'
+2024-12-27 13:25:33,710 - __main__ - DEBUG - Displayed Result: ln(x)
+2024-12-27 13:25:41,821 - __main__ - DEBUG - Original expression: 'int 1/(x^5+1) dx'
+2024-12-27 13:25:41,821 - __main__ - DEBUG - Original expression: 'int 1/(x^5+1) dx'
+2024-12-27 13:25:41,822 - __main__ - DEBUG - Converted integral expression: 'int(1/(x^5+1), x)'
+2024-12-27 13:25:41,822 - __main__ - DEBUG - After explicit multiplication: 'int(1/(x^5+1), x)'
+2024-12-27 13:25:41,863 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/(x**5 + 1), x)'
+2024-12-27 13:25:41,864 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/(x^5 + 1), x)'
+2024-12-27 13:25:42,273 - __main__ - DEBUG - Displayed Result: ln(x + 1)/5 - ln(x - 5^(1/2)/4 - (2^(1/2)*(5^(1/2) - 5)^(1/2))/4 - 1/4)*(5^(1/2)/20 + (2^(1/2)*(5^(1/2) - 5)^(1/2))/20 + 1/20) - ln(x - 5^(1/2)/4 + (2^(1/2)*(5^(1/2) - 5)^(1/2))/4 - 1/4)*(5^(1/2)/20 - (2^(1/2)*(5^(1/2) - 5)^(1/2))/20 + 1/20) - ln(x - (2^(1/2)*(- 5^(1/2) - 5)^(1/2))/4 + 5^(1/2)/4 - 1/4)*((2^(1/2)*(- 5^(1/2) - 5)^(1/2))/20 - 5^(1/2)/20 + 1/20) + ln(x + (2^(1/2)*(- 5^(1/2) - 5)^(1/2))/4 + 5^(1/2)/4 - 1/4)*((2^(1/2)*(- 5^(1/2) - 5)^(1/2))/20 + 5^(1/2)/20 - 1/20)
+2024-12-27 13:25:55,691 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 13:26:01,388 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 13:32:02,072 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 13:32:12,039 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 13:33:21,570 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 13:33:28,838 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 13:56:41,357 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 13:56:51,924 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 13:59:32,946 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 13:59:40,247 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 14:00:17,956 - __main__ - DEBUG - Original expression: 'int 1/(x^5+1) dx'
+2024-12-27 14:00:17,957 - __main__ - DEBUG - Original expression: 'int 1/(x^5+1) dx'
+2024-12-27 14:00:17,957 - __main__ - DEBUG - Converted integral expression: 'int(1/(x^5+1), x)'
+2024-12-27 14:00:17,958 - __main__ - DEBUG - After explicit multiplication: 'int(1/(x^5+1), x)'
+2024-12-27 14:00:18,025 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/(x**5 + 1), x)'
+2024-12-27 14:00:18,026 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/(x^5 + 1), x)'
+2024-12-27 14:00:18,556 - __main__ - DEBUG - Displayed Result: ln(x + 1)/5 - ln(x - 5^(1/2)/4 - (2^(1/2)*(5^(1/2) - 5)^(1/2))/4 - 1/4)*(5^(1/2)/20 + (2^(1/2)*(5^(1/2) - 5)^(1/2))/20 + 1/20) - ln(x - 5^(1/2)/4 + (2^(1/2)*(5^(1/2) - 5)^(1/2))/4 - 1/4)*(5^(1/2)/20 - (2^(1/2)*(5^(1/2) - 5)^(1/2))/20 + 1/20) - ln(x - (2^(1/2)*(- 5^(1/2) - 5)^(1/2))/4 + 5^(1/2)/4 - 1/4)*((2^(1/2)*(- 5^(1/2) - 5)^(1/2))/20 - 5^(1/2)/20 + 1/20) + ln(x + (2^(1/2)*(- 5^(1/2) - 5)^(1/2))/4 + 5^(1/2)/4 - 1/4)*((2^(1/2)*(- 5^(1/2) - 5)^(1/2))/20 + 5^(1/2)/20 - 1/20)
+2024-12-27 14:09:41,137 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 14:12:10,231 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 14:14:57,924 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 14:15:08,480 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 15:04:48,135 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 15:05:07,470 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 15:10:46,296 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 15:10:55,073 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 15:15:28,310 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 15:15:36,906 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 15:16:22,213 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 15:16:30,453 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 15:17:31,498 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 15:17:40,420 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 15:18:51,750 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 15:19:01,528 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 15:20:39,170 - __main__ - DEBUG - Original expression: '1+1'
+2024-12-27 15:20:39,171 - __main__ - DEBUG - Original expression: '1+1'
+2024-12-27 15:20:39,173 - __main__ - DEBUG - Converted integral expression: '1+1'
+2024-12-27 15:20:39,173 - __main__ - DEBUG - After explicit multiplication: '1+1'
+2024-12-27 15:20:39,209 - __main__ - DEBUG - Converted to SymPy expression: '2'
+2024-12-27 15:20:39,209 - __main__ - DEBUG - Converted to MATLAB expression: '2'
+2024-12-27 15:20:39,238 - __main__ - DEBUG - Displayed Result: 2.0
+2024-12-27 15:20:39,239 - __main__ - ERROR - Error in LaTeX calculation: 'CalculatorApp' object has no attribute 'result_label'
+Traceback (most recent call last):
+  File "/Users/goge/MATLAB-Calculator-on-py/main.py", line 873, in handle_latex_calculation
+    self.result_label.setText(f"Result: {displayed_result}")
+AttributeError: 'CalculatorApp' object has no attribute 'result_label'
+2024-12-27 15:21:08,186 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 15:21:17,200 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 15:21:20,590 - __main__ - DEBUG - Original expression: '1+1'
+2024-12-27 15:21:20,591 - __main__ - DEBUG - Original expression: '1+1'
+2024-12-27 15:21:20,593 - __main__ - DEBUG - Converted integral expression: '1+1'
+2024-12-27 15:21:20,594 - __main__ - DEBUG - After explicit multiplication: '1+1'
+2024-12-27 15:21:20,647 - __main__ - DEBUG - Converted to SymPy expression: '2'
+2024-12-27 15:21:20,648 - __main__ - DEBUG - Converted to MATLAB expression: '2'
+2024-12-27 15:21:20,659 - __main__ - DEBUG - Displayed Result: 2.0
+2024-12-27 15:21:20,659 - __main__ - ERROR - Error in LaTeX calculation: 'CalculatorApp' object has no attribute 'result_label'
+Traceback (most recent call last):
+  File "/Users/goge/MATLAB-Calculator-on-py/main.py", line 873, in handle_latex_calculation
+    self.result_label.setText(f"Result: {displayed_result}")
+AttributeError: 'CalculatorApp' object has no attribute 'result_label'
+2024-12-27 15:23:15,005 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 15:23:24,105 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 15:23:29,510 - __main__ - DEBUG - Original expression: '1+1'
+2024-12-27 15:23:29,512 - __main__ - DEBUG - Original expression: '1+1'
+2024-12-27 15:23:29,515 - __main__ - DEBUG - Converted integral expression: '1+1'
+2024-12-27 15:23:29,516 - __main__ - DEBUG - After explicit multiplication: '1+1'
+2024-12-27 15:23:29,572 - __main__ - DEBUG - Converted to SymPy expression: '2'
+2024-12-27 15:23:29,572 - __main__ - DEBUG - Converted to MATLAB expression: '2'
+2024-12-27 15:23:29,583 - __main__ - DEBUG - Displayed Result: 2.0
+2024-12-27 15:25:54,085 - __main__ - DEBUG - Original expression: 'int 1/(x^5+1) dx'
+2024-12-27 15:25:54,088 - __main__ - DEBUG - Original expression: 'int 1/(x^5+1) dx'
+2024-12-27 15:25:54,088 - __main__ - DEBUG - Converted integral expression: 'int(1/(x^5+1), x)'
+2024-12-27 15:25:54,089 - __main__ - DEBUG - After explicit multiplication: 'int(1/(x^5+1), x)'
+2024-12-27 15:25:54,135 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/(x**5 + 1), x)'
+2024-12-27 15:25:54,136 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/(x^5 + 1), x)'
+2024-12-27 15:25:55,095 - __main__ - DEBUG - Displayed Result: ln(x + 1)/5 - ln(x - 5^(1/2)/4 - (2^(1/2)*(5^(1/2) - 5)^(1/2))/4 - 1/4)*(5^(1/2)/20 + (2^(1/2)*(5^(1/2) - 5)^(1/2))/20 + 1/20) - ln(x - 5^(1/2)/4 + (2^(1/2)*(5^(1/2) - 5)^(1/2))/4 - 1/4)*(5^(1/2)/20 - (2^(1/2)*(5^(1/2) - 5)^(1/2))/20 + 1/20) - ln(x - (2^(1/2)*(- 5^(1/2) - 5)^(1/2))/4 + 5^(1/2)/4 - 1/4)*((2^(1/2)*(- 5^(1/2) - 5)^(1/2))/20 - 5^(1/2)/20 + 1/20) + ln(x + (2^(1/2)*(- 5^(1/2) - 5)^(1/2))/4 + 5^(1/2)/4 - 1/4)*((2^(1/2)*(- 5^(1/2) - 5)^(1/2))/20 + 5^(1/2)/20 - 1/20)
+2024-12-27 15:26:18,647 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 15:26:27,384 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 15:26:34,180 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-27 15:26:34,181 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-27 15:26:34,184 - __main__ - DEBUG - Converted integral expression: 'int(1/x, x)'
+2024-12-27 15:26:34,185 - __main__ - DEBUG - After explicit multiplication: 'int(1/x, x)'
+2024-12-27 15:26:34,231 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/x, x)'
+2024-12-27 15:26:34,232 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/x, x)'
+2024-12-27 15:26:34,396 - __main__ - DEBUG - Displayed Result: ln(x)
+2024-12-27 15:28:25,799 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 15:28:34,852 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 15:29:48,347 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 15:29:57,330 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 15:33:28,186 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 15:33:37,937 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 15:33:43,784 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-27 15:33:43,786 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-27 15:33:43,790 - __main__ - DEBUG - Converted integral expression: 'int(1/x, x)'
+2024-12-27 15:33:43,790 - __main__ - DEBUG - After explicit multiplication: 'int(1/x, x)'
+2024-12-27 15:33:43,844 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/x, x)'
+2024-12-27 15:33:43,844 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/x, x)'
+2024-12-27 15:33:44,018 - __main__ - DEBUG - Displayed Result: ln(x)
+2024-12-27 15:34:13,172 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 15:34:15,854 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 15:34:50,045 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 15:34:59,305 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 15:35:39,654 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 15:35:47,131 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 15:37:19,816 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 15:37:28,991 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 15:40:15,848 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 15:40:24,560 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 15:42:33,525 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 15:42:41,746 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 15:44:02,607 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 15:44:12,415 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 15:44:56,671 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 15:45:03,512 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 15:48:16,333 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 15:48:41,206 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 15:55:04,889 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 15:56:34,759 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 15:56:45,435 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 16:01:39,222 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 16:01:49,577 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 16:03:16,249 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 16:03:24,870 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 16:04:25,415 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 16:04:34,712 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 16:08:20,495 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 16:08:30,738 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 16:11:32,608 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 16:11:42,706 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 16:14:29,457 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 16:14:43,636 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 16:15:18,443 - __main__ - DEBUG - Original expression: 'int 1/(x^5+1) dx'
+2024-12-27 16:15:18,444 - __main__ - DEBUG - Original expression: 'int 1/(x^5+1) dx'
+2024-12-27 16:15:18,446 - __main__ - DEBUG - Converted integral expression: 'int(1/(x^5+1), x)'
+2024-12-27 16:15:18,447 - __main__ - DEBUG - After explicit multiplication: 'int(1/(x^5+1), x)'
+2024-12-27 16:15:18,542 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/(x**5 + 1), x)'
+2024-12-27 16:15:18,543 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/(x^5 + 1), x)'
+2024-12-27 16:15:20,802 - __main__ - DEBUG - Displayed Result: ln(x + 1)/5 - ln(x - 5^(1/2)/4 - (2^(1/2)*(5^(1/2) - 5)^(1/2))/4 - 1/4)*(5^(1/2)/20 + (2^(1/2)*(5^(1/2) - 5)^(1/2))/20 + 1/20) - ln(x - 5^(1/2)/4 + (2^(1/2)*(5^(1/2) - 5)^(1/2))/4 - 1/4)*(5^(1/2)/20 - (2^(1/2)*(5^(1/2) - 5)^(1/2))/20 + 1/20) - ln(x - (2^(1/2)*(- 5^(1/2) - 5)^(1/2))/4 + 5^(1/2)/4 - 1/4)*((2^(1/2)*(- 5^(1/2) - 5)^(1/2))/20 - 5^(1/2)/20 + 1/20) + ln(x + (2^(1/2)*(- 5^(1/2) - 5)^(1/2))/4 + 5^(1/2)/4 - 1/4)*((2^(1/2)*(- 5^(1/2) - 5)^(1/2))/20 + 5^(1/2)/20 - 1/20)
+2024-12-27 16:19:21,439 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 16:19:30,269 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 16:20:21,531 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-27 16:20:21,532 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-27 16:20:21,534 - __main__ - DEBUG - Converted integral expression: 'int(1/x, x)'
+2024-12-27 16:20:21,535 - __main__ - DEBUG - After explicit multiplication: 'int(1/x, x)'
+2024-12-27 16:20:21,585 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/x, x)'
+2024-12-27 16:20:21,585 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/x, x)'
+2024-12-27 16:20:21,862 - __main__ - DEBUG - Displayed Result: ln(x)
+2024-12-27 16:20:27,726 - __main__ - DEBUG - Original expression: 'sin(30)'
+2024-12-27 16:20:27,727 - __main__ - DEBUG - Original expression: 'sin(30)'
+2024-12-27 16:20:27,727 - __main__ - DEBUG - Converted integral expression: 'sin(30)'
+2024-12-27 16:20:27,727 - __main__ - DEBUG - After explicit multiplication: 'sin(30)'
+2024-12-27 16:20:27,733 - __main__ - DEBUG - Converted to SymPy expression: 'sin(30)'
+2024-12-27 16:20:27,734 - __main__ - DEBUG - Converted to MATLAB expression: 'sin(30)'
+2024-12-27 16:20:27,747 - __main__ - DEBUG - Displayed Result: 0.5
+2024-12-27 16:20:37,835 - __main__ - DEBUG - Original expression: 'int 1/(x^5+1) dx'
+2024-12-27 16:20:37,836 - __main__ - DEBUG - Original expression: 'int 1/(x^5+1) dx'
+2024-12-27 16:20:37,836 - __main__ - DEBUG - Converted integral expression: 'int(1/(x^5+1), x)'
+2024-12-27 16:20:37,836 - __main__ - DEBUG - After explicit multiplication: 'int(1/(x^5+1), x)'
+2024-12-27 16:20:37,878 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/(x**5 + 1), x)'
+2024-12-27 16:20:37,879 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/(x^5 + 1), x)'
+2024-12-27 16:20:38,294 - __main__ - DEBUG - Displayed Result: ln(x
++ 1)/5
+- ln(x
+- 5^(1/2)/4
+- (2^(1/2)*(5^(1/2)
+- 5)^(1/2))/4
+- 1/4)*(5^(1/2)/20
++ (2^(1/2)*(5^(1/2)
+- 5)^(1/2))/20
++ 1/20)
+- ln(x
+- 5^(1/2)/4
++ (2^(1/2)*(5^(1/2)
+- 5)^(1/2))/4
+- 1/4)*(5^(1/2)/20
+- (2^(1/2)*(5^(1/2)
+- 5)^(1/2))/20
++ 1/20)
+- ln(x
+- (2^(1/2)*(- 5^(1/2)
+- 5)^(1/2))/4
++ 5^(1/2)/4
+- 1/4)*((2^(1/2)*(- 5^(1/2)
+- 5)^(1/2))/20
+- 5^(1/2)/20
++ 1/20)
++ ln(x
++ (2^(1/2)*(- 5^(1/2)
+- 5)^(1/2))/4
++ 5^(1/2)/4
+- 1/4)*((2^(1/2)*(- 5^(1/2)
+- 5)^(1/2))/20
++ 5^(1/2)/20
+- 1/20)
+2024-12-27 16:21:10,864 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 16:21:19,069 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 16:21:56,276 - __main__ - DEBUG - Original expression: 'int 1/(x^5+1) dx'
+2024-12-27 16:21:56,278 - __main__ - DEBUG - Original expression: 'int 1/(x^5+1) dx'
+2024-12-27 16:21:56,279 - __main__ - DEBUG - Converted integral expression: 'int(1/(x^5+1), x)'
+2024-12-27 16:21:56,279 - __main__ - DEBUG - After explicit multiplication: 'int(1/(x^5+1), x)'
+2024-12-27 16:21:56,350 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/(x**5 + 1), x)'
+2024-12-27 16:21:56,351 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/(x^5 + 1), x)'
+2024-12-27 16:21:56,889 - __main__ - DEBUG - Displayed Result: ln(x + 1)/5 - ln(x - 5^(1/2)/4 - (2^(1/2)*(5^(1/2) - 5)^(1/2))/4 - 1/4)*(5^(1/2)/20 + (2^(1/2)*(5^(1/2) - 5)^(1/2))/20 + 1/20) - ln(x - 5^(1/2)/4 + (2^(1/2)*(5^(1/2) - 5)^(1/2))/4 - 1/4)*(5^(1/2)/20 - (2^(1/2)*(5^(1/2) - 5)^(1/2))/20 + 1/20) - ln(x - (2^(1/2)*(- 5^(1/2) - 5)^(1/2))/4 + 5^(1/2)/4 - 1/4)*((2^(1/2)*(- 5^(1/2) - 5)^(1/2))/20 - 5^(1/2)/20 + 1/20) + ln(x + (2^(1/2)*(- 5^(1/2) - 5)^(1/2))/4 + 5^(1/2)/4 - 1/4)*((2^(1/2)*(- 5^(1/2) - 5)^(1/2))/20 + 5^(1/2)/20 - 1/20)
+2024-12-27 16:22:09,008 - __main__ - DEBUG - Original expression: '1+1'
+2024-12-27 16:22:09,009 - __main__ - DEBUG - Original expression: '1+1'
+2024-12-27 16:22:09,009 - __main__ - DEBUG - Converted integral expression: '1+1'
+2024-12-27 16:22:09,009 - __main__ - DEBUG - After explicit multiplication: '1+1'
+2024-12-27 16:22:09,011 - __main__ - DEBUG - Converted to SymPy expression: '2'
+2024-12-27 16:22:09,011 - __main__ - DEBUG - Converted to MATLAB expression: '2'
+2024-12-27 16:22:09,034 - __main__ - DEBUG - Displayed Result: 2.0
+2024-12-27 16:22:32,414 - __main__ - DEBUG - Original expression: 'int 1/(x^4 + 1) dx'
+2024-12-27 16:22:32,415 - __main__ - DEBUG - Original expression: 'int 1/(x^4 + 1) dx'
+2024-12-27 16:22:32,416 - __main__ - DEBUG - Converted integral expression: 'int(1/(x^4 + 1), x)'
+2024-12-27 16:22:32,416 - __main__ - DEBUG - After explicit multiplication: 'int(1/(x^4 + 1), x)'
+2024-12-27 16:22:32,420 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/(x**4 + 1), x)'
+2024-12-27 16:22:32,421 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/(x^4 + 1), x)'
+2024-12-27 16:22:32,547 - __main__ - DEBUG - Displayed Result: 2^(1/2)*atan(2^(1/2)*x*(1/2 - 1i/2))*(1/4 + 1i/4) + 2^(1/2)*atan(2^(1/2)*x*(1/2 + 1i/2))*(1/4 - 1i/4)
+2024-12-27 16:22:37,414 - __main__ - DEBUG - Original expression: 'int 1/(x^5 + 1) dx'
+2024-12-27 16:22:37,414 - __main__ - DEBUG - Original expression: 'int 1/(x^5 + 1) dx'
+2024-12-27 16:22:37,414 - __main__ - DEBUG - Converted integral expression: 'int(1/(x^5 + 1), x)'
+2024-12-27 16:22:37,415 - __main__ - DEBUG - After explicit multiplication: 'int(1/(x^5 + 1), x)'
+2024-12-27 16:22:37,416 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/(x**5 + 1), x)'
+2024-12-27 16:22:37,418 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/(x^5 + 1), x)'
+2024-12-27 16:22:37,474 - __main__ - DEBUG - Displayed Result: ln(x + 1)/5 - ln(x - 5^(1/2)/4 - (2^(1/2)*(5^(1/2) - 5)^(1/2))/4 - 1/4)*(5^(1/2)/20 + (2^(1/2)*(5^(1/2) - 5)^(1/2))/20 + 1/20) - ln(x - 5^(1/2)/4 + (2^(1/2)*(5^(1/2) - 5)^(1/2))/4 - 1/4)*(5^(1/2)/20 - (2^(1/2)*(5^(1/2) - 5)^(1/2))/20 + 1/20) - ln(x - (2^(1/2)*(- 5^(1/2) - 5)^(1/2))/4 + 5^(1/2)/4 - 1/4)*((2^(1/2)*(- 5^(1/2) - 5)^(1/2))/20 - 5^(1/2)/20 + 1/20) + ln(x + (2^(1/2)*(- 5^(1/2) - 5)^(1/2))/4 + 5^(1/2)/4 - 1/4)*((2^(1/2)*(- 5^(1/2) - 5)^(1/2))/20 + 5^(1/2)/20 - 1/20)
+2024-12-27 16:23:34,322 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 16:23:42,955 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 16:23:55,029 - __main__ - DEBUG - Original expression: 'int 1/(x^5 + 1) dx'
+2024-12-27 16:23:55,030 - __main__ - DEBUG - Original expression: 'int 1/(x^5 + 1) dx'
+2024-12-27 16:23:55,031 - __main__ - DEBUG - Converted integral expression: 'int(1/(x^5 + 1), x)'
+2024-12-27 16:23:55,032 - __main__ - DEBUG - After explicit multiplication: 'int(1/(x^5 + 1), x)'
+2024-12-27 16:23:55,104 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/(x**5 + 1), x)'
+2024-12-27 16:23:55,105 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/(x^5 + 1), x)'
+2024-12-27 16:23:55,627 - __main__ - DEBUG - Displayed Result: ln(x + 1)/5 - ln(x - 5^(1/2)/4 - (2^(1/2)*(5^(1/2) - 5)^(1/2))/4 - 1/4)*(5^(1/2)/20 + (2^(1/2)*(5^(1/2) - 5)^(1/2))/20 + 1/20) - ln(x - 5^(1/2)/4 + (2^(1/2)*(5^(1/2) - 5)^(1/2))/4 - 1/4)*(5^(1/2)/20 - (2^(1/2)*(5^(1/2) - 5)^(1/2))/20 + 1/20) - ln(x - (2^(1/2)*(- 5^(1/2) - 5)^(1/2))/4 + 5^(1/2)/4 - 1/4)*((2^(1/2)*(- 5^(1/2) - 5)^(1/2))/20 - 5^(1/2)/20 + 1/20) + ln(x + (2^(1/2)*(- 5^(1/2) - 5)^(1/2))/4 + 5^(1/2)/4 - 1/4)*((2^(1/2)*(- 5^(1/2) - 5)^(1/2))/20 + 5^(1/2)/20 - 1/20)
+2024-12-27 16:24:33,071 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 16:24:39,341 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 16:28:01,838 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 16:28:10,717 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 16:30:36,012 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 16:30:43,744 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 16:31:52,945 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 16:32:01,757 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 16:32:22,993 - __main__ - DEBUG - Original expression: 'int 1/(x^5 +1) dx'
+2024-12-27 16:32:22,994 - __main__ - DEBUG - Original expression: 'int 1/(x^5 +1) dx'
+2024-12-27 16:32:22,997 - __main__ - DEBUG - Converted integral expression: 'int(1/(x^5 +1), x)'
+2024-12-27 16:32:22,997 - __main__ - DEBUG - After explicit multiplication: 'int(1/(x^5 +1), x)'
+2024-12-27 16:32:23,069 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/(x**5 + 1), x)'
+2024-12-27 16:32:23,069 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/(x^5 + 1), x)'
+2024-12-27 16:32:23,598 - __main__ - DEBUG - Displayed Result: ln(x + 1)/5 - ln(x - 5^(1/2)/4 - (2^(1/2)*(5^(1/2) - 5)^(1/2))/4 - 1/4)*(5^(1/2)/20 + (2^(1/2)*(5^(1/2) - 5)^(1/2))/20 + 1/20) - ln(x - 5^(1/2)/4 + (2^(1/2)*(5^(1/2) - 5)^(1/2))/4 - 1/4)*(5^(1/2)/20 - (2^(1/2)*(5^(1/2) - 5)^(1/2))/20 + 1/20) - ln(x - (2^(1/2)*(- 5^(1/2) - 5)^(1/2))/4 + 5^(1/2)/4 - 1/4)*((2^(1/2)*(- 5^(1/2) - 5)^(1/2))/20 - 5^(1/2)/20 + 1/20) + ln(x + (2^(1/2)*(- 5^(1/2) - 5)^(1/2))/4 + 5^(1/2)/4 - 1/4)*((2^(1/2)*(- 5^(1/2) - 5)^(1/2))/20 + 5^(1/2)/20 - 1/20)
+2024-12-27 16:35:30,059 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 16:35:40,749 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 16:36:09,920 - __main__ - DEBUG - Original expression: 'int 1/(x^5 + 1) dx'
+2024-12-27 16:36:09,921 - __main__ - DEBUG - Original expression: 'int 1/(x^5 + 1) dx'
+2024-12-27 16:36:09,923 - __main__ - DEBUG - Converted integral expression: 'int(1/(x^5 + 1), x)'
+2024-12-27 16:36:09,923 - __main__ - DEBUG - After explicit multiplication: 'int(1/(x^5 + 1), x)'
+2024-12-27 16:36:10,006 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/(x**5 + 1), x)'
+2024-12-27 16:36:10,007 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/(x^5 + 1), x)'
+2024-12-27 16:36:10,601 - __main__ - DEBUG - Displayed Result: ln(x + 1)/5 - ln(x - 5^(1/2)/4 - (2^(1/2)*(5^(1/2) - 5)^(1/2))/4 - 1/4)*(5^(1/2)/20 + (2^(1/2)*(5^(1/2) - 5)^(1/2))/20 + 1/20) - ln(x - 5^(1/2)/4 + (2^(1/2)*(5^(1/2) - 5)^(1/2))/4 - 1/4)*(5^(1/2)/20 - (2^(1/2)*(5^(1/2) - 5)^(1/2))/20 + 1/20) - ln(x - (2^(1/2)*(- 5^(1/2) - 5)^(1/2))/4 + 5^(1/2)/4 - 1/4)*((2^(1/2)*(- 5^(1/2) - 5)^(1/2))/20 - 5^(1/2)/20 + 1/20) + ln(x + (2^(1/2)*(- 5^(1/2) - 5)^(1/2))/4 + 5^(1/2)/4 - 1/4)*((2^(1/2)*(- 5^(1/2) - 5)^(1/2))/20 + 5^(1/2)/20 - 1/20)
+2024-12-27 16:37:26,529 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 16:37:36,920 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 16:38:22,478 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 16:38:29,845 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 16:40:03,506 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 16:40:12,777 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 16:42:30,948 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 16:42:39,750 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 16:43:49,418 - __main__ - DEBUG - Original expression: 'int 1/(x^5+1) dx'
+2024-12-27 16:43:49,419 - __main__ - DEBUG - Original expression: 'int 1/(x^5+1) dx'
+2024-12-27 16:43:49,422 - __main__ - DEBUG - Converted integral expression: 'int(1/(x^5+1), x)'
+2024-12-27 16:43:49,423 - __main__ - DEBUG - After explicit multiplication: 'int(1/(x^5+1), x)'
+2024-12-27 16:43:49,512 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/(x**5 + 1), x)'
+2024-12-27 16:43:49,513 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/(x^5 + 1), x)'
+2024-12-27 16:43:50,107 - __main__ - DEBUG - Displayed Result: ln(x + 1)/5 - ln(x - 5^(1/2)/4 - (2^(1/2)*(5^(1/2) - 5)^(1/2))/4 - 1/4)*(5^(1/2)/20 + (2^(1/2)*(5^(1/2) - 5)^(1/2))/20 + 1/20) - ln(x - 5^(1/2)/4 + (2^(1/2)*(5^(1/2) - 5)^(1/2))/4 - 1/4)*(5^(1/2)/20 - (2^(1/2)*(5^(1/2) - 5)^(1/2))/20 + 1/20) - ln(x - (2^(1/2)*(- 5^(1/2) - 5)^(1/2))/4 + 5^(1/2)/4 - 1/4)*((2^(1/2)*(- 5^(1/2) - 5)^(1/2))/20 - 5^(1/2)/20 + 1/20) + ln(x + (2^(1/2)*(- 5^(1/2) - 5)^(1/2))/4 + 5^(1/2)/4 - 1/4)*((2^(1/2)*(- 5^(1/2) - 5)^(1/2))/20 + 5^(1/2)/20 - 1/20)
+2024-12-27 16:44:36,618 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 16:44:44,948 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 16:45:29,717 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 16:46:08,749 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 16:46:18,486 - __main__ - INFO - MATLAB engine started successfully
+2024-12-27 16:46:33,141 - __main__ - DEBUG - Original expression: 'int 1/(x^5 + 1) dx'
+2024-12-27 16:46:33,142 - __main__ - DEBUG - Original expression: 'int 1/(x^5 + 1) dx'
+2024-12-27 16:46:33,147 - __main__ - DEBUG - Converted integral expression: 'int(1/(x^5 + 1), x)'
+2024-12-27 16:46:33,149 - __main__ - DEBUG - After explicit multiplication: 'int(1/(x^5 + 1), x)'
+2024-12-27 16:46:33,229 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/(x**5 + 1), x)'
+2024-12-27 16:46:33,229 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/(x^5 + 1), x)'
+2024-12-27 16:46:33,798 - __main__ - DEBUG - Displayed Result: ln(x + 1)/5 - ln(x - 5^(1/2)/4 - (2^(1/2)*(5^(1/2) - 5)^(1/2))/4 - 1/4)*(5^(1/2)/20 + (2^(1/2)*(5^(1/2) - 5)^(1/2))/20 + 1/20) - ln(x - 5^(1/2)/4 + (2^(1/2)*(5^(1/2) - 5)^(1/2))/4 - 1/4)*(5^(1/2)/20 - (2^(1/2)*(5^(1/2) - 5)^(1/2))/20 + 1/20) - ln(x - (2^(1/2)*(- 5^(1/2) - 5)^(1/2))/4 + 5^(1/2)/4 - 1/4)*((2^(1/2)*(- 5^(1/2) - 5)^(1/2))/20 - 5^(1/2)/20 + 1/20) + ln(x + (2^(1/2)*(- 5^(1/2) - 5)^(1/2))/4 + 5^(1/2)/4 - 1/4)*((2^(1/2)*(- 5^(1/2) - 5)^(1/2))/20 + 5^(1/2)/20 - 1/20)
+2024-12-27 16:46:41,639 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2024-12-27 16:46:41,641 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2024-12-27 16:46:41,641 - __main__ - DEBUG - Converted integral expression: 'int(ln(x), x)'
+2024-12-27 16:46:41,641 - __main__ - DEBUG - After explicit multiplication: 'int(ln(x), x)'
+2024-12-27 16:46:41,647 - __main__ - DEBUG - Converted to SymPy expression: 'int(log(x), x)'
+2024-12-27 16:46:41,648 - __main__ - DEBUG - Converted to MATLAB expression: 'int(log(x), x)'
+2024-12-27 16:46:41,738 - __main__ - DEBUG - Displayed Result: x*(ln(x) - 1)
+2024-12-27 16:47:22,966 - __main__ - INFO - Initializing Calculator Application
+2024-12-27 16:47:32,474 - __main__ - INFO - MATLAB engine started successfully

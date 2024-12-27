@@ -1,4 +1,8 @@
-from PyQt5.QtWidgets import QPushButton, QLabel, QComboBox, QHBoxLayout, QVBoxLayout, QMenu, QTextEdit
+from PyQt5.QtWidgets import (
+    QPushButton, QLabel, QComboBox, QHBoxLayout, QVBoxLayout, QMenu, QTextEdit,
+    QSizePolicy, QInputDialog, QMessageBox, QScrollArea, QSpacerItem
+)
+from PyQt5.QtGui import QFont, QTextOption, QIcon
 from PyQt5.QtCore import Qt
 from themes.theme_manager import get_tokyo_night_theme, get_aura_theme, get_light_theme
 from ui.legend_window import LegendWindow
@@ -15,6 +19,10 @@ class UIComponents:
         """
         self.parent = parent
 
+        self.parent.PLACEHOLDER_TEXT = 'Enter LaTeX expression, e.g., \\binom{5}{2} + sin(pi/2)\n' \
+            'Or MATLAB expression, e.g., nchoosek(5,2) + sin(pi/2)'
+        self.parent.FORMULA_FONT = QFont("Arial", 13)
+
     def init_ui(self):
         """Initialize the calculator's user interface."""
         self._setup_window()
@@ -30,26 +38,25 @@ class UIComponents:
             'result': self._create_result_components()
         }
         
+        # Create a vertical spacer
+        vertical_spacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Fixed)
+        
         # Add all layouts to main layout in order
-        for layout in layouts.values():
-            if isinstance(layout, (list, tuple)):
-                for item in layout:
-                    if isinstance(item, QHBoxLayout):
-                        main_layout.addLayout(item)
-                    else:
-                        main_layout.addWidget(item)
+        for key, layout in layouts.items():
+            if isinstance(layout, (QHBoxLayout, QVBoxLayout)):
+                main_layout.addLayout(layout)
             else:
-                if isinstance(layout, QHBoxLayout):
-                    main_layout.addLayout(layout)
-                else:
-                    main_layout.addWidget(layout)
+                main_layout.addWidget(layout)
+            # Add spacing after mode selection
+            if key == 'angle':
+                main_layout.addSpacerItem(vertical_spacer)
         
         self.parent.setLayout(main_layout)
 
     def _setup_window(self):
         """Set up the main window properties."""
         self.parent.setWindowTitle('Scientific Calculator')
-        self.parent.setGeometry(100, 100, 600, 450)
+        self.parent.setGeometry(100, 100, 700, 500)
 
     def _create_top_buttons(self):
         """Create theme and legend buttons."""
@@ -103,44 +110,137 @@ class UIComponents:
         angle_layout.addWidget(self.parent.label_angle)
         angle_layout.addWidget(self.parent.combo_angle)
         angle_layout.addStretch()
+        angle_layout.addSpacing(10)
         return angle_layout
+    
 
     def _create_matrix_components(self):
         """Create matrix operation components."""
-        matrix_layout = QHBoxLayout()
+        matrix_layout = QVBoxLayout()  # Changed to QVBoxLayout for better organization
+        
+        # Create matrix input text area
+        self.parent.matrix_input = QTextEdit()
+        self.parent.matrix_input.setPlaceholderText(
+            "Enter matrix in MATLAB format, e.g., [1 2; 3 4]\n"
+            "Or [1, 2; 3, 4] for comma-separated values"
+        )
+        self.parent.matrix_input.setFont(QFont("Arial", 13))
+        self.parent.matrix_input.setFixedHeight(100)
+        self.parent.matrix_input.hide()  # Initially hidden
+        
+        # Create matrix operation selection
+        operation_layout = QHBoxLayout()
+        self.parent.label_matrix_op = QLabel('Matrix Operation:')
+        self.parent.label_matrix_op.setFixedWidth(120)
+        self.parent.combo_matrix_op = QComboBox()
+        self.parent.combo_matrix_op.addItems([
+            'Determinant', 'Inverse', 'Eigenvalues', 'Rank',
+            'Multiply', 'Add', 'Subtract', 'Divide', 'Differentiate'
+        ])
+        self.parent.combo_matrix_op.setFixedWidth(130)
+        self.parent.combo_matrix_op.hide()
+        self.parent.label_matrix_op.hide()
+        
+        operation_layout.addWidget(self.parent.label_matrix_op)
+        operation_layout.addWidget(self.parent.combo_matrix_op)
+        operation_layout.addStretch()
+        
+        # Create matrix memory buttons layout
+        button_layout = QHBoxLayout()
         
         # Create Store Matrix Button
         self.parent.store_matrix_button = QPushButton('Store Matrix')
         self.parent.store_matrix_button.setFixedSize(120, 30)
-        self.parent.store_matrix_button.clicked.connect(self.parent.store_matrix)  # Connect to parent
+        self.parent.store_matrix_button.clicked.connect(self.parent.store_matrix)
+        self.parent.store_matrix_button.hide()
         
         # Create Recall Matrix Button
         self.parent.recall_matrix_button = QPushButton('Recall Matrix')
         self.parent.recall_matrix_button.setFixedSize(120, 30)
-        self.parent.recall_matrix_button.clicked.connect(self.parent.recall_matrix)  # Connect to parent
+        self.parent.recall_matrix_button.clicked.connect(self.parent.recall_matrix)
+        self.parent.recall_matrix_button.hide()
         
-        matrix_layout.addWidget(self.parent.store_matrix_button)
-        matrix_layout.addWidget(self.parent.recall_matrix_button)
-        matrix_layout.addStretch()
+        button_layout.addWidget(self.parent.store_matrix_button)
+        button_layout.addWidget(self.parent.recall_matrix_button)
+        button_layout.addStretch()
         
+        # Add all components to the main matrix layout
+        matrix_layout.addWidget(self.parent.matrix_input)
+        matrix_layout.addLayout(operation_layout)
+        matrix_layout.addLayout(button_layout)
+        
+        # Initially hide matrix-related components; visibility managed by mode_config
+        self.parent.store_matrix_button.hide()
+        self.parent.recall_matrix_button.hide()
         return matrix_layout
 
     def _create_formula_components(self):
-        """Create formula input components."""
+        """Create formula input components with vertical layout."""
+        # Create main horizontal layout for label and input section
         formula_layout = QHBoxLayout()
+        formula_layout.setContentsMargins(0, 0, 0, 0)
+        formula_layout.setSpacing(0)
+        
+        # Create and configure the 'Math Input' label
+        self.parent.label_formula = QLabel('Math Input:')
+        self.parent.label_formula.setFont(QFont("Arial", 13, QFont.Bold))
+        self.parent.label_formula.setFixedWidth(100)  # Match width with other labels
+        self.parent.label_formula.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)  # Align vertically center
+        
+        # Create vertical layout for input and button
+        input_button_layout = QVBoxLayout()
+        input_button_layout.setContentsMargins(0, 0, 0, 0)
+        input_button_layout.setSpacing(20)  # Space between input and button
+        
+        # Create and configure the formula entry area
         self.parent.entry_formula = QTextEdit()
         self.parent.entry_formula.setPlaceholderText(self.parent.PLACEHOLDER_TEXT)
         self.parent.entry_formula.setFont(self.parent.FORMULA_FONT)
-        formula_layout.addWidget(self.parent.entry_formula)
+        self.parent.entry_formula.setFixedHeight(100)
+        self.parent.entry_formula.setStyleSheet("QTextEdit { margin-top: 0px; padding-top: 0px; }")
+        
+        # Create and configure the 'Calculate' button
+        self.parent.calculate_button = QPushButton('Calculate')
+        self.parent.calculate_button.clicked.connect(self.parent.calculate)
+        self.parent.calculate_button.setFixedHeight(30)
+        
+        # Add input and button to vertical layout
+        input_button_layout.addWidget(self.parent.entry_formula)
+        input_button_layout.addWidget(self.parent.calculate_button)
+        
+        # Add label and input-button section to main layout
+        formula_layout.addWidget(self.parent.label_formula)
+        formula_layout.addLayout(input_button_layout)
+        
         return formula_layout
 
     def _create_result_components(self):
         """Create result display components."""
-        result_layout = QHBoxLayout()
+        result_layout = QVBoxLayout()  # Changed to vertical layout
+        result_layout.setContentsMargins(0, 10, 0, 0)  # Add some top margin
+        
+        # Create header layout for the "Result:" label
+        header_layout = QHBoxLayout()
         self.parent.result_label = QLabel('Result:')
         self.parent.result_label.setFont(QFont("Arial", 13, QFont.Bold))
-        result_layout.addWidget(self.parent.result_label)
-        result_layout.addStretch()
+        header_layout.addWidget(self.parent.result_label)
+        header_layout.addStretch()
+        
+        # Create and configure the result display label
+        self.parent.result_display = QLabel()
+        self.parent.result_display.setFont(QFont("Arial", 13))
+        self.parent.result_display.setWordWrap(True)  # Enable word wrap
+        self.parent.result_display.setTextInteractionFlags(Qt.TextSelectableByMouse)  # Make text selectable
+        self.parent.result_display.setStyleSheet("""
+            QLabel {
+                padding: 10px;
+                background-color: rgba(255, 255, 255, 0.1);
+                border-radius: 5px;
+            }
+        """)
+        
+        # Add both layouts
+        result_layout.addLayout(header_layout)
+        result_layout.addWidget(self.parent.result_display)
+        
         return result_layout
-
-    # You can add additional UI component creation methods here if needed.

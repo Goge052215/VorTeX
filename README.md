@@ -30,7 +30,7 @@ A PyQt5-based scientific calculator that supports $\LaTeX$ input, integrates wit
    pip install -r requirements.txt
    ```
 
-   This method is deprecated. The automatic installation method is recommended, see [modules_import.py](modules/modules_import.py), which will automatically install the necessary modules.
+   The requirement list is in [requirements.txt](requirements.txt)
 
 3. **Run the Application:**
 
@@ -95,6 +95,14 @@ A PyQt5-based scientific calculator that supports $\LaTeX$ input, integrates wit
 | `\infty`       | `infty`                |
 
 for more shortcuts, see [shortcut.py](latex_pack/shortcut.py)
+
+### Example for $\LaTeX$ Mode
+
+```LaTeX
+int 1/x dx           ->  ln(x)
+d2/dx2 (4x^10)       ->  320x^8
+tan(90) or tan(pi/2) ->  inf
+```
 
 ## Troubleshooting
 

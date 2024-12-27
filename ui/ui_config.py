@@ -46,15 +46,17 @@ class UiConfig:
                     calculator.recall_matrix_button
                 ],
                 'hide': [
+                    calculator.label_formula,
                     calculator.entry_formula,
-                    calculator.label_formula
+                    calculator.calculate_button
                 ],
                 'dimensions': (450, 600)  # (height, width)
             },
             'default': {
                 'show': [
+                    calculator.label_formula,
                     calculator.entry_formula,
-                    calculator.label_formula
+                    calculator.calculate_button
                 ],
                 'hide': [
                     calculator.matrix_input,
@@ -63,7 +65,7 @@ class UiConfig:
                     calculator.store_matrix_button,
                     calculator.recall_matrix_button
                 ],
-                'dimensions': (400, 600)  # (height, width)
+                'dimensions': (500, 700)  # (height, width)
             }
         }
 
