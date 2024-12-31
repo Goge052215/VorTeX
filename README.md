@@ -106,17 +106,52 @@ for more shortcuts, see [shortcut.py](latex_pack/shortcut.py)
 
 ### Example for $\LaTeX$ Mode
 
-1. `int 1/x dx` $\rightarrow$ $\displaystyle \int \frac{1}{x} \, \text{d}x = \ln(x)$
+1. `int 1/x dx` $\rightarrow$ $\displaystyle \int \frac{1}{x} \text{d}x = \ln(x)$
 2. `d2/dx2 (4x^10)` $\rightarrow$ $\displaystyle \frac{\text{d}^2}{\text{d}x^2} (4x^{10}) = 320x^8$
 3. `binom(5, 2)` $\rightarrow$ $\displaystyle \binom{5}{2} = 10$
 4. `tan(90) or tan(pi/2)` $\rightarrow$ $\tan(90) = \infty$
 
 ### Example for Matrix Mode
 
-1. (Determinant Mode) `[1 2; 3 4]` $\rightarrow$ $\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} = -2$
-2. (Inverse Mode) `[1 2; 3 4]` $\rightarrow$ $\begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix}^{-1} = \begin{pmatrix} -2 & 1 \\ 1.5 & -0.5 \end{pmatrix} \rightarrow$ `[[-2.0, 1.0], [1.5, -0.5]]`
-3. (Eigenvalues Mode) `[1 2; 3 4]` $\rightarrow$ $\begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix} = \begin{pmatrix} -0.37 & 0.00 \\ 0.00 & 5.37 \end{pmatrix} \rightarrow$ `[-0.37, 5.37]`
-4. (Rank Mode) `[1 2; 3 4]` $\rightarrow$ $\begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix} = 2$
+1. (Determinant Mode) `[1 2; 3 4]`
+```math
+\begin{bmatrix}
+   1 & 2 \\
+   3 & 4
+\end{bmatrix} = -2
+```
+
+2. (Inverse Mode) `[1 2; 3 4]`
+```math
+\begin{pmatrix}
+   1 & 2 \\
+   3 & 4
+\end{pmatrix}^{-1} = \begin{pmatrix}
+   -2 & 1 \\
+   1.5 & -0.5
+\end{pmatrix}
+```
+Output: `[[-2.0, 1.0], [1.5, -0.5]]`
+
+3. (Eigenvalues Mode) `[1 2; 3 4]`
+```math
+\begin{pmatrix}
+   1 & 2 \\
+   3 & 4
+\end{pmatrix} = \begin{pmatrix}
+   -0.37 & 0.00 \\
+   0.00 & 5.37
+\end{pmatrix}
+```
+Output: `[-0.37, 5.37]`
+
+4. (Rank Mode) `[1 2; 3 4]`
+```math
+\begin{pmatrix}
+   1 & 2 \\
+   3 & 4
+\end{pmatrix} = 2
+```
 
 ## Troubleshooting
 
