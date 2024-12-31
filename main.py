@@ -79,32 +79,6 @@ def download_fonts():
         print(f"Error downloading fonts: {str(e)}")
         return False'''
 
-def preprocess_expression(expression):
-    """
-    Transform integral expressions from 'int expr dvar' to 'int(expr, var)'
-    
-    Args:
-        expression (str): The input expression, e.g., 'int x^2 dx'
-    
-    Returns:
-        str: The transformed expression, e.g., 'int(x^2, x)'
-    """
-    # Regular expression to match 'int expression dvariable'
-    integral_pattern = r'int\s+(.+)\s+d([a-zA-Z])'
-
-    # Function to replace the matched pattern
-    def replace_integral(match):
-        expr = match.group(1).strip()
-        var = match.group(2).strip()
-        # Replace '^' with '.^' for MATLAB compatibility
-        expr = expr.replace('^', '.^')
-        return f'int({expr}, {var})'
-
-    # Substitute all occurrences of the pattern
-    transformed_expression = re.sub(integral_pattern, replace_integral, expression)
-    
-    return transformed_expression
-
 def parse_latex_expression(latex_expr):
     """
     Parse a LaTeX-like expression and convert it to a MATLAB-compatible expression.
@@ -321,6 +295,7 @@ class CalculatorApp(QWidget, LatexCalculation):
             
             # Set window dimensions
             height, width = config['dimensions']
+            
             self.setFixedHeight(height)
             self.setFixedWidth(width)
             
@@ -524,7 +499,9 @@ class CalculatorApp(QWidget, LatexCalculation):
                 'sqrt': lambda args: f"sqrt({args[0]})",
                 'Abs': lambda args: f"abs({args[0]})",
                 'factorial': lambda args: f"factorial({args[0]})",
-                'nchoosek': lambda args: f"nchoosek({args[0]}, {args[1]})"
+                'nchoosek': lambda args: f"nchoosek({args[0]}, {args[1]})",
+                'symsum': lambda args: f"symsum({args[0]}, {args[1]}, {args[2]}, {args[3]})",
+                'prod': lambda args: f"prod({args[0]}, {args[1]}, {args[2]}, {args[3]})"
             }
             
             if func_name in function_handlers:
@@ -847,7 +824,7 @@ class CalculatorApp(QWidget, LatexCalculation):
         """
         try:
             # Preprocess the expression
-            processed_expr = preprocess_expression(expression)
+            processed_expr = EvaluateExpression.preprocess_expression(expression)
             self.logger.debug(f"Processed expression for SymPy: {processed_expr}")
             
             # Sympify the transformed expression

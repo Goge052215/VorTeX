@@ -89,8 +89,8 @@ class ExpressionShortcuts:
     
     # Operator shortcuts
     OPERATOR_SHORTCUTS = {
-        'sum': r'\sum',
-        'prod': r'\prod',
+        'sum (a to b)': r'\sum_{a}^{b}',
+        'prod (a to b)': r'\prod_{a}^{b}',
         'lim': r'\lim',
         'to': r'\to',
         'rightarrow': r'\rightarrow',
@@ -216,4 +216,28 @@ class ExpressionShortcuts:
         """Convert combinatorial expressions to MATLAB format."""
         # Convert nCr(n, k) or nCr to nchoosek(n, k)
         expr = re.sub(r'(\d+)C(\d+)', r'nchoosek(\1, \2)', expr)
+        return expr
+    
+    @staticmethod
+    def convert_sum_prod_expression(expr):
+        """Convert sum and prod expressions to MATLAB format."""
+        # Enhanced pattern to handle spaces and case insensitivity
+        sum_pattern = r'(?i)sum\s*\(\s*(\d+)\s*to\s*(\d+)\s*\)\s*([^\n]+)'
+        
+        def replace_sum(match):
+            start, end, function = match.groups()
+            return f"symsum({function}, x, {start}, {end})"
+
+        expr = re.sub(sum_pattern, replace_sum, expr)
+        
+        # Adjust prod pattern to use a loop or symbolic product
+        prod_pattern = r'(?i)prod\s*\(\s*(\d+)\s*to\s*(\d+)\s*\)\s*([^\n]+)'
+        
+        def replace_prod(match):
+            start, end, function = match.groups()
+            # Use a loop or symbolic product function
+            return f"prod(arrayfun(@(x) {function}, {start}:{end}))"
+
+        expr = re.sub(prod_pattern, replace_prod, expr)
+        
         return expr

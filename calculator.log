@@ -2738,3 +2738,393 @@ Out of range subscript.
 2024-12-31 13:17:20,782 - __main__ - INFO - MATLAB engine terminated
 2024-12-31 13:17:30,496 - __main__ - INFO - Initializing Calculator Application
 2024-12-31 13:17:41,274 - __main__ - INFO - MATLAB engine started successfully
+2024-12-31 14:59:45,331 - __main__ - INFO - Initializing Calculator Application
+2024-12-31 15:00:18,691 - __main__ - INFO - MATLAB engine started successfully
+2024-12-31 15:00:58,050 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-31 15:00:58,056 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-31 15:00:58,059 - __main__ - DEBUG - After binom conversion: 'int 1/x dx'
+2024-12-31 15:00:58,060 - __main__ - DEBUG - Converted integral expression: 'int(1/x, x)'
+2024-12-31 15:00:58,061 - __main__ - DEBUG - After explicit multiplication: 'int(1/x, x)'
+2024-12-31 15:00:58,061 - __main__ - DEBUG - Final MATLAB expression: 'int(1/x, x)'
+2024-12-31 15:00:58,061 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/x, x)'
+2024-12-31 15:00:58,061 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/x, x)'
+2024-12-31 15:00:59,042 - __main__ - DEBUG - Displayed Result: ln(x)
+2024-12-31 15:00:59,065 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-31 15:00:59,065 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-31 15:00:59,065 - __main__ - DEBUG - After binom conversion: 'int 1/x dx'
+2024-12-31 15:00:59,065 - __main__ - DEBUG - Converted integral expression: 'int(1/x, x)'
+2024-12-31 15:00:59,065 - __main__ - DEBUG - After explicit multiplication: 'int(1/x, x)'
+2024-12-31 15:00:59,065 - __main__ - DEBUG - Final MATLAB expression: 'int(1/x, x)'
+2024-12-31 15:00:59,065 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/x, x)'
+2024-12-31 15:00:59,065 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/x, x)'
+2024-12-31 15:00:59,143 - __main__ - DEBUG - Displayed Result: ln(x)
+2024-12-31 15:01:01,680 - __main__ - INFO - MATLAB engine terminated
+2024-12-31 15:01:50,389 - __main__ - INFO - Initializing Calculator Application
+2024-12-31 15:02:09,357 - __main__ - INFO - MATLAB engine started successfully
+2024-12-31 15:03:44,590 - __main__ - DEBUG - Original expression: 'd/dx 2x'
+2024-12-31 15:03:44,591 - __main__ - DEBUG - Original expression: 'd/dx 2x'
+2024-12-31 15:03:44,593 - __main__ - DEBUG - After binom conversion: 'd/dx 2x'
+2024-12-31 15:03:44,594 - __main__ - DEBUG - Converted integral expression: 'd/dx 2x'
+2024-12-31 15:03:44,594 - __main__ - DEBUG - After explicit multiplication: 'd/dx 2*x'
+2024-12-31 15:03:44,594 - __main__ - DEBUG - Final MATLAB expression: 'd/dx 2*x'
+2024-12-31 15:03:44,594 - __main__ - DEBUG - Converted to SymPy expression: 'd/dx 2*x'
+2024-12-31 15:03:44,595 - __main__ - DEBUG - Converted to MATLAB expression: 'd/dx 2*x'
+2024-12-31 15:03:44,781 - __main__ - ERROR - Error in LaTeX calculation: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2024-12-31 15:03:50,464 - __main__ - INFO - MATLAB engine terminated
+2024-12-31 15:04:47,130 - __main__ - INFO - Initializing Calculator Application
+2024-12-31 15:05:05,201 - __main__ - INFO - MATLAB engine started successfully
+2024-12-31 15:05:27,387 - __main__ - DEBUG - Original expression: 'd/dx 2x'
+2024-12-31 15:05:27,389 - __main__ - DEBUG - Original expression: 'd/dx 2x'
+2024-12-31 15:05:27,390 - __main__ - DEBUG - After binom conversion: 'd/dx 2x'
+2024-12-31 15:05:27,391 - __main__ - DEBUG - Converted integral expression: 'd/dx 2x'
+2024-12-31 15:05:27,392 - __main__ - DEBUG - After explicit multiplication: 'd/dx 2*x'
+2024-12-31 15:05:27,392 - __main__ - DEBUG - Final MATLAB expression: 'd/dx 2*x'
+2024-12-31 15:05:27,392 - __main__ - DEBUG - Converted to SymPy expression: 'd/dx 2*x'
+2024-12-31 15:05:27,392 - __main__ - DEBUG - Converted to MATLAB expression: 'd/dx 2*x'
+2024-12-31 15:05:27,585 - __main__ - ERROR - Error in LaTeX calculation: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2024-12-31 15:07:09,443 - __main__ - INFO - MATLAB engine terminated
+2024-12-31 15:07:40,080 - __main__ - INFO - Initializing Calculator Application
+2024-12-31 15:07:59,608 - __main__ - INFO - MATLAB engine started successfully
+2024-12-31 15:08:55,559 - __main__ - DEBUG - Original expression: 'd/dx 2x'
+2024-12-31 15:08:55,563 - __main__ - DEBUG - Original expression: 'd/dx 2x'
+2024-12-31 15:08:55,564 - __main__ - DEBUG - After binom conversion: 'd/dx 2x'
+2024-12-31 15:08:55,565 - __main__ - DEBUG - Converted integral expression: 'd/dx 2x'
+2024-12-31 15:08:55,566 - __main__ - DEBUG - After explicit multiplication: 'd/dx 2*x'
+2024-12-31 15:08:55,566 - __main__ - DEBUG - Final MATLAB expression: 'd/dx 2*x'
+2024-12-31 15:08:55,566 - __main__ - DEBUG - Converted to SymPy expression: 'd/dx 2*x'
+2024-12-31 15:08:55,566 - __main__ - DEBUG - Converted to MATLAB expression: 'd/dx 2*x'
+2024-12-31 15:08:56,057 - __main__ - ERROR - Error in LaTeX calculation: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2024-12-31 15:12:55,728 - __main__ - INFO - MATLAB engine terminated
+2024-12-31 15:13:04,484 - __main__ - INFO - Initializing Calculator Application
+2024-12-31 15:13:21,974 - __main__ - INFO - MATLAB engine started successfully
+2024-12-31 15:13:36,095 - __main__ - DEBUG - Original expression: 'd/dx 2x^4'
+2024-12-31 15:13:36,096 - __main__ - DEBUG - Original expression: 'd/dx 2x^4'
+2024-12-31 15:13:36,098 - __main__ - DEBUG - After binom conversion: 'd/dx 2x^4'
+2024-12-31 15:13:36,099 - __main__ - DEBUG - Converted integral expression: 'd/dx 2x^4'
+2024-12-31 15:13:36,099 - __main__ - DEBUG - After explicit multiplication: 'diff(2*x.^4, x)'
+2024-12-31 15:13:36,099 - __main__ - DEBUG - Final MATLAB expression: 'diff(2*x.^4, x)'
+2024-12-31 15:13:36,099 - __main__ - DEBUG - Converted to SymPy expression: 'diff(2*x.^4, x)'
+2024-12-31 15:13:36,100 - __main__ - DEBUG - Converted to MATLAB expression: 'diff(2*x.^4, x)'
+2024-12-31 15:13:36,684 - __main__ - DEBUG - Displayed Result: 8*x^3
+2024-12-31 15:33:15,014 - __main__ - DEBUG - Original expression: 'd5/dx5 2x^4'
+2024-12-31 15:33:15,017 - __main__ - DEBUG - Original expression: 'd5/dx5 2x^4'
+2024-12-31 15:33:15,017 - __main__ - DEBUG - After binom conversion: 'd5/dx5 2x^4'
+2024-12-31 15:33:15,018 - __main__ - DEBUG - Converted integral expression: 'd5/dx5 2x^4'
+2024-12-31 15:33:15,018 - __main__ - DEBUG - After explicit multiplication: 'diff(2*x.^4, x, 5)'
+2024-12-31 15:33:15,018 - __main__ - DEBUG - Final MATLAB expression: 'diff(2*x.^4, x, 5)'
+2024-12-31 15:33:15,019 - __main__ - DEBUG - Converted to SymPy expression: 'diff(2*x.^4, x, 5)'
+2024-12-31 15:33:15,019 - __main__ - DEBUG - Converted to MATLAB expression: 'diff(2*x.^4, x, 5)'
+2024-12-31 15:33:15,396 - __main__ - DEBUG - Displayed Result: 0.0
+2024-12-31 15:33:18,286 - __main__ - DEBUG - Original expression: 'd5/dx5 2x^14'
+2024-12-31 15:33:18,286 - __main__ - DEBUG - Original expression: 'd5/dx5 2x^14'
+2024-12-31 15:33:18,287 - __main__ - DEBUG - After binom conversion: 'd5/dx5 2x^14'
+2024-12-31 15:33:18,287 - __main__ - DEBUG - Converted integral expression: 'd5/dx5 2x^14'
+2024-12-31 15:33:18,287 - __main__ - DEBUG - After explicit multiplication: 'diff(2*x.^14, x, 5)'
+2024-12-31 15:33:18,287 - __main__ - DEBUG - Final MATLAB expression: 'diff(2*x.^14, x, 5)'
+2024-12-31 15:33:18,287 - __main__ - DEBUG - Converted to SymPy expression: 'diff(2*x.^14, x, 5)'
+2024-12-31 15:33:18,287 - __main__ - DEBUG - Converted to MATLAB expression: 'diff(2*x.^14, x, 5)'
+2024-12-31 15:33:18,524 - __main__ - DEBUG - Displayed Result: 480480*x^9
+2024-12-31 15:33:25,428 - __main__ - INFO - MATLAB engine terminated
+2024-12-31 15:41:49,280 - __main__ - INFO - Initializing Calculator Application
+2024-12-31 15:47:12,601 - __main__ - INFO - Initializing Calculator Application
+2024-12-31 15:47:26,477 - __main__ - INFO - MATLAB engine started successfully
+2024-12-31 15:47:39,112 - __main__ - INFO - MATLAB engine terminated
+2024-12-31 15:48:15,456 - __main__ - INFO - Initializing Calculator Application
+2024-12-31 15:48:31,433 - __main__ - INFO - MATLAB engine started successfully
+2024-12-31 15:48:33,589 - __main__ - INFO - MATLAB engine terminated
+2024-12-31 15:50:12,279 - __main__ - INFO - Initializing Calculator Application
+2024-12-31 15:50:24,671 - __main__ - INFO - MATLAB engine started successfully
+2024-12-31 15:50:44,491 - __main__ - INFO - MATLAB engine terminated
+2024-12-31 18:33:57,052 - __main__ - INFO - Initializing Calculator Application
+2024-12-31 18:34:10,022 - __main__ - INFO - MATLAB engine started successfully
+2024-12-31 18:34:31,414 - __main__ - DEBUG - Original expression: 'sum (1 to 10) x'
+2024-12-31 18:34:31,417 - __main__ - DEBUG - Original expression: 'sum (1 to 10) x'
+2024-12-31 18:34:31,420 - __main__ - DEBUG - After binom conversion: 'sum (1 to 10) x'
+2024-12-31 18:34:31,422 - __main__ - DEBUG - Converted integral expression: 'sum (1 to 10) x'
+2024-12-31 18:34:31,425 - __main__ - DEBUG - After explicit multiplication: 'sum (1 to 10) x'
+2024-12-31 18:34:31,425 - __main__ - DEBUG - Final MATLAB expression: 'sum (1 to 10) x'
+2024-12-31 18:34:31,425 - __main__ - DEBUG - Converted to SymPy expression: 'sum (1 to 10) x'
+2024-12-31 18:34:31,427 - __main__ - DEBUG - Converted to MATLAB expression: 'sum (1 to 10) x'
+2024-12-31 18:34:31,768 - __main__ - ERROR - Error in LaTeX calculation: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2024-12-31 18:52:06,857 - __main__ - INFO - MATLAB engine terminated
+2024-12-31 18:52:34,521 - __main__ - INFO - Initializing Calculator Application
+2024-12-31 18:52:45,736 - __main__ - INFO - MATLAB engine started successfully
+2024-12-31 18:53:05,300 - __main__ - DEBUG - Original expression: 'sum (1 to 5) x'
+2024-12-31 18:53:05,307 - __main__ - DEBUG - Original expression: 'sum (1 to 5) x'
+2024-12-31 18:53:05,311 - __main__ - DEBUG - After binom conversion: 'sum (1 to 5) x'
+2024-12-31 18:53:05,311 - __main__ - DEBUG - Converted integral expression: 'sum (1 to 5) x'
+2024-12-31 18:53:05,312 - __main__ - DEBUG - After explicit multiplication: 'sum (1 to 5) x'
+2024-12-31 18:53:05,312 - __main__ - DEBUG - Final MATLAB expression: 'sum (1 to 5) x'
+2024-12-31 18:53:05,312 - __main__ - DEBUG - Converted to SymPy expression: 'sum (1 to 5) x'
+2024-12-31 18:53:05,313 - __main__ - DEBUG - Converted to MATLAB expression: 'sum (1 to 5) x'
+2024-12-31 18:53:05,669 - __main__ - ERROR - Error in LaTeX calculation: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2024-12-31 18:55:04,356 - __main__ - INFO - MATLAB engine terminated
+2024-12-31 18:55:09,038 - __main__ - INFO - Initializing Calculator Application
+2024-12-31 18:55:18,940 - __main__ - INFO - MATLAB engine started successfully
+2024-12-31 18:55:37,703 - __main__ - DEBUG - Original expression: 'sum (1 to 5) x^2'
+2024-12-31 18:55:37,706 - __main__ - DEBUG - Original expression: 'sum (1 to 5) x^2'
+2024-12-31 18:55:37,708 - __main__ - DEBUG - After binom conversion: 'sum (1 to 5) x^2'
+2024-12-31 18:55:37,708 - __main__ - DEBUG - Converted integral expression: 'sum (1 to 5) x^2'
+2024-12-31 18:55:37,710 - __main__ - DEBUG - After explicit multiplication: 'sum (1 to 5) x^2'
+2024-12-31 18:55:37,710 - __main__ - DEBUG - Final MATLAB expression: 'sum (1 to 5) x^2'
+2024-12-31 18:55:37,710 - __main__ - DEBUG - Converted to SymPy expression: 'sum (1 to 5) x^2'
+2024-12-31 18:55:37,710 - __main__ - DEBUG - Converted to MATLAB expression: 'sum (1 to 5) x^2'
+2024-12-31 18:55:38,026 - __main__ - ERROR - Error in LaTeX calculation: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2024-12-31 19:23:07,936 - __main__ - DEBUG - Original expression: 'sum (1 to 5) x^2'
+2024-12-31 19:23:07,940 - __main__ - DEBUG - Original expression: 'sum (1 to 5) x^2'
+2024-12-31 19:23:07,942 - __main__ - DEBUG - After binom conversion: 'sum (1 to 5) x^2'
+2024-12-31 19:23:07,942 - __main__ - DEBUG - Converted integral expression: 'sum (1 to 5) x^2'
+2024-12-31 19:23:07,943 - __main__ - DEBUG - After explicit multiplication: 'sum (1 to 5) x^2'
+2024-12-31 19:23:07,943 - __main__ - DEBUG - Final MATLAB expression: 'sum (1 to 5) x^2'
+2024-12-31 19:23:07,943 - __main__ - DEBUG - Converted to SymPy expression: 'sum (1 to 5) x^2'
+2024-12-31 19:23:07,944 - __main__ - DEBUG - Converted to MATLAB expression: 'sum (1 to 5) x^2'
+2024-12-31 19:23:08,453 - __main__ - ERROR - Error in LaTeX calculation: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2024-12-31 19:23:10,450 - __main__ - INFO - MATLAB engine terminated
+2024-12-31 20:29:11,000 - __main__ - INFO - Initializing Calculator Application
+2024-12-31 20:29:41,277 - __main__ - INFO - MATLAB engine started successfully
+2024-12-31 20:29:55,071 - __main__ - DEBUG - Original expression: 'sum (1 to 5) x'
+2024-12-31 20:29:55,075 - __main__ - DEBUG - Original expression: 'sum (1 to 5) x'
+2024-12-31 20:29:55,077 - __main__ - DEBUG - After binom conversion: 'sum (1 to 5) x'
+2024-12-31 20:29:55,078 - __main__ - DEBUG - Converted integral expression: 'sum (1 to 5) x'
+2024-12-31 20:29:55,079 - __main__ - DEBUG - After explicit multiplication: 'sum (1 to 5) x'
+2024-12-31 20:29:55,079 - __main__ - DEBUG - Final MATLAB expression: 'sum (1 to 5) x'
+2024-12-31 20:29:55,079 - __main__ - DEBUG - Converted to SymPy expression: 'sum (1 to 5) x'
+2024-12-31 20:29:55,080 - __main__ - DEBUG - Converted to MATLAB expression: 'sum (1 to 5) x'
+2024-12-31 20:29:55,541 - __main__ - ERROR - Error in LaTeX calculation: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2024-12-31 20:31:16,042 - __main__ - INFO - Initializing Calculator Application
+2024-12-31 20:31:48,673 - __main__ - INFO - MATLAB engine started successfully
+2024-12-31 20:32:13,498 - __main__ - DEBUG - Original expression: 'sum (1 to 5) x'
+2024-12-31 20:32:13,502 - __main__ - DEBUG - Original expression: 'sum (1 to 5) x'
+2024-12-31 20:32:13,504 - __main__ - DEBUG - After binom conversion: 'sum (1 to 5) x'
+2024-12-31 20:32:13,505 - __main__ - DEBUG - Converted integral expression: 'sum (1 to 5) x'
+2024-12-31 20:32:13,506 - __main__ - DEBUG - After explicit multiplication: 'sum (1 to 5) x'
+2024-12-31 20:32:13,506 - __main__ - DEBUG - Final MATLAB expression: 'sum (1 to 5) x'
+2024-12-31 20:32:13,506 - __main__ - DEBUG - Converted to SymPy expression: 'sum (1 to 5) x'
+2024-12-31 20:32:13,506 - __main__ - DEBUG - Converted to MATLAB expression: 'sum (1 to 5) x'
+2024-12-31 20:32:13,944 - __main__ - ERROR - Error in LaTeX calculation: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2024-12-31 20:35:00,440 - __main__ - INFO - MATLAB engine terminated
+2024-12-31 20:35:07,792 - __main__ - INFO - Initializing Calculator Application
+2024-12-31 20:35:20,777 - __main__ - INFO - MATLAB engine started successfully
+2024-12-31 20:35:38,685 - __main__ - DEBUG - Original expression: 'sum (1 to 5) x'
+2024-12-31 20:35:38,687 - __main__ - DEBUG - Original expression: 'sum (1 to 5) x'
+2024-12-31 20:35:38,688 - __main__ - DEBUG - After binom conversion: 'sum (1 to 5) x'
+2024-12-31 20:35:38,689 - __main__ - DEBUG - Converted integral expression: 'sum (1 to 5) x'
+2024-12-31 20:35:38,690 - __main__ - DEBUG - After explicit multiplication: 'sum (1 to 5) x'
+2024-12-31 20:35:38,690 - __main__ - DEBUG - Final MATLAB expression: 'sum (1 to 5) x'
+2024-12-31 20:35:38,690 - __main__ - DEBUG - Converted to SymPy expression: 'sum (1 to 5) x'
+2024-12-31 20:35:38,690 - __main__ - DEBUG - Converted to MATLAB expression: 'sum (1 to 5) x'
+2024-12-31 20:35:38,847 - __main__ - ERROR - Error in LaTeX calculation: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2024-12-31 20:37:17,173 - __main__ - INFO - MATLAB engine terminated
+2024-12-31 20:37:24,475 - __main__ - INFO - Initializing Calculator Application
+2024-12-31 20:37:42,248 - __main__ - INFO - MATLAB engine started successfully
+2024-12-31 20:38:00,480 - __main__ - DEBUG - Original expression: 'sum (1 to 5) x^2'
+2024-12-31 20:38:00,481 - __main__ - DEBUG - Original expression: 'sum (1 to 5) x^2'
+2024-12-31 20:38:00,483 - __main__ - DEBUG - After binom conversion: 'sum (1 to 5) x^2'
+2024-12-31 20:38:00,485 - __main__ - DEBUG - Converted integral expression: 'sum (1 to 5) x^2'
+2024-12-31 20:38:00,486 - __main__ - DEBUG - After explicit multiplication: 'sum (1 to 5) x^2'
+2024-12-31 20:38:00,486 - __main__ - DEBUG - Final MATLAB expression: 'sum (1 to 5) x^2'
+2024-12-31 20:38:00,486 - __main__ - DEBUG - Converted to SymPy expression: 'sum (1 to 5) x^2'
+2024-12-31 20:38:00,486 - __main__ - DEBUG - Converted to MATLAB expression: 'sum (1 to 5) x^2'
+2024-12-31 20:38:01,134 - __main__ - ERROR - Error in LaTeX calculation: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2024-12-31 20:43:17,491 - __main__ - INFO - MATLAB engine terminated
+2024-12-31 20:43:32,986 - __main__ - INFO - Initializing Calculator Application
+2024-12-31 20:43:50,662 - __main__ - INFO - MATLAB engine started successfully
+2024-12-31 20:44:16,415 - __main__ - DEBUG - Original expression: 'sum (1 to 5) x'
+2024-12-31 20:44:16,418 - __main__ - DEBUG - Original expression: 'sum (1 to 5) x'
+2024-12-31 20:44:16,419 - __main__ - DEBUG - After binom conversion: 'sum (1 to 5) x'
+2024-12-31 20:44:16,420 - __main__ - DEBUG - Converted integral expression: 'sum (1 to 5) x'
+2024-12-31 20:44:16,422 - __main__ - DEBUG - After explicit multiplication: 'sum (1 to 5) x'
+2024-12-31 20:44:16,422 - __main__ - DEBUG - Final MATLAB expression: 'sum (1 to 5) x'
+2024-12-31 20:44:16,422 - __main__ - DEBUG - Converted to SymPy expression: 'sum (1 to 5) x'
+2024-12-31 20:44:16,422 - __main__ - DEBUG - Converted to MATLAB expression: 'sum (1 to 5) x'
+2024-12-31 20:44:16,692 - __main__ - ERROR - Error in LaTeX calculation: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2024-12-31 20:48:34,540 - __main__ - INFO - MATLAB engine terminated
+2024-12-31 20:48:51,112 - __main__ - INFO - Initializing Calculator Application
+2024-12-31 20:49:19,168 - __main__ - INFO - MATLAB engine started successfully
+2024-12-31 20:50:01,808 - __main__ - DEBUG - Original expression: 'sum (1 to 5) x^2'
+2024-12-31 20:50:01,811 - __main__ - DEBUG - Original expression: 'sum (1 to 5) x^2'
+2024-12-31 20:50:01,813 - __main__ - DEBUG - After binom conversion: 'sum (1 to 5) x^2'
+2024-12-31 20:50:01,814 - __main__ - DEBUG - Converted integral expression: 'sum (1 to 5) x^2'
+2024-12-31 20:50:01,815 - __main__ - DEBUG - After explicit multiplication: 'sum (1 to 5) x^2'
+2024-12-31 20:50:01,815 - __main__ - DEBUG - Final MATLAB expression: 'sum (1 to 5) x^2'
+2024-12-31 20:50:01,815 - __main__ - DEBUG - Converted to SymPy expression: 'sum (1 to 5) x^2'
+2024-12-31 20:50:01,815 - __main__ - DEBUG - Converted to MATLAB expression: 'sum (1 to 5) x^2'
+2024-12-31 20:50:02,201 - __main__ - ERROR - Error in LaTeX calculation: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2024-12-31 21:00:22,004 - __main__ - INFO - MATLAB engine terminated
+2024-12-31 21:02:06,430 - __main__ - INFO - Initializing Calculator Application
+2024-12-31 21:02:21,946 - __main__ - INFO - MATLAB engine started successfully
+2024-12-31 21:03:17,425 - __main__ - DEBUG - Original expression: 'sum (1 to 5) x'
+2024-12-31 21:03:17,428 - __main__ - DEBUG - Original expression: 'sum (1 to 5) x'
+2024-12-31 21:03:17,430 - __main__ - DEBUG - After binom conversion: 'sum (1 to 5) x'
+2024-12-31 21:03:17,431 - __main__ - DEBUG - Converted integral expression: 'sum (1 to 5) x'
+2024-12-31 21:03:17,432 - __main__ - DEBUG - After explicit multiplication: 'sum (1 to 5) x'
+2024-12-31 21:03:17,432 - __main__ - DEBUG - Final MATLAB expression: 'sum (1 to 5) x'
+2024-12-31 21:03:17,433 - __main__ - DEBUG - Converted to SymPy expression: 'sum (1 to 5) x'
+2024-12-31 21:03:17,433 - __main__ - DEBUG - Converted to MATLAB expression: 'sum (1 to 5) x'
+2024-12-31 21:03:18,110 - __main__ - ERROR - Error in LaTeX calculation: float() argument must be a string or a number, not 'matlab.object'
+2024-12-31 21:08:32,359 - __main__ - INFO - MATLAB engine terminated
+2024-12-31 21:09:00,858 - __main__ - INFO - Initializing Calculator Application
+2024-12-31 21:09:10,599 - __main__ - INFO - MATLAB engine started successfully
+2024-12-31 21:09:18,774 - __main__ - DEBUG - Original expression: 'sum (1 to 5) x'
+2024-12-31 21:09:18,775 - __main__ - DEBUG - Original expression: 'sum (1 to 5) x'
+2024-12-31 21:09:18,778 - __main__ - DEBUG - After binom conversion: 'sum (1 to 5) x'
+2024-12-31 21:09:18,779 - __main__ - DEBUG - Converted integral expression: 'sum (1 to 5) x'
+2024-12-31 21:09:18,780 - __main__ - DEBUG - After explicit multiplication: 'sum (1 to 5) x'
+2024-12-31 21:09:18,780 - __main__ - DEBUG - Final MATLAB expression: 'sum (1 to 5) x'
+2024-12-31 21:09:18,780 - __main__ - DEBUG - Converted to SymPy expression: 'sum (1 to 5) x'
+2024-12-31 21:09:18,780 - __main__ - DEBUG - Converted to MATLAB expression: 'sum (1 to 5) x'
+2024-12-31 21:09:19,312 - __main__ - ERROR - Error in LaTeX calculation: float() argument must be a string or a number, not 'matlab.object'
+2024-12-31 21:13:26,443 - __main__ - INFO - MATLAB engine terminated
+2024-12-31 21:13:51,271 - __main__ - INFO - Initializing Calculator Application
+2024-12-31 21:13:59,914 - __main__ - INFO - MATLAB engine started successfully
+2024-12-31 21:14:10,124 - __main__ - DEBUG - Original expression: 'sum (1 to 5) x^2'
+2024-12-31 21:14:10,125 - __main__ - DEBUG - Original expression: 'sum (1 to 5) x^2'
+2024-12-31 21:14:10,129 - __main__ - DEBUG - After binom conversion: 'sum (1 to 5) x^2'
+2024-12-31 21:14:10,130 - __main__ - DEBUG - Converted integral expression: 'sum (1 to 5) x^2'
+2024-12-31 21:14:10,132 - __main__ - DEBUG - After explicit multiplication: 'sum (1 to 5) x^2'
+2024-12-31 21:14:10,132 - __main__ - DEBUG - Final MATLAB expression: 'sum (1 to 5) x^2'
+2024-12-31 21:14:10,132 - __main__ - DEBUG - Converted to SymPy expression: 'sum (1 to 5) x^2'
+2024-12-31 21:14:10,132 - __main__ - DEBUG - Converted to MATLAB expression: 'sum (1 to 5) x^2'
+2024-12-31 21:14:11,227 - __main__ - ERROR - Error in LaTeX calculation: Unrecognized function or variable 'temp_result'.
+
+2024-12-31 21:17:01,060 - __main__ - INFO - MATLAB engine terminated
+2024-12-31 21:17:05,437 - __main__ - INFO - Initializing Calculator Application
+2024-12-31 21:17:17,941 - __main__ - INFO - MATLAB engine started successfully
+2024-12-31 21:17:29,577 - __main__ - DEBUG - Original expression: 'sum (1 to 5) x^2'
+2024-12-31 21:17:29,580 - __main__ - DEBUG - Original expression: 'sum (1 to 5) x^2'
+2024-12-31 21:17:29,582 - __main__ - DEBUG - After binom conversion: 'sum (1 to 5) x^2'
+2024-12-31 21:17:29,583 - __main__ - DEBUG - Converted integral expression: 'sum (1 to 5) x^2'
+2024-12-31 21:17:29,584 - __main__ - DEBUG - After explicit multiplication: 'sum (1 to 5) x^2'
+2024-12-31 21:17:29,584 - __main__ - DEBUG - Final MATLAB expression: 'sum (1 to 5) x^2'
+2024-12-31 21:17:29,584 - __main__ - DEBUG - Converted to SymPy expression: 'sum (1 to 5) x^2'
+2024-12-31 21:17:29,584 - __main__ - DEBUG - Converted to MATLAB expression: 'sum (1 to 5) x^2'
+2024-12-31 21:17:30,445 - __main__ - ERROR - Error in LaTeX calculation: Unrecognized function or variable 'temp_result'.
+
+2024-12-31 21:19:32,092 - __main__ - INFO - MATLAB engine terminated
+2024-12-31 21:20:22,829 - __main__ - INFO - Initializing Calculator Application
+2024-12-31 21:20:32,526 - __main__ - INFO - MATLAB engine started successfully
+2024-12-31 21:20:42,976 - __main__ - DEBUG - Original expression: 'sum (1 to 10) x^2'
+2024-12-31 21:20:42,977 - __main__ - DEBUG - Original expression: 'sum (1 to 10) x^2'
+2024-12-31 21:20:42,979 - __main__ - DEBUG - After binom conversion: 'sum (1 to 10) x^2'
+2024-12-31 21:20:42,981 - __main__ - DEBUG - Converted integral expression: 'sum (1 to 10) x^2'
+2024-12-31 21:20:42,982 - __main__ - DEBUG - After explicit multiplication: 'sum (1 to 10) x^2'
+2024-12-31 21:20:42,982 - __main__ - DEBUG - Final MATLAB expression: 'sum (1 to 10) x^2'
+2024-12-31 21:20:42,982 - __main__ - DEBUG - Converted to SymPy expression: 'sum (1 to 10) x^2'
+2024-12-31 21:20:42,983 - __main__ - DEBUG - Converted to MATLAB expression: 'sum (1 to 10) x^2'
+2024-12-31 21:20:43,665 - __main__ - DEBUG - Displayed Result: 385
+2024-12-31 21:20:49,601 - __main__ - DEBUG - Original expression: 'sum (1 to 10) ln(x)'
+2024-12-31 21:20:49,602 - __main__ - DEBUG - Original expression: 'sum (1 to 10) ln(x)'
+2024-12-31 21:20:49,603 - __main__ - DEBUG - After binom conversion: 'sum (1 to 10) ln(x)'
+2024-12-31 21:20:49,603 - __main__ - DEBUG - Converted integral expression: 'sum (1 to 10) ln(x)'
+2024-12-31 21:20:49,603 - __main__ - DEBUG - After explicit multiplication: 'sum (1 to 10) ln(x)'
+2024-12-31 21:20:49,603 - __main__ - DEBUG - Final MATLAB expression: 'sum (1 to 10) log(x)'
+2024-12-31 21:20:49,603 - __main__ - DEBUG - Converted to SymPy expression: 'sum (1 to 10) log(x)'
+2024-12-31 21:20:49,603 - __main__ - DEBUG - Converted to MATLAB expression: 'sum (1 to 10) log(x)'
+2024-12-31 21:20:49,720 - __main__ - DEBUG - Displayed Result: ln(2)/ln(10) + ln(3)/ln(10) + ln(4)/ln(10) + ln(5)/ln(10) + ln(6)/ln(10) + ln(7)/ln(10) + ln(8)/ln(10) + ln(9)/ln(10) + 1
+2024-12-31 21:21:05,258 - __main__ - DEBUG - Original expression: 'sum (1 to 100) x'
+2024-12-31 21:21:05,260 - __main__ - DEBUG - Original expression: 'sum (1 to 100) x'
+2024-12-31 21:21:05,260 - __main__ - DEBUG - After binom conversion: 'sum (1 to 100) x'
+2024-12-31 21:21:05,260 - __main__ - DEBUG - Converted integral expression: 'sum (1 to 100) x'
+2024-12-31 21:21:05,260 - __main__ - DEBUG - After explicit multiplication: 'sum (1 to 100) x'
+2024-12-31 21:21:05,260 - __main__ - DEBUG - Final MATLAB expression: 'sum (1 to 100) x'
+2024-12-31 21:21:05,260 - __main__ - DEBUG - Converted to SymPy expression: 'sum (1 to 100) x'
+2024-12-31 21:21:05,261 - __main__ - DEBUG - Converted to MATLAB expression: 'sum (1 to 100) x'
+2024-12-31 21:21:05,386 - __main__ - DEBUG - Displayed Result: 5050
+2024-12-31 21:21:38,511 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-31 21:21:38,512 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2024-12-31 21:21:38,513 - __main__ - DEBUG - After binom conversion: 'int 1/x dx'
+2024-12-31 21:21:38,513 - __main__ - DEBUG - Converted integral expression: 'int(1/x, x)'
+2024-12-31 21:21:38,513 - __main__ - DEBUG - After explicit multiplication: 'int(1/x, x)'
+2024-12-31 21:21:38,513 - __main__ - DEBUG - Final MATLAB expression: 'int(1/x, x)'
+2024-12-31 21:21:38,513 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/x, x)'
+2024-12-31 21:21:38,513 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/x, x)'
+2024-12-31 21:21:39,296 - __main__ - DEBUG - Displayed Result: ln(x)
+2024-12-31 21:24:15,292 - __main__ - DEBUG - Original expression: 'prod(1,5) x^2'
+2024-12-31 21:24:15,296 - __main__ - DEBUG - Original expression: 'prod(1,5) x^2'
+2024-12-31 21:24:15,297 - __main__ - DEBUG - After binom conversion: 'prod(1,5) x^2'
+2024-12-31 21:24:15,297 - __main__ - DEBUG - Converted integral expression: 'prod(1,5) x^2'
+2024-12-31 21:24:15,298 - __main__ - DEBUG - After explicit multiplication: 'prod(1,5) x^2'
+2024-12-31 21:24:15,298 - __main__ - DEBUG - Final MATLAB expression: 'prod(1,5) x^2'
+2024-12-31 21:24:15,298 - __main__ - DEBUG - Converted to SymPy expression: 'prod(1,5) x^2'
+2024-12-31 21:24:15,298 - __main__ - DEBUG - Converted to MATLAB expression: 'prod(1,5) x^2'
+2024-12-31 21:24:15,618 - __main__ - ERROR - Error in LaTeX calculation: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2024-12-31 21:31:59,298 - __main__ - INFO - MATLAB engine terminated
+2024-12-31 21:32:04,945 - __main__ - INFO - Initializing Calculator Application
+2024-12-31 21:32:15,552 - __main__ - INFO - MATLAB engine started successfully
+2024-12-31 21:32:22,444 - __main__ - DEBUG - Original expression: 'sum (1 to 100) x'
+2024-12-31 21:32:22,445 - __main__ - DEBUG - Original expression: 'sum (1 to 100) x'
+2024-12-31 21:32:22,447 - __main__ - DEBUG - After binom conversion: 'sum (1 to 100) x'
+2024-12-31 21:32:22,449 - __main__ - DEBUG - Converted integral expression: 'sum (1 to 100) x'
+2024-12-31 21:32:22,450 - __main__ - DEBUG - After explicit multiplication: 'sum (1 to 100) x'
+2024-12-31 21:32:22,450 - __main__ - DEBUG - Final MATLAB expression: 'sum (1 to 100) x'
+2024-12-31 21:32:22,450 - __main__ - DEBUG - Converted to SymPy expression: 'sum (1 to 100) x'
+2024-12-31 21:32:22,450 - __main__ - DEBUG - Converted to MATLAB expression: 'sum (1 to 100) x'
+2024-12-31 21:32:23,045 - __main__ - DEBUG - Displayed Result: 5050
+2024-12-31 21:32:26,395 - __main__ - DEBUG - Original expression: 'prod (1 to 100) x'
+2024-12-31 21:32:26,395 - __main__ - DEBUG - Original expression: 'prod (1 to 100) x'
+2024-12-31 21:32:26,395 - __main__ - DEBUG - After binom conversion: 'prod (1 to 100) x'
+2024-12-31 21:32:26,395 - __main__ - DEBUG - Converted integral expression: 'prod (1 to 100) x'
+2024-12-31 21:32:26,396 - __main__ - DEBUG - After explicit multiplication: 'prod (1 to 100) x'
+2024-12-31 21:32:26,396 - __main__ - DEBUG - Final MATLAB expression: 'prod (1 to 100) x'
+2024-12-31 21:32:26,396 - __main__ - DEBUG - Converted to SymPy expression: 'prod (1 to 100) x'
+2024-12-31 21:32:26,396 - __main__ - DEBUG - Converted to MATLAB expression: 'prod (1 to 100) x'
+2024-12-31 21:32:26,533 - __main__ - ERROR - Error in LaTeX calculation: 
+  File /Applications/MATLAB_R2024b.app/toolbox/symbolic/symbolic/@sym/prod.m, line 13, in prod
+Too many input arguments.
+
+2024-12-31 21:33:51,412 - __main__ - INFO - MATLAB engine terminated
+2024-12-31 21:34:00,626 - __main__ - INFO - Initializing Calculator Application
+2024-12-31 21:34:09,935 - __main__ - INFO - MATLAB engine started successfully
+2024-12-31 21:34:46,844 - __main__ - DEBUG - Original expression: 'prod (1 to 10) x^2'
+2024-12-31 21:34:46,847 - __main__ - DEBUG - Original expression: 'prod (1 to 10) x^2'
+2024-12-31 21:34:46,849 - __main__ - DEBUG - After binom conversion: 'prod (1 to 10) x^2'
+2024-12-31 21:34:46,850 - __main__ - DEBUG - Converted integral expression: 'prod (1 to 10) x^2'
+2024-12-31 21:34:46,851 - __main__ - DEBUG - After explicit multiplication: 'prod (1 to 10) x^2'
+2024-12-31 21:34:46,851 - __main__ - DEBUG - Final MATLAB expression: 'prod (1 to 10) x^2'
+2024-12-31 21:34:46,851 - __main__ - DEBUG - Converted to SymPy expression: 'prod (1 to 10) x^2'
+2024-12-31 21:34:46,851 - __main__ - DEBUG - Converted to MATLAB expression: 'prod (1 to 10) x^2'
+2024-12-31 21:34:47,063 - __main__ - DEBUG - Displayed Result: 13168189440000.0
+2024-12-31 21:34:54,657 - __main__ - DEBUG - Original expression: 'prod (1 to 10) ln(x)'
+2024-12-31 21:34:54,659 - __main__ - DEBUG - Original expression: 'prod (1 to 10) ln(x)'
+2024-12-31 21:34:54,659 - __main__ - DEBUG - After binom conversion: 'prod (1 to 10) ln(x)'
+2024-12-31 21:34:54,659 - __main__ - DEBUG - Converted integral expression: 'prod (1 to 10) ln(x)'
+2024-12-31 21:34:54,659 - __main__ - DEBUG - After explicit multiplication: 'prod (1 to 10) ln(x)'
+2024-12-31 21:34:54,659 - __main__ - DEBUG - Final MATLAB expression: 'prod (1 to 10) log(x)'
+2024-12-31 21:34:54,659 - __main__ - DEBUG - Converted to SymPy expression: 'prod (1 to 10) log(x)'
+2024-12-31 21:34:54,659 - __main__ - DEBUG - Converted to MATLAB expression: 'prod (1 to 10) log(x)'
+2024-12-31 21:34:54,697 - __main__ - DEBUG - Displayed Result: 0.0
+2024-12-31 21:35:01,190 - __main__ - DEBUG - Original expression: 'prod (2 to 10) ln(x)'
+2024-12-31 21:35:01,191 - __main__ - DEBUG - Original expression: 'prod (2 to 10) ln(x)'
+2024-12-31 21:35:01,191 - __main__ - DEBUG - After binom conversion: 'prod (2 to 10) ln(x)'
+2024-12-31 21:35:01,191 - __main__ - DEBUG - Converted integral expression: 'prod (2 to 10) ln(x)'
+2024-12-31 21:35:01,191 - __main__ - DEBUG - After explicit multiplication: 'prod (2 to 10) ln(x)'
+2024-12-31 21:35:01,191 - __main__ - DEBUG - Final MATLAB expression: 'prod (2 to 10) log(x)'
+2024-12-31 21:35:01,191 - __main__ - DEBUG - Converted to SymPy expression: 'prod (2 to 10) log(x)'
+2024-12-31 21:35:01,192 - __main__ - DEBUG - Converted to MATLAB expression: 'prod (2 to 10) log(x)'
+2024-12-31 21:35:01,224 - __main__ - DEBUG - Displayed Result: 0.034252931317656346
+2024-12-31 21:35:04,975 - __main__ - INFO - MATLAB engine terminated
+2024-12-31 21:36:07,415 - __main__ - INFO - Initializing Calculator Application
+2024-12-31 21:36:20,851 - __main__ - INFO - MATLAB engine started successfully
+2024-12-31 21:36:53,495 - __main__ - DEBUG - Original expression: 'int (1 to 3) x^3/(x^2 + 1) dx'
+2024-12-31 21:36:53,496 - __main__ - DEBUG - Original expression: 'int (1 to 3) x^3/(x^2 + 1) dx'
+2024-12-31 21:36:53,498 - __main__ - DEBUG - After binom conversion: 'int (1 to 3) x^3/(x^2 + 1) dx'
+2024-12-31 21:36:53,499 - __main__ - DEBUG - Converted integral expression: 'int(x^3/(x^2 + 1), x, 1, 3)'
+2024-12-31 21:36:53,500 - __main__ - DEBUG - After explicit multiplication: 'int(x^3/(x^2 + 1), x, 1, 3)'
+2024-12-31 21:36:53,501 - __main__ - DEBUG - Final MATLAB expression: 'int(x^3/(x^2 + 1), x, 1, 3)'
+2024-12-31 21:36:53,501 - __main__ - DEBUG - Converted to SymPy expression: 'int(x^3/(x^2 + 1), x, 1, 3)'
+2024-12-31 21:36:53,501 - __main__ - DEBUG - Converted to MATLAB expression: 'int(x^3/(x^2 + 1), x, 1, 3)'
+2024-12-31 21:36:53,913 - __main__ - DEBUG - Displayed Result: 4 - ln(5)/2

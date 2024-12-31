@@ -50,7 +50,7 @@ class UiConfig:
                     calculator.entry_formula,
                     calculator.calculate_button
                 ],
-                'dimensions': (450, 600)  # (height, width)
+                'dimensions': (500, 700)  # (height, width)
             },
             'default': {
                 'show': [

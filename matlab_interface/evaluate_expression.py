@@ -72,18 +72,58 @@ class EvaluateExpression:
         
         # Ensure multiplication is explicit, e.g., '4x' becomes '4*x'
         expression = re.sub(r'(\d)([a-zA-Z])', r'\1*\2', expression)
+
+        # Handle sum and prod functions
+        sum_pattern = r'\bsum\s*\(([^)]+)\)'
+        prod_pattern = r'\bprod\s*\(([^)]+)\)'
+        expression = re.sub(sum_pattern, r'sum(\1)', expression)
+        expression = re.sub(prod_pattern, r'prod(\1)', expression)
+
+        # Handle LaTeX-style sum expressions: \sum_{a}^{b} f(x)
+        latex_sum_pattern = r'\\sum_{([^}]+)}\^{([^}]+)}\s*([^$]+)'
+        def replace_latex_sum(match):
+            lower_limit = match.group(1).strip()
+            upper_limit = match.group(2).strip()
+            function_expr = match.group(3).strip()
+            # Ensure multiplication is explicit in the function expression
+            function_expr = re.sub(r'(\d)([a-zA-Z])', r'\1*\2', function_expr)
+            return f"symsum({function_expr}, x, {lower_limit}, {upper_limit})"
+        
+        expression = re.sub(latex_sum_pattern, replace_latex_sum, expression)
+
+        # Handle LaTeX-style product expressions: \prod_{a}^{b} f(x)
+        latex_prod_pattern = r'\\prod_{([^}]+)}\^{([^}]+)}\s*([^$]+)'
+        def replace_latex_prod(match):
+            lower_limit = match.group(1).strip()
+            upper_limit = match.group(2).strip()
+            function_expr = match.group(3).strip()
+            # Ensure multiplication is explicit in the function expression
+            function_expr = re.sub(r'(\d)([a-zA-Z])', r'\1*\2', function_expr)
+            return f"prod({function_expr}, x, {lower_limit}, {upper_limit})"
+        
+        expression = re.sub(latex_prod_pattern, replace_latex_prod, expression)
+
+        # Regular expression to match 'int expression dvariable'
+        integral_pattern = r'int\s+(.+)\s+d([a-zA-Z])'
+        def replace_integral(match):
+            expr = match.group(1).strip()
+            var = match.group(2).strip()
+            # Replace '^' with '.^' for MATLAB compatibility
+            expr = expr.replace('^', '.^')
+            return f'int({expr}, {var})'
         
         # Handle higher-order derivatives, e.g., 'd2/dx2 expr' -> 'diff(expr, x, 2)'
-        derivative_pattern = r'd(\d*)/d([a-zA-Z])(\d*)\s+(.+)'
+        derivative_pattern = r'd/d([a-zA-Z])\s*([^$]+)'
         def replace_derivative(match):
-            order = match.group(1) or '1'
-            var = match.group(2)
-            expr = match.group(4)
-            # Ensure multiplication is explicit within the derivative expression
+            var = match.group(1)
+            expr = match.group(2).strip()
+            # Ensure multiplication is explicit in the expression
             expr = re.sub(r'(\d)([a-zA-Z])', r'\1*\2', expr)
-            return f"diff({expr}, {var}, {order})"
+            # Convert Python-style power operator to MATLAB
+            expr = expr.replace('^', '.^')
+            return f"diff({expr}, {var})"
         
-        expression = re.sub(derivative_pattern, replace_derivative, expression)
+        expression = re.sub(integral_pattern, derivative_pattern, replace_derivative, replace_integral, expression)
         
         self.logger.debug(f"Converted '{original_expr}' to '{expression}'")
         return expression
@@ -118,12 +158,6 @@ class EvaluateExpression:
     def evaluate_matlab_expression(self, expression):
         """
         Evaluate a MATLAB expression and return the result.
-        
-        Args:
-            expression (str): The MATLAB expression to evaluate.
-        
-        Returns:
-            str or float or list: The evaluated result.
         """
         self.logger.debug(f"Starting evaluation of MATLAB expression: '{expression}'")
         
@@ -142,6 +176,9 @@ class EvaluateExpression:
             # Convert logarithms before evaluation
             expression = ExpressionShortcuts._convert_logarithms(expression)
             self.logger.debug(f"After logarithm conversion: {expression}")
+
+            expression = ExpressionShortcuts.convert_sum_prod_expression(expression)
+            self.logger.debug(f"After sum and prod conversion: {expression}")
 
             # Special handling for solve function
             if 'solve' in expression:
@@ -178,6 +215,19 @@ class EvaluateExpression:
                 # Ensure x is symbolic for logarithm evaluation
                 self.eng.eval("syms x", nargout=0)
                 self.logger.debug("Symbolized x for logarithm evaluation")
+
+            if 'symsum' or 'prod' in expression:
+                self.logger.debug("Evaluating sum expression")
+                # Ensure x is symbolic for symsum evaluation
+                self.eng.eval("syms x", nargout=0)
+                matlab_cmd = f"temp_result = {expression};"
+                self.logger.debug(f"Executing MATLAB command: {matlab_cmd}")
+                self.eng.eval(matlab_cmd, nargout=0)
+                result = self.eng.eval("temp_result", nargout=1)
+                # Convert result to string if it's a symbolic object
+                if isinstance(result, matlab.object):
+                    result = self.eng.eval("char(temp_result)", nargout=1)
+                return str(result)
 
             # Extract variables (excluding built-in functions)
             variables = self._extract_variables(expression)
@@ -249,7 +299,8 @@ class EvaluateExpression:
         # Regular expression to find variable names (one or more letters)
         variables = set(re.findall(r'\b([a-zA-Z]+)\b', expression_clean))
         # Remove MATLAB reserved keywords and function names if necessary
-        reserved_keywords = {'int', 'diff', 'syms', 'log', 'sin', 'cos', 'tan', 'exp', 'sqrt', 'abs', 'sind', 'cosd', 'tand'}
+        reserved_keywords = {'int', 'diff', 'syms', 'log', 'sin', 'cos', 'tan', 
+                             'exp', 'sqrt', 'abs', 'sind', 'cosd', 'tand', 'symsum', 'prod'}
         variables = variables - reserved_keywords
         self.logger.debug(f"Extracted variables from expression: {variables}")
         return variables

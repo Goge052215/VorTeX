@@ -17,6 +17,12 @@ class SympyToMatlab:
         if expr.is_Derivative:
             return self._handle_derivative(expr)
         
+        if isinstance(expr, sy.Sum):
+            return self._convert_sum(expr)
+        
+        if isinstance(expr, sy.Product):
+            return self._convert_product(expr)
+        
         # Convert the expression to a string
         expr_str = str(expr)
         
@@ -156,7 +162,8 @@ class SympyToMatlab:
             'ln': 'log',      # MATLAB uses log for natural logarithm
             'log10': 'log10',
             'log2': 'log2',
-            # Add more mappings as needed
+            'sum': 'symsum',
+            'prod': 'prod'
         }
         
         matlab_func = function_mappings.get(func_name, func_name)
@@ -170,4 +177,18 @@ class SympyToMatlab:
         
         self.logger.debug(f"Converted function to MATLAB syntax: {matlab_expression}")
         return matlab_expression
-        
+    
+    def _convert_sum(self, expr):
+        """Convert a SymPy Sum to a MATLAB symsum."""
+        function_expr = self.sympy_to_matlab(expr.function)
+        lower_limit, upper_limit = expr.limits[0][1], expr.limits[0][2]
+        variable = expr.limits[0][0]
+        return f"symsum({function_expr}, {variable}, {lower_limit}, {upper_limit})"
+    
+    def _convert_product(self, expr):
+        """Convert a SymPy Product to a MATLAB prod."""
+        function_expr = self.sympy_to_matlab(expr.function)
+        lower_limit, upper_limit = expr.limits[0][1], expr.limits[0][2]
+        variable = expr.limits[0][0]
+        return f"prod({function_expr}, {variable}, {lower_limit}, {upper_limit})"
+    

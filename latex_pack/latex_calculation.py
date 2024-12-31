@@ -1,6 +1,5 @@
 from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtGui import QFont
-from latex_pack.shortcut import ExpressionShortcuts
 import re
 import matlab.engine
 from matlab_interface.evaluate_expression import EvaluateExpression
@@ -11,7 +10,7 @@ class LatexCalculation:
     # Define supported functions, ordered from longest to shortest to prevent partial matches
     SUPPORTED_FUNCTIONS = [
         'log10', 'ln', 'asin', 'acos', 'atan', 'cot', 'sec', 'csc',
-        'sin', 'cos', 'tan', 'log', 'sqrt', 'abs', 'exp'
+        'sin', 'cos', 'tan', 'log', 'sqrt', 'abs', 'exp', 'sum', 'prod'
     ]
 
     def __init__(self):
@@ -61,6 +60,26 @@ class LatexCalculation:
 
     def _preprocess_latex_functions(self, expr):
         """Preprocess LaTeX function notation to MATLAB notation."""
+        self.logger.debug(f"Initial expression: {expr}")
+
+        # Enhanced sum pattern with case-insensitivity and better space handling
+        sum_pattern = r'(?i)sum\s*\(\s*(\d+)\s*to\s*(\d+)\s*\)\s*([a-zA-Z_]\w*)'
+        def replace_sum(match):
+            start, end, var = match.groups()
+            return f"symsum({var}^2, {var}, {start}, {end})"
+
+        expr = re.sub(sum_pattern, replace_sum, expr)
+        self.logger.debug(f"After sum conversion: {expr}")
+
+        # Handle operator shortcuts
+        operator_shortcuts = {
+            r'prod\s*\((\d+)\s*to\s*(\d+)\)\s*([a-zA-Z0-9]+)': r'\\prod_{\1}^{\2} \3'
+        }
+
+        for shortcut_pattern, latex_pattern in operator_shortcuts.items():
+            expr = re.sub(shortcut_pattern, latex_pattern, expr)
+            self.logger.debug(f"Converted shortcut to LaTeX: {expr}")
+
         # Dictionary of common LaTeX functions and their MATLAB equivalents
         latex_funcs = {
             r'\\sin': 'sin',
@@ -76,7 +95,9 @@ class LatexCalculation:
             r'\\log': 'log10',   # LaTeX \log -> MATLAB log10
             r'\\sqrt': 'sqrt',
             r'\\abs': 'abs',
-            r'\\exp': 'exp'
+            r'\\exp': 'exp',
+            r'\\sum': 'symsum',
+            r'\\prod': 'prod'
         }
 
         # Replace LaTeX function notation with MATLAB notation
@@ -84,16 +105,9 @@ class LatexCalculation:
             expr = re.sub(latex_func + r'\s*{([^}]+)}', rf'{matlab_func}(\1)', expr)
             expr = re.sub(latex_func + r'\s*\(([^)]+)\)', rf'{matlab_func}(\1)', expr)
             expr = re.sub(latex_func + r'\s+([a-zA-Z0-9]+)', rf'{matlab_func}(\1)', expr)
+            self.logger.debug(f"Converted LaTeX to MATLAB: {expr}")
 
-        # Convert ln to log for MATLAB only when processing the final expression
-        if 'ln(' in expr:
-            self.logger.debug(f"Found natural logarithm in expression: {expr}")
-            # Store the original expression for display
-            self.original_expr = expr
-            # Convert ln to log for MATLAB computation
-            expr = expr.replace('ln(', 'log(')
-            self.logger.debug(f"Converted to MATLAB expression: {expr}")
-
+        self.logger.debug(f"Final preprocessed expression: {expr}")
         return expr
 
     def _process_expression(self, expr, angle_mode):
@@ -107,6 +121,12 @@ class LatexCalculation:
         # Handle integrals
         if expr.startswith('int'):
             return self._process_integral(expr)
+        
+        if expr.startswith('sum'):
+            return self._process_sum(expr)
+        
+        if expr.startswith('prod'):
+            return self._process_product(expr)
         
         # Add multiplication operators where necessary
         expr = self._add_multiplication_operators(expr)
@@ -140,6 +160,32 @@ class LatexCalculation:
         derivative_expr = match.group(1)
         matlab_expr = f'diff({derivative_expr}, x)'
         self.logger.debug(f"Converted derivative to MATLAB expression: '{matlab_expr}'")
+        return matlab_expr
+
+    def _process_sum(self, expr):
+        """Process the sum expression."""
+        self.logger.debug(f"Processing sum: {expr}")
+        # Expected format: sum(n to m) expression
+        pattern = r'(?i)sum\s*\(\s*(\d+)\s*to\s*(\d+)\s*\)\s*([a-zA-Z_]\w*)'
+        match = re.match(pattern, expr)
+        if not match:
+            raise ValueError("Invalid sum format. Use 'sum(n to m) expression'.")
+        start, end, sum_expr = match.groups()
+        matlab_expr = f'symsum({sum_expr}, n, {start}, {end})'
+        self.logger.debug(f"Converted sum to MATLAB expression: '{matlab_expr}'")
+        return matlab_expr
+
+    def _process_product(self, expr):
+        """Process the product expression."""
+        self.logger.debug(f"Processing product: {expr}")
+        # Expected format: prod(n to m) expression
+        pattern = r'(?i)prod\s*\(\s*(\d+)\s*to\s*(\d+)\s*\)\s*([a-zA-Z_]\w*)'
+        match = re.match(pattern, expr)
+        if not match:
+            raise ValueError("Invalid product format. Use 'prod(n to m) expression'.")
+        start, end, prod_expr = match.groups()
+        matlab_expr = f'prod({prod_expr}, n, {start}, {end})'
+        self.logger.debug(f"Converted product to MATLAB expression: '{matlab_expr}'")
         return matlab_expr
 
     def _add_multiplication_operators(self, expr):
