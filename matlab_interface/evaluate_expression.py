@@ -2,6 +2,7 @@ import matlab.engine
 import logging
 import re
 from matlab_interface.auto_simplify import AutoSimplify
+from latex_pack.shortcut import ExpressionShortcuts
 
 class EvaluateExpression:
     def __init__(self, eng):
@@ -15,6 +16,12 @@ class EvaluateExpression:
         self.logger = logging.getLogger(__name__)
         self._configure_logger()
         self.simplifier = AutoSimplify(eng)
+        
+        # Define built-in MATLAB functions that shouldn't be treated as variables
+        self.matlab_functions = {
+            'nchoosek', 'diff', 'int', 'sin', 'cos', 'tan', 
+            'log', 'exp', 'sqrt', 'factorial', 'solve'
+        }
 
     def _configure_logger(self):
         """
@@ -108,30 +115,83 @@ class EvaluateExpression:
         self.logger.debug(f"Symbolic result after postprocessing: {result_str}")
         return result_str
 
-    def evaluate_matlab_expression(self, matlab_expression):
+    def evaluate_matlab_expression(self, expression):
         """
         Evaluate a MATLAB expression and return the result.
         
         Args:
-            matlab_expression (str): The MATLAB expression to evaluate.
+            expression (str): The MATLAB expression to evaluate.
         
         Returns:
             str or float or list: The evaluated result.
         """
-        self.logger.debug(f"Starting evaluation of MATLAB expression: '{matlab_expression}'")
+        self.logger.debug(f"Starting evaluation of MATLAB expression: '{expression}'")
         
         try:
-            # Extract variables, excluding 'e'
-            variables = self._extract_variables(matlab_expression)
-            for var in variables:
-                if var != 'e':  # Do not declare 'e' as symbolic
-                    self._declare_symbolic_variable(var)
+            # Convert combinatorial expressions before evaluation
+            expression = ExpressionShortcuts.convert_combinatorial_expression(expression)
+            self.logger.debug(f"After shortcut conversion: {expression}")
+
+            expression = re.sub(r'(\d+)C(\d+)', r'nchoosek(\1, \2)', expression)  # Handle nCr pattern
+            expression = re.sub(r'binom\s*\((\d+)\s*,\s*(\d+)\)', r'nchoosek(\1, \2)', expression)
+            expression = re.sub(r'nCr\s*\((\d+)\s*,\s*(\d+)\)', r'nchoosek(\1, \2)', expression)
+            expression = re.sub(r'nPr\s*\((\d+)\s*,\s*(\d+)\)', r'nchoosek(\1, \2)', expression)
+
+            self.logger.debug(f"After combinatorial conversion: {expression}")
+
+            # Convert logarithms before evaluation
+            expression = ExpressionShortcuts._convert_logarithms(expression)
+            self.logger.debug(f"After logarithm conversion: {expression}")
+
+            # Special handling for solve function
+            if 'solve' in expression:
+                # Always symbolize x for equations
+                self.eng.eval("syms x", nargout=0)
+                self.logger.debug("Symbolized x for equation solving")
+                
+                # Evaluate solve expression
+                matlab_cmd = f"temp_result = {expression};"
+                self.logger.debug(f"Executing solve command: {matlab_cmd}")
+                self.eng.eval(matlab_cmd, nargout=0)
+                
+                # Convert solutions to double array
+                self.eng.eval("temp_double = double(temp_result);", nargout=0)
+                solutions = self.eng.eval("temp_double", nargout=1)
+                
+                # Format solutions
+                if isinstance(solutions, float):
+                    return f"x = {solutions}"
+                else:
+                    formatted_solutions = []
+                    for i, sol in enumerate(solutions, 1):
+                        formatted_solutions.append(f"x{i} = {sol}")
+                    return '\n'.join(formatted_solutions)
+
+            # Special handling for nchoosek
+            if 'nchoosek' in expression:
+                self.logger.debug("Evaluating combinatorial expression numerically")
+                result = self.eng.eval(expression, nargout=1)
+                return str(float(result))
+
+            # Special handling for logarithms
+            if any(log in expression for log in ['log', 'log10']):
+                # Ensure x is symbolic for logarithm evaluation
+                self.eng.eval("syms x", nargout=0)
+                self.logger.debug("Symbolized x for logarithm evaluation")
+
+            # Extract variables (excluding built-in functions)
+            variables = self._extract_variables(expression)
+            variables = variables - self.matlab_functions
             
-            # Preprocess the expression (if needed)
-            processed_expr = self._preprocess_expression(matlab_expression)
+            # Declare variables as symbolic in MATLAB
+            for var in variables:
+                self.logger.debug(f"Declaring symbolic variable in MATLAB: syms {var}")
+                self.eng.eval(f"syms {var}", nargout=0)
+                self.logger.debug(f"Declared symbolic variable: {var}")
+            
+            processed_expr = self._preprocess_expression(expression)
             self.logger.debug(f"Preprocessed expression: '{processed_expr}'")
             
-            # Execute the MATLAB expression
             matlab_cmd = f"temp_result = {processed_expr};"
             self.logger.debug(f"Executing MATLAB command: {matlab_cmd}")
             self.eng.eval(matlab_cmd, nargout=0)
@@ -160,19 +220,13 @@ class EvaluateExpression:
                 self.logger.debug(f"Double result obtained: {result}")
                 return str(float(result))
 
-        except matlab.engine.MatlabExecutionError as me:
-            self.logger.error(f"MATLAB Execution Error: {me}", exc_info=True)
-            raise ValueError(f"MATLAB Error: {me}") from me
         except Exception as e:
-            self.logger.error(f"Unexpected Error: {e}", exc_info=True)
-            raise ValueError(f"Unexpected Error: {e}") from e
+            self.logger.error(f"MATLAB Execution Error: {str(e)}")
+            raise
+            
         finally:
-            try:
-                # Clean up workspace
-                self.eng.eval("clear temp_result", nargout=0)
-                self.logger.debug("Cleared 'temp_result' from MATLAB workspace.")
-            except Exception as e:
-                self.logger.warning(f"Error during cleanup: {e}")
+            # Clean up temporary variable
+            self.eng.eval("clear temp_result temp_double", nargout=0)
 
     def _extract_variables(self, expression):
         """

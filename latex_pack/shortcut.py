@@ -1,4 +1,5 @@
 import re
+import logging
 
 class ExpressionShortcuts:
     """
@@ -14,6 +15,13 @@ class ExpressionShortcuts:
         'd3/dx3': r'\frac{d^3}{dx^3}',
         'd4/dx4': r'\frac{d^4}{dx^4}',
         'd5/dx5': r'\frac{d^5}{dx^5}'
+    }
+    
+    # Combinatorial shortcuts
+    COMBINATORIAL_SHORTCUTS = {
+        'binom': r'nchoosek',  # Convert binom to nchoosek for MATLAB
+        'C': r'nchoosek',      # Alternative notation
+        'choose': r'nchoosek'  # Another common notation
     }
     
     # Integral shortcuts
@@ -41,7 +49,7 @@ class ExpressionShortcuts:
         'arccos': r'\arccos',
         'arctan': r'\arctan',
         'ln': r'\ln',
-        'lg': r'\log_{10}',  # Added 'lg' as a shortcut for log base 10
+        'lg': r'\log_{10}',  # base-10 logarithm
         'log': r'\log',
         'log10': r'\log_{10}',  # Explicit base-10 log
         'log2': r'\log_{2}'     # Base-2 log
@@ -101,6 +109,7 @@ class ExpressionShortcuts:
         """
         all_shortcuts = {}
         all_shortcuts.update(cls.DERIVATIVE_SHORTCUTS)
+        all_shortcuts.update(cls.COMBINATORIAL_SHORTCUTS)
         all_shortcuts.update(cls.INTEGRAL_SHORTCUTS)
         all_shortcuts.update(cls.FUNCTION_SHORTCUTS)
         all_shortcuts.update(cls.FRACTION_SHORTCUTS)
@@ -187,3 +196,24 @@ class ExpressionShortcuts:
         text = re.sub(indefinite_integral_pattern, replace_indefinite_integral, text)
         
         return text
+
+    @staticmethod
+    def _convert_logarithms(expr):
+        """Convert different logarithm notations to MATLAB format."""
+        # Convert lg(x) to log10(x)
+        expr = re.sub(r'lg\s*\((.*?)\)', r'log10(\1)', expr)
+        
+        # Keep ln(x) as log(x) for natural logarithm
+        expr = re.sub(r'ln\s*\((.*?)\)', r'log(\1)', expr)
+        
+        # Convert log(x) to log10(x) if not already handled
+        expr = re.sub(r'(?<![\w])log\s*\((.*?)\)', r'log10(\1)', expr)
+        
+        return expr
+
+    @staticmethod
+    def convert_combinatorial_expression(expr):
+        """Convert combinatorial expressions to MATLAB format."""
+        # Convert nCr(n, k) or nCr to nchoosek(n, k)
+        expr = re.sub(r'(\d+)C(\d+)', r'nchoosek(\1, \2)', expr)
+        return expr

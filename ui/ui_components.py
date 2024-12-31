@@ -160,8 +160,15 @@ class UIComponents:
         self.parent.recall_matrix_button.clicked.connect(self.parent.recall_matrix)
         self.parent.recall_matrix_button.hide()
         
+        # Create Calculate Button for Matrix
+        self.parent.calculate_matrix_button = QPushButton('Calculate')
+        self.parent.calculate_matrix_button.setFixedSize(120, 30)
+        self.parent.calculate_matrix_button.clicked.connect(self.parent.calculate_matrix)
+        self.parent.calculate_matrix_button.hide()
+        
         button_layout.addWidget(self.parent.store_matrix_button)
         button_layout.addWidget(self.parent.recall_matrix_button)
+        button_layout.addWidget(self.parent.calculate_matrix_button)
         button_layout.addStretch()
         
         # Add all components to the main matrix layout
@@ -172,6 +179,7 @@ class UIComponents:
         # Initially hide matrix-related components; visibility managed by mode_config
         self.parent.store_matrix_button.hide()
         self.parent.recall_matrix_button.hide()
+        self.parent.calculate_matrix_button.hide()
         return matrix_layout
 
     def _create_formula_components(self):

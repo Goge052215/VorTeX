@@ -11,7 +11,7 @@ SIMPLE_LATEX_LEGEND = """
     </tr>
     <tr>
         <td style="padding: 4px; border: 1px solid #414868;">Combinations (nCr)</td>
-        <td style="padding: 4px; border: 1px solid #414868;"><code>\\binom{n}{r}</code></td>
+        <td style="padding: 4px; border: 1px solid #414868;"><code>binom(n,r)</code></td>
     </tr>
     <tr>
         <td style="padding: 4px; border: 1px solid #414868;">Trigonometric Functions</td>
@@ -47,7 +47,7 @@ SIMPLE_LATEX_LEGEND = """
     </tr>
     <tr>
         <td style="padding: 4px; border: 1px solid #414868;">Definite Integral</td>
-        <td style="padding: 4px; border: 1px solid #414868;"><code>int_{a}^{b} f(x) dx</code></td>
+        <td style="padding: 4px; border: 1px solid #414868;"><code>int (a to b) f(x) dx</code></td>
     </tr>
     <tr>
         <td style="padding: 4px; border: 1px solid #414868;">Indefinite Integral</td>

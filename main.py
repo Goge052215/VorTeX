@@ -53,9 +53,9 @@ def download_fonts():
     Download and install fonts based on the operating system.
     Returns True if successful, False otherwise.
     """
-    try:
+    '''try:
         if sys.platform == "darwin":  # macOS
-            result = os.system("bash fonts/fonts_download_macos.bash")
+            result = os.system("bash fonts/fonts_download.bash")
             if result != 0:
                 logger.error("Failed to download fonts on macOS")
                 return False
@@ -77,7 +77,7 @@ def download_fonts():
     except Exception as e:
         logger.error(f"Error downloading fonts: {str(e)}")
         print(f"Error downloading fonts: {str(e)}")
-        return False
+        return False'''
 
 def preprocess_expression(expression):
     """
@@ -107,41 +107,77 @@ def preprocess_expression(expression):
 
 def parse_latex_expression(latex_expr):
     """
-    Parse a LaTeX-like expression and convert it to a SymPy expression.
+    Parse a LaTeX-like expression and convert it to a MATLAB-compatible expression.
 
     Args:
         latex_expr (str): The LaTeX-like expression.
 
     Returns:
-        sympy.Expr: The parsed SymPy expression.
+        str: The MATLAB-compatible expression.
     """
     logger.debug(f"Original expression: '{latex_expr}'")
+
+    # Check if it's an equation (contains '=')
+    is_equation = '=' in latex_expr
+    if is_equation:
+        # Convert single '=' to '==' for MATLAB equation solving
+        # But first ensure we don't double up existing '=='
+        latex_expr = latex_expr.replace('==', '=').replace('=', '==')
+        # Move everything to left side of equation
+        left_side, right_side = latex_expr.split('==')
+        latex_expr = f"solve({left_side} - ({right_side}), x)"
+        logger.debug(f"Converted equation to solve format: {latex_expr}")
+    
+    # Handle combinatorial expressions (binomial coefficients)
+    binom_pattern = r'binom\{(\d+)\}\{(\d+)\}'
+    def replace_binom(match):
+        n = match.group(1)
+        k = match.group(2)
+        return f"nchoosek({n}, {k})"
+    
+    latex_expr = re.sub(binom_pattern, replace_binom, latex_expr)
+    logger.debug(f"After binom conversion: '{latex_expr}'")
 
     # Preprocess integral expressions
     latex_expr = ExpressionShortcuts.convert_integral_expression(latex_expr)
     logger.debug(f"Converted integral expression: '{latex_expr}'")
 
-    # Ensure multiplication is explicit (e.g., '2x' -> '2*x')
+    # Handle derivative expressions directly
+    derivative_pattern = r'd/d([a-zA-Z])\s*([^$]+)'
+    def replace_derivative(match):
+        var = match.group(1)
+        expr = match.group(2).strip()
+        # Ensure multiplication is explicit in the expression
+        expr = re.sub(r'(\d)([a-zA-Z])', r'\1*\2', expr)
+        # Convert Python-style power operator to MATLAB
+        expr = expr.replace('^', '.^')
+        return f"diff({expr}, {var})"
+
+    # Handle higher-order derivatives
+    higher_derivative_pattern = r'd(\d+)/d([a-zA-Z])\^?(\d*)\s*([^$]+)'
+    def replace_higher_derivative(match):
+        order = match.group(1)
+        var = match.group(2)
+        expr = match.group(4).strip()
+        # Ensure multiplication is explicit in the expression
+        expr = re.sub(r'(\d)([a-zA-Z])', r'\1*\2', expr)
+        # Convert Python-style power operator to MATLAB
+        expr = expr.replace('^', '.^')
+        return f"diff({expr}, {var}, {order})"
+
+    # Try higher-order derivative first, then first-order derivative
+    latex_expr = re.sub(higher_derivative_pattern, replace_higher_derivative, latex_expr)
+    latex_expr = re.sub(derivative_pattern, replace_derivative, latex_expr)
+
+    # Ensure multiplication is explicit for remaining terms
     latex_expr = re.sub(r'(\d)([a-zA-Z])', r'\1*\2', latex_expr)
     logger.debug(f"After explicit multiplication: '{latex_expr}'")
 
-    # Convert 'ln' to 'log' for SymPy compatibility
+    # Convert 'ln' to 'log' for MATLAB compatibility
     latex_expr = latex_expr.replace('ln(', 'log(')
 
-    # Handle derivative expressions
-    derivative_pattern = r'd(\d*)/d([a-zA-Z])(\d*)\s+(.+)'
-
-    def replace_derivative(match):
-        order = int(match.group(1)) if match.group(1) else 1
-        var = match.group(2)
-        expr = match.group(4)
-        sympy_expr = sy.sympify(expr.replace('^', '**'))
-        return str(sy.Derivative(sympy_expr, sy.Symbol(var), order))
-
-    latex_expr = re.sub(derivative_pattern, lambda m: replace_derivative(m), latex_expr)
-
-    # Return the final SymPy expression
-    return sy.sympify(latex_expr)
+    logger.debug(f"Final MATLAB expression: '{latex_expr}'")
+    return latex_expr
 
 class CalculatorApp(QWidget, LatexCalculation):
     """
@@ -279,6 +315,9 @@ class CalculatorApp(QWidget, LatexCalculation):
                 widget.show()
             for widget in config['hide']:
                 widget.hide()
+            
+            # Always show the Calculate button
+            self.calculate_matrix_button.show()
             
             # Set window dimensions
             height, width = config['dimensions']
@@ -876,15 +915,62 @@ class CalculatorApp(QWidget, LatexCalculation):
             self.logger.warning(f"Error terminating MATLAB engine: {e}")
         event.accept()
 
-    def _preprocess_expression(self, expression):
-        """Delegate preprocessing to EvaluateExpression for consistency."""
-        # Assuming preprocessing is handled in EvaluateExpression
-        return expression  # No action needed here
+    def calculate_matrix(self):
+        """Handle the calculation for matrix operations."""
+        try:
+            # Retrieve the matrix text and selected operation
+            matrix_text = self.matrix_input.toPlainText().strip()
+            operation = self.combo_matrix_op.currentText()
+            
+            if not matrix_text:
+                QMessageBox.warning(self, "Input Error", "Please enter a matrix.")
+                return
+            
+            # Check if the input is a stored matrix name
+            if matrix_text in self.matrix_memory:
+                matrix_text = self.matrix_memory[matrix_text]
 
-    def _postprocess_result(self, result_str, is_numeric=False):
-        """Delegate postprocessing to EvaluateExpression for consistency."""
-        # Assuming postprocessing is handled in EvaluateExpression
-        return result_str  # No action needed here
+            # Evaluate the matrix in MATLAB
+            self.eng.eval(f"matrix = {matrix_text};", nargout=0)
+            
+            # Perform the selected operation
+            if operation == 'Determinant':
+                result = self.eng.eval("det(matrix)", nargout=1)
+                result = round(float(result), 2)  # Round to 2 decimal places
+
+            elif operation == 'Inverse':
+                result = self.eng.eval("inv(matrix)", nargout=1)
+                result = np.round(np.array(result), 2).tolist()  # Round each element to 2 decimal places
+
+            elif operation == 'Eigenvalues':
+                result = self.eng.eval("eig(matrix)", nargout=1)
+                result = np.round(np.array(result), 2).tolist()  # Round each eigenvalue to 2 decimal places
+
+            elif operation == 'Rank':
+                result = self.eng.eval("rank(matrix)", nargout=1)
+                result = int(result)  # Rank is always an integer, no rounding needed
+
+            elif operation in ['Multiply', 'Add', 'Subtract', 'Divide']:
+                result = self.handle_matrix_arithmetic(operation)
+
+            elif operation == 'Differentiate':
+                result = self.handle_matrix_differentiation()
+
+            else:
+                QMessageBox.warning(self, "Operation Warning", f"Operation '{operation}' is not supported.")
+                return
+
+            # Convert result to string for display
+            result_str = self.format_matrix_result(result, operation)
+
+            # Set the result in the result_display text area
+            self.result_display.setText(result_str)
+            self.result_display.setFont(QFont("Monaspace Neon", 14))
+
+        except matlab.engine.MatlabExecutionError as me:
+            QMessageBox.critical(self, "MATLAB Error", f"MATLAB Error: {me}")
+        except Exception as e:
+            QMessageBox.critical(self, "Unexpected Error", f"Unexpected Error: {str(e)}")
 
 if __name__ == '__main__':
     download_fonts()
