@@ -87,8 +87,8 @@ A PyQt5-based scientific calculator that supports $\LaTeX$ input, integrates wit
 | ------------- | ----------------------- | ----------------------- |
 | $\displaystyle\frac{\text{d}}{\text{d}x}(f(x))$ | `\frac{d}{dx} (f(x))` | `d/dx (f(x))`  |
 | $\displaystyle\frac{\text{d}^n}{\text{d}x^n}(f(x))$  | `\frac{d^n}{dx^n} (f(x))` | `dn/dxn (f(x))` |
-| $\displaystyle\int e^{x} dx$ | `\int e^{x} dx` | `int e^x dx` |
-| $\displaystyle\int_{a}^{b} f(x) dx$ | `\int_{a}^{b} f(x) dx` | `int (a to b) f(x) dx` |
+| $\displaystyle\int e^{x} \text{d}x$ | `\int e^{x} dx` | `int e^x dx` |
+| $\displaystyle\int_{a}^{b} f(x) \text{d}x$ | `\int_{a}^{b} f(x) dx` | `int (a to b) f(x) dx` |
 | $\sin, \cos, \tan, \dots$ | `\sin, \cos, \tan, ...` | `sin, cos, tan, ...` |
 | $\displaystyle\binom{n}{r}$ or $^n\text{C}_r$ | `\binom{n}{r}` | `binom(n, r)` |
 | $\sqrt{x}$  | `\sqrt{x}` | `sqrt(x)` |

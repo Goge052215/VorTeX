@@ -3128,3 +3128,4 @@ Too many input arguments.
 2024-12-31 21:36:53,501 - __main__ - DEBUG - Converted to SymPy expression: 'int(x^3/(x^2 + 1), x, 1, 3)'
 2024-12-31 21:36:53,501 - __main__ - DEBUG - Converted to MATLAB expression: 'int(x^3/(x^2 + 1), x, 1, 3)'
 2024-12-31 21:36:53,913 - __main__ - DEBUG - Displayed Result: 4 - ln(5)/2
+2024-12-31 22:12:55,306 - __main__ - INFO - MATLAB engine terminated
