@@ -3129,3 +3129,639 @@ Too many input arguments.
 2024-12-31 21:36:53,501 - __main__ - DEBUG - Converted to MATLAB expression: 'int(x^3/(x^2 + 1), x, 1, 3)'
 2024-12-31 21:36:53,913 - __main__ - DEBUG - Displayed Result: 4 - ln(5)/2
 2024-12-31 22:12:55,306 - __main__ - INFO - MATLAB engine terminated
+2025-01-01 13:20:13,471 - __main__ - INFO - Initializing Calculator Application
+2025-01-01 13:20:39,189 - __main__ - INFO - MATLAB engine started successfully
+2025-01-01 13:39:50,096 - __main__ - DEBUG - Original expression: 'infty'
+2025-01-01 13:39:50,098 - __main__ - DEBUG - Original expression: 'infty'
+2025-01-01 13:39:50,100 - __main__ - DEBUG - After binom conversion: 'infty'
+2025-01-01 13:39:50,101 - __main__ - DEBUG - Converted integral expression: 'infty'
+2025-01-01 13:39:50,102 - __main__ - DEBUG - After explicit multiplication: 'infty'
+2025-01-01 13:39:50,103 - __main__ - DEBUG - Final MATLAB expression: 'infty'
+2025-01-01 13:39:50,103 - __main__ - DEBUG - Converted to SymPy expression: 'infty'
+2025-01-01 13:39:50,103 - __main__ - DEBUG - Converted to MATLAB expression: 'infty'
+2025-01-01 13:39:51,062 - __main__ - ERROR - Error in LaTeX calculation: Unrecognized function or variable 'infty'.
+
+2025-01-01 13:40:13,309 - __main__ - INFO - MATLAB engine terminated
+2025-01-01 13:41:46,701 - __main__ - INFO - Initializing Calculator Application
+2025-01-01 13:42:01,608 - __main__ - INFO - MATLAB engine started successfully
+2025-01-01 13:42:10,093 - __main__ - DEBUG - Original expression: 'infty'
+2025-01-01 13:42:10,094 - __main__ - DEBUG - Original expression: 'infty'
+2025-01-01 13:42:10,096 - __main__ - DEBUG - After binom conversion: 'infty'
+2025-01-01 13:42:10,097 - __main__ - DEBUG - Converted integral expression: 'infty'
+2025-01-01 13:42:10,098 - __main__ - DEBUG - After explicit multiplication: 'infty'
+2025-01-01 13:42:10,098 - __main__ - DEBUG - Final MATLAB expression: 'infty'
+2025-01-01 13:42:10,098 - __main__ - DEBUG - Converted to SymPy expression: 'infty'
+2025-01-01 13:42:10,099 - __main__ - DEBUG - Converted to MATLAB expression: 'infty'
+2025-01-01 13:42:10,560 - __main__ - ERROR - Error in LaTeX calculation: Unrecognized function or variable 'infty'.
+
+2025-01-01 14:08:30,882 - __main__ - INFO - MATLAB engine terminated
+2025-01-01 14:08:40,070 - __main__ - INFO - Initializing Calculator Application
+2025-01-01 14:08:53,996 - __main__ - INFO - MATLAB engine started successfully
+2025-01-01 14:10:18,840 - __main__ - DEBUG - Original expression: 'infty'
+2025-01-01 14:10:18,842 - __main__ - DEBUG - Original expression: 'infty'
+2025-01-01 14:10:18,844 - __main__ - DEBUG - After binom conversion: 'infty'
+2025-01-01 14:10:18,845 - __main__ - DEBUG - Converted integral expression: 'infty'
+2025-01-01 14:10:18,846 - __main__ - DEBUG - After explicit multiplication: 'infty'
+2025-01-01 14:10:18,846 - __main__ - DEBUG - Final MATLAB expression: 'infty'
+2025-01-01 14:10:18,846 - __main__ - DEBUG - Converted to SymPy expression: 'infty'
+2025-01-01 14:10:18,846 - __main__ - DEBUG - Converted to MATLAB expression: 'infty'
+2025-01-01 14:10:19,267 - __main__ - ERROR - Error in LaTeX calculation: Unrecognized function or variable 'infty'.
+
+2025-01-01 14:10:50,463 - __main__ - INFO - MATLAB engine terminated
+2025-01-01 15:12:50,191 - __main__ - INFO - Initializing Calculator Application
+2025-01-01 15:13:03,608 - __main__ - INFO - MATLAB engine started successfully
+2025-01-01 15:13:19,283 - __main__ - DEBUG - Original expression: 'infty'
+2025-01-01 15:13:19,284 - __main__ - DEBUG - Original expression: 'infty'
+2025-01-01 15:13:19,286 - __main__ - DEBUG - After binom conversion: 'inf'
+2025-01-01 15:13:19,287 - __main__ - DEBUG - Converted integral expression: 'inf'
+2025-01-01 15:13:19,289 - __main__ - DEBUG - After explicit multiplication: 'inf'
+2025-01-01 15:13:19,289 - __main__ - DEBUG - Final MATLAB expression: 'inf'
+2025-01-01 15:13:19,289 - __main__ - DEBUG - Converted to SymPy expression: 'inf'
+2025-01-01 15:13:19,289 - __main__ - DEBUG - Converted to MATLAB expression: 'inf'
+2025-01-01 15:13:19,324 - __main__ - DEBUG - Displayed Result: inf
+2025-01-01 15:13:32,846 - __main__ - DEBUG - Original expression: 'int (3 to infty) ln(x) dx'
+2025-01-01 15:13:32,846 - __main__ - DEBUG - Original expression: 'int (3 to infty) ln(x) dx'
+2025-01-01 15:13:32,846 - __main__ - DEBUG - After binom conversion: 'int (3 to inf) ln(x) dx'
+2025-01-01 15:13:32,846 - __main__ - DEBUG - Converted integral expression: 'int(ln(x), x, 3, inf)'
+2025-01-01 15:13:32,846 - __main__ - DEBUG - After explicit multiplication: 'int(ln(x), x, 3, inf)'
+2025-01-01 15:13:32,846 - __main__ - DEBUG - Final MATLAB expression: 'int(log(x), x, 3, inf)'
+2025-01-01 15:13:32,847 - __main__ - DEBUG - Converted to SymPy expression: 'int(log(x), x, 3, inf)'
+2025-01-01 15:13:32,847 - __main__ - DEBUG - Converted to MATLAB expression: 'int(log(x), x, 3, inf)'
+2025-01-01 15:13:32,977 - __main__ - DEBUG - Displayed Result: Inf
+2025-01-01 15:14:17,545 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2025-01-01 15:14:17,545 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2025-01-01 15:14:17,546 - __main__ - DEBUG - After binom conversion: 'int ln(x) dx'
+2025-01-01 15:14:17,546 - __main__ - DEBUG - Converted integral expression: 'int(ln(x), x)'
+2025-01-01 15:14:17,546 - __main__ - DEBUG - After explicit multiplication: 'int(ln(x), x)'
+2025-01-01 15:14:17,546 - __main__ - DEBUG - Final MATLAB expression: 'int(log(x), x)'
+2025-01-01 15:14:17,546 - __main__ - DEBUG - Converted to SymPy expression: 'int(log(x), x)'
+2025-01-01 15:14:17,546 - __main__ - DEBUG - Converted to MATLAB expression: 'int(log(x), x)'
+2025-01-01 15:14:17,713 - __main__ - DEBUG - Displayed Result: (x*(ln(x) - 1))/ln(10)
+2025-01-01 15:14:19,612 - __main__ - INFO - MATLAB engine terminated
+2025-01-01 15:20:55,739 - __main__ - INFO - Initializing Calculator Application
+2025-01-01 15:21:12,446 - __main__ - INFO - MATLAB engine started successfully
+2025-01-01 15:21:19,234 - __main__ - DEBUG - Original expression: 'int log(x) dx'
+2025-01-01 15:21:19,234 - __main__ - DEBUG - Original expression: 'int log(x) dx'
+2025-01-01 15:21:19,237 - __main__ - DEBUG - After binom conversion: 'int log(x) dx'
+2025-01-01 15:21:19,238 - __main__ - DEBUG - Converted integral expression: 'int(log(x), x)'
+2025-01-01 15:21:19,238 - __main__ - DEBUG - After explicit multiplication: 'int(log(x), x)'
+2025-01-01 15:21:19,239 - __main__ - DEBUG - Final MATLAB expression: 'int(log(x), x)'
+2025-01-01 15:21:19,239 - __main__ - DEBUG - Converted to SymPy expression: 'int(log(x), x)'
+2025-01-01 15:21:19,239 - __main__ - DEBUG - Converted to MATLAB expression: 'int(log(x), x)'
+2025-01-01 15:21:19,444 - __main__ - DEBUG - Displayed Result: (x*(ln(x) - 1))/ln(10)
+2025-01-01 15:41:55,928 - __main__ - INFO - MATLAB engine terminated
+2025-01-01 15:42:10,484 - __main__ - INFO - Initializing Calculator Application
+2025-01-01 15:42:22,619 - __main__ - INFO - MATLAB engine started successfully
+2025-01-01 15:42:44,443 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2025-01-01 15:42:44,446 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2025-01-01 15:42:44,448 - __main__ - DEBUG - After binom conversion: 'int ln(x) dx'
+2025-01-01 15:42:44,449 - __main__ - DEBUG - Converted integral expression: 'int(ln(x), x)'
+2025-01-01 15:42:44,450 - __main__ - DEBUG - After explicit multiplication: 'int(ln(x), x)'
+2025-01-01 15:42:44,450 - __main__ - DEBUG - Final MATLAB expression: 'int(log(x), x)'
+2025-01-01 15:42:44,450 - __main__ - DEBUG - Converted to SymPy expression: 'int(log(x), x)'
+2025-01-01 15:42:44,451 - __main__ - DEBUG - Converted to MATLAB expression: 'int(log(x), x)'
+2025-01-01 15:42:44,713 - __main__ - DEBUG - Displayed Result: (x*(ln(x) - 1))/ln(10)
+2025-01-01 15:43:43,782 - __main__ - DEBUG - Original expression: 'log2(3)'
+2025-01-01 15:43:43,784 - __main__ - DEBUG - Original expression: 'log2(3)'
+2025-01-01 15:43:43,785 - __main__ - DEBUG - After binom conversion: 'log2(3)'
+2025-01-01 15:43:43,785 - __main__ - DEBUG - Converted integral expression: 'log2(3)'
+2025-01-01 15:43:43,785 - __main__ - DEBUG - After explicit multiplication: 'log2(3)'
+2025-01-01 15:43:43,785 - __main__ - DEBUG - Final MATLAB expression: 'log2(3)'
+2025-01-01 15:43:43,785 - __main__ - DEBUG - Converted to SymPy expression: 'log2(3)'
+2025-01-01 15:43:43,786 - __main__ - DEBUG - Converted to MATLAB expression: 'log2(3)'
+2025-01-01 15:43:43,857 - __main__ - DEBUG - Displayed Result: 1.584962500721156
+2025-01-01 15:43:49,204 - __main__ - DEBUG - Original expression: 'log3(3)'
+2025-01-01 15:43:49,205 - __main__ - DEBUG - Original expression: 'log3(3)'
+2025-01-01 15:43:49,205 - __main__ - DEBUG - After binom conversion: 'log3(3)'
+2025-01-01 15:43:49,205 - __main__ - DEBUG - Converted integral expression: 'log3(3)'
+2025-01-01 15:43:49,205 - __main__ - DEBUG - After explicit multiplication: 'log3(3)'
+2025-01-01 15:43:49,205 - __main__ - DEBUG - Final MATLAB expression: 'log3(3)'
+2025-01-01 15:43:49,205 - __main__ - DEBUG - Converted to SymPy expression: 'log3(3)'
+2025-01-01 15:43:49,205 - __main__ - DEBUG - Converted to MATLAB expression: 'log3(3)'
+2025-01-01 15:43:49,651 - __main__ - ERROR - Error in LaTeX calculation: Undefined function 'log3' for input arguments of type 'double'.
+
+2025-01-01 15:55:46,794 - __main__ - INFO - MATLAB engine terminated
+2025-01-01 16:49:05,184 - __main__ - INFO - Initializing Calculator Application
+2025-01-01 16:49:21,184 - __main__ - INFO - MATLAB engine started successfully
+2025-01-01 16:49:28,502 - __main__ - DEBUG - Original expression: 'log3(3)'
+2025-01-01 16:49:28,504 - __main__ - DEBUG - Original expression: 'log3(3)'
+2025-01-01 16:49:28,506 - __main__ - DEBUG - After binom conversion: 'log3(3)'
+2025-01-01 16:49:28,507 - __main__ - DEBUG - Converted integral expression: 'log3(3)'
+2025-01-01 16:49:28,508 - __main__ - DEBUG - After explicit multiplication: 'log3(3)'
+2025-01-01 16:49:28,508 - __main__ - DEBUG - Final MATLAB expression: 'log3(3)'
+2025-01-01 16:49:28,509 - __main__ - DEBUG - Converted to SymPy expression: 'log3(3)'
+2025-01-01 16:49:28,509 - __main__ - DEBUG - Converted to MATLAB expression: 'log3(3)'
+2025-01-01 16:49:28,527 - __main__ - ERROR - Error in LaTeX calculation: look-behind requires fixed-width pattern
+2025-01-01 16:57:32,961 - __main__ - INFO - MATLAB engine terminated
+2025-01-01 16:57:54,101 - __main__ - INFO - Initializing Calculator Application
+2025-01-01 16:58:08,170 - __main__ - INFO - MATLAB engine started successfully
+2025-01-01 16:58:21,107 - __main__ - DEBUG - Original expression: 'log3(3)'
+2025-01-01 16:58:21,109 - __main__ - DEBUG - Original expression: 'log3(3)'
+2025-01-01 16:58:21,111 - __main__ - DEBUG - After binom conversion: 'log3(3)'
+2025-01-01 16:58:21,112 - __main__ - DEBUG - Converted integral expression: 'log3(3)'
+2025-01-01 16:58:21,113 - __main__ - DEBUG - After explicit multiplication: 'log3(3)'
+2025-01-01 16:58:21,113 - __main__ - DEBUG - Final MATLAB expression: 'log3(3)'
+2025-01-01 16:58:21,113 - __main__ - DEBUG - Converted to SymPy expression: 'log3(3)'
+2025-01-01 16:58:21,114 - __main__ - DEBUG - Converted to MATLAB expression: 'log3(3)'
+2025-01-01 16:58:21,124 - __main__ - ERROR - Error in LaTeX calculation: look-behind requires fixed-width pattern
+2025-01-01 18:24:23,766 - __main__ - INFO - Initializing Calculator Application
+2025-01-01 18:24:37,763 - __main__ - INFO - MATLAB engine started successfully
+2025-01-01 18:28:12,899 - __main__ - DEBUG - Original expression: 'ln(2)'
+2025-01-01 18:28:12,903 - __main__ - DEBUG - Original expression: 'ln(2)'
+2025-01-01 18:28:12,905 - __main__ - DEBUG - After binom conversion: 'ln(2)'
+2025-01-01 18:28:12,905 - __main__ - DEBUG - Converted integral expression: 'ln(2)'
+2025-01-01 18:28:12,907 - __main__ - DEBUG - After explicit multiplication: 'ln(2)'
+2025-01-01 18:28:12,907 - __main__ - DEBUG - Final MATLAB expression: 'log(2)'
+2025-01-01 18:28:12,907 - __main__ - DEBUG - Converted to SymPy expression: 'log(2)'
+2025-01-01 18:28:12,907 - __main__ - DEBUG - Converted to MATLAB expression: 'log(2)'
+2025-01-01 18:28:13,026 - __main__ - ERROR - Error in LaTeX calculation: look-behind requires fixed-width pattern
+2025-01-01 21:22:59,591 - __main__ - INFO - MATLAB engine terminated
+2025-01-01 21:23:21,111 - __main__ - INFO - Initializing Calculator Application
+2025-01-01 21:24:09,869 - __main__ - INFO - MATLAB engine started successfully
+2025-01-01 21:24:33,205 - __main__ - DEBUG - Original expression: 'ln(2)'
+2025-01-01 21:24:33,206 - __main__ - DEBUG - Original expression: 'ln(2)'
+2025-01-01 21:24:33,208 - __main__ - DEBUG - After binom conversion: 'ln(2)'
+2025-01-01 21:24:33,209 - __main__ - DEBUG - Converted integral expression: 'ln(2)'
+2025-01-01 21:24:33,210 - __main__ - DEBUG - After explicit multiplication: 'ln(2)'
+2025-01-01 21:24:33,210 - __main__ - DEBUG - Final MATLAB expression: 'log(2)'
+2025-01-01 21:24:33,210 - __main__ - DEBUG - Converted to SymPy expression: 'log(2)'
+2025-01-01 21:24:33,211 - __main__ - DEBUG - Converted to MATLAB expression: 'log(2)'
+2025-01-01 21:24:33,241 - __main__ - ERROR - Error in LaTeX calculation: look-behind requires fixed-width pattern
+2025-01-01 21:28:10,193 - __main__ - INFO - MATLAB engine terminated
+2025-01-01 22:19:53,582 - __main__ - INFO - Initializing Calculator Application
+2025-01-01 22:20:06,162 - __main__ - INFO - MATLAB engine started successfully
+2025-01-02 10:12:14,753 - __main__ - DEBUG - Original expression: 'ln(2)'
+2025-01-02 10:12:14,756 - __main__ - DEBUG - Original expression: 'ln(2)'
+2025-01-02 10:12:14,758 - __main__ - DEBUG - After binom conversion: 'ln(2)'
+2025-01-02 10:12:14,758 - __main__ - DEBUG - Converted integral expression: 'ln(2)'
+2025-01-02 10:12:14,760 - __main__ - DEBUG - After explicit multiplication: 'ln(2)'
+2025-01-02 10:12:14,760 - __main__ - DEBUG - Final MATLAB expression: 'log(2)'
+2025-01-02 10:12:14,760 - __main__ - DEBUG - Converted to SymPy expression: 'log(2)'
+2025-01-02 10:12:14,760 - __main__ - DEBUG - Converted to MATLAB expression: 'log(2)'
+2025-01-02 10:12:15,166 - __main__ - DEBUG - Displayed Result: 0.3010299956639812
+2025-01-02 10:12:23,353 - __main__ - DEBUG - Original expression: 'log3(3)'
+2025-01-02 10:12:23,353 - __main__ - DEBUG - Original expression: 'log3(3)'
+2025-01-02 10:12:23,353 - __main__ - DEBUG - After binom conversion: 'log3(3)'
+2025-01-02 10:12:23,353 - __main__ - DEBUG - Converted integral expression: 'log3(3)'
+2025-01-02 10:12:23,353 - __main__ - DEBUG - After explicit multiplication: 'log3(3)'
+2025-01-02 10:12:23,354 - __main__ - DEBUG - Final MATLAB expression: 'log3(3)'
+2025-01-02 10:12:23,354 - __main__ - DEBUG - Converted to SymPy expression: 'log3(3)'
+2025-01-02 10:12:23,354 - __main__ - DEBUG - Converted to MATLAB expression: 'log3(3)'
+2025-01-02 10:12:23,393 - __main__ - DEBUG - Displayed Result: 1.0
+2025-01-02 10:12:28,763 - __main__ - DEBUG - Original expression: 'log5(3)'
+2025-01-02 10:12:28,764 - __main__ - DEBUG - Original expression: 'log5(3)'
+2025-01-02 10:12:28,764 - __main__ - DEBUG - After binom conversion: 'log5(3)'
+2025-01-02 10:12:28,764 - __main__ - DEBUG - Converted integral expression: 'log5(3)'
+2025-01-02 10:12:28,764 - __main__ - DEBUG - After explicit multiplication: 'log5(3)'
+2025-01-02 10:12:28,764 - __main__ - DEBUG - Final MATLAB expression: 'log5(3)'
+2025-01-02 10:12:28,764 - __main__ - DEBUG - Converted to SymPy expression: 'log5(3)'
+2025-01-02 10:12:28,764 - __main__ - DEBUG - Converted to MATLAB expression: 'log5(3)'
+2025-01-02 10:12:28,796 - __main__ - DEBUG - Displayed Result: 0.6826061944859853
+2025-01-02 10:17:34,767 - __main__ - INFO - MATLAB engine terminated
+2025-01-02 10:17:41,361 - __main__ - INFO - Initializing Calculator Application
+2025-01-02 10:17:51,370 - __main__ - INFO - MATLAB engine started successfully
+2025-01-02 10:20:20,550 - __main__ - DEBUG - Original expression: 'ln(2)'
+2025-01-02 10:20:20,551 - __main__ - DEBUG - Original expression: 'ln(2)'
+2025-01-02 10:20:20,554 - __main__ - DEBUG - After binom conversion: 'ln(2)'
+2025-01-02 10:20:20,555 - __main__ - DEBUG - Converted integral expression: 'ln(2)'
+2025-01-02 10:20:20,556 - __main__ - DEBUG - After explicit multiplication: 'ln(2)'
+2025-01-02 10:20:20,556 - __main__ - DEBUG - Final MATLAB expression: 'log(2)'
+2025-01-02 10:20:20,556 - __main__ - DEBUG - Converted to SymPy expression: 'log(2)'
+2025-01-02 10:20:20,556 - __main__ - DEBUG - Converted to MATLAB expression: 'log(2)'
+2025-01-02 10:20:20,753 - __main__ - DEBUG - Displayed Result: 0.6931471805599453
+2025-01-02 10:20:26,577 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2025-01-02 10:20:26,577 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2025-01-02 10:20:26,577 - __main__ - DEBUG - After binom conversion: 'int ln(x) dx'
+2025-01-02 10:20:26,577 - __main__ - DEBUG - Converted integral expression: 'int(ln(x), x)'
+2025-01-02 10:20:26,577 - __main__ - DEBUG - After explicit multiplication: 'int(ln(x), x)'
+2025-01-02 10:20:26,578 - __main__ - DEBUG - Final MATLAB expression: 'int(log(x), x)'
+2025-01-02 10:20:26,578 - __main__ - DEBUG - Converted to SymPy expression: 'int(log(x), x)'
+2025-01-02 10:20:26,578 - __main__ - DEBUG - Converted to MATLAB expression: 'int(log(x), x)'
+2025-01-02 10:20:26,919 - __main__ - DEBUG - Displayed Result: x*(ln(x) - 1)
+2025-01-02 10:20:37,670 - __main__ - DEBUG - Original expression: 'int (3 to infty) ln(x) dx'
+2025-01-02 10:20:37,670 - __main__ - DEBUG - Original expression: 'int (3 to infty) ln(x) dx'
+2025-01-02 10:20:37,670 - __main__ - DEBUG - After binom conversion: 'int (3 to inf) ln(x) dx'
+2025-01-02 10:20:37,670 - __main__ - DEBUG - Converted integral expression: 'int(ln(x), x, 3, inf)'
+2025-01-02 10:20:37,670 - __main__ - DEBUG - After explicit multiplication: 'int(ln(x), x, 3, inf)'
+2025-01-02 10:20:37,670 - __main__ - DEBUG - Final MATLAB expression: 'int(log(x), x, 3, inf)'
+2025-01-02 10:20:37,671 - __main__ - DEBUG - Converted to SymPy expression: 'int(log(x), x, 3, inf)'
+2025-01-02 10:20:37,671 - __main__ - DEBUG - Converted to MATLAB expression: 'int(log(x), x, 3, inf)'
+2025-01-02 10:20:37,749 - __main__ - DEBUG - Displayed Result: Inf
+2025-01-02 11:18:28,294 - __main__ - DEBUG - Original expression: 'int (3 to infty) 1/x dx'
+2025-01-02 11:18:28,297 - __main__ - DEBUG - Original expression: 'int (3 to infty) 1/x dx'
+2025-01-02 11:18:28,297 - __main__ - DEBUG - After binom conversion: 'int (3 to inf) 1/x dx'
+2025-01-02 11:18:28,297 - __main__ - DEBUG - Converted integral expression: 'int(1/x, x, 3, inf)'
+2025-01-02 11:18:28,298 - __main__ - DEBUG - After explicit multiplication: 'int(1/x, x, 3, inf)'
+2025-01-02 11:18:28,298 - __main__ - DEBUG - Final MATLAB expression: 'int(1/x, x, 3, inf)'
+2025-01-02 11:18:28,298 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/x, x, 3, inf)'
+2025-01-02 11:18:28,299 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/x, x, 3, inf)'
+2025-01-02 11:18:29,646 - __main__ - DEBUG - Displayed Result: Inf
+2025-01-02 11:19:05,987 - __main__ - DEBUG - Original expression: 'sum (1 to infty) 1/n'
+2025-01-02 11:19:05,990 - __main__ - DEBUG - Original expression: 'sum (1 to infty) 1/n'
+2025-01-02 11:19:05,991 - __main__ - DEBUG - After binom conversion: 'sum (1 to inf) 1/n'
+2025-01-02 11:19:05,991 - __main__ - DEBUG - Converted integral expression: 'sum (1 to inf) 1/n'
+2025-01-02 11:19:05,992 - __main__ - DEBUG - After explicit multiplication: 'sum (1 to inf) 1/n'
+2025-01-02 11:19:05,992 - __main__ - DEBUG - Final MATLAB expression: 'sum (1 to inf) 1/n'
+2025-01-02 11:19:05,992 - __main__ - DEBUG - Converted to SymPy expression: 'sum (1 to inf) 1/n'
+2025-01-02 11:19:05,992 - __main__ - DEBUG - Converted to MATLAB expression: 'sum (1 to inf) 1/n'
+2025-01-02 11:19:06,396 - __main__ - ERROR - Error in LaTeX calculation: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2025-01-02 11:20:49,678 - __main__ - INFO - MATLAB engine terminated
+2025-01-02 11:21:18,518 - __main__ - INFO - Initializing Calculator Application
+2025-01-02 11:21:28,601 - __main__ - INFO - MATLAB engine started successfully
+2025-01-02 12:02:40,246 - __main__ - DEBUG - Original expression: 'sum (1 to 5) x^2'
+2025-01-02 12:02:40,249 - __main__ - DEBUG - Original expression: 'sum (1 to 5) x^2'
+2025-01-02 12:02:40,251 - __main__ - DEBUG - After binom conversion: 'sum (1 to 5) x^2'
+2025-01-02 12:02:40,252 - __main__ - DEBUG - Converted integral expression: 'sum (1 to 5) x^2'
+2025-01-02 12:02:40,253 - __main__ - DEBUG - After explicit multiplication: 'sum (1 to 5) x^2'
+2025-01-02 12:02:40,253 - __main__ - DEBUG - Final MATLAB expression: 'sum (1 to 5) x^2'
+2025-01-02 12:02:40,253 - __main__ - DEBUG - Converted to SymPy expression: 'sum (1 to 5) x^2'
+2025-01-02 12:02:40,254 - __main__ - DEBUG - Converted to MATLAB expression: 'sum (1 to 5) x^2'
+2025-01-02 12:02:40,764 - __main__ - DEBUG - Displayed Result: 5*x^2
+2025-01-02 12:04:45,324 - __main__ - INFO - MATLAB engine terminated
+2025-01-02 12:05:46,387 - __main__ - INFO - Initializing Calculator Application
+2025-01-02 12:05:59,914 - __main__ - INFO - MATLAB engine started successfully
+2025-01-02 12:08:56,788 - __main__ - DEBUG - Original expression: 'sum(1 to 5) x^2'
+2025-01-02 12:08:56,790 - __main__ - DEBUG - Original expression: 'sum(1 to 5) x^2'
+2025-01-02 12:08:56,792 - __main__ - DEBUG - After binom conversion: 'sum(1 to 5) x^2'
+2025-01-02 12:08:56,793 - __main__ - DEBUG - Converted integral expression: 'sum(1 to 5) x^2'
+2025-01-02 12:08:56,794 - __main__ - DEBUG - After explicit multiplication: 'sum(1 to 5) x^2'
+2025-01-02 12:08:56,794 - __main__ - DEBUG - Final MATLAB expression: 'sum(1 to 5) x^2'
+2025-01-02 12:08:56,794 - __main__ - DEBUG - Converted to SymPy expression: 'sum(1 to 5) x^2'
+2025-01-02 12:08:56,794 - __main__ - DEBUG - Converted to MATLAB expression: 'sum(1 to 5) x^2'
+2025-01-02 12:08:57,309 - __main__ - DEBUG - Displayed Result: 55
+2025-01-02 12:09:09,851 - __main__ - DEBUG - Original expression: 'sum(1 to infty) 1/x'
+2025-01-02 12:09:09,852 - __main__ - DEBUG - Original expression: 'sum(1 to infty) 1/x'
+2025-01-02 12:09:09,852 - __main__ - DEBUG - After binom conversion: 'sum(1 to inf) 1/x'
+2025-01-02 12:09:09,852 - __main__ - DEBUG - Converted integral expression: 'sum(1 to inf) 1/x'
+2025-01-02 12:09:09,852 - __main__ - DEBUG - After explicit multiplication: 'sum(1 to inf) 1/x'
+2025-01-02 12:09:09,852 - __main__ - DEBUG - Final MATLAB expression: 'sum(1 to inf) 1/x'
+2025-01-02 12:09:09,852 - __main__ - DEBUG - Converted to SymPy expression: 'sum(1 to inf) 1/x'
+2025-01-02 12:09:09,853 - __main__ - DEBUG - Converted to MATLAB expression: 'sum(1 to inf) 1/x'
+2025-01-02 12:09:09,953 - __main__ - DEBUG - Displayed Result: Inf
+2025-01-02 12:09:37,963 - __main__ - DEBUG - Original expression: 'sum(1 to infty) 1/x^2'
+2025-01-02 12:09:37,965 - __main__ - DEBUG - Original expression: 'sum(1 to infty) 1/x^2'
+2025-01-02 12:09:37,965 - __main__ - DEBUG - After binom conversion: 'sum(1 to inf) 1/x^2'
+2025-01-02 12:09:37,965 - __main__ - DEBUG - Converted integral expression: 'sum(1 to inf) 1/x^2'
+2025-01-02 12:09:37,965 - __main__ - DEBUG - After explicit multiplication: 'sum(1 to inf) 1/x^2'
+2025-01-02 12:09:37,965 - __main__ - DEBUG - Final MATLAB expression: 'sum(1 to inf) 1/x^2'
+2025-01-02 12:09:37,966 - __main__ - DEBUG - Converted to SymPy expression: 'sum(1 to inf) 1/x^2'
+2025-01-02 12:09:37,966 - __main__ - DEBUG - Converted to MATLAB expression: 'sum(1 to inf) 1/x^2'
+2025-01-02 12:09:38,111 - __main__ - DEBUG - Displayed Result: pi^2/6
+2025-01-02 12:10:02,045 - __main__ - DEBUG - Original expression: 'sum(1 to infty) 1/(x^2)'
+2025-01-02 12:10:02,047 - __main__ - DEBUG - Original expression: 'sum(1 to infty) 1/(x^2)'
+2025-01-02 12:10:02,047 - __main__ - DEBUG - After binom conversion: 'sum(1 to inf) 1/(x^2)'
+2025-01-02 12:10:02,047 - __main__ - DEBUG - Converted integral expression: 'sum(1 to inf) 1/(x^2)'
+2025-01-02 12:10:02,048 - __main__ - DEBUG - After explicit multiplication: 'sum(1 to inf) 1/(x^2)'
+2025-01-02 12:10:02,048 - __main__ - DEBUG - Final MATLAB expression: 'sum(1 to inf) 1/(x^2)'
+2025-01-02 12:10:02,048 - __main__ - DEBUG - Converted to SymPy expression: 'sum(1 to inf) 1/(x^2)'
+2025-01-02 12:10:02,048 - __main__ - DEBUG - Converted to MATLAB expression: 'sum(1 to inf) 1/(x^2)'
+2025-01-02 12:10:02,192 - __main__ - DEBUG - Displayed Result: pi^2/6
+2025-01-02 12:15:39,404 - __main__ - DEBUG - Original expression: 'int (-infty to infty) x^2'
+2025-01-02 12:15:39,408 - __main__ - DEBUG - Original expression: 'int (-infty to infty) x^2'
+2025-01-02 12:15:39,408 - __main__ - DEBUG - After binom conversion: 'int (-inf to inf) x^2'
+2025-01-02 12:15:39,409 - __main__ - DEBUG - Converted integral expression: 'int (-inf to inf) x^2'
+2025-01-02 12:15:39,410 - __main__ - DEBUG - After explicit multiplication: 'int (-inf to inf) x^2'
+2025-01-02 12:15:39,410 - __main__ - DEBUG - Final MATLAB expression: 'int (-inf to inf) x^2'
+2025-01-02 12:15:39,410 - __main__ - DEBUG - Converted to SymPy expression: 'int (-inf to inf) x^2'
+2025-01-02 12:15:39,410 - __main__ - DEBUG - Converted to MATLAB expression: 'int (-inf to inf) x^2'
+2025-01-02 12:15:39,774 - __main__ - ERROR - Error in LaTeX calculation: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2025-01-02 12:24:43,850 - __main__ - INFO - MATLAB engine terminated
+2025-01-02 12:24:50,483 - __main__ - INFO - Initializing Calculator Application
+2025-01-02 12:25:00,676 - __main__ - INFO - MATLAB engine started successfully
+2025-01-02 12:25:15,757 - __main__ - DEBUG - Original expression: 'int (-infty to infty) x^2 dx'
+2025-01-02 12:25:15,758 - __main__ - DEBUG - Original expression: 'int (-infty to infty) x^2 dx'
+2025-01-02 12:25:15,760 - __main__ - DEBUG - After binom conversion: 'int (-inf to inf) x^2 dx'
+2025-01-02 12:25:15,761 - __main__ - DEBUG - Converted integral expression: 'int(x^2, x, -inf, inf)'
+2025-01-02 12:25:15,762 - __main__ - DEBUG - After explicit multiplication: 'int(x^2, x, -inf, inf)'
+2025-01-02 12:25:15,762 - __main__ - DEBUG - Final MATLAB expression: 'int(x^2, x, -inf, inf)'
+2025-01-02 12:25:15,763 - __main__ - DEBUG - Converted to SymPy expression: 'int(x^2, x, -inf, inf)'
+2025-01-02 12:25:15,763 - __main__ - DEBUG - Converted to MATLAB expression: 'int(x^2, x, -inf, inf)'
+2025-01-02 12:25:15,953 - __main__ - DEBUG - Displayed Result: Inf
+2025-01-02 12:25:22,886 - __main__ - DEBUG - Original expression: 'int (-infty to infty) x^3 dx'
+2025-01-02 12:25:22,887 - __main__ - DEBUG - Original expression: 'int (-infty to infty) x^3 dx'
+2025-01-02 12:25:22,887 - __main__ - DEBUG - After binom conversion: 'int (-inf to inf) x^3 dx'
+2025-01-02 12:25:22,887 - __main__ - DEBUG - Converted integral expression: 'int(x^3, x, -inf, inf)'
+2025-01-02 12:25:22,887 - __main__ - DEBUG - After explicit multiplication: 'int(x^3, x, -inf, inf)'
+2025-01-02 12:25:22,887 - __main__ - DEBUG - Final MATLAB expression: 'int(x^3, x, -inf, inf)'
+2025-01-02 12:25:22,887 - __main__ - DEBUG - Converted to SymPy expression: 'int(x^3, x, -inf, inf)'
+2025-01-02 12:25:22,888 - __main__ - DEBUG - Converted to MATLAB expression: 'int(x^3, x, -inf, inf)'
+2025-01-02 12:25:22,957 - __main__ - DEBUG - Displayed Result: NaN
+2025-01-02 12:34:17,575 - __main__ - INFO - MATLAB engine terminated
+2025-01-02 12:34:23,235 - __main__ - INFO - Initializing Calculator Application
+2025-01-02 12:34:33,484 - __main__ - INFO - MATLAB engine started successfully
+2025-01-02 12:34:47,484 - __main__ - DEBUG - Original expression: 'int (-infty to infty) x^3 dx'
+2025-01-02 12:34:47,485 - __main__ - DEBUG - Original expression: 'int (-infty to infty) x^3 dx'
+2025-01-02 12:34:47,487 - __main__ - DEBUG - After binom conversion: 'int (-inf to inf) x^3 dx'
+2025-01-02 12:34:47,488 - __main__ - DEBUG - Converted integral expression: 'int(x^3, x, -inf, inf)'
+2025-01-02 12:34:47,489 - __main__ - DEBUG - After explicit multiplication: 'int(x^3, x, -inf, inf)'
+2025-01-02 12:34:47,490 - __main__ - DEBUG - Final MATLAB expression: 'int(x^3, x, -inf, inf)'
+2025-01-02 12:34:47,490 - __main__ - DEBUG - Converted to SymPy expression: 'int(x^3, x, -inf, inf)'
+2025-01-02 12:34:47,490 - __main__ - DEBUG - Converted to MATLAB expression: 'int(x^3, x, -inf, inf)'
+2025-01-02 12:34:47,689 - __main__ - DEBUG - Displayed Result: NaN
+2025-01-02 12:59:42,189 - __main__ - INFO - MATLAB engine terminated
+2025-01-02 12:59:48,478 - __main__ - INFO - Initializing Calculator Application
+2025-01-02 12:59:58,328 - __main__ - INFO - MATLAB engine started successfully
+2025-01-02 13:00:33,217 - __main__ - DEBUG - Original expression: 'lim (x to 5) x^2'
+2025-01-02 13:00:33,218 - __main__ - DEBUG - Original expression: 'lim (x to 5) x^2'
+2025-01-02 13:00:33,219 - __main__ - DEBUG - After binom conversion: 'lim (x to 5) x^2'
+2025-01-02 13:00:33,220 - __main__ - DEBUG - Converted integral expression: 'lim (x to 5) x^2'
+2025-01-02 13:00:33,221 - __main__ - DEBUG - After explicit multiplication: 'lim (x to 5) x^2'
+2025-01-02 13:00:33,221 - __main__ - DEBUG - Final MATLAB expression: 'lim (x to 5) x^2'
+2025-01-02 13:00:33,221 - __main__ - DEBUG - Converted to SymPy expression: 'lim (x to 5) x^2'
+2025-01-02 13:00:33,221 - __main__ - DEBUG - Converted to MATLAB expression: 'lim (x to 5) x^2'
+2025-01-02 13:00:33,347 - __main__ - ERROR - Error in LaTeX calculation: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2025-01-02 13:05:29,250 - __main__ - INFO - MATLAB engine terminated
+2025-01-02 13:56:22,282 - __main__ - INFO - Initializing Calculator Application
+2025-01-02 13:56:49,264 - __main__ - INFO - MATLAB engine started successfully
+2025-01-02 13:57:50,091 - __main__ - DEBUG - Original expression: 'lim (x to 5) x^2'
+2025-01-02 13:57:50,094 - __main__ - DEBUG - Original expression: 'lim (x to 5) x^2'
+2025-01-02 13:57:50,096 - __main__ - DEBUG - After binom conversion: 'lim (x to 5) x^2'
+2025-01-02 13:57:50,097 - __main__ - DEBUG - Converted integral expression: 'lim (x to 5) x^2'
+2025-01-02 13:57:50,098 - __main__ - DEBUG - After explicit multiplication: 'lim (x to 5) x^2'
+2025-01-02 13:57:50,098 - __main__ - DEBUG - Final MATLAB expression: 'lim (x to 5) x^2'
+2025-01-02 13:57:50,098 - __main__ - DEBUG - Converted to SymPy expression: 'lim (x to 5) x^2'
+2025-01-02 13:57:50,098 - __main__ - DEBUG - Converted to MATLAB expression: 'lim (x to 5) x^2'
+2025-01-02 13:57:50,616 - __main__ - ERROR - Error in LaTeX calculation: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2025-01-02 15:31:25,360 - __main__ - DEBUG - Original expression: 'lim (x to 5) x^2'
+2025-01-02 15:31:25,363 - __main__ - DEBUG - Original expression: 'lim (x to 5) x^2'
+2025-01-02 15:31:25,364 - __main__ - DEBUG - After binom conversion: 'lim (x to 5) x^2'
+2025-01-02 15:31:25,364 - __main__ - DEBUG - Converted integral expression: 'lim (x to 5) x^2'
+2025-01-02 15:31:25,365 - __main__ - DEBUG - After explicit multiplication: 'lim (x to 5) x^2'
+2025-01-02 15:31:25,365 - __main__ - DEBUG - Final MATLAB expression: 'lim (x to 5) x^2'
+2025-01-02 15:31:25,365 - __main__ - DEBUG - Converted to SymPy expression: 'lim (x to 5) x^2'
+2025-01-02 15:31:25,365 - __main__ - DEBUG - Converted to MATLAB expression: 'lim (x to 5) x^2'
+2025-01-02 15:31:25,866 - __main__ - ERROR - Error in LaTeX calculation: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2025-01-02 15:31:28,485 - __main__ - INFO - MATLAB engine terminated
+2025-01-02 16:46:41,717 - __main__ - INFO - Initializing Calculator Application
+2025-01-02 16:46:55,511 - __main__ - INFO - MATLAB engine started successfully
+2025-01-02 17:02:51,197 - __main__ - DEBUG - Original expression: 'lim (x to 5) x^2'
+2025-01-02 17:02:51,201 - __main__ - DEBUG - Original expression: 'lim (x to 5) x^2'
+2025-01-02 17:02:51,204 - __main__ - DEBUG - After binom conversion: 'limit(x^2, x, 5)'
+2025-01-02 17:02:51,205 - __main__ - DEBUG - Converted integral expression: 'limit(x^2, x, 5)'
+2025-01-02 17:02:51,206 - __main__ - DEBUG - After explicit multiplication: 'limit(x^2, x, 5)'
+2025-01-02 17:02:51,206 - __main__ - DEBUG - Final MATLAB expression: 'limit(x^2, x, 5)'
+2025-01-02 17:02:51,206 - __main__ - DEBUG - Converted to SymPy expression: 'limit(x^2, x, 5)'
+2025-01-02 17:02:51,206 - __main__ - DEBUG - Converted to MATLAB expression: 'limit(x^2, x, 5)'
+2025-01-02 17:02:51,696 - __main__ - DEBUG - Displayed Result: 25
+2025-01-02 17:02:57,969 - __main__ - DEBUG - Original expression: 'lim (x to infty) x^2'
+2025-01-02 17:02:57,969 - __main__ - DEBUG - Original expression: 'lim (x to infty) x^2'
+2025-01-02 17:02:57,969 - __main__ - DEBUG - After binom conversion: 'limit(x^2, x, inf)'
+2025-01-02 17:02:57,969 - __main__ - DEBUG - Converted integral expression: 'limit(x^2, x, inf)'
+2025-01-02 17:02:57,970 - __main__ - DEBUG - After explicit multiplication: 'limit(x^2, x, inf)'
+2025-01-02 17:02:57,970 - __main__ - DEBUG - Final MATLAB expression: 'limit(x^2, x, inf)'
+2025-01-02 17:02:57,970 - __main__ - DEBUG - Converted to SymPy expression: 'limit(x^2, x, inf)'
+2025-01-02 17:02:57,970 - __main__ - DEBUG - Converted to MATLAB expression: 'limit(x^2, x, inf)'
+2025-01-02 17:02:58,037 - __main__ - DEBUG - Displayed Result: Inf
+2025-01-02 17:03:02,235 - __main__ - DEBUG - Original expression: 'lim (x to infty) 1/x'
+2025-01-02 17:03:02,235 - __main__ - DEBUG - Original expression: 'lim (x to infty) 1/x'
+2025-01-02 17:03:02,235 - __main__ - DEBUG - After binom conversion: 'limit(1/x, x, inf)'
+2025-01-02 17:03:02,235 - __main__ - DEBUG - Converted integral expression: 'limit(1/x, x, inf)'
+2025-01-02 17:03:02,235 - __main__ - DEBUG - After explicit multiplication: 'limit(1/x, x, inf)'
+2025-01-02 17:03:02,235 - __main__ - DEBUG - Final MATLAB expression: 'limit(1/x, x, inf)'
+2025-01-02 17:03:02,235 - __main__ - DEBUG - Converted to SymPy expression: 'limit(1/x, x, inf)'
+2025-01-02 17:03:02,235 - __main__ - DEBUG - Converted to MATLAB expression: 'limit(1/x, x, inf)'
+2025-01-02 17:03:02,280 - __main__ - DEBUG - Displayed Result: 0
+2025-01-02 17:03:05,606 - __main__ - INFO - MATLAB engine terminated
+2025-01-02 17:04:29,706 - __main__ - INFO - Initializing Calculator Application
+2025-01-02 17:04:38,928 - __main__ - INFO - MATLAB engine started successfully
+2025-01-02 17:04:50,914 - __main__ - DEBUG - Original expression: 'prod (2 to 10) ln(x)'
+2025-01-02 17:04:50,915 - __main__ - DEBUG - Original expression: 'prod (2 to 10) ln(x)'
+2025-01-02 17:04:50,918 - __main__ - DEBUG - After binom conversion: 'prod (2 to 10) ln(x)'
+2025-01-02 17:04:50,918 - __main__ - DEBUG - Converted integral expression: 'prod (2 to 10) ln(x)'
+2025-01-02 17:04:50,920 - __main__ - DEBUG - After explicit multiplication: 'prod (2 to 10) ln(x)'
+2025-01-02 17:04:50,920 - __main__ - DEBUG - Final MATLAB expression: 'prod (2 to 10) log(x)'
+2025-01-02 17:04:50,920 - __main__ - DEBUG - Converted to SymPy expression: 'prod (2 to 10) log(x)'
+2025-01-02 17:04:50,920 - __main__ - DEBUG - Converted to MATLAB expression: 'prod (2 to 10) log(x)'
+2025-01-02 17:04:50,987 - __main__ - DEBUG - Displayed Result: 62.32164985970148
+2025-01-02 17:06:11,217 - __main__ - DEBUG - Original expression: 'lim (x to 3) (x^3 + 2)/(log10(x))'
+2025-01-02 17:06:11,219 - __main__ - DEBUG - Original expression: 'lim (x to 3) (x^3 + 2)/(log10(x))'
+2025-01-02 17:06:11,220 - __main__ - DEBUG - After binom conversion: 'limit((x^3 + 2)/(log10(x)), x, 3)'
+2025-01-02 17:06:11,220 - __main__ - DEBUG - Converted integral expression: 'limit((x^3 + 2)/(log10(x)), x, 3)'
+2025-01-02 17:06:11,220 - __main__ - DEBUG - After explicit multiplication: 'limit((x^3 + 2)/(log10(x)), x, 3)'
+2025-01-02 17:06:11,220 - __main__ - DEBUG - Final MATLAB expression: 'limit((x^3 + 2)/(log10(x)), x, 3)'
+2025-01-02 17:06:11,220 - __main__ - DEBUG - Converted to SymPy expression: 'limit((x^3 + 2)/(log10(x)), x, 3)'
+2025-01-02 17:06:11,221 - __main__ - DEBUG - Converted to MATLAB expression: 'limit((x^3 + 2)/(log10(x)), x, 3)'
+2025-01-02 17:06:11,566 - __main__ - DEBUG - Displayed Result: 75181929909277119/(1125899906842624*ln(3))
+2025-01-02 17:46:41,039 - __main__ - INFO - MATLAB engine terminated
+2025-01-02 17:46:47,294 - __main__ - INFO - Initializing Calculator Application
+2025-01-02 17:46:55,550 - __main__ - INFO - MATLAB engine started successfully
+2025-01-02 17:48:06,043 - __main__ - DEBUG - Original expression: 'lim (x to 3) (x^3 + 2)/(log10(x))'
+2025-01-02 17:48:06,045 - __main__ - DEBUG - Original expression: 'lim (x to 3) (x^3 + 2)/(log10(x))'
+2025-01-02 17:48:06,047 - __main__ - DEBUG - After binom conversion: 'limit((x^3 + 2)/(log10(x)), x, 3)'
+2025-01-02 17:48:06,048 - __main__ - DEBUG - Converted integral expression: 'limit((x^3 + 2)/(log10(x)), x, 3)'
+2025-01-02 17:48:06,049 - __main__ - DEBUG - After explicit multiplication: 'limit((x^3 + 2)/(log10(x)), x, 3)'
+2025-01-02 17:48:06,049 - __main__ - DEBUG - Final MATLAB expression: 'limit((x^3 + 2)/(log10(x)), x, 3)'
+2025-01-02 17:48:06,049 - __main__ - DEBUG - Converted to SymPy expression: 'limit((x^3 + 2)/(log10(x)), x, 3)'
+2025-01-02 17:48:06,050 - __main__ - DEBUG - Converted to MATLAB expression: 'limit((x^3 + 2)/(log10(x)), x, 3)'
+2025-01-02 17:48:06,195 - __main__ - ERROR - Error in LaTeX calculation: 'float' object has no attribute 'replace'
+2025-01-02 17:49:28,599 - __main__ - INFO - MATLAB engine terminated
+2025-01-02 17:49:32,689 - __main__ - INFO - Initializing Calculator Application
+2025-01-02 17:49:41,652 - __main__ - INFO - MATLAB engine started successfully
+2025-01-02 17:49:58,208 - __main__ - DEBUG - Original expression: 'lim (x to 3) (x^3 + 2)/(log10(x))'
+2025-01-02 17:49:58,208 - __main__ - DEBUG - Original expression: 'lim (x to 3) (x^3 + 2)/(log10(x))'
+2025-01-02 17:49:58,210 - __main__ - DEBUG - After binom conversion: 'limit((x^3 + 2)/(log10(x)), x, 3)'
+2025-01-02 17:49:58,211 - __main__ - DEBUG - Converted integral expression: 'limit((x^3 + 2)/(log10(x)), x, 3)'
+2025-01-02 17:49:58,211 - __main__ - DEBUG - After explicit multiplication: 'limit((x^3 + 2)/(log10(x)), x, 3)'
+2025-01-02 17:49:58,211 - __main__ - DEBUG - Final MATLAB expression: 'limit((x^3 + 2)/(log10(x)), x, 3)'
+2025-01-02 17:49:58,211 - __main__ - DEBUG - Converted to SymPy expression: 'limit((x^3 + 2)/(log10(x)), x, 3)'
+2025-01-02 17:49:58,212 - __main__ - DEBUG - Converted to MATLAB expression: 'limit((x^3 + 2)/(log10(x)), x, 3)'
+2025-01-02 17:49:58,361 - __main__ - DEBUG - Displayed Result: 60.7812
+2025-01-02 17:52:35,279 - __main__ - DEBUG - Original expression: 'lim (x to 0) 1/x'
+2025-01-02 17:52:35,282 - __main__ - DEBUG - Original expression: 'lim (x to 0) 1/x'
+2025-01-02 17:52:35,282 - __main__ - DEBUG - After binom conversion: 'limit(1/x, x, 0)'
+2025-01-02 17:52:35,283 - __main__ - DEBUG - Converted integral expression: 'limit(1/x, x, 0)'
+2025-01-02 17:52:35,284 - __main__ - DEBUG - After explicit multiplication: 'limit(1/x, x, 0)'
+2025-01-02 17:52:35,284 - __main__ - DEBUG - Final MATLAB expression: 'limit(1/x, x, 0)'
+2025-01-02 17:52:35,284 - __main__ - DEBUG - Converted to SymPy expression: 'limit(1/x, x, 0)'
+2025-01-02 17:52:35,285 - __main__ - DEBUG - Converted to MATLAB expression: 'limit(1/x, x, 0)'
+2025-01-02 17:52:35,527 - __main__ - DEBUG - Displayed Result: nan
+2025-01-02 17:57:22,317 - __main__ - DEBUG - Original expression: 'lim+ (x to 0) 1/x'
+2025-01-02 17:57:22,321 - __main__ - DEBUG - Original expression: 'lim+ (x to 0) 1/x'
+2025-01-02 17:57:22,322 - __main__ - DEBUG - After binom conversion: 'lim+ (x to 0) 1/x'
+2025-01-02 17:57:22,322 - __main__ - DEBUG - Converted integral expression: 'lim+ (x to 0) 1/x'
+2025-01-02 17:57:22,323 - __main__ - DEBUG - After explicit multiplication: 'lim+ (x to 0) 1/x'
+2025-01-02 17:57:22,323 - __main__ - DEBUG - Final MATLAB expression: 'lim+ (x to 0) 1/x'
+2025-01-02 17:57:22,323 - __main__ - DEBUG - Converted to SymPy expression: 'lim+ (x to 0) 1/x'
+2025-01-02 17:57:22,323 - __main__ - DEBUG - Converted to MATLAB expression: 'lim+ (x to 0) 1/x'
+2025-01-02 17:57:22,696 - __main__ - ERROR - Error in evaluate_expression: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2025-01-02 17:57:22,696 - __main__ - ERROR - Error in LaTeX calculation: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2025-01-02 18:02:49,978 - __main__ - INFO - MATLAB engine terminated
+2025-01-02 18:03:04,958 - __main__ - INFO - Initializing Calculator Application
+2025-01-02 18:03:20,602 - __main__ - INFO - MATLAB engine started successfully
+2025-01-02 18:03:34,078 - __main__ - DEBUG - Original expression: 'lim (x to 0+) 1/x'
+2025-01-02 18:03:34,080 - __main__ - DEBUG - Original expression: 'lim (x to 0+) 1/x'
+2025-01-02 18:03:34,082 - __main__ - DEBUG - After binom conversion: 'limit(1/x, x, 0+)'
+2025-01-02 18:03:34,082 - __main__ - DEBUG - Converted integral expression: 'limit(1/x, x, 0+)'
+2025-01-02 18:03:34,084 - __main__ - DEBUG - After explicit multiplication: 'limit(1/x, x, 0+)'
+2025-01-02 18:03:34,084 - __main__ - DEBUG - Final MATLAB expression: 'limit(1/x, x, 0+)'
+2025-01-02 18:03:34,084 - __main__ - DEBUG - Converted to SymPy expression: 'limit(1/x, x, 0+)'
+2025-01-02 18:03:34,084 - __main__ - DEBUG - Converted to MATLAB expression: 'limit(1/x, x, 0+)'
+2025-01-02 18:03:34,423 - __main__ - ERROR - Error in evaluate_expression: Invalid expression. When calling a function or indexing a variable, use parentheses. Otherwise, check for mismatched delimiters.
+
+2025-01-02 18:03:34,423 - __main__ - ERROR - Error in LaTeX calculation: Invalid expression. When calling a function or indexing a variable, use parentheses. Otherwise, check for mismatched delimiters.
+
+2025-01-02 18:10:29,287 - __main__ - INFO - MATLAB engine terminated
+2025-01-02 18:14:36,564 - __main__ - INFO - Initializing Calculator Application
+2025-01-02 18:14:50,675 - __main__ - INFO - MATLAB engine started successfully
+2025-01-02 18:15:04,851 - __main__ - DEBUG - Original expression: 'int (x to 0+) 1/x'
+2025-01-02 18:15:04,852 - __main__ - DEBUG - Original expression: 'int (x to 0+) 1/x'
+2025-01-02 18:15:04,853 - __main__ - DEBUG - After binom conversion: 'int (x to 0+) 1/x'
+2025-01-02 18:15:04,854 - __main__ - DEBUG - Converted integral expression: 'int (x to 0+) 1/x'
+2025-01-02 18:15:04,855 - __main__ - DEBUG - After explicit multiplication: 'int (x to 0+) 1/x'
+2025-01-02 18:15:04,855 - __main__ - DEBUG - Final MATLAB expression: 'int (x to 0+) 1/x'
+2025-01-02 18:15:04,855 - __main__ - DEBUG - Converted to SymPy expression: 'int (x to 0+) 1/x'
+2025-01-02 18:15:04,855 - __main__ - DEBUG - Converted to MATLAB expression: 'int (x to 0+) 1/x'
+2025-01-02 18:15:04,916 - __main__ - ERROR - Error in evaluate_expression: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2025-01-02 18:15:04,917 - __main__ - ERROR - Error in LaTeX calculation: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2025-01-02 18:15:25,016 - __main__ - DEBUG - Original expression: 'lim (x to 0+) 1/x'
+2025-01-02 18:15:25,018 - __main__ - DEBUG - Original expression: 'lim (x to 0+) 1/x'
+2025-01-02 18:15:25,018 - __main__ - DEBUG - After binom conversion: 'limit(1/x, x, 0+)'
+2025-01-02 18:15:25,018 - __main__ - DEBUG - Converted integral expression: 'limit(1/x, x, 0+)'
+2025-01-02 18:15:25,018 - __main__ - DEBUG - After explicit multiplication: 'limit(1/x, x, 0+)'
+2025-01-02 18:15:25,018 - __main__ - DEBUG - Final MATLAB expression: 'limit(1/x, x, 0+)'
+2025-01-02 18:15:25,018 - __main__ - DEBUG - Converted to SymPy expression: 'limit(1/x, x, 0+)'
+2025-01-02 18:15:25,018 - __main__ - DEBUG - Converted to MATLAB expression: 'limit(1/x, x, 0+)'
+2025-01-02 18:15:25,041 - __main__ - ERROR - Error in evaluate_expression: Invalid expression. When calling a function or indexing a variable, use parentheses. Otherwise, check for mismatched delimiters.
+
+2025-01-02 18:15:25,042 - __main__ - ERROR - Error in LaTeX calculation: Invalid expression. When calling a function or indexing a variable, use parentheses. Otherwise, check for mismatched delimiters.
+
+2025-01-02 18:15:51,191 - __main__ - INFO - MATLAB engine terminated
+2025-01-02 18:16:01,742 - __main__ - INFO - Initializing Calculator Application
+2025-01-02 18:16:12,874 - __main__ - INFO - MATLAB engine started successfully
+2025-01-02 18:16:31,049 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2025-01-02 18:16:31,052 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2025-01-02 18:16:31,053 - __main__ - DEBUG - After binom conversion: 'int 1/x dx'
+2025-01-02 18:16:31,053 - __main__ - DEBUG - Converted integral expression: 'int(1/x, x)'
+2025-01-02 18:16:31,054 - __main__ - DEBUG - After explicit multiplication: 'int(1/x, x)'
+2025-01-02 18:16:31,054 - __main__ - DEBUG - Final MATLAB expression: 'int(1/x, x)'
+2025-01-02 18:16:31,054 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/x, x)'
+2025-01-02 18:16:31,054 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/x, x)'
+2025-01-02 18:16:31,963 - __main__ - DEBUG - Displayed Result: <matlab.object object at 0x130e56790>
+2025-01-02 18:20:30,907 - __main__ - INFO - MATLAB engine terminated
+2025-01-02 18:21:01,296 - __main__ - INFO - Initializing Calculator Application
+2025-01-02 18:21:13,626 - __main__ - INFO - MATLAB engine started successfully
+2025-01-02 18:21:52,757 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2025-01-02 18:21:52,758 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2025-01-02 18:21:52,760 - __main__ - DEBUG - After binom conversion: 'int 1/x dx'
+2025-01-02 18:21:52,761 - __main__ - DEBUG - Converted integral expression: 'int(1/x, x)'
+2025-01-02 18:21:52,762 - __main__ - DEBUG - After explicit multiplication: 'int(1/x, x)'
+2025-01-02 18:21:52,762 - __main__ - DEBUG - Final MATLAB expression: 'int(1/x, x)'
+2025-01-02 18:21:52,762 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/x, x)'
+2025-01-02 18:21:52,762 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/x, x)'
+2025-01-02 18:21:52,935 - __main__ - ERROR - Error in LaTeX calculation: unsupported format string passed to matlab.object.__format__
+2025-01-02 18:24:28,275 - __main__ - INFO - MATLAB engine terminated
+2025-01-02 18:24:33,835 - __main__ - INFO - Initializing Calculator Application
+2025-01-02 18:24:45,766 - __main__ - INFO - MATLAB engine started successfully
+2025-01-02 18:25:13,535 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2025-01-02 18:25:13,537 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2025-01-02 18:25:13,539 - __main__ - DEBUG - After binom conversion: 'int 1/x dx'
+2025-01-02 18:25:13,540 - __main__ - DEBUG - Converted integral expression: 'int(1/x, x)'
+2025-01-02 18:25:13,541 - __main__ - DEBUG - After explicit multiplication: 'int(1/x, x)'
+2025-01-02 18:25:13,541 - __main__ - DEBUG - Final MATLAB expression: 'int(1/x, x)'
+2025-01-02 18:25:13,541 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/x, x)'
+2025-01-02 18:25:13,541 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/x, x)'
+2025-01-02 18:25:13,703 - __main__ - DEBUG - Displayed Result: ln(x)
+2025-01-02 18:25:30,080 - __main__ - DEBUG - Original expression: 'lim (x to 0-) 1/x'
+2025-01-02 18:25:30,082 - __main__ - DEBUG - Original expression: 'lim (x to 0-) 1/x'
+2025-01-02 18:25:30,083 - __main__ - DEBUG - After binom conversion: 'limit(1/x, x, 0-)'
+2025-01-02 18:25:30,083 - __main__ - DEBUG - Converted integral expression: 'limit(1/x, x, 0-)'
+2025-01-02 18:25:30,083 - __main__ - DEBUG - After explicit multiplication: 'limit(1/x, x, 0-)'
+2025-01-02 18:25:30,083 - __main__ - DEBUG - Final MATLAB expression: 'limit(1/x, x, 0-)'
+2025-01-02 18:25:30,083 - __main__ - DEBUG - Converted to SymPy expression: 'limit(1/x, x, 0-)'
+2025-01-02 18:25:30,083 - __main__ - DEBUG - Converted to MATLAB expression: 'limit(1/x, x, 0-)'
+2025-01-02 18:25:30,148 - __main__ - ERROR - Error in LaTeX calculation: Invalid expression. When calling a function or indexing a variable, use parentheses. Otherwise, check for mismatched delimiters.
+
+2025-01-02 18:32:06,804 - __main__ - INFO - MATLAB engine terminated
+2025-01-04 10:16:12,058 - __main__ - INFO - Initializing Calculator Application
+2025-01-04 10:16:42,512 - __main__ - ERROR - Failed to start MATLAB engine: Unable to launch MVM server: License Error: Licensing shutdown
+2025-01-04 10:26:45,977 - __main__ - INFO - Initializing Calculator Application
+2025-01-04 10:27:29,360 - __main__ - INFO - MATLAB engine started successfully
+2025-01-04 10:28:58,535 - __main__ - INFO - MATLAB engine terminated
+2025-01-04 10:29:04,334 - __main__ - INFO - Initializing Calculator Application
+2025-01-04 10:29:19,042 - __main__ - INFO - MATLAB engine started successfully
+2025-01-04 10:29:43,541 - __main__ - DEBUG - Original expression: 'lim (x to 3) x^2'
+2025-01-04 10:29:43,543 - __main__ - DEBUG - Original expression: 'lim (x to 3) x^2'
+2025-01-04 10:29:43,546 - __main__ - DEBUG - After binom conversion: 'limit(x^2, x, 3)'
+2025-01-04 10:29:43,547 - __main__ - DEBUG - Converted integral expression: 'limit(x^2, x, 3)'
+2025-01-04 10:29:43,548 - __main__ - DEBUG - After explicit multiplication: 'limit(x^2, x, 3)'
+2025-01-04 10:29:43,548 - __main__ - DEBUG - Final MATLAB expression: 'limit(x^2, x, 3)'
+2025-01-04 10:29:43,548 - __main__ - DEBUG - Converted to SymPy expression: 'limit(x^2, x, 3)'
+2025-01-04 10:29:43,548 - __main__ - DEBUG - Converted to MATLAB expression: 'limit(x^2, x, 3)'
+2025-01-04 10:29:43,716 - __main__ - DEBUG - Displayed Result: 9
+2025-01-04 10:29:53,175 - __main__ - DEBUG - Original expression: 'lim (x to 0-) 1/x'
+2025-01-04 10:29:53,176 - __main__ - DEBUG - Original expression: 'lim (x to 0-) 1/x'
+2025-01-04 10:29:53,176 - __main__ - DEBUG - After binom conversion: 'limit(1/x, x, 0-)'
+2025-01-04 10:29:53,176 - __main__ - DEBUG - Converted integral expression: 'limit(1/x, x, 0-)'
+2025-01-04 10:29:53,176 - __main__ - DEBUG - After explicit multiplication: 'limit(1/x, x, 0-)'
+2025-01-04 10:29:53,176 - __main__ - DEBUG - Final MATLAB expression: 'limit(1/x, x, 0-)'
+2025-01-04 10:29:53,176 - __main__ - DEBUG - Converted to SymPy expression: 'limit(1/x, x, 0-)'
+2025-01-04 10:29:53,176 - __main__ - DEBUG - Converted to MATLAB expression: 'limit(1/x, x, 0-)'
+2025-01-04 10:29:53,245 - __main__ - ERROR - Error in LaTeX calculation: Invalid expression. When calling a function or indexing a variable, use parentheses. Otherwise, check for mismatched delimiters.
+
+2025-01-04 10:34:10,838 - __main__ - INFO - MATLAB engine terminated
+2025-01-04 10:34:23,088 - __main__ - INFO - Initializing Calculator Application
+2025-01-04 10:34:39,009 - __main__ - INFO - MATLAB engine started successfully
+2025-01-04 10:35:43,844 - __main__ - DEBUG - Original expression: 'lim (x to 3-) x^2'
+2025-01-04 10:35:43,847 - __main__ - DEBUG - Original expression: 'lim (x to 3-) x^2'
+2025-01-04 10:35:43,849 - __main__ - DEBUG - After binom conversion: 'limit(x^2, x, 3-)'
+2025-01-04 10:35:43,849 - __main__ - DEBUG - Converted integral expression: 'limit(x^2, x, 3-)'
+2025-01-04 10:35:43,850 - __main__ - DEBUG - After explicit multiplication: 'limit(x^2, x, 3-)'
+2025-01-04 10:35:43,850 - __main__ - DEBUG - Final MATLAB expression: 'limit(x^2, x, 3-)'
+2025-01-04 10:35:43,850 - __main__ - DEBUG - Converted to SymPy expression: 'limit(x^2, x, 3-)'
+2025-01-04 10:35:43,850 - __main__ - DEBUG - Converted to MATLAB expression: 'limit(x^2, x, 3-)'
+2025-01-04 10:35:43,981 - __main__ - ERROR - Error in LaTeX calculation: Invalid expression. When calling a function or indexing a variable, use parentheses. Otherwise, check for mismatched delimiters.
+
+2025-01-04 10:35:47,475 - __main__ - INFO - MATLAB engine terminated
+2025-01-04 10:44:50,599 - __main__ - INFO - Initializing Calculator Application
+2025-01-04 10:45:08,090 - __main__ - INFO - MATLAB engine started successfully
+2025-01-04 10:46:24,699 - __main__ - DEBUG - Original expression: 'lim (x to ln(2)) e^x'
+2025-01-04 10:46:24,702 - __main__ - DEBUG - Original expression: 'lim (x to ln(2)) e^x'
+2025-01-04 10:46:24,705 - __main__ - DEBUG - After binom conversion: 'limit() e^x, x, ln(2)'
+2025-01-04 10:46:24,706 - __main__ - DEBUG - Converted integral expression: 'limit() e^x, x, ln(2)'
+2025-01-04 10:46:24,707 - __main__ - DEBUG - After explicit multiplication: 'limit() e^x, x, ln(2)'
+2025-01-04 10:46:24,708 - __main__ - DEBUG - Final MATLAB expression: 'limit() e^x, x, log(2)'
+2025-01-04 10:46:24,708 - __main__ - DEBUG - Converted to SymPy expression: 'limit() e^x, x, log(2)'
+2025-01-04 10:46:24,708 - __main__ - DEBUG - Converted to MATLAB expression: 'limit() e^x, x, log(2)'
+2025-01-04 10:46:24,857 - __main__ - ERROR - Error in LaTeX calculation: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2025-01-04 10:49:48,719 - __main__ - INFO - MATLAB engine terminated
+2025-01-04 10:49:58,954 - __main__ - INFO - Initializing Calculator Application
+2025-01-04 10:50:20,553 - __main__ - INFO - MATLAB engine started successfully
+2025-01-04 10:50:31,993 - __main__ - DEBUG - Original expression: 'lim (x to 3) x^2'
+2025-01-04 10:50:31,994 - __main__ - DEBUG - Original expression: 'lim (x to 3) x^2'
+2025-01-04 10:50:31,996 - __main__ - DEBUG - After binom conversion: 'limit(x^2, x, 3)'
+2025-01-04 10:50:31,997 - __main__ - DEBUG - Converted integral expression: 'limit(x^2, x, 3)'
+2025-01-04 10:50:31,998 - __main__ - DEBUG - After explicit multiplication: 'limit(x^2, x, 3)'
+2025-01-04 10:50:31,998 - __main__ - DEBUG - Final MATLAB expression: 'limit(x^2, x, 3)'
+2025-01-04 10:50:31,998 - __main__ - DEBUG - Converted to SymPy expression: 'limit(x^2, x, 3)'
+2025-01-04 10:50:31,998 - __main__ - DEBUG - Converted to MATLAB expression: 'limit(x^2, x, 3)'
+2025-01-04 10:50:32,127 - __main__ - DEBUG - Displayed Result: 9
+2025-01-04 10:50:37,836 - __main__ - DEBUG - Original expression: 'lim (x to ln(2)) x^2'
+2025-01-04 10:50:37,837 - __main__ - DEBUG - Original expression: 'lim (x to ln(2)) x^2'
+2025-01-04 10:50:37,837 - __main__ - DEBUG - After binom conversion: 'limit() x^2, x, ln(2)'
+2025-01-04 10:50:37,837 - __main__ - DEBUG - Converted integral expression: 'limit() x^2, x, ln(2)'
+2025-01-04 10:50:37,837 - __main__ - DEBUG - After explicit multiplication: 'limit() x^2, x, ln(2)'
+2025-01-04 10:50:37,837 - __main__ - DEBUG - Final MATLAB expression: 'limit() x^2, x, log(2)'
+2025-01-04 10:50:37,837 - __main__ - DEBUG - Converted to SymPy expression: 'limit() x^2, x, log(2)'
+2025-01-04 10:50:37,837 - __main__ - DEBUG - Converted to MATLAB expression: 'limit() x^2, x, log(2)'
+2025-01-04 10:50:37,913 - __main__ - ERROR - Error in LaTeX calculation: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2025-01-04 10:50:49,452 - __main__ - DEBUG - Original expression: 'ln(2)'
+2025-01-04 10:50:49,455 - __main__ - DEBUG - Original expression: 'ln(2)'
+2025-01-04 10:50:49,455 - __main__ - DEBUG - After binom conversion: 'ln(2)'
+2025-01-04 10:50:49,455 - __main__ - DEBUG - Converted integral expression: 'ln(2)'
+2025-01-04 10:50:49,455 - __main__ - DEBUG - After explicit multiplication: 'ln(2)'
+2025-01-04 10:50:49,455 - __main__ - DEBUG - Final MATLAB expression: 'log(2)'
+2025-01-04 10:50:49,455 - __main__ - DEBUG - Converted to SymPy expression: 'log(2)'
+2025-01-04 10:50:49,455 - __main__ - DEBUG - Converted to MATLAB expression: 'log(2)'
+2025-01-04 10:50:49,485 - __main__ - DEBUG - Displayed Result: 0.693147
+2025-01-04 10:53:14,487 - __main__ - INFO - MATLAB engine terminated

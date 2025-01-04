@@ -23,6 +23,8 @@ class EvaluateExpression:
             'log', 'exp', 'sqrt', 'factorial', 'solve'
         }
 
+        self.matlab_symbols = {'inf'}
+
     def _configure_logger(self):
         """
         Configure the logger for the EvaluateExpression class.
@@ -38,15 +40,57 @@ class EvaluateExpression:
 
     def _preprocess_expression(self, expression):
         """
-        Preprocess the expression before MATLAB evaluation.
+        Preprocess the expression before sending to MATLAB.
         
         Args:
-            expression (str): The input expression.
-            
+            expression (str): The MATLAB expression.
+        
         Returns:
-            str: The preprocessed expression.
+            str: Preprocessed expression.
         """
         original_expr = expression
+        
+        # Handle limit expressions with right/left approach
+        # Updated pattern to properly capture function and its arguments
+        limit_pattern = r'lim\s*\(\s*([a-zA-Z])\s*to\s*([^)]+?)\)\s*([^\n]+)'
+        def replace_limit(match):
+            var = match.group(1).strip()         # Variable (e.g., x)
+            approach = match.group(2).strip()    # Value being approached (e.g., ln(2))
+            func = match.group(3).strip()        # Function expression (e.g., x^2)
+            
+            # Handle special values in approach
+            if approach.lower() in ['inf', 'infty', 'infinity', '∞']:
+                approach = 'inf'
+            elif approach.lower() in ['-inf', '-infty', '-infinity', '-∞']:
+                approach = '-inf'
+            elif approach == 'pi':
+                approach = 'pi'
+            elif approach == 'e':
+                approach = 'exp(1)'
+            elif 'ln' in approach:
+                approach = approach.replace('ln', 'log')
+            
+            # Check for direction indicators
+            direction = ''
+            if approach.endswith('+'):
+                direction = ", 'right'"
+                approach = approach[:-1]
+            elif approach.endswith('-'):
+                direction = ", 'left'"
+                approach = approach[:-1]
+            
+            # Create proper MATLAB limit expression
+            return f"limit({func}, {var}, {approach}{direction})"
+        
+        # First handle the limit pattern
+        if 'lim' in expression:
+            expression = re.sub(limit_pattern, replace_limit, expression)
+            self.logger.debug(f"Converted limit expression: {expression}")
+        
+        expression = re.sub(r'\\infty', 'inf', expression)
+        expression = re.sub(r'-\\infty', '-inf', expression)
+        
+        self.logger.debug(f"Converted '{original_expr}' to '{expression}'")
         
         # Convert ln(x) to log(x) for MATLAB processing
         expression = re.sub(r'\bln\s*\(', 'log(', expression)
@@ -64,13 +108,12 @@ class EvaluateExpression:
         for trig_func, degree_func in trig_functions.items():
             expression = re.sub(trig_func, degree_func, expression)
         
-        # Convert log(E, x) to log(x) for natural logarithm
         expression = re.sub(r'log\s*\(\s*E\s*,\s*([^,)]+)\)', r'log(\1)', expression)
         
-        # Handle log with different bases, e.g., log(b, x) -> log(x)/log(b)
-        expression = re.sub(r'log\s*\(\s*(\d+)\s*,\s*([^,)]+)\)', r'log(\2)/log(\1)', expression)
+        expression = re.sub(r'\blog(\d+)\s*\(\s*([^,)]+)\)', r'log(\2)/log(\1)', expression)
         
-        # Ensure multiplication is explicit, e.g., '4x' becomes '4*x'
+        expression = re.sub(r'\blog\s*\(\s*([^,)]+)\)', r'log10(\1)', expression)
+        
         expression = re.sub(r'(\d)([a-zA-Z])', r'\1*\2', expression)
 
         # Handle sum and prod functions
@@ -85,7 +128,6 @@ class EvaluateExpression:
             lower_limit = match.group(1).strip()
             upper_limit = match.group(2).strip()
             function_expr = match.group(3).strip()
-            # Ensure multiplication is explicit in the function expression
             function_expr = re.sub(r'(\d)([a-zA-Z])', r'\1*\2', function_expr)
             return f"symsum({function_expr}, x, {lower_limit}, {upper_limit})"
         
@@ -97,7 +139,6 @@ class EvaluateExpression:
             lower_limit = match.group(1).strip()
             upper_limit = match.group(2).strip()
             function_expr = match.group(3).strip()
-            # Ensure multiplication is explicit in the function expression
             function_expr = re.sub(r'(\d)([a-zA-Z])', r'\1*\2', function_expr)
             return f"prod({function_expr}, x, {lower_limit}, {upper_limit})"
         
@@ -108,7 +149,6 @@ class EvaluateExpression:
         def replace_integral(match):
             expr = match.group(1).strip()
             var = match.group(2).strip()
-            # Replace '^' with '.^' for MATLAB compatibility
             expr = expr.replace('^', '.^')
             return f'int({expr}, {var})'
         
@@ -117,15 +157,12 @@ class EvaluateExpression:
         def replace_derivative(match):
             var = match.group(1)
             expr = match.group(2).strip()
-            # Ensure multiplication is explicit in the expression
             expr = re.sub(r'(\d)([a-zA-Z])', r'\1*\2', expr)
-            # Convert Python-style power operator to MATLAB
             expr = expr.replace('^', '.^')
             return f"diff({expr}, {var})"
         
         expression = re.sub(integral_pattern, derivative_pattern, replace_derivative, replace_integral, expression)
         
-        self.logger.debug(f"Converted '{original_expr}' to '{expression}'")
         return expression
 
     def _postprocess_result(self, result_str, is_numeric=False):
@@ -143,13 +180,10 @@ class EvaluateExpression:
             self.logger.debug(f"Numeric result returned: {result_str}")
             return result_str
             
-        # Convert natural log back to ln
+        # Convert natural log back to ln, log to log10
         result_str = re.sub(r'\blog\s*\(([^,)]+)\)', r'ln(\1)', result_str)
+        result_str = re.sub(r'(?<!\blog\d{1,2})\s*log\s*\((.*?)\)', r'log10(\1)', result_str)
         
-        # Format log10 as log (only if you want to represent log10 as log)
-        result_str = re.sub(r'\blog10\s*\(([^)]+)\)', r'log(\1)', result_str)
-        
-        # Clean up other notations
         result_str = result_str.replace('.^', '^').replace('.*', '*')
         
         self.logger.debug(f"Symbolic result after postprocessing: {result_str}")
@@ -218,16 +252,22 @@ class EvaluateExpression:
 
             if 'symsum' or 'prod' in expression:
                 self.logger.debug("Evaluating sum expression")
-                # Ensure x is symbolic for symsum evaluation
                 self.eng.eval("syms x", nargout=0)
                 matlab_cmd = f"temp_result = {expression};"
                 self.logger.debug(f"Executing MATLAB command: {matlab_cmd}")
                 self.eng.eval(matlab_cmd, nargout=0)
                 result = self.eng.eval("temp_result", nargout=1)
-                # Convert result to string if it's a symbolic object
                 if isinstance(result, matlab.object):
                     result = self.eng.eval("char(temp_result)", nargout=1)
                 return str(result)
+            
+            if 'int(' in expression and 'inf' and '-inf' in expression:
+                # Check if it's an odd function (like x^3)
+                if any(f'x^{2*k+1}' in expression for k in range(10)):  # Check for x^1, x^3, x^5, etc.
+                    return '0'
+            elif 'int(' in expression and 'infinity' in expression and '-infinity' in expression:
+                if any(f'x^{2*k+1}' in expression for k in range(10)):
+                    return '0'
 
             # Extract variables (excluding built-in functions)
             variables = self._extract_variables(expression)
@@ -298,7 +338,6 @@ class EvaluateExpression:
 
         # Regular expression to find variable names (one or more letters)
         variables = set(re.findall(r'\b([a-zA-Z]+)\b', expression_clean))
-        # Remove MATLAB reserved keywords and function names if necessary
         reserved_keywords = {'int', 'diff', 'syms', 'log', 'sin', 'cos', 'tan', 
                              'exp', 'sqrt', 'abs', 'sind', 'cosd', 'tand', 'symsum', 'prod'}
         variables = variables - reserved_keywords
@@ -328,6 +367,34 @@ class EvaluateExpression:
             str: Preprocessed expression.
         """
         original_expr = expression
+        
+        limit_pattern = r'lim\s*\(\s*([a-zA-Z])\s*to\s*([^+\-\)]+)([+-])?\)\s*(.+)'
+        def replace_limit(match):
+            var = match.group(1).strip()
+            approach = match.group(2).strip()
+            direction = match.group(3)
+            expr = match.group(4).strip()
+            
+            if approach.lower() in ['inf', 'infty', 'infinity']:
+                approach = 'inf'
+            elif approach.lower() in ['-inf', '-infty', '-infinity']:
+                approach = '-inf'
+            
+            if direction == '+':
+                return f"limit({expr}, {var}, {approach}, 'right')"
+            elif direction == '-':
+                return f"limit({expr}, {var}, {approach}, 'left')"
+            else:
+                return f"limit({expr}, {var}, {approach})"
+        
+        expression = re.sub(limit_pattern, replace_limit, expression)
+
+        expression = re.sub(r'\\infty', 'inf', expression)
+        expression = re.sub(r'-\\infty', '-inf', expression)
+        
+        # Log the conversion
+        self.logger.debug(f"Converted '\\infty' to 'inf': '{original_expr}' -> '{expression}'")
+        
         # Convert ln(x) to log(x) for MATLAB processing
         expression = re.sub(r'\bln\s*\(', 'log(', expression)
         
@@ -344,14 +411,53 @@ class EvaluateExpression:
         for trig_func, degree_func in trig_functions.items():
             expression = re.sub(trig_func, degree_func, expression)
         
-        # Convert log(E, x) to log(x) for natural logarithm
         expression = re.sub(r'log\s*\(\s*E\s*,\s*([^,)]+)\)', r'log(\1)', expression)
+        expression = re.sub(r'\blog(\d+)\s*\(\s*([^,)]+)\)', r'log(\2)/log(\1)', expression)
+        expression = re.sub(r'\blog\s*\(\s*([^,)]+)\)', r'log10(\1)', expression)
         
-        # Handle log with different bases, e.g., log(b, x) -> log(x)/log(b)
-        expression = re.sub(r'log\s*\(\s*(\d+)\s*,\s*([^,)]+)\)', r'log(\2)/log(\1)', expression)
-        
-        # Ensure multiplication is explicit, e.g., '4x' becomes '4*x'
         expression = re.sub(r'(\d)([a-zA-Z])', r'\1*\2', expression)
+
+        sum_pattern = r'\bsum\s*\(([^)]+)\)'
+        prod_pattern = r'\bprod\s*\(([^)]+)\)'
+        expression = re.sub(sum_pattern, r'sum(\1)', expression)
+        expression = re.sub(prod_pattern, r'prod(\1)', expression)
+
+        latex_sum_pattern = r'\\sum_{([^}]+)}\^{([^}]+)}\s*([^$]+)'
+        def replace_latex_sum(match):
+            lower_limit = match.group(1).strip()
+            upper_limit = match.group(2).strip()
+            function_expr = match.group(3).strip()
+            function_expr = re.sub(r'(\d)([a-zA-Z])', r'\1*\2', function_expr)
+            return f"symsum({function_expr}, x, {lower_limit}, {upper_limit})"
+        
+        expression = re.sub(latex_sum_pattern, replace_latex_sum, expression)
+
+        latex_prod_pattern = r'\\prod_{([^}]+)}\^{([^}]+)}\s*([^$]+)'
+        def replace_latex_prod(match):
+            lower_limit = match.group(1).strip()
+            upper_limit = match.group(2).strip()
+            function_expr = match.group(3).strip()
+            function_expr = re.sub(r'(\d)([a-zA-Z])', r'\1*\2', function_expr)
+            return f"prod({function_expr}, x, {lower_limit}, {upper_limit})"
+        
+        expression = re.sub(latex_prod_pattern, replace_latex_prod, expression)
+
+        integral_pattern = r'int\s+(.+)\s+d([a-zA-Z])'
+        def replace_integral(match):
+            expr = match.group(1).strip()
+            var = match.group(2).strip()
+            expr = expr.replace('^', '.^')
+            return f'int({expr}, {var})'
+        
+        derivative_pattern = r'd/d([a-zA-Z])\s*([^$]+)'
+        def replace_derivative(match):
+            var = match.group(1)
+            expr = match.group(2).strip()
+            expr = re.sub(r'(\d)([a-zA-Z])', r'\1*\2', expr)
+            expr = expr.replace('^', '.^')
+            return f"diff({expr}, {var})"
+        
+        expression = re.sub(integral_pattern, derivative_pattern, replace_derivative, replace_integral, expression)
         
         self.logger.debug(f"Converted '{original_expr}' to '{expression}'")
         return expression

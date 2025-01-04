@@ -85,7 +85,7 @@ A PyQt5-based scientific calculator that supports $\LaTeX$ input, integrates wit
 
 | $\LaTeX$ | Previous $\LaTeX$ Command | Simplified $\LaTeX$ Input |
 | ------------- | ----------------------- | ----------------------- |
-| $\displaystyle\frac{\text{d}}{\text{d}x}(f(x))$ | `\frac{d}{dx} (f(x))` | `d/dx (f(x))`  |
+| $\displaystyle\frac{\text{d} }{\text{d}x}(f(x))$ | `\frac{d}{dx} (f(x))` | `d/dx (f(x))`  |
 | $\displaystyle\frac{\text{d}^n}{\text{d}x^n}(f(x))$  | `\frac{d^n}{dx^n} (f(x))` | `dn/dxn (f(x))` |
 | $\displaystyle\int e^{x} \text{d}x$ | `\int e^{x} dx` | `int e^x dx` |
 | $\displaystyle\int_{a}^{b} f(x) \text{d}x$ | `\int_{a}^{b} f(x) dx` | `int (a to b) f(x) dx` |
@@ -99,8 +99,8 @@ A PyQt5-based scientific calculator that supports $\LaTeX$ input, integrates wit
 | $\alpha, \beta, \gamma, \dots$ | `\alpha, \beta, \gamma, ...` | `alpha, beta, gamma, ...` |
 | $\displaystyle\sum_{i = a}^{b-a} f(x_i)$         | `\sum_{i = a}^{b-a} f(x_i)` | `sum (a to b) f(x)`      |
 | $\displaystyle\prod_{i = a}^{b-a} f(x_i)$      | `\prod_{i = a}^{b-a} f(x_i)` | `prod (a to b) f(x)`     |
-| $\lim_{x \to a} f(x)$         | `\lim_{x \to a} f(x)` | `lim x to a f(x)`      |
-| $\infty$       | `\infty`    | `infty`    |
+| $\lim_{x \to a} f(x)$         | `\lim_{x \to a} f(x)` | `lim (x to a) f(x)`      |
+| $\pm\infty$       | `\pm\infty`    | `+infty` or `-infty`    |
 
 for more shortcuts, see [shortcut.py](latex_pack/shortcut.py)
 
@@ -108,11 +108,11 @@ for more shortcuts, see [shortcut.py](latex_pack/shortcut.py)
 
 1. `int 1/x dx` $\rightarrow$ $\displaystyle \int \frac{1}{x} \text{d}x = \ln(x)$
 2. `int (1 to 3) x^3/(x^2 + 1) dx` $\rightarrow$ $\displaystyle \int_{1}^{3} \frac{x^3}{x^2 + 1} \text{d}x = 4 - \left(\frac{\ln 5}{2}\right)$
-3. `d2/dx2 (4x^10)` $\rightarrow$ $\displaystyle \frac{\text{d}^2}{\text{d}x^2} (4x^{10}) = 320x^8$
+3. `d2/dx2 (4x^10)` $\rightarrow$ $\displaystyle \frac{\text{d}^2}{\text{d}x^2} (4x^{10}) = 360x^8$
 4. `binom(5, 2)` $\rightarrow$ $\displaystyle \binom{5}{2} = 10$
 5. `tan(90) or tan(pi/2)` $\rightarrow$ $\tan(90) = \infty$
 6. `sum (1 to 100) x` $\rightarrow$ $\displaystyle \sum_{i = 1}^{100} x = 5050$
-7. `prod (2 to 10) ln(x)` $\rightarrow$ $\displaystyle \prod_{i = 2}^{10} \ln(x) = 0.0342529$
+7. `prod (2 to 10) ln(x)` $\rightarrow$ $\displaystyle \prod_{i = 2}^{10} \ln(x) = 62.321650$
 
 ### Example for Matrix Mode
 
