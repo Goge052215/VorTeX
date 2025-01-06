@@ -52,7 +52,8 @@ class ExpressionShortcuts:
         'lg': r'\log_{10}',  # base-10 logarithm
         'log': r'\log',
         'log10': r'\log_{10}',  # Explicit base-10 log
-        'log2': r'\log_{2}'     # Base-2 log
+        'log2': r'\log_{2}',    # Base-2 log
+        'logn': r'\log_{n}',    # Base-n log
     }
     
     # Fraction shortcuts
@@ -91,9 +92,11 @@ class ExpressionShortcuts:
     OPERATOR_SHORTCUTS = {
         'sum (a to b)': r'\sum_{a}^{b}',
         'prod (a to b)': r'\prod_{a}^{b}',
-        'lim': r'\lim',
+        'lim (x to a)': r'\lim_{x \to a}',
+        'lim (x to a+)': r'\lim_{x \to a^{+}}',
+        'lim (x to a-)': r'\lim_{x \to a^{-}}',
         'to': r'\to',
-        'rightarrow': r'\rightarrow',
+        'rightarrow': r'\rightarrow',   
         'leftarrow': r'\leftarrow',
         'infty': r'\infty',
         'infinity': r'\infty',
@@ -129,6 +132,12 @@ class ExpressionShortcuts:
             str: Text with shortcuts converted to LaTeX
         """
         result = text
+        
+        # Handle limits before other conversions
+        result = cls.convert_limit_expression(result)
+        
+        # Handle logarithms with different bases
+        result = cls._convert_logarithms(result)
         
         # Handle higher-order derivative notation (e.g., "d2/dx2 x^2")
         if text.startswith('d') and ('/' in text or text[1:2].isdigit()):
@@ -206,8 +215,8 @@ class ExpressionShortcuts:
         # Keep ln(x) as log(x) for natural logarithm
         expr = re.sub(r'ln\s*\((.*?)\)', r'log(\1)', expr)
         
-        # Convert log(x) to log10(x) if not already handled
-        expr = re.sub(r'(?<![\w])log\s*\((.*?)\)', r'log10(\1)', expr)
+        # Convert logN(x) to log(x)/log(N) for any base N
+        expr = re.sub(r'log(\d+)\s*\((.*?)\)', lambda m: f'log({m.group(2)})/log({m.group(1)})', expr)
         
         return expr
 
@@ -240,4 +249,73 @@ class ExpressionShortcuts:
 
         expr = re.sub(prod_pattern, replace_prod, expr)
         
+        return expr
+
+    @staticmethod
+    def convert_limit_expression(expr):
+        """Convert limit expressions to MATLAB format."""
+        # Pattern to match limit expressions including all function types
+        limit_pattern = r'(?i)lim\s*\(\s*([a-zA-Z])\s*to\s*' + \
+                       r'(' + \
+                       r'[-+]?\d*\.?\d+|' + \
+                       r'[-+]?(?:inf(?:ty|inity)?)|' + \
+                       r'[a-zA-Z][a-zA-Z0-9]*|' + \
+                       r'(?:sin|cos|tan|csc|sec|cot|arcsin|arccos|arctan|ln|log|log\d+|sqrt|exp)\s*\([^)]+\)|' + \
+                       r'e\^?[^,\s)]*' + \
+                       r')([+-])?\s*\)\s*' + \
+                       r'((?:[^()]+|\((?:[^()]+|\([^()]*\))*\))*)'
+        
+        def replace_limit(match):
+            var, approach, side, function = match.groups()
+            
+            # Convert infinity variations
+            if isinstance(approach, str) and re.match(r'(?i)inf(?:ty|inity)?', approach):
+                approach = 'inf'
+            elif isinstance(approach, str) and re.match(r'(?i)[+-]inf(?:ty|inity)?', approach):
+                sign = approach[0]
+                approach = f'{sign}inf'
+            # Handle functions in approach
+            elif '(' in approach:
+                # Convert trigonometric functions
+                approach = re.sub(r'arcsin\(', r'asin(', approach)
+                approach = re.sub(r'arccos\(', r'acos(', approach)
+                approach = re.sub(r'arctan\(', r'atan(', approach)
+                # Convert logarithms
+                approach = re.sub(r'ln\(', r'log(', approach)
+                if re.match(r'log\d+\(', approach):
+                    base = re.match(r'log(\d+)', approach).group(1)
+                    arg = re.search(r'\((.*?)\)', approach).group(1)
+                    approach = f'log({arg})/log({base})'
+            # Handle exponential e
+            elif approach.startswith('e^'):
+                approach = f'exp({approach[2:]})'
+            elif approach == 'e':
+                approach = 'exp(1)'
+            
+            # Format the function part
+            function = function.strip()
+            # Convert trigonometric functions
+            function = re.sub(r'arcsin\(', r'asin(', function)
+            function = re.sub(r'arccos\(', r'acos(', function)
+            function = re.sub(r'arctan\(', r'atan(', function)
+            # Convert logarithms
+            function = re.sub(r'ln\(', r'log(', function)
+            if re.search(r'log\d+\(', function):
+                function = re.sub(r'log(\d+)\((.*?)\)', 
+                                lambda m: f'log({m.group(2)})/log({m.group(1)})', 
+                                function)
+            # Convert exponentials
+            if 'e^' in function:
+                function = function.replace('e^', 'exp(') + ')'
+            
+            # Handle one-sided limits
+            if side:
+                if side == '+':
+                    return f"limit({function}, {var}, {approach}, 'right')"
+                elif side == '-':
+                    return f"limit({function}, {var}, {approach}, 'left')"
+            
+            return f"limit({function}, {var}, {approach})"
+
+        expr = re.sub(limit_pattern, replace_limit, expr)
         return expr

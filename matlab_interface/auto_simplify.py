@@ -60,7 +60,7 @@ class AutoSimplify:
         Returns:
             str: The simplified expression.
         """
-        self.logger.debug(f"Simplifying expression: '{expr_str}' using mode: basic")
+        self.logger.debug(f"Simplifying expression: '{expr_str}'")
         
         try:
             # Convert the expression to a symbolic form
@@ -68,36 +68,44 @@ class AutoSimplify:
             
             # Try different simplification methods in sequence
             simplification_commands = [
-                "simplify(expr, 'Steps', 50)",  # More steps for better simplification
-                "simplify(collect(expr, 'x'))",  # Collect terms with respect to x
+                "simplify(expr, 'Steps', 50)",  # Basic simplification
+                "simplify(collect(expr))",       # Collect similar terms
                 "simplify(factor(expr))",        # Try factoring
-                "simplify(combine(expr, 'all'))" # Combine similar terms
+                "simplify(combine(expr))",       # Combine terms
+                "vpa(expr, 10)"                  # Variable precision arithmetic if needed
             ]
             
             for cmd in simplification_commands:
                 self.logger.debug(f"Applying simplification command: {cmd}")
                 self.eng.eval(f"result = {cmd};", nargout=0)
                 
-                # Check if the result is simpler
+                # Get the current result
                 current_result = self.eng.eval("char(result)", nargout=1)
+                
+                # Try to convert fractions to decimals if they're too complex
+                if '/' in current_result:
+                    numerator = self.eng.eval("num2str(double(numden(result)), 15)", nargout=1)
+                    if not ('e' in numerator.lower() or 'i' in numerator.lower()):
+                        self.eng.eval("result = vpa(result, 10);", nargout=0)
+                        current_result = self.eng.eval("char(result)", nargout=1)
+                
+                # Update if simpler
                 if len(current_result) < len(expr_str):
                     expr_str = current_result
             
-            # Final cleanup of the expression
-            expr_str = expr_str.replace('log', 'ln')  # Convert back to ln notation
-            expr_str = re.sub(r'\s+', ' ', expr_str)  # Clean up whitespace
+            # Final cleanup
+            expr_str = self._clean_expression(expr_str)
             
             self.logger.debug(f"Simplified result: {expr_str}")
             return expr_str
             
         except Exception as e:
             self.logger.error(f"Error during simplification: {e}")
-            return expr_str  # Return original expression if simplification fails
+            return expr_str
             
         finally:
             # Clean up workspace
             self.eng.eval("clear expr result", nargout=0)
-            self.logger.debug("Cleaned up MATLAB workspace")
 
     def _clean_expression(self, expr_str):
         """

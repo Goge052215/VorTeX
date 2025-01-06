@@ -146,9 +146,6 @@ class EvaluateExpression:
         # Convert natural log back to ln
         result_str = re.sub(r'\blog\s*\(([^,)]+)\)', r'ln(\1)', result_str)
         
-        # Format log10 as log (only if you want to represent log10 as log)
-        result_str = re.sub(r'\blog10\s*\(([^)]+)\)', r'log(\1)', result_str)
-        
         # Clean up other notations
         result_str = result_str.replace('.^', '^').replace('.*', '*')
         
@@ -165,6 +162,42 @@ class EvaluateExpression:
             # Convert combinatorial expressions before evaluation
             expression = ExpressionShortcuts.convert_combinatorial_expression(expression)
             self.logger.debug(f"After shortcut conversion: {expression}")
+
+            # Handle limit expressions
+            expression = ExpressionShortcuts.convert_limit_expression(expression)
+            self.logger.debug(f"After limit conversion: {expression}")
+
+            # If expression contains 'limit', ensure symbolic variables are declared
+            if 'limit' in expression:
+                # Set up symbolic variables and e
+                self.eng.eval("syms e real; e = exp(1);", nargout=0)
+                self.logger.debug("Declared e as symbolic exp(1) in MATLAB")
+                
+                var_match = re.search(r'limit\([^,]+,\s*([a-zA-Z])\s*,', expression)
+                if var_match:
+                    var = var_match.group(1)
+                    self._declare_symbolic_variable(var)
+                    self.logger.debug(f"Declared symbolic variable for limit: {var}")
+                
+                matlab_cmd = f"temp_result = {expression};"
+                self.logger.debug(f"Executing MATLAB command: {matlab_cmd}")
+                self.eng.eval(matlab_cmd, nargout=0)
+                
+                # Keep result in symbolic form
+                self.eng.eval("temp_result = simplify(temp_result);", nargout=0)
+                
+                # Get the result in a readable format
+                result = self.eng.eval("char(temp_result)", nargout=1)
+                
+                # Replace e^n with exp(n) in the result if needed
+                result = re.sub(r'e\^(\d+)', r'exp(\1)', result)
+                
+                # Clean up the result
+                result = result.replace('exp(1)', 'e')
+                result = result.replace('exp(2)', 'e^2')
+                result = result.replace('exp(3)', 'e^3')
+                
+                return result
 
             expression = re.sub(r'(\d+)C(\d+)', r'nchoosek(\1, \2)', expression)  # Handle nCr pattern
             expression = re.sub(r'binom\s*\((\d+)\s*,\s*(\d+)\)', r'nchoosek(\1, \2)', expression)

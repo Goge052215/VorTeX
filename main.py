@@ -14,6 +14,7 @@ import sympy as sy
 from latex_pack.shortcut import ExpressionShortcuts
 from matlab_interface.auto_simplify import AutoSimplify
 from matlab_interface.display import Display
+from ip_check.ip_check import IPCheck
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -48,12 +49,18 @@ from themes.theme_manager import (
 )
 from ui.legend_window import LegendWindow
 
+FONT_NAME = "Monaspace Neon"
+FONT_SIZE = 14
+
+def _download_fonts():
+    if IPCheck.ip_check():
+        download_fonts()
+    else:
+        logger.warning("IP check failed, skipping font download")
+        FONT_NAME = "Arial"
+
 def download_fonts():
-    """
-    Download and install fonts based on the operating system.
-    Returns True if successful, False otherwise.
-    """
-    '''try:
+    try:
         if sys.platform == "darwin":  # macOS
             result = os.system("bash fonts/fonts_download.bash")
             if result != 0:
@@ -77,7 +84,7 @@ def download_fonts():
     except Exception as e:
         logger.error(f"Error downloading fonts: {str(e)}")
         print(f"Error downloading fonts: {str(e)}")
-        return False'''
+        return False
 
 def parse_latex_expression(latex_expr):
     """
@@ -195,14 +202,14 @@ class CalculatorApp(QWidget, LatexCalculation):
         self.matrix_memory = {}
 
         # Set the font for result_display to Menlo
-        self.result_display.setFont(QFont("Monaspace Neon", 14))  # Change font to Menlo with size 14
+        self.result_display.setFont(QFont(FONT_NAME, FONT_SIZE))  # Change font to Menlo with size 14
         self.result_display.setWordWrap(True)  # Enable word wrap
         self.result_display.setTextInteractionFlags(Qt.TextSelectableByMouse)  # Make text selectable
 
         self.display = Display(
             self.result_display,
-            font_name="Monaspace Neon",
-            font_size=14,
+            font_name=FONT_NAME,
+            font_size=FONT_SIZE,
             bold=True
         ) 
         
@@ -774,19 +781,26 @@ class CalculatorApp(QWidget, LatexCalculation):
             # Evaluate the expression in MATLAB
             matlab_result = self.evaluate_expression(matlab_expression)
 
-            # Postprocess the result
-            displayed_result = self.evaluator._postprocess_result(matlab_result, is_numeric=False)
+            # Simplify the result using AutoSimplify
+            simplified_result = self.auto_simplify.simplify_expression(str(matlab_result))
+
+            # Postprocess the simplified result
+            displayed_result = self.evaluator._postprocess_result(simplified_result, is_numeric=False)
 
             # Convert 'log(x)' to 'ln(x)' for display
             displayed_result = displayed_result.replace('log(', 'ln(')
 
-            # Convert 'cosd(x)' back to 'cos(x)' for display
+            # Convert trigonometric functions back for display
             displayed_result = displayed_result.replace('cosd(', 'cos(')
             displayed_result = displayed_result.replace('sind(', 'sin(')
             displayed_result = displayed_result.replace('tand(', 'tan(')
 
-            # Format the result for better readability
-            displayed_result = str(displayed_result)
+            self.result_display.setText(displayed_result)
+            self.logger.debug(f"Displayed Result: {displayed_result}")
+
+        except Exception as e:
+            self.logger.error(f"Error in latex calculation: {e}")
+            QMessageBox.critical(self, "Error", f"Error evaluating expression: {str(e)}")
             
             self.result_display.setText(displayed_result)
             self.logger.debug(f"Displayed Result: {displayed_result}")
@@ -876,7 +890,7 @@ class CalculatorApp(QWidget, LatexCalculation):
             result = result.replace('==', '=')
 
             self.result_label.setText(f"Result: {result}")
-            self.result_label.setFont(QFont("Monaspace Neon", 14))
+            self.result_label.setFont(QFont(FONT_NAME, FONT_SIZE))
 
         except matlab.engine.MatlabExecutionError as me:
             QMessageBox.critical(self, "MATLAB Error", f"MATLAB Error: {me}")
@@ -942,7 +956,7 @@ class CalculatorApp(QWidget, LatexCalculation):
 
             # Set the result in the result_display text area
             self.result_display.setText(result_str)
-            self.result_display.setFont(QFont("Monaspace Neon", 14))
+            self.result_display.setFont(QFont(FONT_NAME, FONT_SIZE))
 
         except matlab.engine.MatlabExecutionError as me:
             QMessageBox.critical(self, "MATLAB Error", f"MATLAB Error: {me}")
@@ -950,7 +964,7 @@ class CalculatorApp(QWidget, LatexCalculation):
             QMessageBox.critical(self, "Unexpected Error", f"Unexpected Error: {str(e)}")
 
 if __name__ == '__main__':
-    download_fonts()
+    _download_fonts()
     app = QApplication(sys.argv)
     calculator = CalculatorApp()
     calculator.show()
