@@ -13,6 +13,10 @@ class SympyToMatlab:
         if isinstance(expr, str):
             return expr
         
+        # Handle SymPy's infinity
+        if expr == sy.oo:
+            return 'inf'
+        
         # Handle derivatives
         if expr.is_Derivative:
             return self._handle_derivative(expr)

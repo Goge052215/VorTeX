@@ -52,6 +52,8 @@ class ExpressionShortcuts:
         'lg': r'\log_{10}',  # base-10 logarithm
         'log': r'\log',
         'log10': r'\log_{10}',  # Explicit base-10 log
+        'log2': r'\log_{2}',     # Base-2 log
+        'logn': r'\log_{n}',     # Base-n log
         'log2': r'\log_{2}',    # Base-2 log
         'logn': r'\log_{n}',    # Base-n log
     }
@@ -93,6 +95,9 @@ class ExpressionShortcuts:
         'sum (a to b)': r'\sum_{a}^{b}',
         'prod (a to b)': r'\prod_{a}^{b}',
         'lim (x to a)': r'\lim_{x \to a}',
+        'lim (x to a+)': r'\lim_{x \to a^+}',  # Right limit
+        'lim (x to a-)': r'\lim_{x \to a^-}',  # Left limit
+        'lim (x to a)': r'\lim_{x \to a}',
         'lim (x to a+)': r'\lim_{x \to a^{+}}',
         'lim (x to a-)': r'\lim_{x \to a^{-}}',
         'to': r'\to',
@@ -100,6 +105,8 @@ class ExpressionShortcuts:
         'leftarrow': r'\leftarrow',
         'infty': r'\infty',
         'infinity': r'\infty',
+        '-infty': r'-\infty',
+        '-infinity': r'-\infty',
     }
     
     @classmethod
@@ -190,6 +197,18 @@ class ExpressionShortcuts:
             upper = match.group(2).strip()
             expr = match.group(3).strip()
             var = match.group(4).strip()
+            
+            # Handle infinity cases in limits
+            if lower.lower() in ['inf', 'infty', 'infinity']:
+                lower = 'inf'
+            elif lower.lower() in ['-inf', '-infty', '-infinity']:
+                lower = '-inf'
+            
+            if upper.lower() in ['inf', 'infty', 'infinity']:
+                upper = 'inf'
+            elif upper.lower() in ['-inf', '-infty', '-infinity']:
+                upper = '-inf'
+            
             return f'int({expr}, {var}, {lower}, {upper})'
         
         text = re.sub(definite_integral_pattern, replace_definite_integral, text)
@@ -212,9 +231,11 @@ class ExpressionShortcuts:
         # Convert lg(x) to log10(x)
         expr = re.sub(r'lg\s*\((.*?)\)', r'log10(\1)', expr)
         
-        # Keep ln(x) as log(x) for natural logarithm
-        expr = re.sub(r'ln\s*\((.*?)\)', r'log(\1)', expr)
+        # Convert ln(x) to log(x) for natural logarithm
+        expr = re.sub(r'\bln\s*\((.*?)\)', r'log(\1)', expr)
         
+        # Convert logn(x) to log(x)/log(n) for base-n logarithm
+        expr = re.sub(r'\blog(\d+)\s*\((.*?)\)', r'log(\2)/log(\1)', expr)
         # Convert logN(x) to log(x)/log(N) for any base N
         expr = re.sub(r'log(\d+)\s*\((.*?)\)', lambda m: f'log({m.group(2)})/log({m.group(1)})', expr)
         
@@ -231,10 +252,16 @@ class ExpressionShortcuts:
     def convert_sum_prod_expression(expr):
         """Convert sum and prod expressions to MATLAB format."""
         # Enhanced pattern to handle spaces and case insensitivity
-        sum_pattern = r'(?i)sum\s*\(\s*(\d+)\s*to\s*(\d+)\s*\)\s*([^\n]+)'
+        sum_pattern = r'(?i)sum\s*\(\s*(\d+|\w+)\s*to\s*(\d+|\w+)\s*\)\s*([^\n]+)'
         
         def replace_sum(match):
             start, end, function = match.groups()
+            # Handle infinity cases
+            if end.lower() in ['inf', 'infty', 'infinity']:
+                end = 'inf'
+            elif end.lower() in ['-inf', '-infty', '-infinity']:
+                end = '-inf'
+            # Use x as the summation variable since it appears in the expression
             return f"symsum({function}, x, {start}, {end})"
 
         expr = re.sub(sum_pattern, replace_sum, expr)
