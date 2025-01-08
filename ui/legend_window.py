@@ -23,7 +23,7 @@ class LegendWindow(QWidget):
     """
 
     WINDOW_WIDTH = 600
-    WINDOW_HEIGHT = 450
+    WINDOW_HEIGHT = 550
     FONT_SIZE = 13
     FONT_FAMILY = "Arial"
 

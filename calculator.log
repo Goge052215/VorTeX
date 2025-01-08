@@ -3309,3 +3309,944 @@ Too many input arguments.
 2025-01-06 13:03:43,557 - __main__ - DEBUG - Converted to SymPy expression: 'lim (x to e^2) 2*x'
 2025-01-06 13:03:43,557 - __main__ - DEBUG - Converted to MATLAB expression: 'lim (x to e^2) 2*x'
 2025-01-06 13:03:43,991 - __main__ - DEBUG - Displayed Result: 4159668786720471/281474976710656
+2025-01-06 13:25:39,251 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 13:25:50,935 - __main__ - INFO - MATLAB engine started successfully
+2025-01-06 13:25:57,603 - __main__ - DEBUG - Original expression: 'log3(3)'
+2025-01-06 13:25:57,603 - __main__ - DEBUG - Original expression: 'log3(3)'
+2025-01-06 13:25:57,606 - __main__ - DEBUG - After binom conversion: 'log3(3)'
+2025-01-06 13:25:57,607 - __main__ - DEBUG - Converted integral expression: 'log3(3)'
+2025-01-06 13:25:57,608 - __main__ - DEBUG - After explicit multiplication: 'log3(3)'
+2025-01-06 13:25:57,608 - __main__ - DEBUG - Final MATLAB expression: 'log3(3)'
+2025-01-06 13:25:57,609 - __main__ - DEBUG - Converted to SymPy expression: 'log3(3)'
+2025-01-06 13:25:57,609 - __main__ - DEBUG - Converted to MATLAB expression: 'log3(3)'
+2025-01-06 13:25:58,075 - __main__ - ERROR - Error in evaluate_expression: Undefined function 'log3' for input arguments of type 'double'.
+
+2025-01-06 13:25:58,075 - __main__ - ERROR - Error in latex calculation: Undefined function 'log3' for input arguments of type 'double'.
+
+2025-01-06 13:27:49,030 - __main__ - INFO - MATLAB engine terminated
+2025-01-06 13:28:19,570 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 13:28:29,735 - __main__ - INFO - MATLAB engine started successfully
+2025-01-06 13:28:38,479 - __main__ - DEBUG - Original expression: 'log3(3)'
+2025-01-06 13:28:38,480 - __main__ - DEBUG - Original expression: 'log3(3)'
+2025-01-06 13:28:38,481 - __main__ - DEBUG - After binom conversion: 'log3(3)'
+2025-01-06 13:28:38,482 - __main__ - DEBUG - Converted integral expression: 'log3(3)'
+2025-01-06 13:28:38,483 - __main__ - DEBUG - After explicit multiplication: 'log3(3)'
+2025-01-06 13:28:38,484 - __main__ - DEBUG - Final MATLAB expression: 'log3(3)'
+2025-01-06 13:28:38,484 - __main__ - DEBUG - Converted to SymPy expression: 'log3(3)'
+2025-01-06 13:28:38,484 - __main__ - DEBUG - Converted to MATLAB expression: 'log3(3)'
+2025-01-06 13:28:38,561 - __main__ - ERROR - Error in latex calculation: 'CalculatorApp' object has no attribute 'auto_simplify'
+2025-01-06 13:31:35,089 - __main__ - INFO - MATLAB engine terminated
+2025-01-06 13:31:43,896 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 13:31:55,420 - __main__ - INFO - MATLAB engine started successfully
+2025-01-06 13:32:03,311 - __main__ - DEBUG - Original expression: 'log2(3)'
+2025-01-06 13:32:03,312 - __main__ - DEBUG - Original expression: 'log2(3)'
+2025-01-06 13:32:03,314 - __main__ - DEBUG - After binom conversion: 'log2(3)'
+2025-01-06 13:32:03,317 - __main__ - DEBUG - Converted integral expression: 'log2(3)'
+2025-01-06 13:32:03,318 - __main__ - DEBUG - After explicit multiplication: 'log2(3)'
+2025-01-06 13:32:03,318 - __main__ - DEBUG - Final MATLAB expression: 'log2(3)'
+2025-01-06 13:32:03,318 - __main__ - DEBUG - Converted to SymPy expression: 'log2(3)'
+2025-01-06 13:32:03,318 - __main__ - DEBUG - Converted to MATLAB expression: 'log2(3)'
+2025-01-06 13:32:03,734 - __main__ - ERROR - Error in latex calculation: Undefined function 'simplify' for input arguments of type 'double'.
+
+2025-01-06 13:32:08,087 - __main__ - INFO - MATLAB engine terminated
+2025-01-06 13:34:01,423 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 13:34:11,595 - __main__ - INFO - MATLAB engine started successfully
+2025-01-06 13:34:28,396 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2025-01-06 13:34:28,397 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2025-01-06 13:34:28,401 - __main__ - DEBUG - After binom conversion: 'int ln(x) dx'
+2025-01-06 13:34:28,402 - __main__ - DEBUG - Converted integral expression: 'int(ln(x), x)'
+2025-01-06 13:34:28,403 - __main__ - DEBUG - After explicit multiplication: 'int(ln(x), x)'
+2025-01-06 13:34:28,403 - __main__ - DEBUG - Final MATLAB expression: 'int(log(x), x)'
+2025-01-06 13:34:28,403 - __main__ - DEBUG - Converted to SymPy expression: 'int(log(x), x)'
+2025-01-06 13:34:28,403 - __main__ - DEBUG - Converted to MATLAB expression: 'int(log(x), x)'
+2025-01-06 13:34:28,687 - __main__ - ERROR - Error in latex calculation: _postprocess_result() missing 1 required positional argument: 'is_numeric'
+2025-01-06 13:43:12,032 - __main__ - INFO - MATLAB engine terminated
+2025-01-06 13:43:20,888 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 13:43:36,477 - __main__ - INFO - MATLAB engine started successfully
+2025-01-06 13:43:45,406 - __main__ - DEBUG - Original expression: 'log3(3)'
+2025-01-06 13:43:45,409 - __main__ - DEBUG - Original expression: 'log3(3)'
+2025-01-06 13:43:45,411 - __main__ - DEBUG - After binom conversion: 'log3(3)'
+2025-01-06 13:43:45,412 - __main__ - DEBUG - Converted integral expression: 'log3(3)'
+2025-01-06 13:43:45,413 - __main__ - DEBUG - After explicit multiplication: 'log3(3)'
+2025-01-06 13:43:45,413 - __main__ - DEBUG - Final MATLAB expression: 'log3(3)'
+2025-01-06 13:43:45,413 - __main__ - DEBUG - Converted to SymPy expression: 'log3(3)'
+2025-01-06 13:43:45,413 - __main__ - DEBUG - Converted to MATLAB expression: 'log3(3)'
+2025-01-06 13:43:45,897 - __main__ - ERROR - Error in latex calculation: 'CalculatorApp' object has no attribute 'auto_simplify'
+2025-01-06 13:54:37,209 - __main__ - INFO - MATLAB engine terminated
+2025-01-06 13:54:42,790 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 13:54:57,334 - __main__ - INFO - MATLAB engine started successfully
+2025-01-06 13:55:08,313 - __main__ - DEBUG - Original expression: 'log3(3)'
+2025-01-06 13:55:08,314 - __main__ - DEBUG - Original expression: 'log3(3)'
+2025-01-06 13:55:08,316 - __main__ - DEBUG - After binom conversion: 'log3(3)'
+2025-01-06 13:55:08,316 - __main__ - DEBUG - Converted integral expression: 'log3(3)'
+2025-01-06 13:55:08,317 - __main__ - DEBUG - After explicit multiplication: 'log3(3)'
+2025-01-06 13:55:08,318 - __main__ - DEBUG - Final MATLAB expression: 'log3(3)'
+2025-01-06 13:55:08,318 - __main__ - DEBUG - Converted to SymPy expression: 'log3(3)'
+2025-01-06 13:55:08,318 - __main__ - DEBUG - Converted to MATLAB expression: 'log3(3)'
+2025-01-06 13:55:08,827 - __main__ - DEBUG - Displayed Result: 1
+2025-01-06 13:55:13,483 - __main__ - DEBUG - Original expression: 'log2(3)'
+2025-01-06 13:55:13,484 - __main__ - DEBUG - Original expression: 'log2(3)'
+2025-01-06 13:55:13,484 - __main__ - DEBUG - After binom conversion: 'log2(3)'
+2025-01-06 13:55:13,484 - __main__ - DEBUG - Converted integral expression: 'log2(3)'
+2025-01-06 13:55:13,484 - __main__ - DEBUG - After explicit multiplication: 'log2(3)'
+2025-01-06 13:55:13,484 - __main__ - DEBUG - Final MATLAB expression: 'log2(3)'
+2025-01-06 13:55:13,484 - __main__ - DEBUG - Converted to SymPy expression: 'log2(3)'
+2025-01-06 13:55:13,484 - __main__ - DEBUG - Converted to MATLAB expression: 'log2(3)'
+2025-01-06 13:55:13,581 - __main__ - DEBUG - Displayed Result: 1.58496250072116
+2025-01-06 13:55:15,375 - __main__ - INFO - MATLAB engine terminated
+2025-01-06 13:55:21,516 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 13:55:28,371 - __main__ - INFO - MATLAB engine started successfully
+2025-01-06 13:56:20,909 - __main__ - DEBUG - Original expression: 'lim (x to 3) x^2'
+2025-01-06 13:56:20,910 - __main__ - DEBUG - Original expression: 'lim (x to 3) x^2'
+2025-01-06 13:56:20,912 - __main__ - DEBUG - After binom conversion: 'lim (x to 3) x^2'
+2025-01-06 13:56:20,913 - __main__ - DEBUG - Converted integral expression: 'lim (x to 3) x^2'
+2025-01-06 13:56:20,915 - __main__ - DEBUG - After explicit multiplication: 'lim (x to 3) x^2'
+2025-01-06 13:56:20,915 - __main__ - DEBUG - Final MATLAB expression: 'lim (x to 3) x^2'
+2025-01-06 13:56:20,915 - __main__ - DEBUG - Converted to SymPy expression: 'lim (x to 3) x^2'
+2025-01-06 13:56:20,915 - __main__ - DEBUG - Converted to MATLAB expression: 'lim (x to 3) x^2'
+2025-01-06 13:56:21,536 - __main__ - DEBUG - Displayed Result: 9
+2025-01-06 13:59:06,516 - __main__ - INFO - MATLAB engine terminated
+2025-01-06 13:59:14,551 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 13:59:25,255 - __main__ - INFO - MATLAB engine started successfully
+2025-01-06 14:04:08,433 - __main__ - DEBUG - Original expression: 'lim (x to e^2) 2x'
+2025-01-06 14:04:08,436 - __main__ - DEBUG - Original expression: 'lim (x to e^2) 2x'
+2025-01-06 14:04:08,438 - __main__ - DEBUG - After binom conversion: 'lim (x to e^2) 2x'
+2025-01-06 14:04:08,438 - __main__ - DEBUG - Converted integral expression: 'lim (x to e^2) 2x'
+2025-01-06 14:04:08,440 - __main__ - DEBUG - After explicit multiplication: 'lim (x to e^2) 2*x'
+2025-01-06 14:04:08,440 - __main__ - DEBUG - Final MATLAB expression: 'lim (x to e^2) 2*x'
+2025-01-06 14:04:08,440 - __main__ - DEBUG - Converted to SymPy expression: 'lim (x to e^2) 2*x'
+2025-01-06 14:04:08,440 - __main__ - DEBUG - Converted to MATLAB expression: 'lim (x to e^2) 2*x'
+2025-01-06 14:04:09,565 - __main__ - DEBUG - Displayed Result: 4159668786720471/281474976710656
+2025-01-06 14:07:42,382 - __main__ - INFO - MATLAB engine terminated
+2025-01-06 14:07:48,109 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 14:08:02,198 - __main__ - INFO - MATLAB engine started successfully
+2025-01-06 14:08:33,702 - __main__ - INFO - MATLAB engine terminated
+2025-01-06 14:08:50,360 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 14:09:25,964 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 14:09:35,167 - __main__ - INFO - MATLAB engine started successfully
+2025-01-06 14:13:10,247 - __main__ - DEBUG - Original expression: 'lim (x to e^2) 2x'
+2025-01-06 14:13:10,250 - __main__ - DEBUG - Original expression: 'lim (x to e^2) 2x'
+2025-01-06 14:13:10,252 - __main__ - DEBUG - After binom conversion: 'lim (x to e^2) 2x'
+2025-01-06 14:13:10,253 - __main__ - DEBUG - Converted integral expression: 'lim (x to e^2) 2x'
+2025-01-06 14:13:10,254 - __main__ - DEBUG - After explicit multiplication: 'lim (x to e^2) 2*x'
+2025-01-06 14:13:10,254 - __main__ - DEBUG - Final MATLAB expression: 'lim (x to e^2) 2*x'
+2025-01-06 14:13:10,254 - __main__ - DEBUG - Converted to SymPy expression: 'lim (x to e^2) 2*x'
+2025-01-06 14:13:10,255 - __main__ - DEBUG - Converted to MATLAB expression: 'lim (x to e^2) 2*x'
+2025-01-06 14:13:11,105 - __main__ - DEBUG - Displayed Result: 
+2025-01-06 14:16:32,517 - __main__ - INFO - MATLAB engine terminated
+2025-01-06 14:16:55,016 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 14:17:07,139 - __main__ - INFO - MATLAB engine started successfully
+2025-01-06 14:18:09,307 - __main__ - DEBUG - Original expression: 'int x^2 dx'
+2025-01-06 14:18:09,308 - __main__ - DEBUG - Original expression: 'int x^2 dx'
+2025-01-06 14:18:09,310 - __main__ - DEBUG - After binom conversion: 'int x^2 dx'
+2025-01-06 14:18:09,313 - __main__ - DEBUG - Converted integral expression: 'int(x^2, x)'
+2025-01-06 14:18:09,315 - __main__ - DEBUG - After explicit multiplication: 'int(x^2, x)'
+2025-01-06 14:18:09,316 - __main__ - DEBUG - Final MATLAB expression: 'int(x^2, x)'
+2025-01-06 14:18:09,316 - __main__ - DEBUG - Converted to SymPy expression: 'int(x^2, x)'
+2025-01-06 14:18:09,316 - __main__ - DEBUG - Converted to MATLAB expression: 'int(x^2, x)'
+2025-01-06 14:18:10,084 - __main__ - DEBUG - Displayed Result: 0.3333333333*x^3
+2025-01-06 14:21:02,564 - __main__ - INFO - MATLAB engine terminated
+2025-01-06 14:21:08,153 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 14:21:19,781 - __main__ - INFO - MATLAB engine started successfully
+2025-01-06 14:39:41,807 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2025-01-06 14:39:41,811 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2025-01-06 14:39:41,813 - __main__ - DEBUG - After binom conversion: 'int ln(x) dx'
+2025-01-06 14:39:41,814 - __main__ - DEBUG - Converted integral expression: 'int(ln(x), x)'
+2025-01-06 14:39:41,815 - __main__ - DEBUG - After explicit multiplication: 'int(ln(x), x)'
+2025-01-06 14:39:41,815 - __main__ - DEBUG - Final MATLAB expression: 'int(log(x), x)'
+2025-01-06 14:39:41,815 - __main__ - DEBUG - Converted to SymPy expression: 'int(log(x), x)'
+2025-01-06 14:39:41,815 - __main__ - DEBUG - Converted to MATLAB expression: 'int(log(x), x)'
+2025-01-06 14:39:43,118 - __main__ - DEBUG - Displayed Result: x*(ln(x) - 1)
+2025-01-06 14:39:47,918 - __main__ - DEBUG - Original expression: 'int x^2 dx'
+2025-01-06 14:39:47,918 - __main__ - DEBUG - Original expression: 'int x^2 dx'
+2025-01-06 14:39:47,918 - __main__ - DEBUG - After binom conversion: 'int x^2 dx'
+2025-01-06 14:39:47,918 - __main__ - DEBUG - Converted integral expression: 'int(x^2, x)'
+2025-01-06 14:39:47,918 - __main__ - DEBUG - After explicit multiplication: 'int(x^2, x)'
+2025-01-06 14:39:47,918 - __main__ - DEBUG - Final MATLAB expression: 'int(x^2, x)'
+2025-01-06 14:39:47,919 - __main__ - DEBUG - Converted to SymPy expression: 'int(x^2, x)'
+2025-01-06 14:39:47,919 - __main__ - DEBUG - Converted to MATLAB expression: 'int(x^2, x)'
+2025-01-06 14:39:48,132 - __main__ - DEBUG - Displayed Result: 0.3333333333*x^3
+2025-01-06 14:40:33,928 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-06 14:40:33,929 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-06 14:40:33,930 - __main__ - DEBUG - After binom conversion: 'int e^x dx'
+2025-01-06 14:40:33,930 - __main__ - DEBUG - Converted integral expression: 'int(e^x, x)'
+2025-01-06 14:40:33,930 - __main__ - DEBUG - After explicit multiplication: 'int(e^x, x)'
+2025-01-06 14:40:33,930 - __main__ - DEBUG - Final MATLAB expression: 'int(e^x, x)'
+2025-01-06 14:40:33,930 - __main__ - DEBUG - Converted to SymPy expression: 'int(e^x, x)'
+2025-01-06 14:40:33,930 - __main__ - DEBUG - Converted to MATLAB expression: 'int(e^x, x)'
+2025-01-06 14:40:34,617 - __main__ - DEBUG - Displayed Result: 1.0*2.718281828^x
+2025-01-06 14:40:40,434 - __main__ - INFO - MATLAB engine terminated
+2025-01-06 14:42:41,356 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 14:42:58,784 - __main__ - INFO - MATLAB engine started successfully
+2025-01-06 14:43:09,725 - __main__ - DEBUG - Original expression: 'int x^2 dx'
+2025-01-06 14:43:09,727 - __main__ - DEBUG - After binom conversion: 'int x^2 dx'
+2025-01-06 14:43:09,728 - __main__ - DEBUG - Converted integral expression: 'int(x^2, x)'
+2025-01-06 14:43:09,729 - __main__ - DEBUG - After explicit multiplication: 'int(x^2, x)'
+2025-01-06 14:43:09,729 - __main__ - DEBUG - Final MATLAB expression: 'int(x^2, x)'
+2025-01-06 14:45:46,147 - __main__ - INFO - MATLAB engine terminated
+2025-01-06 14:45:56,301 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 14:46:10,393 - __main__ - INFO - MATLAB engine started successfully
+2025-01-06 14:47:46,204 - __main__ - DEBUG - Original expression: 'int x^2 dx'
+2025-01-06 14:47:46,208 - __main__ - DEBUG - After binom conversion: 'int x^2 dx'
+2025-01-06 14:47:46,209 - __main__ - DEBUG - Converted integral expression: 'int(x^2, x)'
+2025-01-06 14:47:46,210 - __main__ - DEBUG - After explicit multiplication: 'int(x^2, x)'
+2025-01-06 14:47:46,210 - __main__ - DEBUG - Final MATLAB expression: 'int(x^2, x)'
+2025-01-06 14:47:52,237 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-06 14:47:52,238 - __main__ - DEBUG - After binom conversion: 'int e^x dx'
+2025-01-06 14:47:52,238 - __main__ - DEBUG - Converted integral expression: 'int(e^x, x)'
+2025-01-06 14:47:52,238 - __main__ - DEBUG - After explicit multiplication: 'int(e^x, x)'
+2025-01-06 14:47:52,239 - __main__ - DEBUG - Final MATLAB expression: 'int(e^x, x)'
+2025-01-06 14:58:32,615 - __main__ - INFO - MATLAB engine terminated
+2025-01-06 14:58:43,384 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 14:58:58,774 - __main__ - INFO - MATLAB engine started successfully
+2025-01-06 14:59:32,352 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-06 14:59:32,355 - __main__ - DEBUG - After binom conversion: 'int e^x dx'
+2025-01-06 14:59:32,356 - __main__ - DEBUG - Converted integral expression: 'int(e^x, x)'
+2025-01-06 14:59:32,357 - __main__ - DEBUG - After explicit multiplication: 'int(e^x, x)'
+2025-01-06 14:59:32,357 - __main__ - DEBUG - Final MATLAB expression: 'int(e^x, x)'
+2025-01-06 14:59:35,554 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-06 14:59:35,554 - __main__ - DEBUG - After binom conversion: 'int e^x dx'
+2025-01-06 14:59:35,554 - __main__ - DEBUG - Converted integral expression: 'int(e^x, x)'
+2025-01-06 14:59:35,554 - __main__ - DEBUG - After explicit multiplication: 'int(e^x, x)'
+2025-01-06 14:59:35,554 - __main__ - DEBUG - Final MATLAB expression: 'int(e^x, x)'
+2025-01-06 15:01:07,780 - __main__ - INFO - MATLAB engine terminated
+2025-01-06 15:01:49,368 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 15:02:00,921 - __main__ - INFO - MATLAB engine started successfully
+2025-01-06 15:02:19,514 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-06 15:02:19,517 - __main__ - DEBUG - After binom conversion: 'int e^x dx'
+2025-01-06 15:02:19,518 - __main__ - DEBUG - Converted integral expression: 'int(e^x, x)'
+2025-01-06 15:02:19,519 - __main__ - DEBUG - After explicit multiplication: 'int(e^x, x)'
+2025-01-06 15:02:19,519 - __main__ - DEBUG - Final MATLAB expression: 'int(e^x, x)'
+2025-01-06 15:20:54,748 - __main__ - INFO - MATLAB engine terminated
+2025-01-06 16:09:44,260 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 16:10:15,459 - __main__ - INFO - MATLAB engine started successfully
+2025-01-06 16:10:25,515 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-06 16:10:25,517 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-06 16:10:25,519 - __main__ - DEBUG - After binom conversion: 'int e^x dx'
+2025-01-06 16:10:25,520 - __main__ - DEBUG - Converted integral expression: 'int(e^x, x)'
+2025-01-06 16:10:25,521 - __main__ - DEBUG - After explicit multiplication: 'int(e^x, x)'
+2025-01-06 16:10:25,521 - __main__ - DEBUG - Final MATLAB expression: 'int(e^x, x)'
+2025-01-06 16:10:25,521 - __main__ - DEBUG - Converted to SymPy expression: 'int(e^x, x)'
+2025-01-06 16:10:25,522 - __main__ - DEBUG - Converted to MATLAB expression: 'int(e^x, x)'
+2025-01-06 16:10:25,526 - __main__ - DEBUG - After shortcut conversion: \int(exp(x), x)
+2025-01-06 16:10:25,526 - __main__ - DEBUG - Final MATLAB expression: '\int(exp(x), x)'
+2025-01-06 16:10:25,577 - __main__ - DEBUG - Raw result from MATLAB: 'Invalid use of operator.
+'
+2025-01-06 16:10:25,959 - __main__ - DEBUG - Simplified Result: 'Invalid use of operator.
+'
+2025-01-06 16:10:25,960 - __main__ - DEBUG - Displayed Result: Invalid use of operator.
+
+2025-01-06 16:15:24,499 - __main__ - INFO - MATLAB engine terminated
+2025-01-06 16:15:39,741 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 16:15:57,492 - __main__ - INFO - MATLAB engine started successfully
+2025-01-06 16:18:58,780 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-06 16:18:58,782 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-06 16:18:58,784 - __main__ - DEBUG - After binom conversion: 'int e^x dx'
+2025-01-06 16:18:58,785 - __main__ - DEBUG - Converted integral expression: 'int(e^x, x)'
+2025-01-06 16:18:58,786 - __main__ - DEBUG - After explicit multiplication: 'int(e^x, x)'
+2025-01-06 16:18:58,786 - __main__ - DEBUG - Final MATLAB expression: 'int(e^x, x)'
+2025-01-06 16:18:58,786 - __main__ - DEBUG - Converted to SymPy expression: 'int(e^x, x)'
+2025-01-06 16:18:58,786 - __main__ - DEBUG - Converted to MATLAB expression: 'int(e^x, x)'
+2025-01-06 16:18:58,791 - __main__ - DEBUG - After shortcut conversion: \int(exp(x), x)
+2025-01-06 16:18:58,791 - __main__ - DEBUG - Final MATLAB expression: '\int(exp(x), x)'
+2025-01-06 16:18:58,891 - __main__ - DEBUG - Raw result from MATLAB: 'Invalid use of operator.
+'
+2025-01-06 16:18:59,272 - __main__ - DEBUG - Simplified Result: 'Invalid use of operator.
+'
+2025-01-06 16:18:59,273 - __main__ - DEBUG - Displayed Result: Invalid use of operator.
+
+2025-01-06 16:21:24,665 - __main__ - INFO - MATLAB engine terminated
+2025-01-06 16:22:53,397 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 16:23:05,984 - __main__ - INFO - MATLAB engine started successfully
+2025-01-06 16:23:43,042 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-06 16:23:43,043 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-06 16:23:43,045 - __main__ - DEBUG - After binom conversion: 'int e^x dx'
+2025-01-06 16:23:43,046 - __main__ - DEBUG - Converted integral expression: 'int(e^x, x)'
+2025-01-06 16:23:43,047 - __main__ - DEBUG - After explicit multiplication: 'int(e^x, x)'
+2025-01-06 16:23:43,047 - __main__ - DEBUG - Final MATLAB expression: 'int(e^x, x)'
+2025-01-06 16:23:43,047 - __main__ - DEBUG - Converted to SymPy expression: 'int(e^x, x)'
+2025-01-06 16:23:43,047 - __main__ - DEBUG - Converted to MATLAB expression: 'int(e^x, x)'
+2025-01-06 16:23:43,051 - __main__ - DEBUG - After shortcut conversion: \int(exp(x), x)
+2025-01-06 16:23:43,052 - __main__ - DEBUG - Final MATLAB expression: '\int(exp(x), x)'
+2025-01-06 16:23:43,110 - __main__ - DEBUG - Raw result from MATLAB: 'Invalid use of operator.
+'
+2025-01-06 16:23:43,450 - __main__ - DEBUG - Simplified Result: 'Invalid use of operator.
+'
+2025-01-06 16:23:43,451 - __main__ - DEBUG - Displayed Result: Invalid use of operator.
+
+2025-01-06 16:27:31,621 - __main__ - INFO - MATLAB engine terminated
+2025-01-06 16:27:45,368 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 16:27:55,292 - __main__ - INFO - MATLAB engine started successfully
+2025-01-06 16:28:01,086 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-06 16:28:01,087 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-06 16:28:01,087 - __main__ - DEBUG - After binom conversion: 'int e^x dx'
+2025-01-06 16:28:01,088 - __main__ - DEBUG - Converted integral expression: 'int(e^x, x)'
+2025-01-06 16:28:01,089 - __main__ - DEBUG - After explicit multiplication: 'int(e^x, x)'
+2025-01-06 16:28:01,089 - __main__ - DEBUG - Final MATLAB expression: 'int(e^x, x)'
+2025-01-06 16:28:01,089 - __main__ - DEBUG - Converted to SymPy expression: 'int(e^x, x)'
+2025-01-06 16:28:01,089 - __main__ - DEBUG - Converted to MATLAB expression: 'int(e^x, x)'
+2025-01-06 16:28:01,093 - __main__ - DEBUG - After shortcut conversion: int(exp(x), x)
+2025-01-06 16:28:01,093 - __main__ - DEBUG - Final MATLAB expression: 'int(exp(x), x)'
+2025-01-06 16:28:01,349 - __main__ - DEBUG - Raw result from MATLAB: 'exp(x)'
+2025-01-06 16:28:01,652 - __main__ - DEBUG - Simplified Result: 'exp(x)'
+2025-01-06 16:28:01,652 - __main__ - DEBUG - Displayed Result: exp(x)
+2025-01-06 16:28:07,137 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2025-01-06 16:28:07,138 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2025-01-06 16:28:07,138 - __main__ - DEBUG - After binom conversion: 'int 1/x dx'
+2025-01-06 16:28:07,138 - __main__ - DEBUG - Converted integral expression: 'int(1/x, x)'
+2025-01-06 16:28:07,138 - __main__ - DEBUG - After explicit multiplication: 'int(1/x, x)'
+2025-01-06 16:28:07,138 - __main__ - DEBUG - Final MATLAB expression: 'int(1/x, x)'
+2025-01-06 16:28:07,138 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/x, x)'
+2025-01-06 16:28:07,138 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/x, x)'
+2025-01-06 16:28:07,139 - __main__ - DEBUG - After shortcut conversion: int(1/x, x)
+2025-01-06 16:28:07,139 - __main__ - DEBUG - Final MATLAB expression: 'int(1/x, x)'
+2025-01-06 16:28:07,278 - __main__ - DEBUG - Raw result from MATLAB: 'ln(x)'
+2025-01-06 16:28:07,302 - __main__ - DEBUG - Simplified Result: 'ln(x)'
+2025-01-06 16:28:07,302 - __main__ - DEBUG - Displayed Result: ln(x)
+2025-01-06 16:31:46,812 - __main__ - INFO - MATLAB engine terminated
+2025-01-06 16:31:51,825 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 16:32:03,066 - __main__ - INFO - MATLAB engine started successfully
+2025-01-06 16:32:44,470 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-06 16:32:44,471 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-06 16:32:44,473 - __main__ - DEBUG - After binom conversion: 'int e^x dx'
+2025-01-06 16:32:44,474 - __main__ - DEBUG - Converted integral expression: 'int(e^x, x)'
+2025-01-06 16:32:44,474 - __main__ - DEBUG - After explicit multiplication: 'int(e^x, x)'
+2025-01-06 16:32:44,475 - __main__ - DEBUG - Final MATLAB expression: 'int(e^x, x)'
+2025-01-06 16:32:44,475 - __main__ - DEBUG - Converted to SymPy expression: 'int(e^x, x)'
+2025-01-06 16:32:44,475 - __main__ - DEBUG - Converted to MATLAB expression: 'int(e^x, x)'
+2025-01-06 16:32:44,479 - __main__ - DEBUG - After shortcut conversion: int(exp(x), x)
+2025-01-06 16:32:44,480 - __main__ - DEBUG - Final MATLAB expression: 'int(exp(x), x)'
+2025-01-06 16:32:44,753 - __main__ - DEBUG - Raw result from MATLAB: 'exp(x)'
+2025-01-06 16:32:45,121 - __main__ - DEBUG - Simplified Result: 'exp(x)'
+2025-01-06 16:32:45,122 - __main__ - DEBUG - Displayed Result: exp(x)
+2025-01-06 16:34:46,425 - __main__ - DEBUG - Original expression: 'lim (x to 3) x^2'
+2025-01-06 16:34:46,427 - __main__ - DEBUG - Original expression: 'lim (x to 3) x^2'
+2025-01-06 16:34:46,427 - __main__ - DEBUG - After binom conversion: 'lim (x to 3) x^2'
+2025-01-06 16:34:46,427 - __main__ - DEBUG - Converted integral expression: 'lim (x to 3) x^2'
+2025-01-06 16:34:46,428 - __main__ - DEBUG - After explicit multiplication: 'lim (x to 3) x^2'
+2025-01-06 16:34:46,428 - __main__ - DEBUG - Final MATLAB expression: 'lim (x to 3) x^2'
+2025-01-06 16:34:46,428 - __main__ - DEBUG - Converted to SymPy expression: 'lim (x to 3) x^2'
+2025-01-06 16:34:46,428 - __main__ - DEBUG - Converted to MATLAB expression: 'lim (x to 3) x^2'
+2025-01-06 16:34:46,429 - __main__ - DEBUG - After shortcut conversion: limit(x^2, x, 3)
+2025-01-06 16:34:46,430 - __main__ - DEBUG - Final MATLAB expression: 'limit(x^2, x, 3)'
+2025-01-06 16:34:46,626 - __main__ - DEBUG - Raw result from MATLAB: '9'
+2025-01-06 16:34:46,667 - __main__ - DEBUG - Simplified Result: '9'
+2025-01-06 16:34:46,667 - __main__ - DEBUG - Displayed Result: 9
+2025-01-06 16:34:56,093 - __main__ - DEBUG - Original expression: 'prod (1 to 3) x^2'
+2025-01-06 16:34:56,093 - __main__ - DEBUG - Original expression: 'prod (1 to 3) x^2'
+2025-01-06 16:34:56,093 - __main__ - DEBUG - After binom conversion: 'prod (1 to 3) x^2'
+2025-01-06 16:34:56,093 - __main__ - DEBUG - Converted integral expression: 'prod (1 to 3) x^2'
+2025-01-06 16:34:56,093 - __main__ - DEBUG - After explicit multiplication: 'prod (1 to 3) x^2'
+2025-01-06 16:34:56,093 - __main__ - DEBUG - Final MATLAB expression: 'prod (1 to 3) x^2'
+2025-01-06 16:34:56,093 - __main__ - DEBUG - Converted to SymPy expression: 'prod (1 to 3) x^2'
+2025-01-06 16:34:56,093 - __main__ - DEBUG - Converted to MATLAB expression: 'prod (1 to 3) x^2'
+2025-01-06 16:34:56,094 - __main__ - DEBUG - After shortcut conversion: prod(arrayfun(@(x) x^2, 1:3))
+2025-01-06 16:34:56,094 - __main__ - DEBUG - Final MATLAB expression: 'prod(arrayfun(@(x) x^2, 1:3))'
+2025-01-06 16:34:56,153 - __main__ - DEBUG - Raw result from MATLAB: '36'
+2025-01-06 16:34:56,178 - __main__ - DEBUG - Simplified Result: '36'
+2025-01-06 16:34:56,178 - __main__ - DEBUG - Displayed Result: 36
+2025-01-06 16:40:15,592 - __main__ - INFO - MATLAB engine terminated
+2025-01-06 16:43:57,645 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 16:44:11,425 - __main__ - INFO - MATLAB engine started successfully
+2025-01-06 16:44:28,896 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-06 16:44:28,897 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-06 16:44:28,899 - __main__ - DEBUG - After binom conversion: 'int e^x dx'
+2025-01-06 16:44:28,900 - __main__ - DEBUG - Converted integral expression: 'int(e^x, x)'
+2025-01-06 16:44:28,901 - __main__ - DEBUG - After explicit multiplication: 'int(e^x, x)'
+2025-01-06 16:44:28,901 - __main__ - DEBUG - Final MATLAB expression: 'int(e^x, x)'
+2025-01-06 16:44:28,902 - __main__ - DEBUG - Converted to SymPy expression: 'int(e^x, x)'
+2025-01-06 16:44:28,902 - __main__ - DEBUG - Converted to MATLAB expression: 'int(e^x, x)'
+2025-01-06 16:44:28,906 - __main__ - DEBUG - After shortcut conversion: int(exp(x), x)
+2025-01-06 16:44:28,906 - __main__ - DEBUG - Final MATLAB expression: 'int(exp(x), x)'
+2025-01-06 16:44:29,204 - __main__ - DEBUG - Raw result from MATLAB: 'exp(x)'
+2025-01-06 16:44:29,375 - __main__ - DEBUG - Simplified Result: 'exp(x)'
+2025-01-06 16:44:29,377 - __main__ - DEBUG - Displayed Result: exp(x)
+2025-01-06 16:47:04,943 - __main__ - INFO - MATLAB engine terminated
+2025-01-06 16:47:19,793 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 16:47:31,660 - __main__ - INFO - MATLAB engine started successfully
+2025-01-06 16:47:40,212 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-06 16:47:40,213 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-06 16:47:40,215 - __main__ - DEBUG - After binom conversion: 'int e^x dx'
+2025-01-06 16:47:40,216 - __main__ - DEBUG - Converted integral expression: 'int(e^x, x)'
+2025-01-06 16:47:40,217 - __main__ - DEBUG - After explicit multiplication: 'int(e^x, x)'
+2025-01-06 16:47:40,217 - __main__ - DEBUG - Final MATLAB expression: 'int(e^x, x)'
+2025-01-06 16:47:40,217 - __main__ - DEBUG - Converted to SymPy expression: 'int(e^x, x)'
+2025-01-06 16:47:40,217 - __main__ - DEBUG - Converted to MATLAB expression: 'int(e^x, x)'
+2025-01-06 16:47:40,222 - __main__ - DEBUG - After shortcut conversion: int(exp(x), x)
+2025-01-06 16:47:40,222 - __main__ - DEBUG - Final MATLAB expression: 'int(exp(x), x)'
+2025-01-06 16:47:40,480 - __main__ - DEBUG - Raw result from MATLAB: 'exp(x)'
+2025-01-06 16:47:40,842 - __main__ - DEBUG - Simplified Result: 'e^x'
+2025-01-06 16:47:40,843 - __main__ - DEBUG - Displayed Result: e^x
+2025-01-06 16:47:50,145 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2025-01-06 16:47:50,147 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2025-01-06 16:47:50,147 - __main__ - DEBUG - After binom conversion: 'int ln(x) dx'
+2025-01-06 16:47:50,148 - __main__ - DEBUG - Converted integral expression: 'int(ln(x), x)'
+2025-01-06 16:47:50,148 - __main__ - DEBUG - After explicit multiplication: 'int(ln(x), x)'
+2025-01-06 16:47:50,148 - __main__ - DEBUG - Final MATLAB expression: 'int(log(x), x)'
+2025-01-06 16:47:50,148 - __main__ - DEBUG - Converted to SymPy expression: 'int(log(x), x)'
+2025-01-06 16:47:50,148 - __main__ - DEBUG - Converted to MATLAB expression: 'int(log(x), x)'
+2025-01-06 16:47:50,148 - __main__ - DEBUG - After shortcut conversion: int(\log(x), x)
+2025-01-06 16:47:50,148 - __main__ - DEBUG - Final MATLAB expression: 'int(\log(x), x)'
+2025-01-06 16:47:50,203 - __main__ - DEBUG - Raw result from MATLAB: 'Invalid use of operator.
+'
+2025-01-06 16:47:50,239 - __main__ - DEBUG - Simplified Result: 'Invalid use of operator.
+'
+2025-01-06 16:47:50,239 - __main__ - DEBUG - Displayed Result: Invalid use of operator.
+
+2025-01-06 16:49:00,426 - __main__ - INFO - MATLAB engine terminated
+2025-01-06 16:49:11,339 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 16:49:20,145 - __main__ - INFO - MATLAB engine started successfully
+2025-01-06 16:49:28,331 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2025-01-06 16:49:28,332 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2025-01-06 16:49:28,333 - __main__ - DEBUG - After binom conversion: 'int ln(x) dx'
+2025-01-06 16:49:28,334 - __main__ - DEBUG - Converted integral expression: 'int(ln(x), x)'
+2025-01-06 16:49:28,335 - __main__ - DEBUG - After explicit multiplication: 'int(ln(x), x)'
+2025-01-06 16:49:28,335 - __main__ - DEBUG - Final MATLAB expression: 'int(log(x), x)'
+2025-01-06 16:49:28,335 - __main__ - DEBUG - Converted to SymPy expression: 'int(log(x), x)'
+2025-01-06 16:49:28,335 - __main__ - DEBUG - Converted to MATLAB expression: 'int(log(x), x)'
+2025-01-06 16:49:28,338 - __main__ - DEBUG - After shortcut conversion: int(log(x), x)
+2025-01-06 16:49:28,338 - __main__ - DEBUG - Final MATLAB expression: 'int(log(x), x)'
+2025-01-06 16:49:28,573 - __main__ - DEBUG - Raw result from MATLAB: 'x*(ln(x) - 1)'
+2025-01-06 16:49:28,856 - __main__ - DEBUG - Simplified Result: '[ln(x) - 1, x]'
+2025-01-06 16:49:28,857 - __main__ - DEBUG - Displayed Result: [ln(x) - 1, x]
+2025-01-06 16:50:59,184 - __main__ - INFO - MATLAB engine terminated
+2025-01-06 21:10:22,925 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 21:10:35,374 - __main__ - INFO - MATLAB engine started successfully
+2025-01-06 21:13:25,037 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2025-01-06 21:13:25,038 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2025-01-06 21:13:25,040 - __main__ - DEBUG - After binom conversion: 'int ln(x) dx'
+2025-01-06 21:13:25,041 - __main__ - DEBUG - Converted integral expression: 'int(ln(x), x)'
+2025-01-06 21:13:25,042 - __main__ - DEBUG - After explicit multiplication: 'int(ln(x), x)'
+2025-01-06 21:13:25,042 - __main__ - DEBUG - Final MATLAB expression: 'int(log(x), x)'
+2025-01-06 21:13:25,042 - __main__ - DEBUG - Converted to SymPy expression: 'int(log(x), x)'
+2025-01-06 21:13:25,042 - __main__ - DEBUG - Converted to MATLAB expression: 'int(log(x), x)'
+2025-01-06 21:13:25,047 - __main__ - DEBUG - After shortcut conversion: int(log(x), x)
+2025-01-06 21:13:25,047 - __main__ - DEBUG - Final MATLAB expression: 'int(log(x), x)'
+2025-01-06 21:13:25,456 - __main__ - DEBUG - Raw result from MATLAB: 'x*(ln(x) - 1)'
+2025-01-06 21:13:25,895 - __main__ - DEBUG - Simplified Result: '[ln(x) - 1, x]'
+2025-01-06 21:13:25,896 - __main__ - DEBUG - Displayed Result: [ln(x) - 1, x]
+2025-01-06 21:15:10,517 - __main__ - INFO - MATLAB engine terminated
+2025-01-06 21:15:23,211 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 21:15:38,059 - __main__ - INFO - MATLAB engine started successfully
+2025-01-06 21:16:19,116 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2025-01-06 21:16:19,117 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2025-01-06 21:16:19,119 - __main__ - DEBUG - After binom conversion: 'int ln(x) dx'
+2025-01-06 21:16:19,120 - __main__ - DEBUG - Converted integral expression: 'int(ln(x), x)'
+2025-01-06 21:16:19,121 - __main__ - DEBUG - After explicit multiplication: 'int(ln(x), x)'
+2025-01-06 21:16:19,121 - __main__ - DEBUG - Final MATLAB expression: 'int(log(x), x)'
+2025-01-06 21:16:19,121 - __main__ - DEBUG - Converted to SymPy expression: 'int(log(x), x)'
+2025-01-06 21:16:19,121 - __main__ - DEBUG - Converted to MATLAB expression: 'int(log(x), x)'
+2025-01-06 21:16:19,126 - __main__ - DEBUG - After shortcut conversion: int(log(x), x)
+2025-01-06 21:16:19,126 - __main__ - DEBUG - Final MATLAB expression: 'int(log(x), x)'
+2025-01-06 21:16:19,571 - __main__ - DEBUG - Raw result from MATLAB: 'x*(ln(x) - 1)'
+2025-01-06 21:16:19,947 - __main__ - DEBUG - Simplified Result: 'ln(x) - 1* x'
+2025-01-06 21:16:19,949 - __main__ - DEBUG - Displayed Result: ln(x) - 1* x
+2025-01-06 21:25:54,232 - __main__ - INFO - MATLAB engine terminated
+2025-01-06 21:26:04,308 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 21:26:14,753 - __main__ - INFO - MATLAB engine started successfully
+2025-01-06 21:26:24,712 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2025-01-06 21:26:24,713 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2025-01-06 21:26:24,714 - __main__ - DEBUG - After binom conversion: 'int ln(x) dx'
+2025-01-06 21:26:24,714 - __main__ - DEBUG - Converted integral expression: 'int(ln(x), x)'
+2025-01-06 21:26:24,715 - __main__ - DEBUG - After explicit multiplication: 'int(ln(x), x)'
+2025-01-06 21:26:24,715 - __main__ - DEBUG - Final MATLAB expression: 'int(log(x), x)'
+2025-01-06 21:26:24,715 - __main__ - DEBUG - Converted to SymPy expression: 'int(log(x), x)'
+2025-01-06 21:26:24,715 - __main__ - DEBUG - Converted to MATLAB expression: 'int(log(x), x)'
+2025-01-06 21:26:24,719 - __main__ - DEBUG - After shortcut conversion: int(log(x), x)
+2025-01-06 21:26:24,720 - __main__ - DEBUG - Final MATLAB expression: 'int(log(x), x)'
+2025-01-06 21:26:24,977 - __main__ - DEBUG - Raw result from MATLAB: 'x*(ln(x) - 1)'
+2025-01-06 21:26:25,271 - __main__ - DEBUG - Simplified Result: 'ln(x) - 1* x'
+2025-01-06 21:26:25,273 - __main__ - DEBUG - Displayed Result: ln(x) - 1* x
+2025-01-06 21:28:13,832 - __main__ - INFO - MATLAB engine terminated
+2025-01-06 21:28:44,207 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 21:28:53,901 - __main__ - INFO - MATLAB engine started successfully
+2025-01-06 21:29:04,792 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2025-01-06 21:29:04,793 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2025-01-06 21:29:04,794 - __main__ - DEBUG - After binom conversion: 'int ln(x) dx'
+2025-01-06 21:29:04,795 - __main__ - DEBUG - Converted integral expression: 'int(ln(x), x)'
+2025-01-06 21:29:04,796 - __main__ - DEBUG - After explicit multiplication: 'int(ln(x), x)'
+2025-01-06 21:29:04,796 - __main__ - DEBUG - Final MATLAB expression: 'int(log(x), x)'
+2025-01-06 21:29:04,796 - __main__ - DEBUG - Converted to SymPy expression: 'int(log(x), x)'
+2025-01-06 21:29:04,796 - __main__ - DEBUG - Converted to MATLAB expression: 'int(log(x), x)'
+2025-01-06 21:29:04,801 - __main__ - DEBUG - After shortcut conversion: int(log(x), x)
+2025-01-06 21:29:04,801 - __main__ - DEBUG - Final MATLAB expression: 'int(log(x), x)'
+2025-01-06 21:29:05,129 - __main__ - DEBUG - Raw result from MATLAB: 'x*(ln(x) - 1)'
+2025-01-06 21:29:05,485 - __main__ - DEBUG - Simplified Result: 'ln(x) - 1* x'
+2025-01-06 21:29:05,486 - __main__ - DEBUG - Displayed Result: ln(x) - 1* x
+2025-01-06 21:32:05,974 - __main__ - INFO - MATLAB engine terminated
+2025-01-06 21:32:17,768 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 21:32:28,935 - __main__ - INFO - MATLAB engine started successfully
+2025-01-06 21:35:12,176 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2025-01-06 21:35:12,177 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2025-01-06 21:35:12,180 - __main__ - DEBUG - After binom conversion: 'int ln(x) dx'
+2025-01-06 21:35:12,181 - __main__ - DEBUG - Converted integral expression: 'int(ln(x), x)'
+2025-01-06 21:35:12,182 - __main__ - DEBUG - After explicit multiplication: 'int(ln(x), x)'
+2025-01-06 21:35:12,182 - __main__ - DEBUG - Final MATLAB expression: 'int(log(x), x)'
+2025-01-06 21:35:12,182 - __main__ - DEBUG - Converted to SymPy expression: 'int(log(x), x)'
+2025-01-06 21:35:12,182 - __main__ - DEBUG - Converted to MATLAB expression: 'int(log(x), x)'
+2025-01-06 21:35:12,189 - __main__ - DEBUG - After shortcut conversion: int(log(x), x)
+2025-01-06 21:35:12,190 - __main__ - DEBUG - Final MATLAB expression: 'int(log(x), x)'
+2025-01-06 21:35:12,504 - __main__ - DEBUG - Raw result from MATLAB: 'x*(ln(x) - 1)'
+2025-01-06 21:35:13,124 - __main__ - DEBUG - Simplified Result: 'ln(x) - 1* x'
+2025-01-06 21:35:13,126 - __main__ - DEBUG - Displayed Result: ln(x) - 1* x
+2025-01-06 22:10:48,795 - __main__ - INFO - MATLAB engine terminated
+2025-01-06 22:14:37,495 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 22:14:48,705 - __main__ - INFO - MATLAB engine started successfully
+2025-01-06 22:15:10,134 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2025-01-06 22:15:10,136 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2025-01-06 22:15:10,139 - __main__ - DEBUG - After binom conversion: 'int ln(x) dx'
+2025-01-06 22:15:10,140 - __main__ - DEBUG - Converted integral expression: 'int(ln(x), x)'
+2025-01-06 22:15:10,141 - __main__ - DEBUG - After explicit multiplication: 'int(ln(x), x)'
+2025-01-06 22:15:10,141 - __main__ - DEBUG - Final MATLAB expression: 'int(log(x), x)'
+2025-01-06 22:15:10,141 - __main__ - DEBUG - Converted to SymPy expression: 'int(log(x), x)'
+2025-01-06 22:15:10,141 - __main__ - DEBUG - Converted to MATLAB expression: 'int(log(x), x)'
+2025-01-06 22:15:10,146 - __main__ - DEBUG - After shortcut conversion: int(log(x), x)
+2025-01-06 22:15:10,146 - __main__ - DEBUG - Final MATLAB expression: 'int(log(x), x)'
+2025-01-06 22:15:10,398 - __main__ - DEBUG - Raw result from MATLAB: 'x*(ln(x) - 1)'
+2025-01-06 22:15:10,691 - __main__ - DEBUG - Simplified Result: '[ln(x) - 1, x]'
+2025-01-06 22:15:10,692 - __main__ - DEBUG - Displayed Result: [ln(x) - 1, x]
+2025-01-06 22:25:15,782 - __main__ - INFO - MATLAB engine terminated
+2025-01-06 22:25:23,050 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 22:25:33,646 - __main__ - INFO - MATLAB engine started successfully
+2025-01-06 22:27:42,078 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2025-01-06 22:27:42,079 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2025-01-06 22:27:42,081 - __main__ - DEBUG - After binom conversion: 'int ln(x) dx'
+2025-01-06 22:27:42,082 - __main__ - DEBUG - Converted integral expression: 'int(ln(x), x)'
+2025-01-06 22:27:42,083 - __main__ - DEBUG - After explicit multiplication: 'int(ln(x), x)'
+2025-01-06 22:27:42,084 - __main__ - DEBUG - Final MATLAB expression: 'int(log(x), x)'
+2025-01-06 22:27:42,084 - __main__ - DEBUG - Converted to SymPy expression: 'int(log(x), x)'
+2025-01-06 22:27:42,084 - __main__ - DEBUG - Converted to MATLAB expression: 'int(log(x), x)'
+2025-01-06 22:27:42,088 - __main__ - DEBUG - After shortcut conversion: int(log(x), x)
+2025-01-06 22:27:42,089 - __main__ - DEBUG - Final MATLAB expression: 'int(log(x), x)'
+2025-01-06 22:27:42,347 - __main__ - DEBUG - Raw result from MATLAB: 'x*(ln(x) - 1)'
+2025-01-06 22:27:42,631 - __main__ - DEBUG - Simplified Result: '[ln(x) - 1, x]'
+2025-01-06 22:27:42,631 - __main__ - DEBUG - Displayed Result: [ln(x) - 1, x]
+2025-01-06 22:27:56,841 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-06 22:27:56,843 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-06 22:27:56,843 - __main__ - DEBUG - After binom conversion: 'int e^x dx'
+2025-01-06 22:27:56,843 - __main__ - DEBUG - Converted integral expression: 'int(e^x, x)'
+2025-01-06 22:27:56,844 - __main__ - DEBUG - After explicit multiplication: 'int(e^x, x)'
+2025-01-06 22:27:56,844 - __main__ - DEBUG - Final MATLAB expression: 'int(e^x, x)'
+2025-01-06 22:27:56,844 - __main__ - DEBUG - Converted to SymPy expression: 'int(e^x, x)'
+2025-01-06 22:27:56,844 - __main__ - DEBUG - Converted to MATLAB expression: 'int(e^x, x)'
+2025-01-06 22:27:56,845 - __main__ - DEBUG - After shortcut conversion: int(exp(x), x)
+2025-01-06 22:27:56,845 - __main__ - DEBUG - Final MATLAB expression: 'int(exp(x), x)'
+2025-01-06 22:27:57,002 - __main__ - DEBUG - Raw result from MATLAB: 'exp(x)'
+2025-01-06 22:27:57,052 - __main__ - DEBUG - Simplified Result: 'e^x'
+2025-01-06 22:27:57,053 - __main__ - DEBUG - Displayed Result: e^x
+2025-01-06 22:28:00,758 - __main__ - DEBUG - Original expression: 'int x^2 dx'
+2025-01-06 22:28:00,759 - __main__ - DEBUG - Original expression: 'int x^2 dx'
+2025-01-06 22:28:00,759 - __main__ - DEBUG - After binom conversion: 'int x^2 dx'
+2025-01-06 22:28:00,759 - __main__ - DEBUG - Converted integral expression: 'int(x^2, x)'
+2025-01-06 22:28:00,759 - __main__ - DEBUG - After explicit multiplication: 'int(x^2, x)'
+2025-01-06 22:28:00,759 - __main__ - DEBUG - Final MATLAB expression: 'int(x^2, x)'
+2025-01-06 22:28:00,759 - __main__ - DEBUG - Converted to SymPy expression: 'int(x^2, x)'
+2025-01-06 22:28:00,759 - __main__ - DEBUG - Converted to MATLAB expression: 'int(x^2, x)'
+2025-01-06 22:28:00,759 - __main__ - DEBUG - After shortcut conversion: int(x^2, x)
+2025-01-06 22:28:00,759 - __main__ - DEBUG - Final MATLAB expression: 'int(x^2, x)'
+2025-01-06 22:28:00,843 - __main__ - DEBUG - Raw result from MATLAB: 'x^3/3'
+2025-01-06 22:28:00,917 - __main__ - DEBUG - Simplified Result: '[1/3, x, x, x]'
+2025-01-06 22:28:00,917 - __main__ - DEBUG - Displayed Result: [1/3, x, x, x]
+2025-01-06 22:38:23,636 - __main__ - INFO - MATLAB engine terminated
+2025-01-06 22:38:31,105 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 22:38:41,417 - __main__ - INFO - MATLAB engine started successfully
+2025-01-06 22:41:40,467 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2025-01-06 22:41:40,469 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2025-01-06 22:41:40,472 - __main__ - DEBUG - After binom conversion: 'int ln(x) dx'
+2025-01-06 22:41:40,473 - __main__ - DEBUG - Converted integral expression: 'int(ln(x), x)'
+2025-01-06 22:41:40,474 - __main__ - DEBUG - After explicit multiplication: 'int(ln(x), x)'
+2025-01-06 22:41:40,474 - __main__ - DEBUG - Final MATLAB expression: 'int(log(x), x)'
+2025-01-06 22:41:40,474 - __main__ - DEBUG - Converted to SymPy expression: 'int(log(x), x)'
+2025-01-06 22:41:40,474 - __main__ - DEBUG - Converted to MATLAB expression: 'int(log(x), x)'
+2025-01-06 22:41:40,479 - __main__ - DEBUG - After shortcut conversion: int(log(x), x)
+2025-01-06 22:41:40,479 - __main__ - DEBUG - Final MATLAB expression: 'int(log(x), x)'
+2025-01-06 22:41:40,857 - __main__ - DEBUG - Raw result from MATLAB: 'x*(ln(x) - 1)'
+2025-01-06 22:41:41,287 - __main__ - DEBUG - Simplified Result: '[ln(x) - 1, x]'
+2025-01-06 22:41:41,288 - __main__ - DEBUG - Displayed Result: [ln(x) - 1, x]
+2025-01-06 22:43:28,198 - __main__ - INFO - MATLAB engine terminated
+2025-01-06 22:43:35,238 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 22:43:45,083 - __main__ - INFO - MATLAB engine started successfully
+2025-01-06 22:45:42,380 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2025-01-06 22:45:42,382 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2025-01-06 22:45:42,383 - __main__ - DEBUG - After binom conversion: 'int ln(x) dx'
+2025-01-06 22:45:42,384 - __main__ - DEBUG - Converted integral expression: 'int(ln(x), x)'
+2025-01-06 22:45:42,385 - __main__ - DEBUG - After explicit multiplication: 'int(ln(x), x)'
+2025-01-06 22:45:42,385 - __main__ - DEBUG - Final MATLAB expression: 'int(log(x), x)'
+2025-01-06 22:45:42,385 - __main__ - DEBUG - Converted to SymPy expression: 'int(log(x), x)'
+2025-01-06 22:45:42,386 - __main__ - DEBUG - Converted to MATLAB expression: 'int(log(x), x)'
+2025-01-06 22:45:42,390 - __main__ - DEBUG - After shortcut conversion: int(log(x), x)
+2025-01-06 22:45:42,390 - __main__ - DEBUG - Final MATLAB expression: 'int(log(x), x)'
+2025-01-06 22:45:42,687 - __main__ - DEBUG - Raw result from MATLAB: 'x*(ln(x) - 1)'
+2025-01-06 22:45:42,914 - __main__ - DEBUG - Simplified Result: 'x*(ln(x) - 1)'
+2025-01-06 22:45:42,914 - __main__ - DEBUG - Displayed Result: x*(ln(x) - 1)
+2025-01-06 22:45:47,512 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-06 22:45:47,512 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-06 22:45:47,512 - __main__ - DEBUG - After binom conversion: 'int e^x dx'
+2025-01-06 22:45:47,512 - __main__ - DEBUG - Converted integral expression: 'int(e^x, x)'
+2025-01-06 22:45:47,513 - __main__ - DEBUG - After explicit multiplication: 'int(e^x, x)'
+2025-01-06 22:45:47,513 - __main__ - DEBUG - Final MATLAB expression: 'int(e^x, x)'
+2025-01-06 22:45:47,513 - __main__ - DEBUG - Converted to SymPy expression: 'int(e^x, x)'
+2025-01-06 22:45:47,513 - __main__ - DEBUG - Converted to MATLAB expression: 'int(e^x, x)'
+2025-01-06 22:45:47,513 - __main__ - DEBUG - After shortcut conversion: int(exp(x), x)
+2025-01-06 22:45:47,513 - __main__ - DEBUG - Final MATLAB expression: 'int(exp(x), x)'
+2025-01-06 22:45:47,655 - __main__ - DEBUG - Raw result from MATLAB: 'exp(x)'
+2025-01-06 22:45:47,680 - __main__ - DEBUG - Simplified Result: 'e^x'
+2025-01-06 22:45:47,680 - __main__ - DEBUG - Displayed Result: e^x
+2025-01-06 22:45:59,913 - __main__ - DEBUG - Original expression: 'lim (x to e^2) 2x'
+2025-01-06 22:45:59,913 - __main__ - DEBUG - Original expression: 'lim (x to e^2) 2x'
+2025-01-06 22:45:59,914 - __main__ - DEBUG - After binom conversion: 'lim (x to e^2) 2x'
+2025-01-06 22:45:59,914 - __main__ - DEBUG - Converted integral expression: 'lim (x to e^2) 2x'
+2025-01-06 22:45:59,914 - __main__ - DEBUG - After explicit multiplication: 'lim (x to e^2) 2*x'
+2025-01-06 22:45:59,914 - __main__ - DEBUG - Final MATLAB expression: 'lim (x to e^2) 2*x'
+2025-01-06 22:45:59,914 - __main__ - DEBUG - Converted to SymPy expression: 'lim (x to e^2) 2*x'
+2025-01-06 22:45:59,914 - __main__ - DEBUG - Converted to MATLAB expression: 'lim (x to e^2) 2*x'
+2025-01-06 22:45:59,915 - __main__ - DEBUG - After shortcut conversion: limit(2*x, x, exp(2))
+2025-01-06 22:45:59,915 - __main__ - DEBUG - Final MATLAB expression: 'limit(2*x, x, exp(2))'
+2025-01-06 22:46:00,006 - __main__ - DEBUG - Raw result from MATLAB: '4159668786720471/281474976710656'
+2025-01-06 22:46:00,028 - __main__ - DEBUG - Simplified Result: '4159668786720471/281474976710656'
+2025-01-06 22:46:00,028 - __main__ - DEBUG - Displayed Result: 4159668786720471/281474976710656
+2025-01-06 22:48:50,535 - __main__ - INFO - MATLAB engine terminated
+2025-01-06 22:48:58,674 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 22:49:11,317 - __main__ - INFO - MATLAB engine started successfully
+2025-01-06 22:49:50,798 - __main__ - DEBUG - Original expression: 'lim (x to e^2) 2x'
+2025-01-06 22:49:50,800 - __main__ - DEBUG - Original expression: 'lim (x to e^2) 2x'
+2025-01-06 22:49:50,801 - __main__ - DEBUG - After binom conversion: 'lim (x to e^2) 2x'
+2025-01-06 22:49:50,801 - __main__ - DEBUG - Converted integral expression: 'lim (x to e^2) 2x'
+2025-01-06 22:49:50,802 - __main__ - DEBUG - After explicit multiplication: 'lim (x to e^2) 2*x'
+2025-01-06 22:49:50,802 - __main__ - DEBUG - Final MATLAB expression: 'lim (x to e^2) 2*x'
+2025-01-06 22:49:50,802 - __main__ - DEBUG - Converted to SymPy expression: 'lim (x to e^2) 2*x'
+2025-01-06 22:49:50,803 - __main__ - DEBUG - Converted to MATLAB expression: 'lim (x to e^2) 2*x'
+2025-01-06 22:49:50,808 - __main__ - DEBUG - After shortcut conversion: limit(2*x, x, exp(2))
+2025-01-06 22:49:50,808 - __main__ - DEBUG - Final MATLAB expression: 'limit(2*x, x, exp(2))'
+2025-01-06 22:49:51,057 - __main__ - DEBUG - Raw result from MATLAB: '14.778112197860536980442702770233'
+2025-01-06 22:49:51,178 - __main__ - DEBUG - Simplified Result: '14.778112197860536980442702770233'
+2025-01-06 22:49:51,179 - __main__ - DEBUG - Displayed Result: 14.778112197860536980442702770233
+2025-01-06 22:53:10,188 - __main__ - INFO - MATLAB engine terminated
+2025-01-06 23:22:47,850 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 23:23:02,852 - __main__ - INFO - MATLAB engine started successfully
+2025-01-06 23:25:21,863 - __main__ - DEBUG - Original expression: 'pi'
+2025-01-06 23:25:21,867 - __main__ - DEBUG - Original expression: 'pi'
+2025-01-06 23:25:21,868 - __main__ - DEBUG - After binom conversion: 'pi'
+2025-01-06 23:25:21,869 - __main__ - DEBUG - Converted integral expression: 'pi'
+2025-01-06 23:25:21,870 - __main__ - DEBUG - After explicit multiplication: 'pi'
+2025-01-06 23:25:21,870 - __main__ - DEBUG - Final MATLAB expression: 'pi'
+2025-01-06 23:25:21,870 - __main__ - DEBUG - Converted to SymPy expression: 'pi'
+2025-01-06 23:25:21,870 - __main__ - DEBUG - Converted to MATLAB expression: 'pi'
+2025-01-06 23:25:21,874 - __main__ - DEBUG - After shortcut conversion: \pi
+2025-01-06 23:25:21,875 - __main__ - DEBUG - Final MATLAB expression: '\pi'
+2025-01-06 23:25:22,338 - __main__ - DEBUG - Raw result from MATLAB: 'Invalid use of operator.
+'
+2025-01-06 23:25:22,604 - __main__ - DEBUG - Simplified Result: 'Invalid use of operator.
+'
+2025-01-06 23:25:22,606 - __main__ - DEBUG - Displayed Result: Invalid use of operator.
+
+2025-01-06 23:27:26,628 - __main__ - INFO - MATLAB engine terminated
+2025-01-06 23:27:43,679 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 23:27:57,451 - __main__ - INFO - MATLAB engine started successfully
+2025-01-06 23:28:03,279 - __main__ - DEBUG - Original expression: 'pi'
+2025-01-06 23:28:03,280 - __main__ - DEBUG - Original expression: 'pi'
+2025-01-06 23:28:03,282 - __main__ - DEBUG - After binom conversion: 'pi'
+2025-01-06 23:28:03,283 - __main__ - DEBUG - Converted integral expression: 'pi'
+2025-01-06 23:28:03,285 - __main__ - DEBUG - After explicit multiplication: 'pi'
+2025-01-06 23:28:03,285 - __main__ - DEBUG - Final MATLAB expression: 'pi'
+2025-01-06 23:28:03,285 - __main__ - DEBUG - Converted to SymPy expression: 'pi'
+2025-01-06 23:28:03,285 - __main__ - DEBUG - Converted to MATLAB expression: 'pi'
+2025-01-06 23:28:03,290 - __main__ - DEBUG - After shortcut conversion: pi
+2025-01-06 23:28:03,290 - __main__ - DEBUG - Final MATLAB expression: 'pi'
+2025-01-06 23:28:03,325 - __main__ - DEBUG - Raw result from MATLAB: ''
+2025-01-06 23:28:03,507 - __main__ - DEBUG - Simplified Result: ''
+2025-01-06 23:28:03,508 - __main__ - DEBUG - Displayed Result: 
+2025-01-06 23:32:58,173 - __main__ - INFO - MATLAB engine terminated
+2025-01-06 23:42:35,768 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 23:42:51,218 - __main__ - INFO - MATLAB engine started successfully
+2025-01-06 23:42:55,695 - __main__ - DEBUG - Original expression: 'e'
+2025-01-06 23:42:55,696 - __main__ - DEBUG - Original expression: 'e'
+2025-01-06 23:42:55,700 - __main__ - DEBUG - After binom conversion: 'e'
+2025-01-06 23:42:55,702 - __main__ - DEBUG - Converted integral expression: 'e'
+2025-01-06 23:42:55,703 - __main__ - DEBUG - After explicit multiplication: 'e'
+2025-01-06 23:42:55,703 - __main__ - DEBUG - Final MATLAB expression: 'e'
+2025-01-06 23:42:55,703 - __main__ - DEBUG - Converted to SymPy expression: 'e'
+2025-01-06 23:42:55,703 - __main__ - DEBUG - Converted to MATLAB expression: 'e'
+2025-01-06 23:42:55,706 - __main__ - DEBUG - After shortcut conversion: e
+2025-01-06 23:42:55,707 - __main__ - DEBUG - Final MATLAB expression: 'e'
+2025-01-06 23:42:55,721 - __main__ - DEBUG - Raw result from MATLAB: ''
+2025-01-06 23:42:55,890 - __main__ - DEBUG - Simplified Result: ''
+2025-01-06 23:42:55,891 - __main__ - DEBUG - Displayed Result: 
+2025-01-06 23:44:16,931 - __main__ - INFO - MATLAB engine terminated
+2025-01-06 23:44:33,366 - __main__ - INFO - Initializing Calculator Application
+2025-01-06 23:44:45,659 - __main__ - INFO - MATLAB engine started successfully
+2025-01-06 23:44:48,777 - __main__ - DEBUG - Original expression: 'e'
+2025-01-06 23:44:48,777 - __main__ - DEBUG - Original expression: 'e'
+2025-01-06 23:44:48,778 - __main__ - DEBUG - After binom conversion: 'e'
+2025-01-06 23:44:48,779 - __main__ - DEBUG - Converted integral expression: 'e'
+2025-01-06 23:44:48,780 - __main__ - DEBUG - After explicit multiplication: 'e'
+2025-01-06 23:44:48,780 - __main__ - DEBUG - Final MATLAB expression: 'e'
+2025-01-06 23:44:48,780 - __main__ - DEBUG - Converted to SymPy expression: 'e'
+2025-01-06 23:44:48,780 - __main__ - DEBUG - Converted to MATLAB expression: 'e'
+2025-01-06 23:44:48,784 - __main__ - DEBUG - After shortcut conversion: e
+2025-01-06 23:44:48,785 - __main__ - DEBUG - Final MATLAB expression: 'e'
+2025-01-06 23:44:48,801 - __main__ - DEBUG - Raw result from MATLAB: 'e'
+2025-01-06 23:44:48,967 - __main__ - DEBUG - Simplified Result: 'e'
+2025-01-06 23:44:48,968 - __main__ - DEBUG - Displayed Result: e
+2025-01-06 23:44:51,627 - __main__ - DEBUG - Original expression: 'pi'
+2025-01-06 23:44:51,628 - __main__ - DEBUG - Original expression: 'pi'
+2025-01-06 23:44:51,628 - __main__ - DEBUG - After binom conversion: 'pi'
+2025-01-06 23:44:51,628 - __main__ - DEBUG - Converted integral expression: 'pi'
+2025-01-06 23:44:51,628 - __main__ - DEBUG - After explicit multiplication: 'pi'
+2025-01-06 23:44:51,628 - __main__ - DEBUG - Final MATLAB expression: 'pi'
+2025-01-06 23:44:51,628 - __main__ - DEBUG - Converted to SymPy expression: 'pi'
+2025-01-06 23:44:51,628 - __main__ - DEBUG - Converted to MATLAB expression: 'pi'
+2025-01-06 23:44:51,629 - __main__ - DEBUG - After shortcut conversion: pi
+2025-01-06 23:44:51,629 - __main__ - DEBUG - Final MATLAB expression: 'pi'
+2025-01-06 23:44:51,641 - __main__ - DEBUG - Raw result from MATLAB: ''
+2025-01-06 23:44:51,718 - __main__ - DEBUG - Simplified Result: ''
+2025-01-06 23:44:51,718 - __main__ - DEBUG - Displayed Result: 
+2025-01-06 23:45:16,385 - __main__ - DEBUG - Original expression: 'd/dx e^x'
+2025-01-06 23:45:16,387 - __main__ - DEBUG - Original expression: 'd/dx e^x'
+2025-01-06 23:45:16,387 - __main__ - DEBUG - After binom conversion: 'd/dx e^x'
+2025-01-06 23:45:16,387 - __main__ - DEBUG - Converted integral expression: 'd/dx e^x'
+2025-01-06 23:45:16,388 - __main__ - DEBUG - After explicit multiplication: 'diff(e.^x, x)'
+2025-01-06 23:45:16,388 - __main__ - DEBUG - Final MATLAB expression: 'diff(e.^x, x)'
+2025-01-06 23:45:16,388 - __main__ - DEBUG - Converted to SymPy expression: 'diff(e.^x, x)'
+2025-01-06 23:45:16,388 - __main__ - DEBUG - Converted to MATLAB expression: 'diff(e.^x, x)'
+2025-01-06 23:45:16,389 - __main__ - DEBUG - After shortcut conversion: diff(e.^x, x)
+2025-01-06 23:45:16,389 - __main__ - DEBUG - Final MATLAB expression: 'diff(e.^x, x)'
+2025-01-06 23:45:16,490 - __main__ - DEBUG - Raw result from MATLAB: '(6121026514868073/2251799813685248)^x*ln(6121026514868073/2251799813685248)'
+2025-01-06 23:45:16,620 - __main__ - DEBUG - Simplified Result: '(6121026514868073/2251799813685248)^x*ln(6121026514868073/2251799813685248)'
+2025-01-06 23:45:16,621 - __main__ - DEBUG - Displayed Result: (6121026514868073/2251799813685248)^x*ln(6121026514868073/2251799813685248)
+2025-01-06 23:45:23,866 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-06 23:45:23,866 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-06 23:45:23,866 - __main__ - DEBUG - After binom conversion: 'int e^x dx'
+2025-01-06 23:45:23,867 - __main__ - DEBUG - Converted integral expression: 'int(e^x, x)'
+2025-01-06 23:45:23,867 - __main__ - DEBUG - After explicit multiplication: 'int(e^x, x)'
+2025-01-06 23:45:23,867 - __main__ - DEBUG - Final MATLAB expression: 'int(e^x, x)'
+2025-01-06 23:45:23,867 - __main__ - DEBUG - Converted to SymPy expression: 'int(e^x, x)'
+2025-01-06 23:45:23,867 - __main__ - DEBUG - Converted to MATLAB expression: 'int(e^x, x)'
+2025-01-06 23:45:23,867 - __main__ - DEBUG - After shortcut conversion: int(exp(x), x)
+2025-01-06 23:45:23,867 - __main__ - DEBUG - Final MATLAB expression: 'int(exp(x), x)'
+2025-01-06 23:45:24,038 - __main__ - DEBUG - Raw result from MATLAB: 'exp(x)'
+2025-01-06 23:45:24,207 - __main__ - DEBUG - Simplified Result: 'e^x'
+2025-01-06 23:45:24,207 - __main__ - DEBUG - Displayed Result: e^x
+2025-01-06 23:45:27,306 - __main__ - INFO - MATLAB engine terminated
+2025-01-07 09:42:08,595 - __main__ - INFO - Initializing Calculator Application
+2025-01-07 09:42:24,708 - __main__ - INFO - MATLAB engine started successfully
+2025-01-07 09:43:09,527 - __main__ - DEBUG - Original expression: 'e^2'
+2025-01-07 09:43:09,528 - __main__ - DEBUG - Original expression: 'e^2'
+2025-01-07 09:43:09,530 - __main__ - DEBUG - After binom conversion: 'e^2'
+2025-01-07 09:43:09,531 - __main__ - DEBUG - Converted integral expression: 'e^2'
+2025-01-07 09:43:09,532 - __main__ - DEBUG - After explicit multiplication: 'e^2'
+2025-01-07 09:43:09,532 - __main__ - DEBUG - Final MATLAB expression: 'e^2'
+2025-01-07 09:43:09,532 - __main__ - DEBUG - Converted to SymPy expression: 'e^2'
+2025-01-07 09:43:09,532 - __main__ - DEBUG - Converted to MATLAB expression: 'e^2'
+2025-01-07 09:43:09,536 - __main__ - DEBUG - After shortcut conversion: exp(2)
+2025-01-07 09:43:09,537 - __main__ - DEBUG - Final MATLAB expression: 'exp(2)'
+2025-01-07 09:43:09,596 - __main__ - DEBUG - Raw result from MATLAB: ''
+2025-01-07 09:43:09,784 - __main__ - DEBUG - Simplified Result: ''
+2025-01-07 09:43:09,785 - __main__ - DEBUG - Displayed Result: 
+2025-01-07 09:44:22,758 - __main__ - INFO - MATLAB engine terminated
+2025-01-07 09:44:30,771 - __main__ - INFO - Initializing Calculator Application
+2025-01-07 09:44:39,606 - __main__ - INFO - MATLAB engine started successfully
+2025-01-07 09:46:47,028 - __main__ - DEBUG - Original expression: 'e^2'
+2025-01-07 09:46:47,030 - __main__ - DEBUG - Original expression: 'e^2'
+2025-01-07 09:46:47,031 - __main__ - DEBUG - After binom conversion: 'e^2'
+2025-01-07 09:46:47,032 - __main__ - DEBUG - Converted integral expression: 'e^2'
+2025-01-07 09:46:47,033 - __main__ - DEBUG - After explicit multiplication: 'e^2'
+2025-01-07 09:46:47,033 - __main__ - DEBUG - Final MATLAB expression: 'e^2'
+2025-01-07 09:46:47,033 - __main__ - DEBUG - Converted to SymPy expression: 'e^2'
+2025-01-07 09:46:47,033 - __main__ - DEBUG - Converted to MATLAB expression: 'e^2'
+2025-01-07 09:46:47,038 - __main__ - DEBUG - After shortcut conversion: exp(2)
+2025-01-07 09:46:47,039 - __main__ - DEBUG - Final MATLAB expression: 'exp(2)'
+2025-01-07 09:46:47,093 - __main__ - DEBUG - Raw result from MATLAB: 'e^2'
+2025-01-07 09:46:47,266 - __main__ - DEBUG - Simplified Result: 'e^2'
+2025-01-07 09:46:47,266 - __main__ - DEBUG - Displayed Result: e^2
+2025-01-07 09:46:59,957 - __main__ - DEBUG - Original expression: 'int e^(2x) dx'
+2025-01-07 09:46:59,958 - __main__ - DEBUG - Original expression: 'int e^(2x) dx'
+2025-01-07 09:46:59,958 - __main__ - DEBUG - After binom conversion: 'int e^(2x) dx'
+2025-01-07 09:46:59,959 - __main__ - DEBUG - Converted integral expression: 'int(e^(2x), x)'
+2025-01-07 09:46:59,959 - __main__ - DEBUG - After explicit multiplication: 'int(e^(2*x), x)'
+2025-01-07 09:46:59,959 - __main__ - DEBUG - Final MATLAB expression: 'int(e^(2*x), x)'
+2025-01-07 09:46:59,959 - __main__ - DEBUG - Converted to SymPy expression: 'int(e^(2*x), x)'
+2025-01-07 09:46:59,959 - __main__ - DEBUG - Converted to MATLAB expression: 'int(e^(2*x), x)'
+2025-01-07 09:46:59,959 - __main__ - DEBUG - After shortcut conversion: int(exp((2*x)), x)
+2025-01-07 09:46:59,959 - __main__ - DEBUG - Final MATLAB expression: 'int(exp((2*x)), x)'
+2025-01-07 09:47:00,208 - __main__ - DEBUG - Raw result from MATLAB: 'float() argument must be a string or a number, not 'matlab.object''
+2025-01-07 09:47:00,265 - __main__ - DEBUG - Simplified Result: 'float() argument must be a string or a number, not 'matlab.object''
+2025-01-07 09:47:00,265 - __main__ - DEBUG - Displayed Result: float() argument must be a string or a number, not 'matlab.object'
+2025-01-07 09:48:36,230 - __main__ - INFO - MATLAB engine terminated
+2025-01-07 09:48:51,492 - __main__ - INFO - Initializing Calculator Application
+2025-01-07 09:49:04,387 - __main__ - INFO - MATLAB engine started successfully
+2025-01-07 09:49:44,857 - __main__ - DEBUG - Original expression: 'e^3'
+2025-01-07 09:49:44,859 - __main__ - DEBUG - Original expression: 'e^3'
+2025-01-07 09:49:44,861 - __main__ - DEBUG - After binom conversion: 'e^3'
+2025-01-07 09:49:44,862 - __main__ - DEBUG - Converted integral expression: 'e^3'
+2025-01-07 09:49:44,863 - __main__ - DEBUG - After explicit multiplication: 'e^3'
+2025-01-07 09:49:44,864 - __main__ - DEBUG - Final MATLAB expression: 'e^3'
+2025-01-07 09:49:44,864 - __main__ - DEBUG - Converted to SymPy expression: 'e^3'
+2025-01-07 09:49:44,864 - __main__ - DEBUG - Converted to MATLAB expression: 'e^3'
+2025-01-07 09:49:44,869 - __main__ - DEBUG - After shortcut conversion: exp(3)
+2025-01-07 09:49:44,869 - __main__ - DEBUG - Final MATLAB expression: 'exp(3)'
+2025-01-07 09:49:44,950 - __main__ - DEBUG - Raw result from MATLAB: ''
+2025-01-07 09:49:45,142 - __main__ - DEBUG - Simplified Result: ''
+2025-01-07 09:49:45,144 - __main__ - DEBUG - Displayed Result: 
+2025-01-07 09:51:12,441 - __main__ - INFO - MATLAB engine terminated
+2025-01-07 10:07:09,498 - __main__ - INFO - Initializing Calculator Application
+2025-01-07 10:07:21,554 - __main__ - INFO - MATLAB engine started successfully
+2025-01-07 10:08:28,351 - __main__ - DEBUG - Original expression: 'e^3'
+2025-01-07 10:08:28,353 - __main__ - DEBUG - Original expression: 'e^3'
+2025-01-07 10:08:28,355 - __main__ - DEBUG - After binom conversion: 'e^3'
+2025-01-07 10:08:28,356 - __main__ - DEBUG - Converted integral expression: 'e^3'
+2025-01-07 10:08:28,357 - __main__ - DEBUG - After explicit multiplication: 'e^3'
+2025-01-07 10:08:28,357 - __main__ - DEBUG - Final MATLAB expression: 'e^3'
+2025-01-07 10:08:28,358 - __main__ - DEBUG - Converted to SymPy expression: 'e^3'
+2025-01-07 10:08:28,358 - __main__ - DEBUG - Converted to MATLAB expression: 'e^3'
+2025-01-07 10:08:28,361 - __main__ - DEBUG - After shortcut conversion: exp(3)
+2025-01-07 10:08:28,361 - __main__ - DEBUG - Final MATLAB expression: 'exp(3)'
+2025-01-07 10:08:28,430 - __main__ - DEBUG - Raw result from MATLAB: 'e^3.0'
+2025-01-07 10:08:28,638 - __main__ - DEBUG - Simplified Result: 'e^3'
+2025-01-07 10:08:28,639 - __main__ - DEBUG - Displayed Result: e^3
+2025-01-07 10:10:14,029 - __main__ - DEBUG - Original expression: 'lim (x to e) x^2'
+2025-01-07 10:10:14,031 - __main__ - DEBUG - Original expression: 'lim (x to e) x^2'
+2025-01-07 10:10:14,031 - __main__ - DEBUG - After binom conversion: 'lim (x to e) x^2'
+2025-01-07 10:10:14,031 - __main__ - DEBUG - Converted integral expression: 'lim (x to e) x^2'
+2025-01-07 10:10:14,031 - __main__ - DEBUG - After explicit multiplication: 'lim (x to e) x^2'
+2025-01-07 10:10:14,031 - __main__ - DEBUG - Final MATLAB expression: 'lim (x to e) x^2'
+2025-01-07 10:10:14,031 - __main__ - DEBUG - Converted to SymPy expression: 'lim (x to e) x^2'
+2025-01-07 10:10:14,032 - __main__ - DEBUG - Converted to MATLAB expression: 'lim (x to e) x^2'
+2025-01-07 10:10:14,033 - __main__ - DEBUG - After shortcut conversion: limit(x^2, x, exp(1))
+2025-01-07 10:10:14,034 - __main__ - DEBUG - Final MATLAB expression: 'limit(x^2, x, exp(1))'
+2025-01-07 10:10:14,262 - __main__ - DEBUG - Raw result from MATLAB: '37466965595717987894928594733329/5070602400912917605986812821504'
+2025-01-07 10:10:14,296 - __main__ - DEBUG - Simplified Result: '37466965595717987894928594733329/5070602400912917605986812821504'
+2025-01-07 10:10:14,296 - __main__ - DEBUG - Displayed Result: 37466965595717987894928594733329/5070602400912917605986812821504
+2025-01-07 10:11:56,312 - __main__ - INFO - MATLAB engine terminated
+2025-01-07 10:12:15,979 - __main__ - INFO - Initializing Calculator Application
+2025-01-07 10:12:27,840 - __main__ - INFO - MATLAB engine started successfully
+2025-01-07 10:14:51,980 - __main__ - DEBUG - Original expression: 'lim (x to e) x^2'
+2025-01-07 10:14:51,981 - __main__ - DEBUG - Original expression: 'lim (x to e) x^2'
+2025-01-07 10:14:51,982 - __main__ - DEBUG - After binom conversion: 'lim (x to e) x^2'
+2025-01-07 10:14:51,983 - __main__ - DEBUG - Converted integral expression: 'lim (x to e) x^2'
+2025-01-07 10:14:51,984 - __main__ - DEBUG - After explicit multiplication: 'lim (x to e) x^2'
+2025-01-07 10:14:51,984 - __main__ - DEBUG - Final MATLAB expression: 'lim (x to e) x^2'
+2025-01-07 10:14:51,984 - __main__ - DEBUG - Converted to SymPy expression: 'lim (x to e) x^2'
+2025-01-07 10:14:51,985 - __main__ - DEBUG - Converted to MATLAB expression: 'lim (x to e) x^2'
+2025-01-07 10:14:51,992 - __main__ - DEBUG - After shortcut conversion: limit(x^2, x, exp(1))
+2025-01-07 10:14:51,992 - __main__ - DEBUG - Final MATLAB expression: 'limit(x^2, x, exp(1))'
+2025-01-07 10:14:52,178 - __main__ - DEBUG - Raw result from MATLAB: '7.389056'
+2025-01-07 10:14:52,330 - __main__ - DEBUG - Simplified Result: '7.389056'
+2025-01-07 10:14:52,331 - __main__ - DEBUG - Displayed Result: 7.389056
+2025-01-07 10:15:02,080 - __main__ - DEBUG - Original expression: 'lim (x to ln(2)) x^2'
+2025-01-07 10:15:02,080 - __main__ - DEBUG - Original expression: 'lim (x to ln(2)) x^2'
+2025-01-07 10:15:02,081 - __main__ - DEBUG - After binom conversion: 'lim (x to ln(2)) x^2'
+2025-01-07 10:15:02,081 - __main__ - DEBUG - Converted integral expression: 'lim (x to ln(2)) x^2'
+2025-01-07 10:15:02,081 - __main__ - DEBUG - After explicit multiplication: 'lim (x to ln(2)) x^2'
+2025-01-07 10:15:02,081 - __main__ - DEBUG - Final MATLAB expression: 'lim (x to log(2)) x^2'
+2025-01-07 10:15:02,081 - __main__ - DEBUG - Converted to SymPy expression: 'lim (x to log(2)) x^2'
+2025-01-07 10:15:02,081 - __main__ - DEBUG - Converted to MATLAB expression: 'lim (x to log(2)) x^2'
+2025-01-07 10:15:02,081 - __main__ - DEBUG - After shortcut conversion: limit(x^2, x, log(2))
+2025-01-07 10:15:02,081 - __main__ - DEBUG - Final MATLAB expression: 'limit(x^2, x, log(2))'
+2025-01-07 10:15:02,127 - __main__ - DEBUG - Raw result from MATLAB: '0.480453'
+2025-01-07 10:15:02,148 - __main__ - DEBUG - Simplified Result: '0.480453'
+2025-01-07 10:15:02,148 - __main__ - DEBUG - Displayed Result: 0.480453
+2025-01-07 10:15:08,947 - __main__ - DEBUG - Original expression: 'lim (x to log10(2)) x^2'
+2025-01-07 10:15:08,947 - __main__ - DEBUG - Original expression: 'lim (x to log10(2)) x^2'
+2025-01-07 10:15:08,947 - __main__ - DEBUG - After binom conversion: 'lim (x to log10(2)) x^2'
+2025-01-07 10:15:08,947 - __main__ - DEBUG - Converted integral expression: 'lim (x to log10(2)) x^2'
+2025-01-07 10:15:08,947 - __main__ - DEBUG - After explicit multiplication: 'lim (x to log10(2)) x^2'
+2025-01-07 10:15:08,948 - __main__ - DEBUG - Final MATLAB expression: 'lim (x to log10(2)) x^2'
+2025-01-07 10:15:08,948 - __main__ - DEBUG - Converted to SymPy expression: 'lim (x to log10(2)) x^2'
+2025-01-07 10:15:08,948 - __main__ - DEBUG - Converted to MATLAB expression: 'lim (x to log10(2)) x^2'
+2025-01-07 10:15:08,948 - __main__ - DEBUG - After shortcut conversion: limit(x^2, x, log(2)/log(10))
+2025-01-07 10:15:08,949 - __main__ - DEBUG - Final MATLAB expression: 'limit(x^2, x, log(2)/log(10))'
+2025-01-07 10:15:08,993 - __main__ - DEBUG - Raw result from MATLAB: '0.090619'
+2025-01-07 10:15:09,012 - __main__ - DEBUG - Simplified Result: '090619'
+2025-01-07 10:15:09,012 - __main__ - DEBUG - Displayed Result: 090619
+2025-01-07 10:31:03,006 - __main__ - INFO - MATLAB engine terminated
+2025-01-07 10:31:10,315 - __main__ - INFO - Initializing Calculator Application
+2025-01-07 10:31:21,049 - __main__ - INFO - MATLAB engine started successfully
+2025-01-07 10:32:05,271 - __main__ - DEBUG - Original expression: 'lim (x to log10(2)) x^2'
+2025-01-07 10:32:05,272 - __main__ - DEBUG - Original expression: 'lim (x to log10(2)) x^2'
+2025-01-07 10:32:05,274 - __main__ - DEBUG - After binom conversion: 'lim (x to log10(2)) x^2'
+2025-01-07 10:32:05,275 - __main__ - DEBUG - Converted integral expression: 'lim (x to log10(2)) x^2'
+2025-01-07 10:32:05,276 - __main__ - DEBUG - After explicit multiplication: 'lim (x to log10(2)) x^2'
+2025-01-07 10:32:05,276 - __main__ - DEBUG - Final MATLAB expression: 'lim (x to log10(2)) x^2'
+2025-01-07 10:32:05,276 - __main__ - DEBUG - Converted to SymPy expression: 'lim (x to log10(2)) x^2'
+2025-01-07 10:32:05,276 - __main__ - DEBUG - Converted to MATLAB expression: 'lim (x to log10(2)) x^2'
+2025-01-07 10:32:05,280 - __main__ - DEBUG - After shortcut conversion: limit(x^2, x, log(2)/log(10))
+2025-01-07 10:32:05,280 - __main__ - DEBUG - Final MATLAB expression: 'limit(x^2, x, log(2)/log(10))'
+2025-01-07 10:32:05,470 - __main__ - DEBUG - Raw result from MATLAB: '0.090619'
+2025-01-07 10:32:05,639 - __main__ - DEBUG - Simplified Result: '090619'
+2025-01-07 10:32:05,640 - __main__ - DEBUG - Displayed Result: 090619
+2025-01-07 11:13:36,387 - __main__ - INFO - MATLAB engine terminated
+2025-01-08 09:04:20,419 - __main__ - INFO - Initializing Calculator Application
+2025-01-08 09:04:50,296 - __main__ - INFO - MATLAB engine started successfully
+2025-01-08 09:05:43,731 - __main__ - DEBUG - Original expression: 'lim (x to e) x^2'
+2025-01-08 09:05:43,733 - __main__ - DEBUG - Original expression: 'lim (x to e) x^2'
+2025-01-08 09:05:43,735 - __main__ - DEBUG - After binom conversion: 'lim (x to e) x^2'
+2025-01-08 09:05:43,737 - __main__ - DEBUG - Converted integral expression: 'lim (x to e) x^2'
+2025-01-08 09:05:43,739 - __main__ - DEBUG - After explicit multiplication: 'lim (x to e) x^2'
+2025-01-08 09:05:43,739 - __main__ - DEBUG - Final MATLAB expression: 'lim (x to e) x^2'
+2025-01-08 09:05:43,739 - __main__ - DEBUG - Converted to SymPy expression: 'lim (x to e) x^2'
+2025-01-08 09:05:43,739 - __main__ - DEBUG - Converted to MATLAB expression: 'lim (x to e) x^2'
+2025-01-08 09:05:43,744 - __main__ - DEBUG - After shortcut conversion: limit(x^2, x, exp(1))
+2025-01-08 09:05:43,744 - __main__ - DEBUG - Final MATLAB expression: 'limit(x^2, x, exp(1))'
+2025-01-08 09:05:43,931 - __main__ - DEBUG - Raw result from MATLAB: '7.389056'
+2025-01-08 09:05:44,106 - __main__ - DEBUG - Simplified Result: '7.389056'
+2025-01-08 09:05:44,107 - __main__ - DEBUG - Displayed Result: 7.389056
+2025-01-08 09:05:56,328 - __main__ - DEBUG - Original expression: 'lim (x to ln(2)) x^2'
+2025-01-08 09:05:56,329 - __main__ - DEBUG - Original expression: 'lim (x to ln(2)) x^2'
+2025-01-08 09:05:56,329 - __main__ - DEBUG - After binom conversion: 'lim (x to ln(2)) x^2'
+2025-01-08 09:05:56,329 - __main__ - DEBUG - Converted integral expression: 'lim (x to ln(2)) x^2'
+2025-01-08 09:05:56,329 - __main__ - DEBUG - After explicit multiplication: 'lim (x to ln(2)) x^2'
+2025-01-08 09:05:56,329 - __main__ - DEBUG - Final MATLAB expression: 'lim (x to log(2)) x^2'
+2025-01-08 09:05:56,330 - __main__ - DEBUG - Converted to SymPy expression: 'lim (x to log(2)) x^2'
+2025-01-08 09:05:56,330 - __main__ - DEBUG - Converted to MATLAB expression: 'lim (x to log(2)) x^2'
+2025-01-08 09:05:56,330 - __main__ - DEBUG - After shortcut conversion: limit(x^2, x, log(2))
+2025-01-08 09:05:56,330 - __main__ - DEBUG - Final MATLAB expression: 'limit(x^2, x, log(2))'
+2025-01-08 09:05:56,374 - __main__ - DEBUG - Raw result from MATLAB: '0.480453'
+2025-01-08 09:05:56,396 - __main__ - DEBUG - Simplified Result: '0.480453'
+2025-01-08 09:05:56,396 - __main__ - DEBUG - Displayed Result: 0.480453
+2025-01-08 09:06:04,711 - __main__ - DEBUG - Original expression: 'lim (x to log10(2)) x^2'
+2025-01-08 09:06:04,712 - __main__ - DEBUG - Original expression: 'lim (x to log10(2)) x^2'
+2025-01-08 09:06:04,712 - __main__ - DEBUG - After binom conversion: 'lim (x to log10(2)) x^2'
+2025-01-08 09:06:04,712 - __main__ - DEBUG - Converted integral expression: 'lim (x to log10(2)) x^2'
+2025-01-08 09:06:04,712 - __main__ - DEBUG - After explicit multiplication: 'lim (x to log10(2)) x^2'
+2025-01-08 09:06:04,712 - __main__ - DEBUG - Final MATLAB expression: 'lim (x to log10(2)) x^2'
+2025-01-08 09:06:04,713 - __main__ - DEBUG - Converted to SymPy expression: 'lim (x to log10(2)) x^2'
+2025-01-08 09:06:04,713 - __main__ - DEBUG - Converted to MATLAB expression: 'lim (x to log10(2)) x^2'
+2025-01-08 09:06:04,713 - __main__ - DEBUG - After shortcut conversion: limit(x^2, x, log(2)/log(10))
+2025-01-08 09:06:04,713 - __main__ - DEBUG - Final MATLAB expression: 'limit(x^2, x, log(2)/log(10))'
+2025-01-08 09:06:04,759 - __main__ - DEBUG - Raw result from MATLAB: '0.090619'
+2025-01-08 09:06:04,778 - __main__ - DEBUG - Simplified Result: '090619'
+2025-01-08 09:06:04,779 - __main__ - DEBUG - Displayed Result: 090619
+2025-01-08 09:09:15,111 - __main__ - INFO - MATLAB engine terminated
+2025-01-08 09:12:38,862 - __main__ - INFO - Initializing Calculator Application
+2025-01-08 09:12:53,030 - __main__ - INFO - MATLAB engine started successfully
+2025-01-08 09:13:27,368 - __main__ - DEBUG - Original expression: 'lim (x to log10(2)) x^2'
+2025-01-08 09:13:27,369 - __main__ - DEBUG - Original expression: 'lim (x to log10(2)) x^2'
+2025-01-08 09:13:27,372 - __main__ - DEBUG - After binom conversion: 'lim (x to log10(2)) x^2'
+2025-01-08 09:13:27,373 - __main__ - DEBUG - Converted integral expression: 'lim (x to log10(2)) x^2'
+2025-01-08 09:13:27,374 - __main__ - DEBUG - After explicit multiplication: 'lim (x to log10(2)) x^2'
+2025-01-08 09:13:27,374 - __main__ - DEBUG - Final MATLAB expression: 'lim (x to log10(2)) x^2'
+2025-01-08 09:13:27,374 - __main__ - DEBUG - Converted to SymPy expression: 'lim (x to log10(2)) x^2'
+2025-01-08 09:13:27,375 - __main__ - DEBUG - Converted to MATLAB expression: 'lim (x to log10(2)) x^2'
+2025-01-08 09:13:27,380 - __main__ - DEBUG - After shortcut conversion: limit(x^2, x, log(2)/log(10))
+2025-01-08 09:13:27,380 - __main__ - DEBUG - Final MATLAB expression: 'limit(x^2, x, log(2)/log(10))'
+2025-01-08 09:13:27,552 - __main__ - DEBUG - Raw result from MATLAB: '0.090619'
+2025-01-08 09:13:27,702 - __main__ - DEBUG - Simplified Result: '090619'
+2025-01-08 09:13:27,703 - __main__ - DEBUG - Displayed Result: 090619
+2025-01-08 10:10:49,193 - __main__ - INFO - MATLAB engine terminated
+2025-01-08 10:10:57,786 - __main__ - INFO - Initializing Calculator Application
+2025-01-08 10:11:16,000 - __main__ - INFO - MATLAB engine started successfully
+2025-01-08 10:12:21,348 - __main__ - DEBUG - Original expression: 'lim (x to log10(2)) x^2'
+2025-01-08 10:12:21,352 - __main__ - DEBUG - Original expression: 'lim (x to log10(2)) x^2'
+2025-01-08 10:12:21,353 - __main__ - DEBUG - After binom conversion: 'lim (x to log10(2)) x^2'
+2025-01-08 10:12:21,354 - __main__ - DEBUG - Converted integral expression: 'lim (x to log10(2)) x^2'
+2025-01-08 10:12:21,355 - __main__ - DEBUG - After explicit multiplication: 'lim (x to log10(2)) x^2'
+2025-01-08 10:12:21,356 - __main__ - DEBUG - Final MATLAB expression: 'lim (x to log10(2)) x^2'
+2025-01-08 10:12:21,356 - __main__ - DEBUG - Converted to SymPy expression: 'lim (x to log10(2)) x^2'
+2025-01-08 10:12:21,356 - __main__ - DEBUG - Converted to MATLAB expression: 'lim (x to log10(2)) x^2'
+2025-01-08 10:12:21,360 - __main__ - DEBUG - After shortcut conversion: limit(x^2, x, log(2)/log(10))
+2025-01-08 10:12:21,360 - __main__ - DEBUG - Final MATLAB expression: 'limit(x^2, x, log(2)/log(10))'
+2025-01-08 10:12:21,857 - __main__ - DEBUG - Raw result from MATLAB: '0.090619'
+2025-01-08 10:12:22,134 - __main__ - DEBUG - Simplified Result: '0.090619'
+2025-01-08 10:12:22,135 - __main__ - DEBUG - Displayed Result: 0.090619
+2025-01-08 10:12:24,788 - __main__ - INFO - MATLAB engine terminated

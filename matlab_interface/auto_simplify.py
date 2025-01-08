@@ -24,26 +24,20 @@ class AutoSimplify:
     def _configure_logger(self):
         """Configure the logger for the AutoSimplify class."""
         if not self.logger.handlers:
+            self.logger.setLevel(logging.INFO)  # Set to INFO level for general use
             handler = logging.StreamHandler()
-            formatter = logging.Formatter(
-                '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-            )
+            formatter = logging.Formatter('%(levelname)s: %(message)s')
             handler.setFormatter(formatter)
             self.logger.addHandler(handler)
-            self.logger.setLevel(logging.DEBUG)
 
     def _init_matlab_symbolic_vars(self):
         """Initialize common symbolic variables in MATLAB workspace."""
         try:
-            # Initialize common variables (excluding 'e')
+            # Initialize common variables
             self.eng.eval("syms x y z t a b c n real", nargout=0)
             
             # Define 'e' as the mathematical constant exp(1)
             self.eng.eval("e = exp(1);", nargout=0)
-            
-            # Optionally, define 'pi' as symbolic if needed
-            # MATLAB already has 'pi' defined, so this may be unnecessary
-            # self.eng.eval("syms pi", nargout=0)
             
             self.logger.debug("Initialized symbolic variables in MATLAB workspace")
         except Exception as e:
@@ -60,88 +54,65 @@ class AutoSimplify:
         Returns:
             str: The simplified expression.
         """
-        self.logger.debug(f"Simplifying expression: '{expr_str}'")
-        
         try:
-            # Convert the expression to a symbolic form
+            self.logger.debug(f"Simplifying expression: '{expr_str}'")
+            
+            # Assign the expression to MATLAB workspace
             self.eng.workspace['expr'] = expr_str
             
-            # Try different simplification methods in sequence
+            # Define a sequence of simplification commands
             simplification_commands = [
-                "simplify(expr, 'Steps', 50)",  # Basic simplification
-                "simplify(collect(expr))",       # Collect similar terms
-                "simplify(factor(expr))",        # Try factoring
-                "simplify(combine(expr))",       # Combine terms
-                "vpa(expr, 10)"                  # Variable precision arithmetic if needed
+                "expr = str2sym(expr);",             # Convert string to symbolic
+                "expr = simplify(expr, 'Steps', 50);", # Simplify with specified steps
+                "expr = vpa(expr, 6);",              # Convert to variable-precision arithmetic with 6 decimal places
             ]
             
+            # Execute each simplification command
             for cmd in simplification_commands:
-                self.logger.debug(f"Applying simplification command: {cmd}")
-                self.eng.eval(f"result = {cmd};", nargout=0)
-                
-                # Get the current result
-                current_result = self.eng.eval("char(result)", nargout=1)
-                
-                # Try to convert fractions to decimals if they're too complex
-                if '/' in current_result:
-                    numerator = self.eng.eval("num2str(double(numden(result)), 15)", nargout=1)
-                    if not ('e' in numerator.lower() or 'i' in numerator.lower()):
-                        self.eng.eval("result = vpa(result, 10);", nargout=0)
-                        current_result = self.eng.eval("char(result)", nargout=1)
-                
-                # Update if simpler
-                if len(current_result) < len(expr_str):
-                    expr_str = current_result
+                self.logger.debug(f"Executing MATLAB command: {cmd}")
+                self.eng.eval(cmd, nargout=0)
             
-            # Final cleanup
-            expr_str = self._clean_expression(expr_str)
+            # Get the result as a single expression
+            result = self.eng.eval("char(expr)", nargout=1)
+            self.logger.debug(f"Raw MATLAB result: {result}")
             
-            self.logger.debug(f"Simplified result: {expr_str}")
-            return expr_str
+            # Clean up the result
+            result = self._clean_expression(result)
+            self.logger.debug(f"Simplified Result: '{result}'")
             
+            return result
+                
         except Exception as e:
             self.logger.error(f"Error during simplification: {e}")
             return expr_str
-            
+        
         finally:
             # Clean up workspace
-            self.eng.eval("clear expr result", nargout=0)
+            self.eng.eval("clear expr", nargout=0)
 
-    def _clean_expression(self, expr_str):
-        """
-        Clean up the expression by removing unnecessary symbols and improving readability.
-        
-        Args:
-            expr_str (str): The expression to clean.
+    def _clean_expression(self, expr):
+        """Clean up the expression."""
+        if not expr:
+            return expr
             
-        Returns:
-            str: The cleaned expression.
-        """
-        # Convert 'log' to 'ln'
-        expr_str = expr_str.replace('log', 'ln')
-
-        # Remove multiplication signs in specific cases
-        patterns = [
-            (r'(\d+)\*([a-zA-Z])', r'\1\2'),           # 2*x -> 2x
-            (r'([a-zA-Z])\*(\d+)', r'\1\2'),           # x*2 -> x2
-            (r'([a-zA-Z])\*([a-zA-Z])', r'\1\2'),      # x*y -> xy
-            (r'\)\*([a-zA-Z])', r')\1'),               # )*x -> )x
-            (r'\)\*(\d+)', r')\1'),                    # )*2 -> )2
-            (r'([a-zA-Z])\*\(', r'\1('),              # x*( -> x(
-            (r'(\d+)\*\(', r'\1('),                   # 2*( -> 2(
-            (r'\*\*', '^'),                           # ** -> ^
-        ]
-
-        for pattern, replacement in patterns:
-            expr_str = re.sub(pattern, replacement, expr_str)
-
-        # Clean up whitespace
-        expr_str = re.sub(r'\s+', ' ', expr_str).strip()
-
-        # Handle special cases for negative numbers
-        expr_str = re.sub(r'(\d+)\*-', r'\1(-', expr_str)
-
-        return expr_str
+        self.logger.debug(f"Original expression before cleaning: '{expr}'")
+        
+        # Remove unnecessary multiplications by 1.0
+        expr = expr.replace('*1.0', '')
+        expr = expr.replace('1.0*', '')
+        
+        # Convert 'exp(x)' to 'e^x' for display
+        expr = re.sub(r'exp\((.*?)\)', r'e^\1', expr)
+        
+        # Replace 'log' with 'ln' for natural logarithm
+        expr = expr.replace('log(', 'ln(')
+        
+        # Ensure multiplication is clearly formatted (e.g., remove '1*' before variables)
+        expr = re.sub(r'\b1\*\s*([a-zA-Z])', r'\1', expr)
+        
+        self.logger.debug(f"Final cleaned expression: '{expr}'")
+        
+        return expr
 
     def simplify_equation(self, equation: str) -> str:
         """

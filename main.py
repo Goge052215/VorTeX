@@ -52,6 +52,25 @@ from ui.legend_window import LegendWindow
 FONT_NAME = "Monaspace Neon"
 FONT_SIZE = 14
 
+def _configure_logger():
+    """Configure the root logger with minimal output."""
+    root_logger = logging.getLogger()
+    root_logger.setLevel(logging.WARNING)  # Only show WARNING and above
+    
+    # Remove existing handlers
+    for handler in root_logger.handlers[:]:
+        root_logger.removeHandler(handler)
+    
+    # Create console handler with minimal formatter
+    console_handler = logging.StreamHandler()
+    formatter = logging.Formatter('%(levelname)s: %(message)s')
+    console_handler.setFormatter(formatter)
+    root_logger.addHandler(console_handler)
+
+    # Set specific loggers to WARNING
+    logging.getLogger('matlab_interface').setLevel(logging.WARNING)
+    logging.getLogger('__main__').setLevel(logging.WARNING)
+
 def _download_fonts():
     if IPCheck.ip_check():
         download_fonts()
@@ -98,20 +117,6 @@ def parse_latex_expression(latex_expr):
     """
     logger.debug(f"Original expression: '{latex_expr}'")
 
-    # Handle limit expressions
-    limit_pattern = r'lim\s*\(([a-zA-Z])\s*to\s*([^)]+)\)\s*(.+)'
-    def replace_limit(match):
-        var = match.group(1)
-        limit_value = match.group(2)
-        expr = match.group(3)
-        return f"limit({expr}, {var}, {limit_value})"
-    
-    latex_expr = re.sub(limit_pattern, replace_limit, latex_expr)
-    
-    # Convert \infty and infty to inf for MATLAB processing
-    latex_expr = latex_expr.replace(r'\infty', 'inf').replace('infty', 'inf')
-    latex_expr = latex_expr.replace(r'-\infty', '-inf').replace('-infty', '-inf')
-    
     # Check if it's an equation (contains '=')
     is_equation = '=' in latex_expr
     if is_equation:
@@ -142,7 +147,9 @@ def parse_latex_expression(latex_expr):
     def replace_derivative(match):
         var = match.group(1)
         expr = match.group(2).strip()
+        # Ensure multiplication is explicit in the expression
         expr = re.sub(r'(\d)([a-zA-Z])', r'\1*\2', expr)
+        # Convert Python-style power operator to MATLAB
         expr = expr.replace('^', '.^')
         return f"diff({expr}, {var})"
 
@@ -152,7 +159,9 @@ def parse_latex_expression(latex_expr):
         order = match.group(1)
         var = match.group(2)
         expr = match.group(4).strip()
+        # Ensure multiplication is explicit in the expression
         expr = re.sub(r'(\d)([a-zA-Z])', r'\1*\2', expr)
+        # Convert Python-style power operator to MATLAB
         expr = expr.replace('^', '.^')
         return f"diff({expr}, {var}, {order})"
 
@@ -164,7 +173,7 @@ def parse_latex_expression(latex_expr):
     latex_expr = re.sub(r'(\d)([a-zA-Z])', r'\1*\2', latex_expr)
     logger.debug(f"After explicit multiplication: '{latex_expr}'")
 
-    # Correctly convert 'ln' to 'log' for MATLAB compatibility
+    # Convert 'ln' to 'log' for MATLAB compatibility
     latex_expr = latex_expr.replace('ln(', 'log(')
 
     logger.debug(f"Final MATLAB expression: '{latex_expr}'")
@@ -223,19 +232,20 @@ class CalculatorApp(QWidget, LatexCalculation):
             bold=True
         ) 
         
+        # Start MATLAB engine
         try:
             self.eng = matlab.engine.start_matlab()
-            self.eng.eval("syms x f(x)", nargout=0)
-            self.simplifier = AutoSimplify(self.eng)
+            self.evaluator = EvaluateExpression(self.eng)
+            self.auto_simplify = AutoSimplify(self.eng)  # Initialize AutoSimplify
             self.logger.info("MATLAB engine started successfully")
         except Exception as e:
             self.logger.error(f"Failed to start MATLAB engine: {e}")
+            raise
 
         self.sympy_converter = SympyToMatlab()
-
+        
+        # Add this line to store the current logarithm type
         self.current_log_type = None
-
-        self.evaluator = EvaluateExpression(self.eng)
 
     def _init_theme(self):
         """Initialize and set default theme."""
@@ -567,9 +577,13 @@ class CalculatorApp(QWidget, LatexCalculation):
             str: The converted expression string.
         """
         if for_display:
+            # Convert MATLAB 'log(x)' (natural log) to 'ln(x)' for display
             expr_str = re.sub(r'\blog\s*\(', 'ln(', expr_str)
+            # Ensure 'log10(x)' remains unchanged for display
         else:
+            # Convert 'ln(x)' to 'log(x)' for MATLAB evaluation
             expr_str = re.sub(r'\bln\s*\(', 'log(', expr_str)
+            # Convert 'log(x, 10)' or similar to 'log10(x)' if necessary
             expr_str = re.sub(r'\blog\s*\(\s*x\s*,\s*10\s*\)', 'log10(x)', expr_str)
         
         return expr_str
@@ -776,24 +790,28 @@ class CalculatorApp(QWidget, LatexCalculation):
             matlab_expression = sympy_to_matlab_converter.sympy_to_matlab(sympy_expr)
             self.logger.debug(f"Converted to MATLAB expression: '{matlab_expression}'")
 
+            # Apply Expression Shortcuts
+            matlab_expression = ExpressionShortcuts.convert_shortcut(matlab_expression)
+            self.logger.debug(f"After shortcut conversion: {matlab_expression}")
+
             # Handle trigonometric functions based on angle mode
             if angle_mode == 'Degree':
-                # Convert trig functions to degree versions
                 matlab_expression = re.sub(r'\bsin\((.*?)\)', lambda m: f"sind({m.group(1)})", matlab_expression)
                 matlab_expression = re.sub(r'\bcos\((.*?)\)', lambda m: f"cosd({m.group(1)})", matlab_expression)
                 matlab_expression = re.sub(r'\btan\((.*?)\)', lambda m: f"tand({m.group(1)})", matlab_expression)
 
+            self.logger.debug(f"Final MATLAB expression: '{matlab_expression}'")
+
             # Evaluate the expression in MATLAB
-            matlab_result = self.evaluate_expression(matlab_expression)
+            result = self.evaluator.evaluate_matlab_expression(matlab_expression)
+            self.logger.debug(f"Raw result from MATLAB: '{result}'")
 
-            # Simplify the result using AutoSimplify
-            simplified_result = self.auto_simplify.simplify_expression(str(matlab_result))
-
-            # Postprocess the simplified result
-            displayed_result = self.evaluator._postprocess_result(simplified_result, is_numeric=False)
+            # Optionally, further simplify using AutoSimplify
+            simplified_result = self.auto_simplify.simplify_expression(result)
+            self.logger.debug(f"Simplified Result: '{simplified_result}'")
 
             # Convert 'log(x)' to 'ln(x)' for display
-            displayed_result = displayed_result.replace('log(', 'ln(')
+            displayed_result = simplified_result.replace('log(', 'ln(')
 
             # Convert trigonometric functions back for display
             displayed_result = displayed_result.replace('cosd(', 'cos(')
@@ -806,38 +824,11 @@ class CalculatorApp(QWidget, LatexCalculation):
         except Exception as e:
             self.logger.error(f"Error in latex calculation: {e}")
             QMessageBox.critical(self, "Error", f"Error evaluating expression: {str(e)}")
-            
-            self.result_display.setText(displayed_result)
-            self.logger.debug(f"Displayed Result: {displayed_result}")
-            
-        except Exception as e:
-            self.logger.error(f"Error in LaTeX calculation: {e}")
-            QMessageBox.critical(self, "Error", f"An error occurred: {str(e)}")
 
     def evaluate_expression(self, matlab_expression):
         """Evaluate the expression using the MATLAB engine."""
-        try:
-            # For limit expressions, add numerical evaluation
-            if matlab_expression.startswith('limit('):
-                # First calculate the symbolic limit
-                self.eng.eval(f"temp_result = {matlab_expression};", nargout=0)
-                # Then convert to double for numerical evaluation
-                self.eng.eval("temp_result = double(temp_result);", nargout=0)
-            else:
-                self.eng.eval(f"temp_result = {matlab_expression};", nargout=0)
-            
-            # Get the result
-            result = self.eng.eval("temp_result", nargout=1)
-            
-            # If the result is a float, round it to a reasonable number of decimal places
-            if isinstance(result, float):
-                result = round(result, 6)
-            
-            return result
-            
-        except Exception as e:
-            self.logger.error(f"Error in evaluate_expression: {e}")
-            raise
+        # This method calls the EvaluateExpression class
+        return self.evaluator.evaluate_matlab_expression(matlab_expression)
 
     def _is_numeric_expression(self, sympy_expr):
         """Determine if the SymPy expression is numeric."""
@@ -964,7 +955,7 @@ class CalculatorApp(QWidget, LatexCalculation):
 
             elif operation == 'Rank':
                 result = self.eng.eval("rank(matrix)", nargout=1)
-                result = int(result)
+                result = int(result)  # Rank is always an integer, no rounding needed
 
             elif operation in ['Multiply', 'Add', 'Subtract', 'Divide']:
                 result = self.handle_matrix_arithmetic(operation)
@@ -989,6 +980,7 @@ class CalculatorApp(QWidget, LatexCalculation):
             QMessageBox.critical(self, "Unexpected Error", f"Unexpected Error: {str(e)}")
 
 if __name__ == '__main__':
+    _configure_logger()
     _download_fonts()
     app = QApplication(sys.argv)
     calculator = CalculatorApp()

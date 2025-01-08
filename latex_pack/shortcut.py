@@ -20,15 +20,15 @@ class ExpressionShortcuts:
     # Combinatorial shortcuts
     COMBINATORIAL_SHORTCUTS = {
         'binom': r'nchoosek',  # Convert binom to nchoosek for MATLAB
-        'C': r'nchoosek',      # Alternative notation
+        'nCr': r'nchoosek(n,r)',      # Alternative notation
         'choose': r'nchoosek'  # Another common notation
     }
     
     # Integral shortcuts
     INTEGRAL_SHORTCUTS = {
-        'int': r'\int',
-        'int (a to b)': r'\int_{a}^{b}',
-        'integral': r'\int',
+        'int': 'int',
+        'int (a to b)': r'int_{a}^{b}',
+        'integral': 'int',
         'iint': r'\iint',  # Double integral
         'iiint': r'\iiint',  # Triple integral
         'oint': r'\oint',  # Contour integral
@@ -48,14 +48,12 @@ class ExpressionShortcuts:
         'arcsin': r'\arcsin',
         'arccos': r'\arccos',
         'arctan': r'\arctan',
-        'ln': r'\ln',
-        'lg': r'\log_{10}',  # base-10 logarithm
-        'log': r'\log',
-        'log10': r'\log_{10}',  # Explicit base-10 log
-        'log2': r'\log_{2}',     # Base-2 log
-        'logn': r'\log_{n}',     # Base-n log
-        'log2': r'\log_{2}',    # Base-2 log
-        'logn': r'\log_{n}',    # Base-n log
+        'ln': r'ln',
+        'lg': r'log_{10}',  # base-10 logarithm
+        'log': r'log',
+        'log10': r'log_{10}',  # Explicit base-10 log
+        'log2': r'log_{2}',    # Base-2 log
+        'logn': r'log_{n}',    # Base-n log
     }
     
     # Fraction shortcuts
@@ -65,38 +63,35 @@ class ExpressionShortcuts:
     
     # Greek letters
     GREEK_SHORTCUTS = {
-        'alpha': r'\alpha',
-        'beta': r'\beta',
-        'gamma': r'\gamma',
-        'delta': r'\delta',
-        'epsilon': r'\epsilon',
-        'zeta': r'\zeta',
-        'eta': r'\eta',
-        'theta': r'\theta',
-        'iota': r'\iota',
-        'kappa': r'\kappa',
-        'lambda': r'\lambda',
-        'mu': r'\mu',
-        'nu': r'\nu',
-        'xi': r'\xi',
-        'pi': r'\pi',
-        'rho': r'\rho',
-        'sigma': r'\sigma',
-        'tau': r'\tau',
-        'upsilon': r'\upsilon',
-        'phi': r'\phi',
-        'chi': r'\chi',
-        'psi': r'\psi',
-        'omega': r'\omega',
+        'alpha': 'alpha',
+        'beta': 'beta',
+        'gamma': 'gamma',
+        'delta': 'delta',
+        'epsilon': 'epsilon',
+        'zeta': 'zeta',
+        'eta': 'eta',
+        'theta': 'theta',
+        'iota': 'iota',
+        'kappa': 'kappa',
+        'lambda': 'lambda',
+        'mu': 'mu',
+        'nu': 'nu',
+        'xi': 'xi',
+        'pi': 'pi',
+        'rho': 'rho',
+        'sigma': 'sigma',
+        'tau': 'tau',
+        'upsilon': 'upsilon',
+        'phi': 'phi',
+        'chi': 'chi',
+        'psi': 'psi',
+        'omega': 'omega',
     }
     
     # Operator shortcuts
     OPERATOR_SHORTCUTS = {
         'sum (a to b)': r'\sum_{a}^{b}',
         'prod (a to b)': r'\prod_{a}^{b}',
-        'lim (x to a)': r'\lim_{x \to a}',
-        'lim (x to a+)': r'\lim_{x \to a^+}',  # Right limit
-        'lim (x to a-)': r'\lim_{x \to a^-}',  # Left limit
         'lim (x to a)': r'\lim_{x \to a}',
         'lim (x to a+)': r'\lim_{x \to a^{+}}',
         'lim (x to a-)': r'\lim_{x \to a^{-}}',
@@ -105,8 +100,6 @@ class ExpressionShortcuts:
         'leftarrow': r'\leftarrow',
         'infty': r'\infty',
         'infinity': r'\infty',
-        '-infty': r'-\infty',
-        '-infinity': r'-\infty',
     }
     
     @classmethod
@@ -128,7 +121,7 @@ class ExpressionShortcuts:
         return all_shortcuts
     
     @classmethod
-    def convert_shortcut(cls, text):
+    def     convert_shortcut(cls, text):
         """
         Convert shortcuts in text to their LaTeX equivalents.
         
@@ -140,11 +133,28 @@ class ExpressionShortcuts:
         """
         result = text
         
+        # Convert exponential expressions first
+        result = cls.convert_exponential_expression(result)
+        logging.debug(f"After exponential conversion: {result}")
+        
+        # Convert integral expressions (without adding backslash)
+        result = cls.convert_integral_expression(result)
+        logging.debug(f"After integral conversion: {result}")
+        
         # Handle limits before other conversions
         result = cls.convert_limit_expression(result)
+        logging.debug(f"After limit conversion: {result}")
         
         # Handle logarithms with different bases
         result = cls._convert_logarithms(result)
+        logging.debug(f"After logarithm conversion: {result}")
+
+        # Handle other shortcuts
+        result = cls.convert_combinatorial_expression(result)
+        logging.debug(f"After combinatorial conversion: {result}")
+        
+        result = cls.convert_sum_prod_expression(result)
+        logging.debug(f"After sum and prod conversion: {result}")
         
         # Handle higher-order derivative notation (e.g., "d2/dx2 x^2")
         if text.startswith('d') and ('/' in text or text[1:2].isdigit()):
@@ -197,18 +207,6 @@ class ExpressionShortcuts:
             upper = match.group(2).strip()
             expr = match.group(3).strip()
             var = match.group(4).strip()
-            
-            # Handle infinity cases in limits
-            if lower.lower() in ['inf', 'infty', 'infinity']:
-                lower = 'inf'
-            elif lower.lower() in ['-inf', '-infty', '-infinity']:
-                lower = '-inf'
-            
-            if upper.lower() in ['inf', 'infty', 'infinity']:
-                upper = 'inf'
-            elif upper.lower() in ['-inf', '-infty', '-infinity']:
-                upper = '-inf'
-            
             return f'int({expr}, {var}, {lower}, {upper})'
         
         text = re.sub(definite_integral_pattern, replace_definite_integral, text)
@@ -231,11 +229,9 @@ class ExpressionShortcuts:
         # Convert lg(x) to log10(x)
         expr = re.sub(r'lg\s*\((.*?)\)', r'log10(\1)', expr)
         
-        # Convert ln(x) to log(x) for natural logarithm
-        expr = re.sub(r'\bln\s*\((.*?)\)', r'log(\1)', expr)
+        # Keep ln(x) as log(x) for natural logarithm
+        expr = re.sub(r'ln\s*\((.*?)\)', r'log(\1)', expr)
         
-        # Convert logn(x) to log(x)/log(n) for base-n logarithm
-        expr = re.sub(r'\blog(\d+)\s*\((.*?)\)', r'log(\2)/log(\1)', expr)
         # Convert logN(x) to log(x)/log(N) for any base N
         expr = re.sub(r'log(\d+)\s*\((.*?)\)', lambda m: f'log({m.group(2)})/log({m.group(1)})', expr)
         
@@ -252,16 +248,10 @@ class ExpressionShortcuts:
     def convert_sum_prod_expression(expr):
         """Convert sum and prod expressions to MATLAB format."""
         # Enhanced pattern to handle spaces and case insensitivity
-        sum_pattern = r'(?i)sum\s*\(\s*(\d+|\w+)\s*to\s*(\d+|\w+)\s*\)\s*([^\n]+)'
+        sum_pattern = r'(?i)sum\s*\(\s*(\d+)\s*to\s*(\d+)\s*\)\s*([^\n]+)'
         
         def replace_sum(match):
             start, end, function = match.groups()
-            # Handle infinity cases
-            if end.lower() in ['inf', 'infty', 'infinity']:
-                end = 'inf'
-            elif end.lower() in ['-inf', '-infty', '-infinity']:
-                end = '-inf'
-            # Use x as the summation variable since it appears in the expression
             return f"symsum({function}, x, {start}, {end})"
 
         expr = re.sub(sum_pattern, replace_sum, expr)
@@ -346,3 +336,11 @@ class ExpressionShortcuts:
 
         expr = re.sub(limit_pattern, replace_limit, expr)
         return expr
+
+    @staticmethod
+    def convert_exponential_expression(expr):
+        """Convert e^x to exp(x) to ensure correct MATLAB interpretation."""
+        pattern = r'\be\^([a-zA-Z0-9\+\-\*/\(\)]+)'
+        replacement = r'exp(\1)'
+        converted_expr = re.sub(pattern, replacement, expr)
+        return converted_expr

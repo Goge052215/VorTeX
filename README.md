@@ -116,7 +116,6 @@ for more shortcuts, see [shortcut.py](latex_pack/shortcut.py)
 5. `tan(90) or tan(pi/2)` $\rightarrow$ $\tan(90) = \infty$
 6. `sum (1 to 100) x` $\rightarrow$ $\displaystyle \sum_{i = 1}^{100} x = 5050$
 7. `prod (2 to 10) ln(x)` $\rightarrow$ $\displaystyle \prod_{i = 2}^{10} \ln(x) = 62.321650$
-7. `prod (2 to 10) ln(x)` $\rightarrow$ $\displaystyle \prod_{i = 2}^{10} \ln(x) = 62.321650$
 
 ### Example for Matrix Mode
 

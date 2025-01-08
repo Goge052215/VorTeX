@@ -31,7 +31,7 @@ SIMPLE_LATEX_LEGEND = """
     </tr>
     <tr>
         <td style="padding: 4px; border: 1px solid #414868;">Logarithm</td>
-        <td style="padding: 4px; border: 1px solid #414868;"><code>log</code> (natural log)</td>
+        <td style="padding: 4px; border: 1px solid #414868;"><code>log10, ln, logn</code> (natural log)</td>
     </tr>
     <tr>
         <td style="padding: 4px; border: 1px solid #414868;">Constants</td>
@@ -56,6 +56,18 @@ SIMPLE_LATEX_LEGEND = """
     <tr>
         <td style="padding: 4px; border: 1px solid #414868;">Derivative</td>
         <td style="padding: 4px; border: 1px solid #414868;"><code>d/dx, d2/dx2, d3/dx3</code></td>
+    </tr>
+    <tr>
+        <td style="padding: 4px; border: 1px solid #414868;">Sum</td>
+        <td style="padding: 4px; border: 1px solid #414868;"><code>sum (a to b)</code></td>
+    </tr>
+    <tr>
+        <td style="padding: 4px; border: 1px solid #414868;">Products</td>
+        <td style="padding: 4px; border: 1px solid #414868;"><code>prod (a to b)</code></td>
+    </tr>
+    <tr>
+        <td style="padding: 4px; border: 1px solid #414868;">Limits</td>
+        <td style="padding: 4px; border: 1px solid #414868;"><code>lim (x to a)</code></td>
     </tr>
 </table>
 """
