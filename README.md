@@ -46,22 +46,24 @@ A powerful mathematical workbench that fuses **MATLAB**'s symbolic computation, 
 1. **Clone the Repository:**
 
    ```bash
-   git clone https://github.com/Goge052215/MATLAB-Calculator-on-py.git
+   git clone https://github.com/Goge052215/VorTeX.git
    ```
 
 2. **Install Required Fonts**
 
    Thanks for developers of Monaspace font family! We are using the font [**Monaspace Neon**](https://monaspace.githubnext.com/) for the UI (partially).You can install the font by running the scripts in [fonts](fonts) folder.
 
-   So far, there are 2 scripts for following systems:
+   The system will go through an [iP check](ip_check/ip_check.py) to see whether you can access GitHub easily, then we will check the font and automatically download for you :)
+
+   If automatic download does not work, try the manual way! So far, there are 2 scripts for following systems:
    - [Windows](fonts/fonts_download.ps1)
    - [MacOS](fonts/fonts_download.bash)
 
-   For Linux users, please see the instructions in the [GitHub Monaspace repository](https://github.com/githubnext/monaspace?tab=readme-ov-file).
+   For Linux and other system users, please see the instructions in the [GitHub Monaspace repository](https://github.com/githubnext/monaspace?tab=readme-ov-file).
 
-3. **Install Dependencies:**
+4. **Install Dependencies:**
 
-   Ensure you have MATLAB installed and the MATLAB Engine API for Python set up.
+   Ensure you have MATLAB installed and the MATLAB Engine API for Python set up. Please ensure you put your MATLAB app (e.g. MATLABr2024b.app) address in PATH!
 
    ```bash
    pip install -r requirements.txt
@@ -69,7 +71,7 @@ A powerful mathematical workbench that fuses **MATLAB**'s symbolic computation, 
 
    The requirement list is in [requirements.txt](requirements.txt)
 
-4. **Run the Application:**
+5. **Run the Application:**
 
    ```bash
    python main.py
@@ -210,10 +212,6 @@ Output: `[-0.37, 5.37]`
 ## Contributing
 
 Contributions are welcome! Please open an issue or submit a pull request for any enhancements or bug fixes.
-
-## License
-
-[MIT License](LICENSE)
 
 ## License
 
