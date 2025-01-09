@@ -14,6 +14,7 @@ A PyQt5-based scientific calculator that supports $\LaTeX$ input, integrates wit
 - **Theming:** Multiple UI themes available to customize the appearance of the application.
 - **Logging:** Detailed logging of operations and errors for troubleshooting and analysis.
 - **Auto Simplify:** Automatically simplifies the result of the expression.
+- **Manim Visualization:** Visualize the expression using Manim. (Currently only limited function is supported)
 
 ## Getting Started
 
@@ -68,6 +69,10 @@ A PyQt5-based scientific calculator that supports $\LaTeX$ input, integrates wit
 
 5. **View Result:**
    - The result will be displayed below the calculate button.
+
+6. **Visualize:**
+   - Click the "Visualize" button to visualize the expression.
+   - The expression will be processed under Manim module and displayed in .mp4 file
 
 ## Example Expressions
 

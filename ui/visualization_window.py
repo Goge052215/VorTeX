@@ -1,18 +1,37 @@
 from PyQt5.QtWidgets import (
-    QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, 
-    QPushButton, QComboBox, QLabel, QSpinBox,
-    QDoubleSpinBox, QFrame
+    QMainWindow, QWidget, QVBoxLayout, QGraphicsView, QGraphicsScene,
+    QHBoxLayout, QLabel, QLineEdit, QPushButton, QFrame
 )
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QFont
+from PyQt5.QtCore import Qt, QTimer
+from PyQt5.QtGui import QImage, QPixmap
+from manim import *
+import cv2
 import logging
+import numpy as np
+import tempfile
+import os
+from manim_visual.manim_visualizer import MathVisualizer
+
+# Configure Manim for video output
+config.media_width = "100%"
+config.preview = True
+config.write_to_movie = True
+config.format = "mp4"
+config.save_last_frame = False
 
 class VisualizationWindow(QMainWindow):
-    """A window for controlling and displaying Manim visualizations."""
-    
     def __init__(self, parent=None):
         super().__init__(parent)
         self.logger = logging.getLogger(__name__)
+        self.animation_timer = QTimer()
+        self.animation_timer.timeout.connect(self.update_animation_frame)
+        self.video_capture = None
+        self.animation_speed = 30  # FPS
+        self.current_func = "x**2"
+        
+        # Instantiate MathVisualizer
+        self.visualizer = MathVisualizer()
+        
         self._init_ui()
         
     def _init_ui(self):
@@ -20,176 +39,230 @@ class VisualizationWindow(QMainWindow):
         self.setWindowTitle('Mathematical Visualization')
         self.setGeometry(200, 200, 800, 600)
         
-        # Create central widget and main layout
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
         main_layout = QVBoxLayout(central_widget)
         
-        # Create control panel
-        control_panel = self._create_control_panel()
-        main_layout.addWidget(control_panel)
+        # Controls layout
+        controls_layout = QHBoxLayout()
         
-        # Create visualization area
-        viz_area = self._create_visualization_area()
-        main_layout.addWidget(viz_area)
+        # X Range Input
+        self.x_range_label = QLabel("X Range:")
+        self.x_range_input = QLineEdit("(-10, 10)")
+        controls_layout.addWidget(self.x_range_label)
+        controls_layout.addWidget(self.x_range_input)
         
-        # Create bottom controls
-        bottom_controls = self._create_bottom_controls()
-        main_layout.addWidget(bottom_controls)
-
-    def _create_control_panel(self) -> QFrame:
-        """Create the control panel with visualization options."""
-        control_frame = QFrame()
-        control_frame.setFrameStyle(QFrame.StyledPanel)
-        control_layout = QHBoxLayout(control_frame)
+        # Y Range Input
+        self.y_range_label = QLabel("Y Range:")
+        self.y_range_input = QLineEdit("(-5, 5)")
+        controls_layout.addWidget(self.y_range_label)
+        controls_layout.addWidget(self.y_range_input)
         
-        # Visualization type selector
-        viz_type_layout = QVBoxLayout()
-        viz_type_label = QLabel("Visualization Type:")
-        viz_type_label.setFont(QFont("Arial", 10, QFont.Bold))
-        self.viz_type_combo = QComboBox()
-        self.viz_type_combo.addItems([
-            "Function Plot",
-            "Derivative",
-            "Integral",
-            "Limit",
-            "Series"
-        ])
-        viz_type_layout.addWidget(viz_type_label)
-        viz_type_layout.addWidget(self.viz_type_combo)
-        control_layout.addLayout(viz_type_layout)
-        
-        # Range controls
-        range_layout = QVBoxLayout()
-        range_label = QLabel("Range:")
-        range_label.setFont(QFont("Arial", 10, QFont.Bold))
-        range_controls = QHBoxLayout()
-        
-        self.x_min = QDoubleSpinBox()
-        self.x_min.setRange(-100, 0)
-        self.x_min.setValue(-10)
-        self.x_max = QDoubleSpinBox()
-        self.x_max.setRange(0, 100)
-        self.x_max.setValue(10)
-        
-        range_controls.addWidget(QLabel("Min:"))
-        range_controls.addWidget(self.x_min)
-        range_controls.addWidget(QLabel("Max:"))
-        range_controls.addWidget(self.x_max)
-        
-        range_layout.addWidget(range_label)
-        range_layout.addLayout(range_controls)
-        control_layout.addLayout(range_layout)
-        
-        # Animation settings
-        anim_layout = QVBoxLayout()
-        anim_label = QLabel("Animation:")
-        anim_label.setFont(QFont("Arial", 10, QFont.Bold))
-        
-        self.duration_spin = QDoubleSpinBox()
-        self.duration_spin.setRange(0.1, 10.0)
-        self.duration_spin.setValue(2.0)
-        self.duration_spin.setSingleStep(0.1)
-        
-        anim_controls = QHBoxLayout()
-        anim_controls.addWidget(QLabel("Duration:"))
-        anim_controls.addWidget(self.duration_spin)
-        
-        anim_layout.addWidget(anim_label)
-        anim_layout.addLayout(anim_controls)
-        control_layout.addLayout(anim_layout)
-        
-        return control_frame
-
-    def _create_visualization_area(self) -> QFrame:
-        """Create the area where visualizations will be displayed."""
-        viz_frame = QFrame()
-        viz_frame.setFrameStyle(QFrame.StyledPanel)
-        viz_frame.setMinimumHeight(400)
-        viz_frame.setStyleSheet("""
-            QFrame {
-                background-color: #2b2b2b;
-                border: 1px solid #3d3d3d;
-                border-radius: 5px;
-            }
-        """)
-        
-        # Placeholder text
-        layout = QVBoxLayout(viz_frame)
-        placeholder = QLabel("Visualization will appear here")
-        placeholder.setAlignment(Qt.AlignCenter)
-        placeholder.setStyleSheet("color: #666666;")
-        layout.addWidget(placeholder)
-        
-        return viz_frame
-
-    def _create_bottom_controls(self) -> QFrame:
-        """Create bottom control panel with action buttons."""
-        control_frame = QFrame()
-        control_layout = QHBoxLayout(control_frame)
-        
-        # Create control buttons
+        # Animation controls
         self.play_button = QPushButton("Play")
-        self.pause_button = QPushButton("Pause")
-        self.reset_button = QPushButton("Reset")
-        self.export_button = QPushButton("Export")
+        self.play_button.clicked.connect(self.toggle_animation)
+        controls_layout.addWidget(self.play_button)
         
-        # Add buttons to layout
-        for button in [self.play_button, self.pause_button, 
-                      self.reset_button, self.export_button]:
-            button.setFixedWidth(100)
-            control_layout.addWidget(button)
+        # Update Button
+        self.update_button = QPushButton("Update Plot")
+        self.update_button.clicked.connect(self.update_plot)
+        controls_layout.addWidget(self.update_button)
         
-        # Connect button signals
-        self.play_button.clicked.connect(self._handle_play)
-        self.pause_button.clicked.connect(self._handle_pause)
-        self.reset_button.clicked.connect(self._handle_reset)
-        self.export_button.clicked.connect(self._handle_export)
+        main_layout.addLayout(controls_layout)
         
-        return control_frame
-
-    def _handle_play(self):
-        """Handle play button click."""
-        self.logger.debug("Play clicked")
-        # TODO: Implement play functionality
-        pass
-
-    def _handle_pause(self):
-        """Handle pause button click."""
-        self.logger.debug("Pause clicked")
-        # TODO: Implement pause functionality
-        pass
-
-    def _handle_reset(self):
-        """Handle reset button click."""
-        self.logger.debug("Reset clicked")
-        # TODO: Implement reset functionality
-        pass
-
-    def _handle_export(self):
-        """Handle export button click."""
-        self.logger.debug("Export clicked")
-        # TODO: Implement export functionality
-        pass
-
-    def update_visualization(self, expression: str):
-        """
-        Update the visualization with a new expression.
+        # Visualization area with a border
+        self.viz_frame = QFrame()
+        self.viz_frame.setFrameShape(QFrame.Box)
+        self.viz_frame.setLineWidth(2)
         
-        Args:
-            expression (str): The mathematical expression to visualize
-        """
-        self.logger.debug(f"Updating visualization for expression: {expression}")
-        # TODO: Implement visualization update
-        pass
-
-    def show_error(self, message: str):
-        """
-        Display an error message in the visualization area.
+        self.viz_view = QGraphicsView(self.viz_frame)
+        self.viz_scene = QGraphicsScene()
+        self.viz_view.setScene(self.viz_scene)
         
-        Args:
-            message (str): The error message to display
-        """
-        self.logger.error(f"Visualization error: {message}")
-        # TODO: Implement error display
-        pass
+        main_layout.addWidget(self.viz_frame)
+
+    def toggle_animation(self):
+        """Toggle animation playback."""
+        if self.animation_timer.isActive():
+            self.animation_timer.stop()
+            self.play_button.setText("Play")
+        else:
+            if self.video_capture is not None:
+                self.animation_timer.start(1000 // self.animation_speed)
+                self.play_button.setText("Pause")
+
+    def update_animation_frame(self):
+        """Update the current frame of the animation."""
+        if self.video_capture is not None and self.video_capture.isOpened():
+            ret, frame = self.video_capture.read()
+            if ret:
+                self.display_frame(frame)
+            else:
+                # Reset to beginning of video when it ends
+                self.video_capture.set(cv2.CAP_PROP_POS_FRAMES, 0)
+
+    def display_frame(self, frame):
+        """Display a single frame in the visualization area."""
+        try:
+            # Convert BGR to RGB
+            frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            height, width = frame_rgb.shape[:2]
+            bytes_per_line = 3 * width
+            
+            # Create QImage from frame
+            image = QImage(frame_rgb.data, width, height, bytes_per_line, QImage.Format_RGB888)
+            pixmap = QPixmap.fromImage(image)
+            
+            # Clear previous frame and display new one
+            self.viz_scene.clear()
+            self.viz_scene.addPixmap(pixmap)
+            
+            # Fit the video to the view and center it
+            self.viz_view.fitInView(self.viz_scene.sceneRect(), Qt.KeepAspectRatio)
+            self.viz_view.setAlignment(Qt.AlignCenter)
+            
+        except Exception as e:
+            self.logger.error(f"Error displaying frame: {e}")
+
+    def display_manim_scene(self, scene_class, x_range=(-10, 10), y_range=(-5, 5)):
+        """Display a Manim scene in the visualization area."""
+        try:
+            # Create temporary directory
+            with tempfile.TemporaryDirectory() as tmp_dir:
+                # Set Manim configuration for this render
+                config.media_dir = tmp_dir
+                config.video_dir = tmp_dir
+                
+                # Create and render the scene
+                scene = scene_class(x_range=x_range, y_range=y_range)
+                scene.render()
+                
+                # Get the exact path to the rendered video
+                video_filename = f"{scene.__class__.__name__}.mp4"
+                video_path = os.path.join(tmp_dir, "videos", video_filename)
+                
+                # Ensure the video file exists
+                if not os.path.exists(video_path):
+                    self.logger.error(f"Video file not found at {video_path}")
+                    return
+                
+                self.logger.info(f"Video file created at: {video_path}")
+                
+                # Close any existing video capture
+                if self.video_capture is not None:
+                    self.video_capture.release()
+                
+                # Open the video file
+                self.video_capture = cv2.VideoCapture(video_path)
+                
+                if not self.video_capture.isOpened():
+                    self.logger.error("Failed to open video capture")
+                    return
+                
+                # Read and display the first frame
+                ret, frame = self.video_capture.read()
+                if ret:
+                    self.display_frame(frame)
+                    # Start animation
+                    self.animation_timer.start(1000 // self.animation_speed)
+                    self.play_button.setText("Pause")
+                else:
+                    self.logger.error("Failed to read first frame")
+                
+        except Exception as e:
+            self.logger.error(f"Error displaying Manim scene: {e}")
+            raise  # Re-raise the exception for debugging
+
+    def update_plot(self):
+        """Update the plot based on user input."""
+        try:
+            x_range = eval(self.x_range_input.text())
+            y_range = eval(self.y_range_input.text())
+            # Use MathVisualizer to visualize the function
+            self.visualizer.visualize_function(self.current_func, x_range, y_range)
+        except Exception as e:
+            self.logger.error(f"Error updating plot: {e}")
+
+    def visualize_function(self, func_str: str, x_range: tuple = (-10, 10), y_range: tuple = (-5, 5)):
+        """Visualize a function using Manim."""
+        self.current_func = func_str
+        
+        class FunctionScene(Scene):
+            def __init__(self, x_range, y_range, **kwargs):
+                super().__init__(**kwargs)
+                self.x_range = x_range
+                self.y_range = y_range
+
+            def construct(self):
+                axes = Axes(
+                    x_range=self.x_range,
+                    y_range=self.y_range,
+                    axis_config={"color": BLUE},
+                    x_length=10,
+                    y_length=6
+                )
+                
+                try:
+                    # Log the function string for debugging
+                    self.logger.debug(f"Evaluating function: {func_str}")
+                    
+                    # Use a safe eval context
+                    safe_dict = {"x": 0, "np": np}
+                    graph = axes.plot(lambda x: eval(func_str, {"x": x, "np": np}, safe_dict))
+                    
+                    # Create animation
+                    self.play(Create(axes))
+                    self.play(Create(graph))
+                except Exception as e:
+                    self.add(Text(f"Error: {str(e)}"))
+                    self.logger.error(f"Error in function visualization: {e}")
+        
+        self.display_manim_scene(FunctionScene, x_range, y_range)
+
+    def resizeEvent(self, event):
+        """Handle window resize events."""
+        super().resizeEvent(event)
+        if hasattr(self, 'viz_view'):
+            self.viz_view.fitInView(self.viz_scene.sceneRect(), Qt.KeepAspectRatio)
+
+    def closeEvent(self, event):
+        """Clean up resources when closing the window."""
+        try:
+            # Stop animation timer
+            self.animation_timer.stop()
+            
+            # Release video capture
+            if self.video_capture is not None:
+                self.video_capture.release()
+                self.video_capture = None
+                
+            # Clean up Manim files
+            self._cleanup_manim_files()
+            
+            super().closeEvent(event)
+        except Exception as e:
+            self.logger.error(f"Error during cleanup: {e}")
+
+    def _cleanup_manim_files(self):
+        """Clean up all Manim-generated files."""
+        try:
+            # Get the temporary directory path
+            temp_dir = config.media_dir
+            
+            # List of file extensions to clean up
+            extensions = ['.mp4', '.svg', '.tex', '.png', '.jpg', '.aux', '.log', '.dvi']
+            
+            # Walk through all subdirectories
+            for root, dirs, files in os.walk(temp_dir):
+                for file in files:
+                    if any(file.endswith(ext) for ext in extensions):
+                        try:
+                            file_path = os.path.join(root, file)
+                            os.remove(file_path)
+                            self.logger.debug(f"Removed file: {file_path}")
+                        except Exception as e:
+                            self.logger.warning(f"Failed to remove file {file}: {e}")
+                            
+            self.logger.info("Cleaned up Manim files")
+        except Exception as e:
+            self.logger.error(f"Error cleaning up Manim files: {e}")

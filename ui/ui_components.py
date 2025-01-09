@@ -8,6 +8,7 @@ from themes.theme_manager import get_tokyo_night_theme, get_aura_theme, get_ligh
 from ui.legend_window import LegendWindow
 from ui.ui_config import UiConfig
 from PyQt5.QtGui import QFont
+from ui.visualization_window import VisualizationWindow
 
 class UIComponents:
     def __init__(self, parent):
@@ -18,8 +19,9 @@ class UIComponents:
             parent (CalculatorApp): The instance of the main calculator application.
         """
         self.parent = parent
+        self.visualization_window = None  # Initialize the visualization window as None
 
-        self.parent.PLACEHOLDER_TEXT = 'Enter LaTeX expression, e.g., \\binom{5}{2} + sin(pi/2)\n' \
+        self.parent.PLACEHOLDER_TEXT = 'Enter LaTeX expression, e.g., binom{5}{2} + sin(pi/2)\n' \
             'Or MATLAB expression, e.g., nchoosek(5,2) + sin(pi/2)'
         self.parent.FORMULA_FONT = QFont("Monaspace Neon", 13)
 
@@ -161,10 +163,10 @@ class UIComponents:
         self.parent.recall_matrix_button.hide()
         
         # Create Calculate Button for Matrix
-        self.parent.calculate_matrix_button = QPushButton('Calculate')
-        self.parent.calculate_matrix_button.setFixedSize(120, 30)
+        self.parent.calculate_matrix_button = QPushButton('Calculate Matrix')
+        self.parent.calculate_matrix_button.setFixedSize(180, 30)
         self.parent.calculate_matrix_button.clicked.connect(self.parent.calculate_matrix)
-        self.parent.calculate_matrix_button.hide()
+        self.parent.calculate_matrix_button.hide()  # Initially hidden
         
         button_layout.addWidget(self.parent.store_matrix_button)
         button_layout.addWidget(self.parent.recall_matrix_button)
@@ -212,9 +214,15 @@ class UIComponents:
         self.parent.calculate_button.clicked.connect(self.parent.calculate)
         self.parent.calculate_button.setFixedHeight(30)
         
-        # Add input and button to vertical layout
+        # Create and configure the 'Visualize' button
+        self.parent.visualize_button = QPushButton('Visualize')
+        self.parent.visualize_button.clicked.connect(self.handle_visualization)  # Connect to the new method
+        self.parent.visualize_button.setFixedHeight(30)
+        
+        # Add input and buttons to vertical layout
         input_button_layout.addWidget(self.parent.entry_formula)
         input_button_layout.addWidget(self.parent.calculate_button)
+        input_button_layout.addWidget(self.parent.visualize_button)
         
         # Add label and input-button section to main layout
         formula_layout.addWidget(self.parent.label_formula)
@@ -252,3 +260,14 @@ class UIComponents:
         result_layout.addWidget(self.parent.result_display)
         
         return result_layout
+
+    def handle_visualization(self):
+        """Handle the visualization process."""
+        if self.visualization_window is None:
+            self.visualization_window = VisualizationWindow(self.parent)
+        
+        # Show the visualization window
+        self.visualization_window.show()
+
+        # Call the visualization method from the parent
+        self.parent.handle_visualization()

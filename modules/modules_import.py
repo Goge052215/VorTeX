@@ -80,7 +80,8 @@ class PackageImporter:
                 "manimpango",
                 "numpy",
                 "pydub",
-                "ffmpeg-python"
+                "ffmpeg-python",
+                "opencv-python"
             ]
             
             for package in core_packages:

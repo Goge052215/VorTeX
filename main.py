@@ -112,15 +112,6 @@ def download_fonts():
         return False
 
 def parse_latex_expression(latex_expr):
-    """
-    Parse a LaTeX-like expression and convert it to a MATLAB-compatible expression.
-
-    Args:
-        latex_expr (str): The LaTeX-like expression.
-
-    Returns:
-        str: The MATLAB-compatible expression.
-    """
     logger.debug(f"Original expression: '{latex_expr}'")
 
     # Check if it's an equation (contains '=')
@@ -313,15 +304,15 @@ class CalculatorApp(QWidget, LatexCalculation):
         """Handle UI changes when calculator mode is changed.
         
         Args:
-            mode (str): The selected mode ('Matrix' or 'LaTeX/MATLAB')
+            mode (str): The selected mode ('Matrix', 'LaTeX', or 'Matlab')
         """
         try:
             # Create UiConfig instance and initialize mode configurations
             ui_config = UiConfig()
             ui_config.mode_config(self)  # Pass the calculator instance
             
-            # Get configuration for current mode (use default if not Matrix)
-            config = ui_config.mode_configs.get(mode, ui_config.mode_configs['default'])
+            # Get configuration for current mode
+            config = ui_config.mode_configs.get(mode, ui_config.mode_configs['LaTeX'])
             
             # Apply visibility changes
             for widget in config['show']:
@@ -329,12 +320,8 @@ class CalculatorApp(QWidget, LatexCalculation):
             for widget in config['hide']:
                 widget.hide()
             
-            # Always show the Calculate button
-            self.calculate_matrix_button.show()
-            
             # Set window dimensions
             height, width = config['dimensions']
-            
             self.setFixedHeight(height)
             self.setFixedWidth(width)
             

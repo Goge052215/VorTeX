@@ -40,13 +40,14 @@ class EvaluateExpression:
         """
         # Precompile regex patterns
         self.ln_pattern = re.compile(r'\bln\s*\(')
+        # Update trig patterns to only match explicit degree functions
         self.trig_patterns = {
-            re.compile(r'\bsin\s*\('): 'sind(',
-            re.compile(r'\bcos\s*\('): 'cosd(',
-            re.compile(r'\btan\s*\('): 'tand(',
-            re.compile(r'\barcsin\s*\('): 'asind(',
-            re.compile(r'\barccos\s*\('): 'acosd(',
-            re.compile(r'\barctan\s*\('): 'atand('
+            re.compile(r'\bsind\s*\('): 'sind(',
+            re.compile(r'\bcosd\s*\('): 'cosd(',
+            re.compile(r'\btand\s*\('): 'tand(',
+            re.compile(r'\barcsind\s*\('): 'asind(',
+            re.compile(r'\barccosd\s*\('): 'acosd(',
+            re.compile(r'\barctand\s*\('): 'atand('
         }
         self.log_e_pattern = re.compile(r'log\s*\(\s*E\s*,\s*([^,)]+)\)')
         self.log_base_pattern = re.compile(r'log\s*\(\s*(\d+)\s*,\s*([^,)]+)\)')
@@ -78,12 +79,20 @@ class EvaluateExpression:
         # Use compiled regex patterns
         expression = self.ln_pattern.sub('log(', expression)
         
+        # Only convert to degree functions if explicitly specified with 'd' suffix
+        # e.g., 'sind(x)' stays as 'sind(x)', but 'sin(x)' stays as 'sin(x)'
         for trig_regex, degree_func in self.trig_patterns.items():
             expression = trig_regex.sub(degree_func, expression)
         
         expression = self.log_e_pattern.sub(r'log(\1)', expression)
         expression = self.log_base_pattern.sub(r'log(\2)/log(\1)', expression)
         expression = self.mul_pattern.sub(r'\1*\2', expression)
+        
+        # Handle exponential expressions without adding extra parenthesis
+        if 'e^' in expression:
+            expression = expression.replace('e^', 'exp(')
+            if not expression.endswith(')'):
+                expression += ')'
         
         self.logger.debug(f"Converted '{original_expr}' to '{expression}'")
         return expression
@@ -138,6 +147,10 @@ class EvaluateExpression:
             result_str = re.sub(r'\s+', '', result_str)
             result_str = result_str.replace(')(', ')*(')
         
+        # Remove any unmatched closing parenthesis
+        if result_str.count('(') < result_str.count(')'):
+            result_str = result_str.rstrip(')')
+        
         self.logger.debug(f"Symbolic result after postprocessing: {result_str}")
         return result_str
 
@@ -164,7 +177,8 @@ class EvaluateExpression:
         
         # Remove MATLAB reserved keywords and function names
         reserved_keywords = {'int', 'diff', 'syms', 'log', 'sin', 'cos', 'tan', 
-                             'exp', 'sqrt', 'abs', 'sind', 'cosd', 'tand', 'symsum', 'prod'}
+                             'exp', 'sqrt', 'abs', 'sind', 'cosd', 'tand', 'symsum', 
+                             'prod', 'solve'}
         variables = variables - reserved_keywords
         self.logger.debug(f"Extracted variables from expression: {variables}")
         return sorted(variables)
@@ -186,9 +200,7 @@ class EvaluateExpression:
         self.logger.debug(f"Declared symbolic variable: {var}")
 
     def evaluate_matlab_expression(self, expression):
-        """
-        Evaluate a MATLAB expression and return the result.
-        """
+        """Evaluate a MATLAB expression."""
         try:
             # Preprocess the expression
             preprocessed_expr = self._preprocess_expression(expression)
@@ -280,3 +292,22 @@ class EvaluateExpression:
             self.logger.info("MATLAB engine terminated")
         except:
             pass
+
+    def _clean_expression(self, expr):
+        """Clean up the expression."""
+        if not expr:
+            return expr
+        
+        self.logger.debug(f"Original expression before cleaning: '{expr}'")
+        
+        # Convert 'exp(x)' to 'e^x' for display, ensuring no extra parenthesis
+        expr = re.sub(r'exp\((.*?)\)', r'e^\1', expr)
+        
+        # Other cleaning operations...
+        expr = expr.replace('*1.0', '').replace('1.0*', '')
+        expr = expr.replace('log(', 'ln(')
+        expr = re.sub(r'\b1\*\s*([a-zA-Z])', r'\1', expr)
+        
+        self.logger.debug(f"Final cleaned expression: '{expr}'")
+        
+        return expr

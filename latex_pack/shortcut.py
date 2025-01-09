@@ -39,15 +39,18 @@ class ExpressionShortcuts:
         'sqrt': r'\sqrt',
         'root': r'\sqrt',
         'abs': r'\left|#\right|',  # # will be replaced with the argument
-        'sin': r'\sin',
-        'cos': r'\cos',
-        'tan': r'\tan',
-        'csc': r'\csc',
-        'sec': r'\sec',
-        'cot': r'\cot',
-        'arcsin': r'\arcsin',
-        'arccos': r'\arccos',
-        'arctan': r'\arctan',
+        'sin': r'sin',
+        'cos': r'cos',
+        'tan': r'tan',
+        'sind': r'sind',
+        'cosd': r'cosd',
+        'tand': r'tand',
+        'csc': r'csc',
+        'sec': r'sec',
+        'cot': r'cot',
+        'arcsin': r'arcsin',
+        'arccos': r'arccos',
+        'arctan': r'arctan',
         'ln': r'ln',
         'lg': r'log_{10}',  # base-10 logarithm
         'log': r'log',
@@ -133,6 +136,15 @@ class ExpressionShortcuts:
         """
         result = text
         
+        # Don't automatically convert to degree mode
+        # Only convert explicit degree functions
+        if 'sind(' in result or 'cosd(' in result or 'tand(' in result:
+            # Handle only explicit degree functions
+            pass
+        else:
+            # Keep regular trig functions as is
+            pass
+            
         # Convert exponential expressions first
         result = cls.convert_exponential_expression(result)
         logging.debug(f"After exponential conversion: {result}")
@@ -156,6 +168,10 @@ class ExpressionShortcuts:
         result = cls.convert_sum_prod_expression(result)
         logging.debug(f"After sum and prod conversion: {result}")
         
+        # Remove LaTeX-style backslashes for MATLAB compatibility
+        result = result.replace('\\', '')
+        logging.debug(f"After removing LaTeX backslashes: {result}")
+
         # Handle higher-order derivative notation (e.g., "d2/dx2 x^2")
         if text.startswith('d') and ('/' in text or text[1:2].isdigit()):
             parts = text.split(' ', 1)

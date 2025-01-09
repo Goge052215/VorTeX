@@ -101,8 +101,8 @@ class AutoSimplify:
         expr = expr.replace('*1.0', '')
         expr = expr.replace('1.0*', '')
         
-        # Convert 'exp(x)' to 'e^x' for display
-        expr = re.sub(r'exp\((.*?)\)', r'e^\1', expr)
+        # Convert 'exp(x)' to 'e^x' for display, without extra parenthesis
+        expr = re.sub(r'exp\((.*?)\)', lambda m: f'e^{m.group(1)}', expr).rstrip(')')
         
         # Replace 'log' with 'ln' for natural logarithm
         expr = expr.replace('log(', 'ln(')
