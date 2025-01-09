@@ -1,8 +1,33 @@
-# MATLAB-Scientific Calculator on Py
+<div align="center">
+
+# ⚡ VorTeX ⚡
+
+> *Where Mathematics Converges*
+
+Are you tired of: \
+Juggling between multiple math applications? 📱 \
+Wrestling with complex $\LaTeX$ syntax? ⚔️ \
+Hitting the limitations of basic calculators? 🚫 \
+Running MATLAB for simple calculations? 💻
+
+**VorTeX** seamlessly fuses them all into one powerful solution.
 
 ![legend img](imgs/legend_img.png)
 
-A PyQt5-based scientific calculator that supports $\LaTeX$ input, integrates with MATLAB for symbolic computation, and offers various mathematical functionalities including differentiation, integration, and matrix operations.
+### A Mathematical Vortex of Power
+
+[![MATLAB](https://img.shields.io/badge/MATLAB-Powered-blue.svg)](https://www.mathworks.com/products/matlab.html)
+[![LaTeX](https://img.shields.io/badge/LaTeX-Simplified-green.svg)](https://www.latex-project.org/)
+[![PyQt5](https://img.shields.io/badge/PyQt5-Modern_UI-orange.svg)](https://www.riverbankcomputing.com/software/pyqt/)
+[![Manim](https://img.shields.io/badge/Manim-Visualizations-red.svg)](https://www.manim.community/)
+
+---
+
+A powerful mathematical workbench that fuses **MATLAB**'s symbolic computation, **LaTeX**'s elegant notation, **PyQt5**'s modern interface, and **Manim**'s visualization capabilities into one seamless vortex. *VorTeX* brings together advanced mathematical tools for differentiation, integration, matrix operations, and symbolic computation in an intuitive environment.
+
+---
+
+</div>
 
 ## Features
 
@@ -185,6 +210,10 @@ Output: `[-0.37, 5.37]`
 ## Contributing
 
 Contributions are welcome! Please open an issue or submit a pull request for any enhancements or bug fixes.
+
+## License
+
+[MIT License](LICENSE)
 
 ## License
 
