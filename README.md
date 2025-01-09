@@ -171,9 +171,11 @@ Output: `[-0.37, 5.37]`
 
 ### Current TODO
 
-- [ ] Fixing the limits handling
+- [X] Fixing the limits handling
 - [ ] Fixing the expression handling for $^n\text{C}_r$
-- [ ] Fixing the series evaluation
+- [X] Fixing the series evaluation
+- [ ] Adding 2D plot
+- [ ] Adding 3D demonstration Manim
 
 ## Contributing
 

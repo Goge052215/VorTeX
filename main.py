@@ -15,6 +15,7 @@ from latex_pack.shortcut import ExpressionShortcuts
 from matlab_interface.auto_simplify import AutoSimplify
 from matlab_interface.display import Display
 from ip_check.ip_check import IPCheck
+from manim_visual.manim_visualizer import MathVisualizer
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -42,6 +43,11 @@ try:
     from latex2sympy2 import latex2sympy
 except ImportError:
     PackageImporter.import_sympy()
+
+try:
+    import manim
+except ImportError:
+    PackageImporter.import_manim()
 
 from themes.theme_manager import (
     ThemeManager, get_tokyo_night_theme, 
@@ -247,6 +253,13 @@ class CalculatorApp(QWidget, LatexCalculation):
         # Add this line to store the current logarithm type
         self.current_log_type = None
 
+        # Initialize visualizer
+        self.visualizer = MathVisualizer()
+        
+        # Add visualization button
+        self.viz_button = QPushButton("Visualize")
+        self.viz_button.clicked.connect(self.handle_visualization)
+        
     def _init_theme(self):
         """Initialize and set default theme."""
         self.set_theme("aura")
@@ -978,6 +991,45 @@ class CalculatorApp(QWidget, LatexCalculation):
             QMessageBox.critical(self, "MATLAB Error", f"MATLAB Error: {me}")
         except Exception as e:
             QMessageBox.critical(self, "Unexpected Error", f"Unexpected Error: {str(e)}")
+
+    def handle_visualization(self):
+        """Handle visualization of the current expression."""
+        try:
+            expr = self.entry_formula.toPlainText().strip()
+            if not expr:
+                QMessageBox.warning(self, "Error", "Please enter an expression to visualize.")
+                return
+                
+            # Convert LaTeX/MATLAB expression to Python expression
+            python_expr = self.convert_to_python_expr(expr)
+            
+            # Visualize based on current mode
+            if "d/dx" in expr or "diff" in expr:
+                self.visualizer.visualize_derivative(python_expr)
+            else:
+                self.visualizer.visualize_function(python_expr)
+                
+        except Exception as e:
+            QMessageBox.critical(self, "Visualization Error", str(e))
+            
+    def convert_to_python_expr(self, expr: str) -> str:
+        """Convert LaTeX/MATLAB expression to Python expression."""
+        # Replace common mathematical functions
+        replacements = {
+            'sin': 'np.sin',
+            'cos': 'np.cos',
+            'tan': 'np.tan',
+            'exp': 'np.exp',
+            'log': 'np.log',
+            'sqrt': 'np.sqrt',
+            '^': '**',
+            'pi': 'np.pi'
+        }
+        
+        for old, new in replacements.items():
+            expr = expr.replace(old, new)
+            
+        return expr
 
 if __name__ == '__main__':
     _configure_logger()

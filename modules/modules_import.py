@@ -66,3 +66,40 @@ class PackageImporter:
 
         except Exception as e:
             print(f"Error installing/importing SymPy packages: {e}")
+
+    @staticmethod
+    def import_manim() -> NoReturn:
+        """Install and import Manim-related packages."""
+        try:
+            print("Installing Manim and related packages...")
+            # First install core dependencies
+            core_packages = [
+                "importlib_metadata",
+                "pycairo",
+                "pangocairo",
+                "manimpango",
+                "numpy",
+                "pydub",
+                "ffmpeg-python"
+            ]
+            
+            for package in core_packages:
+                print(f"Installing {package}...")
+                os.system(f"{sys.executable} -m pip install {package}")
+
+            # Then install manim
+            print("Installing manim...")
+            os.system(f"{sys.executable} -m pip install manim")
+
+            # Verify installations
+            import importlib_metadata
+            import manim
+            print("Manim installation successful!")
+
+        except Exception as e:
+            print(f"Error installing/importing Manim packages: {e}")
+            print("\nPlease try installing manually:")
+            print("1. pip install importlib_metadata")
+            print("2. pip install manim")
+            print("3. For macOS: brew install cairo pango ffmpeg")
+            print("4. For Windows: Check Manim installation guide")

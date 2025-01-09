@@ -2,5 +2,6 @@ PyQt5
 matlab
 matlabengine == 24.2.1
 sympy
-numpy
+numpy>=1.21.0
 latex2sympy2
+manim>=0.17.2
