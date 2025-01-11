@@ -114,6 +114,10 @@ def download_fonts():
 def parse_latex_expression(latex_expr):
     logger.debug(f"Original expression: '{latex_expr}'")
 
+    # Add explicit multiplication for expressions like "1/2 x" -> "1/2 * x"
+    latex_expr = re.sub(r'(\d+)\s+([a-zA-Z])', r'\1*\2', latex_expr)
+    latex_expr = re.sub(r'(\d+)/(\d+)\s+([a-zA-Z])', r'(\1/\2)*\3', latex_expr)
+    
     # Check if it's an equation (contains '=')
     is_equation = '=' in latex_expr
     if is_equation:

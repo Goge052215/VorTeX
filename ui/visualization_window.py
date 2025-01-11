@@ -107,19 +107,29 @@ class VisualizationWindow(QMainWindow):
             # Convert BGR to RGB
             frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             height, width = frame_rgb.shape[:2]
-            bytes_per_line = 3 * width
+            
+            # Scale frame to fit the view while maintaining aspect ratio
+            view_size = self.viz_view.size()
+            scale = min(view_size.width() / width, view_size.height() / height)
+            new_width = int(width * scale)
+            new_height = int(height * scale)
+            
+            frame_rgb = cv2.resize(frame_rgb, (new_width, new_height))
+            bytes_per_line = 3 * new_width
             
             # Create QImage from frame
-            image = QImage(frame_rgb.data, width, height, bytes_per_line, QImage.Format_RGB888)
+            image = QImage(frame_rgb.data, new_width, new_height, bytes_per_line, QImage.Format_RGB888)
             pixmap = QPixmap.fromImage(image)
             
             # Clear previous frame and display new one
             self.viz_scene.clear()
             self.viz_scene.addPixmap(pixmap)
             
-            # Fit the video to the view and center it
+            # Center the frame in the view
+            self.viz_scene.setSceneRect(pixmap.rect())
+            self.viz_view.setSceneRect(self.viz_scene.sceneRect())
             self.viz_view.fitInView(self.viz_scene.sceneRect(), Qt.KeepAspectRatio)
-            self.viz_view.setAlignment(Qt.AlignCenter)
+            self.viz_view.centerOn(pixmap.rect().center())
             
         except Exception as e:
             self.logger.error(f"Error displaying frame: {e}")
@@ -127,51 +137,52 @@ class VisualizationWindow(QMainWindow):
     def display_manim_scene(self, scene_class, x_range=(-10, 10), y_range=(-5, 5)):
         """Display a Manim scene in the visualization area."""
         try:
-            # Create temporary directory
-            with tempfile.TemporaryDirectory() as tmp_dir:
-                # Set Manim configuration for this render
-                config.media_dir = tmp_dir
-                config.video_dir = tmp_dir
-                
-                # Create and render the scene
-                scene = scene_class(x_range=x_range, y_range=y_range)
-                scene.render()
-                
-                # Get the exact path to the rendered video
-                video_filename = f"{scene.__class__.__name__}.mp4"
-                video_path = os.path.join(tmp_dir, "videos", video_filename)
-                
-                # Ensure the video file exists
-                if not os.path.exists(video_path):
-                    self.logger.error(f"Video file not found at {video_path}")
-                    return
-                
-                self.logger.info(f"Video file created at: {video_path}")
-                
-                # Close any existing video capture
-                if self.video_capture is not None:
-                    self.video_capture.release()
-                
-                # Open the video file
-                self.video_capture = cv2.VideoCapture(video_path)
-                
-                if not self.video_capture.isOpened():
-                    self.logger.error("Failed to open video capture")
-                    return
-                
-                # Read and display the first frame
-                ret, frame = self.video_capture.read()
-                if ret:
-                    self.display_frame(frame)
-                    # Start animation
-                    self.animation_timer.start(1000 // self.animation_speed)
-                    self.play_button.setText("Pause")
-                else:
-                    self.logger.error("Failed to read first frame")
+            # Create temporary directory for media files
+            media_dir = os.path.join(os.getcwd(), "media")
+            video_dir = os.path.join(media_dir, "videos", "1080p60")
+            
+            # Set Manim configuration
+            config.media_dir = media_dir
+            config.video_dir = video_dir
+            
+            # Create and render the scene
+            scene = scene_class(x_range=x_range, y_range=y_range)
+            scene.render()
+            
+            # Get the path to the rendered video
+            video_path = os.path.join(video_dir, "FunctionScene.mp4")
+            
+            # Ensure the video file exists
+            if not os.path.exists(video_path):
+                self.logger.error(f"Video file not found at {video_path}")
+                return
+            
+            self.logger.info(f"Video file created at: {video_path}")
+            
+            # Close any existing video capture
+            if self.video_capture is not None:
+                self.video_capture.release()
+            
+            # Open the video file
+            self.video_capture = cv2.VideoCapture(video_path)
+            
+            if not self.video_capture.isOpened():
+                self.logger.error("Failed to open video capture")
+                return
+            
+            # Read and display the first frame
+            ret, frame = self.video_capture.read()
+            if ret:
+                self.display_frame(frame)
+                # Start animation
+                self.animation_timer.start(1000 // self.animation_speed)
+                self.play_button.setText("Pause")
+            else:
+                self.logger.error("Failed to read first frame")
                 
         except Exception as e:
             self.logger.error(f"Error displaying Manim scene: {e}")
-            raise  # Re-raise the exception for debugging
+            raise
 
     def update_plot(self):
         """Update the plot based on user input."""
@@ -184,45 +195,14 @@ class VisualizationWindow(QMainWindow):
             self.logger.error(f"Error updating plot: {e}")
 
     def visualize_function(self, func_str: str, x_range: tuple = (-10, 10), y_range: tuple = (-5, 5)):
-        """Visualize a function using Manim."""
+        """Visualize a function using MathVisualizer."""
         self.current_func = func_str
-        
-        class FunctionScene(Scene):
-            def __init__(self, x_range, y_range, **kwargs):
-                super().__init__(**kwargs)
-                self.x_range = x_range
-                self.y_range = y_range
-
-            def construct(self):
-                axes = Axes(
-                    x_range=self.x_range,
-                    y_range=self.y_range,
-                    axis_config={"color": BLUE},
-                    x_length=10,
-                    y_length=6
-                )
-                
-                try:
-                    # Log the function string for debugging
-                    self.logger.debug(f"Evaluating function: {func_str}")
-                    
-                    # Use a safe eval context
-                    safe_dict = {"x": 0, "np": np}
-                    graph = axes.plot(lambda x: eval(func_str, {"x": x, "np": np}, safe_dict))
-                    
-                    # Create animation
-                    self.play(Create(axes))
-                    self.play(Create(graph))
-                except Exception as e:
-                    self.add(Text(f"Error: {str(e)}"))
-                    self.logger.error(f"Error in function visualization: {e}")
-        
-        self.display_manim_scene(FunctionScene, x_range, y_range)
+        self.visualizer.visualize_function(func_str, x_range, y_range)
 
     def resizeEvent(self, event):
         """Handle window resize events."""
         super().resizeEvent(event)
-        if hasattr(self, 'viz_view'):
+        if hasattr(self, 'viz_view') and not self.viz_scene.items():
             self.viz_view.fitInView(self.viz_scene.sceneRect(), Qt.KeepAspectRatio)
 
     def closeEvent(self, event):

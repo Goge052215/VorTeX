@@ -4805,3 +4805,102 @@ Too many input arguments.
 2025-01-09 23:42:02,770 - __main__ - INFO - Initializing Calculator Application
 2025-01-09 23:42:16,836 - __main__ - INFO - MATLAB engine started successfully
 2025-01-09 23:43:36,204 - __main__ - INFO - MATLAB engine terminated
+2025-01-10 14:00:39,464 - __main__ - INFO - Initializing Calculator Application
+2025-01-10 14:00:54,230 - __main__ - INFO - MATLAB engine started successfully
+2025-01-10 14:01:19,007 - __main__ - DEBUG - Original expression: '2x'
+2025-01-10 14:01:19,008 - __main__ - DEBUG - Original expression: '2x'
+2025-01-10 14:01:19,010 - __main__ - DEBUG - After binom conversion: '2x'
+2025-01-10 14:01:19,011 - __main__ - DEBUG - Converted integral expression: '2x'
+2025-01-10 14:01:19,012 - __main__ - DEBUG - After explicit multiplication: '2*x'
+2025-01-10 14:01:19,012 - __main__ - DEBUG - Final MATLAB expression: '2*x'
+2025-01-10 14:01:19,012 - __main__ - DEBUG - Converted to SymPy expression: '2*x'
+2025-01-10 14:01:19,012 - __main__ - DEBUG - Converted to MATLAB expression: '2*x'
+2025-01-10 14:01:19,017 - __main__ - DEBUG - After shortcut conversion: 2*x
+2025-01-10 14:01:19,018 - __main__ - DEBUG - Final MATLAB expression: '2*x'
+2025-01-10 14:01:19,088 - __main__ - DEBUG - Raw result from MATLAB: '2*x'
+2025-01-10 14:01:19,388 - __main__ - DEBUG - Simplified Result: '2.0*x'
+2025-01-10 14:01:19,389 - __main__ - DEBUG - Displayed Result: 2.0*x
+2025-01-11 10:05:00,768 - __main__ - INFO - Initializing Calculator Application
+2025-01-11 10:05:16,341 - __main__ - INFO - MATLAB engine started successfully
+2025-01-11 10:06:05,567 - __main__ - DEBUG - Original expression: '1/2 x'
+2025-01-11 10:06:05,570 - __main__ - DEBUG - Original expression: '1/2 x'
+2025-01-11 10:06:05,571 - __main__ - DEBUG - After binom conversion: '1/2 x'
+2025-01-11 10:06:05,572 - __main__ - DEBUG - Converted integral expression: '1/2 x'
+2025-01-11 10:06:05,573 - __main__ - DEBUG - After explicit multiplication: '1/2 x'
+2025-01-11 10:06:05,574 - __main__ - DEBUG - Final MATLAB expression: '1/2 x'
+2025-01-11 10:06:05,574 - __main__ - DEBUG - Converted to SymPy expression: '1/2 x'
+2025-01-11 10:06:05,574 - __main__ - DEBUG - Converted to MATLAB expression: '1/2 x'
+2025-01-11 10:06:05,580 - __main__ - DEBUG - After shortcut conversion: 1/2 x
+2025-01-11 10:06:05,581 - __main__ - DEBUG - Final MATLAB expression: '1/2 x'
+2025-01-11 10:06:05,977 - __main__ - DEBUG - Raw result from MATLAB: 'Unexpected Error'
+2025-01-11 10:06:06,480 - __main__ - DEBUG - Simplified Result: 'UnexpectedError'
+2025-01-11 10:06:06,482 - __main__ - DEBUG - Displayed Result: UnexpectedError
+2025-01-11 10:07:35,259 - __main__ - INFO - MATLAB engine terminated
+2025-01-11 10:07:42,526 - __main__ - INFO - Initializing Calculator Application
+2025-01-11 10:07:51,948 - __main__ - INFO - MATLAB engine started successfully
+2025-01-11 10:08:01,542 - __main__ - DEBUG - Original expression: '1/2 x'
+2025-01-11 10:08:01,543 - __main__ - DEBUG - Original expression: '1/2 x'
+2025-01-11 10:08:01,545 - __main__ - DEBUG - After binom conversion: '1/2*x'
+2025-01-11 10:08:01,546 - __main__ - DEBUG - Converted integral expression: '1/2*x'
+2025-01-11 10:08:01,546 - __main__ - DEBUG - After explicit multiplication: '1/2*x'
+2025-01-11 10:08:01,546 - __main__ - DEBUG - Final MATLAB expression: '1/2*x'
+2025-01-11 10:08:01,546 - __main__ - DEBUG - Converted to SymPy expression: '1/2*x'
+2025-01-11 10:08:01,547 - __main__ - DEBUG - Converted to MATLAB expression: '1/2*x'
+2025-01-11 10:08:01,553 - __main__ - DEBUG - After shortcut conversion: 1/2*x
+2025-01-11 10:08:01,554 - __main__ - DEBUG - Final MATLAB expression: '1/2*x'
+2025-01-11 10:08:01,628 - __main__ - DEBUG - Raw result from MATLAB: 'x/2'
+2025-01-11 10:08:01,907 - __main__ - DEBUG - Simplified Result: '0.5*x'
+2025-01-11 10:08:01,908 - __main__ - DEBUG - Displayed Result: 0.5*x
+2025-01-11 10:11:40,946 - __main__ - INFO - MATLAB engine terminated
+2025-01-11 10:12:02,648 - __main__ - INFO - Initializing Calculator Application
+2025-01-11 10:12:12,459 - __main__ - INFO - MATLAB engine started successfully
+2025-01-11 10:12:18,250 - __main__ - DEBUG - Original expression: '1/2 x'
+2025-01-11 10:12:18,250 - __main__ - DEBUG - Original expression: '1/2 x'
+2025-01-11 10:12:18,252 - __main__ - DEBUG - After binom conversion: '1/2*x'
+2025-01-11 10:12:18,253 - __main__ - DEBUG - Converted integral expression: '1/2*x'
+2025-01-11 10:12:18,254 - __main__ - DEBUG - After explicit multiplication: '1/2*x'
+2025-01-11 10:12:18,254 - __main__ - DEBUG - Final MATLAB expression: '1/2*x'
+2025-01-11 10:12:18,254 - __main__ - DEBUG - Converted to SymPy expression: '1/2*x'
+2025-01-11 10:12:18,254 - __main__ - DEBUG - Converted to MATLAB expression: '1/2*x'
+2025-01-11 10:12:18,260 - __main__ - DEBUG - After shortcut conversion: 1/2*x
+2025-01-11 10:12:18,260 - __main__ - DEBUG - Final MATLAB expression: '1/2*x'
+2025-01-11 10:12:18,321 - __main__ - DEBUG - Raw result from MATLAB: 'x/2'
+2025-01-11 10:12:18,616 - __main__ - DEBUG - Simplified Result: '0.5*x'
+2025-01-11 10:12:18,617 - __main__ - DEBUG - Displayed Result: 0.5*x
+2025-01-11 10:15:30,593 - __main__ - INFO - MATLAB engine terminated
+2025-01-11 10:16:00,778 - __main__ - INFO - Initializing Calculator Application
+2025-01-11 10:16:19,456 - __main__ - ERROR - Failed to start MATLAB engine: Unable to launch MVM server: License Error: Licensing shutdown
+2025-01-11 10:22:50,470 - __main__ - INFO - Initializing Calculator Application
+2025-01-11 10:23:01,995 - __main__ - INFO - MATLAB engine started successfully
+2025-01-11 10:42:50,590 - __main__ - DEBUG - Original expression: '1/2 x'
+2025-01-11 10:42:50,593 - __main__ - DEBUG - Original expression: '1/2 x'
+2025-01-11 10:42:50,596 - __main__ - DEBUG - After binom conversion: '1/2*x'
+2025-01-11 10:42:50,596 - __main__ - DEBUG - Converted integral expression: '1/2*x'
+2025-01-11 10:42:50,597 - __main__ - DEBUG - After explicit multiplication: '1/2*x'
+2025-01-11 10:42:50,597 - __main__ - DEBUG - Final MATLAB expression: '1/2*x'
+2025-01-11 10:42:50,597 - __main__ - DEBUG - Converted to SymPy expression: '1/2*x'
+2025-01-11 10:42:50,597 - __main__ - DEBUG - Converted to MATLAB expression: '1/2*x'
+2025-01-11 10:42:50,602 - __main__ - DEBUG - After shortcut conversion: 1/2*x
+2025-01-11 10:42:50,603 - __main__ - DEBUG - Final MATLAB expression: '1/2*x'
+2025-01-11 10:42:50,962 - __main__ - DEBUG - Raw result from MATLAB: 'x/2'
+2025-01-11 10:42:51,519 - __main__ - DEBUG - Simplified Result: '0.5*x'
+2025-01-11 10:42:51,522 - __main__ - DEBUG - Displayed Result: 0.5*x
+2025-01-11 10:43:14,742 - __main__ - INFO - MATLAB engine terminated
+2025-01-11 10:48:22,677 - __main__ - INFO - Initializing Calculator Application
+2025-01-11 10:48:33,220 - __main__ - INFO - MATLAB engine started successfully
+2025-01-11 10:50:36,126 - __main__ - DEBUG - Original expression: '1/2 x'
+2025-01-11 10:50:36,128 - __main__ - DEBUG - Original expression: '1/2 x'
+2025-01-11 10:50:36,130 - __main__ - DEBUG - After binom conversion: '1/2*x'
+2025-01-11 10:50:36,131 - __main__ - DEBUG - Converted integral expression: '1/2*x'
+2025-01-11 10:50:36,131 - __main__ - DEBUG - After explicit multiplication: '1/2*x'
+2025-01-11 10:50:36,131 - __main__ - DEBUG - Final MATLAB expression: '1/2*x'
+2025-01-11 10:50:36,131 - __main__ - DEBUG - Converted to SymPy expression: '1/2*x'
+2025-01-11 10:50:36,131 - __main__ - DEBUG - Converted to MATLAB expression: '1/2*x'
+2025-01-11 10:50:36,134 - __main__ - DEBUG - After shortcut conversion: 1/2*x
+2025-01-11 10:50:36,135 - __main__ - DEBUG - Final MATLAB expression: '1/2*x'
+2025-01-11 10:50:36,402 - __main__ - DEBUG - Raw result from MATLAB: 'x/2'
+2025-01-11 10:50:36,866 - __main__ - DEBUG - Simplified Result: '0.5*x'
+2025-01-11 10:50:36,869 - __main__ - DEBUG - Displayed Result: 0.5*x
+2025-01-11 11:23:09,369 - __main__ - INFO - Initializing Calculator Application
+2025-01-11 11:23:22,509 - __main__ - INFO - MATLAB engine started successfully
+2025-01-11 11:26:49,754 - __main__ - INFO - MATLAB engine terminated
