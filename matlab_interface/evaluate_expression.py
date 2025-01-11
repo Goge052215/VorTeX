@@ -139,6 +139,20 @@ class EvaluateExpression:
             'atan(': 'arctan(',
             'log(': 'ln('
         }
+        
+        # Handle trigonometric functions with proper parentheses
+        trig_funcs = ['sin', 'cos', 'tan', 'csc', 'sec', 'cot']
+        for func in trig_funcs:
+            # Match the function and its argument, preserving nested parentheses
+            pattern = f'{func}\\(([^()]*(?:\\([^()]*\\)[^()]*)*)\\)'
+            matches = list(re.finditer(pattern, result_str))
+            for match in reversed(matches):  # Process from right to left
+                full_match = match.group(0)
+                arg = match.group(1)
+                # Ensure proper parentheses around the argument
+                if '(' not in arg and ')' not in arg:
+                    result_str = result_str.replace(full_match, f'{func}({arg})')
+        
         for old, new in symbolizations.items():
             result_str = result_str.replace(old, new)
         
@@ -205,8 +219,21 @@ class EvaluateExpression:
             # Preprocess the expression
             preprocessed_expr = self._preprocess_expression(expression)
             
+            # Define known function names to exclude from variable declarations
+            function_names = {
+                'sin', 'cos', 'tan', 'asin', 'acos', 'atan', 
+                'sinh', 'cosh', 'tanh', 'asinh', 'acosh', 'atanh',
+                'sind', 'cosd', 'tand', 'asind', 'acosd', 'atand',
+                'log', 'exp', 'sqrt', 'abs', 'csc', 'sec', 'cot',
+                'acsc', 'asec', 'acot', 'csch', 'sech', 'coth',
+                'acsch', 'asech', 'acoth'
+            }
+            
             # Extract and declare symbolic variables
-            variables = self._extract_variables(expression)
+            variables = self._extract_variables(preprocessed_expr)
+            # Filter out function names from variables
+            variables = [var for var in variables if var not in function_names]
+            
             for var in variables:
                 self._declare_symbolic_variable(var)
             

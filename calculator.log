@@ -4904,3 +4904,270 @@ Too many input arguments.
 2025-01-11 11:23:09,369 - __main__ - INFO - Initializing Calculator Application
 2025-01-11 11:23:22,509 - __main__ - INFO - MATLAB engine started successfully
 2025-01-11 11:26:49,754 - __main__ - INFO - MATLAB engine terminated
+2025-01-11 21:12:43,277 - __main__ - INFO - Initializing Calculator Application
+2025-01-11 21:13:01,201 - __main__ - INFO - MATLAB engine started successfully
+2025-01-11 21:13:19,769 - __main__ - DEBUG - Original expression: '1/2 x'
+2025-01-11 21:13:19,772 - __main__ - DEBUG - Original expression: '1/2 x'
+2025-01-11 21:13:19,775 - __main__ - DEBUG - After binom conversion: '1/2*x'
+2025-01-11 21:13:19,776 - __main__ - DEBUG - Converted integral expression: '1/2*x'
+2025-01-11 21:13:19,776 - __main__ - DEBUG - After explicit multiplication: '1/2*x'
+2025-01-11 21:13:19,776 - __main__ - DEBUG - Final MATLAB expression: '1/2*x'
+2025-01-11 21:13:19,776 - __main__ - DEBUG - Converted to SymPy expression: '1/2*x'
+2025-01-11 21:13:19,776 - __main__ - DEBUG - Converted to MATLAB expression: '1/2*x'
+2025-01-11 21:13:19,782 - __main__ - DEBUG - After shortcut conversion: 1/2*x
+2025-01-11 21:13:19,782 - __main__ - DEBUG - Final MATLAB expression: '1/2*x'
+2025-01-11 21:13:20,261 - __main__ - DEBUG - Raw result from MATLAB: 'x/2'
+2025-01-11 21:13:20,814 - __main__ - DEBUG - Simplified Result: '0.5*x'
+2025-01-11 21:13:20,816 - __main__ - DEBUG - Displayed Result: 0.5*x
+2025-01-11 21:17:03,241 - __main__ - INFO - MATLAB engine terminated
+2025-01-11 21:18:26,874 - __main__ - INFO - Initializing Calculator Application
+2025-01-11 21:18:41,406 - __main__ - INFO - MATLAB engine started successfully
+2025-01-11 21:21:13,793 - __main__ - DEBUG - Original expression: '2x'
+2025-01-11 21:21:13,796 - __main__ - DEBUG - Original expression: '2x'
+2025-01-11 21:21:13,803 - __main__ - DEBUG - After binom conversion: '2x'
+2025-01-11 21:21:13,803 - __main__ - DEBUG - Converted integral expression: '2x'
+2025-01-11 21:21:13,804 - __main__ - DEBUG - After explicit multiplication: '2*x'
+2025-01-11 21:21:13,804 - __main__ - DEBUG - Final MATLAB expression: '2*x'
+2025-01-11 21:21:13,804 - __main__ - DEBUG - Converted to SymPy expression: '2*x'
+2025-01-11 21:21:13,805 - __main__ - DEBUG - Converted to MATLAB expression: '2*x'
+2025-01-11 21:21:13,809 - __main__ - DEBUG - After shortcut conversion: 2*x
+2025-01-11 21:21:13,809 - __main__ - DEBUG - Final MATLAB expression: '2*x'
+2025-01-11 21:21:14,061 - __main__ - DEBUG - Raw result from MATLAB: '2*x'
+2025-01-11 21:21:14,554 - __main__ - DEBUG - Simplified Result: '2.0*x'
+2025-01-11 21:21:14,562 - __main__ - DEBUG - Displayed Result: 2.0*x
+2025-01-11 21:22:58,177 - __main__ - INFO - MATLAB engine terminated
+2025-01-11 21:24:03,301 - __main__ - INFO - Initializing Calculator Application
+2025-01-11 21:24:19,943 - __main__ - INFO - MATLAB engine started successfully
+2025-01-11 21:26:03,547 - __main__ - DEBUG - Original expression: '1/2 x'
+2025-01-11 21:26:03,553 - __main__ - DEBUG - Original expression: '1/2 x'
+2025-01-11 21:26:03,556 - __main__ - DEBUG - After binom conversion: '1/2*x'
+2025-01-11 21:26:03,556 - __main__ - DEBUG - Converted integral expression: '1/2*x'
+2025-01-11 21:26:03,557 - __main__ - DEBUG - After explicit multiplication: '1/2*x'
+2025-01-11 21:26:03,557 - __main__ - DEBUG - Final MATLAB expression: '1/2*x'
+2025-01-11 21:26:03,557 - __main__ - DEBUG - Converted to SymPy expression: '1/2*x'
+2025-01-11 21:26:03,557 - __main__ - DEBUG - Converted to MATLAB expression: '1/2*x'
+2025-01-11 21:26:03,560 - __main__ - DEBUG - After shortcut conversion: 1/2*x
+2025-01-11 21:26:03,561 - __main__ - DEBUG - Final MATLAB expression: '1/2*x'
+2025-01-11 21:26:03,851 - __main__ - DEBUG - Raw result from MATLAB: 'x/2'
+2025-01-11 21:26:04,346 - __main__ - DEBUG - Simplified Result: '0.5*x'
+2025-01-11 21:26:04,349 - __main__ - DEBUG - Displayed Result: 0.5*x
+2025-01-11 21:26:05,296 - __main__ - DEBUG - Visualizing expression: 1/2*x
+2025-01-11 21:32:43,210 - __main__ - INFO - MATLAB engine terminated
+2025-01-11 21:34:45,337 - __main__ - INFO - Initializing Calculator Application
+2025-01-11 21:35:05,768 - __main__ - INFO - MATLAB engine started successfully
+2025-01-11 21:36:30,208 - __main__ - DEBUG - Original expression: '0.5 x'
+2025-01-11 21:36:30,212 - __main__ - DEBUG - Original expression: '0.5 x'
+2025-01-11 21:36:30,214 - __main__ - DEBUG - After binom conversion: '0.5*x'
+2025-01-11 21:36:30,214 - __main__ - DEBUG - Converted integral expression: '0.5*x'
+2025-01-11 21:36:30,215 - __main__ - DEBUG - After explicit multiplication: '0.5*x'
+2025-01-11 21:36:30,215 - __main__ - DEBUG - Final MATLAB expression: '0.5*x'
+2025-01-11 21:36:30,215 - __main__ - DEBUG - Converted to SymPy expression: '0.5*x'
+2025-01-11 21:36:30,215 - __main__ - DEBUG - Converted to MATLAB expression: '0.5*x'
+2025-01-11 21:36:30,217 - __main__ - DEBUG - After shortcut conversion: 0.5*x
+2025-01-11 21:36:30,218 - __main__ - DEBUG - Final MATLAB expression: '0.5*x'
+2025-01-11 21:36:30,446 - __main__ - DEBUG - Raw result from MATLAB: 'x/2'
+2025-01-11 21:36:30,939 - __main__ - DEBUG - Simplified Result: '0.5*x'
+2025-01-11 21:36:30,942 - __main__ - DEBUG - Displayed Result: 0.5*x
+2025-01-11 21:36:31,757 - __main__ - DEBUG - Visualizing expression: 0.5*x
+2025-01-11 21:42:10,253 - __main__ - INFO - MATLAB engine terminated
+2025-01-11 21:42:36,972 - __main__ - INFO - Initializing Calculator Application
+2025-01-11 21:44:14,520 - __main__ - INFO - MATLAB engine started successfully
+2025-01-11 21:44:58,136 - __main__ - DEBUG - Visualizing expression: 2*x
+2025-01-11 21:45:20,518 - __main__ - INFO - MATLAB engine terminated
+2025-01-11 21:47:25,907 - __main__ - INFO - Initializing Calculator Application
+2025-01-11 21:47:37,841 - __main__ - INFO - MATLAB engine started successfully
+2025-01-11 21:48:39,538 - __main__ - DEBUG - Original expression: '0.5x'
+2025-01-11 21:48:39,542 - __main__ - DEBUG - Original expression: '0.5x'
+2025-01-11 21:48:39,547 - __main__ - DEBUG - After binom conversion: '0.5x'
+2025-01-11 21:48:39,548 - __main__ - DEBUG - Converted integral expression: '0.5x'
+2025-01-11 21:48:39,549 - __main__ - DEBUG - After explicit multiplication: '0.5*x'
+2025-01-11 21:48:39,549 - __main__ - DEBUG - Final MATLAB expression: '0.5*x'
+2025-01-11 21:48:39,549 - __main__ - DEBUG - Converted to SymPy expression: '0.5*x'
+2025-01-11 21:48:39,549 - __main__ - DEBUG - Converted to MATLAB expression: '0.5*x'
+2025-01-11 21:48:39,554 - __main__ - DEBUG - After shortcut conversion: 0.5*x
+2025-01-11 21:48:39,554 - __main__ - DEBUG - Final MATLAB expression: '0.5*x'
+2025-01-11 21:48:39,890 - __main__ - DEBUG - Raw result from MATLAB: 'x/2'
+2025-01-11 21:48:40,415 - __main__ - DEBUG - Simplified Result: '0.5*x'
+2025-01-11 21:48:40,418 - __main__ - DEBUG - Displayed Result: 0.5*x
+2025-01-11 21:48:41,295 - __main__ - DEBUG - Visualizing expression: 0.5*x
+2025-01-11 21:50:18,148 - __main__ - INFO - MATLAB engine terminated
+2025-01-11 21:53:21,054 - __main__ - INFO - Initializing Calculator Application
+2025-01-11 21:53:37,957 - __main__ - INFO - MATLAB engine started successfully
+2025-01-11 21:53:47,152 - __main__ - DEBUG - Visualizing expression: 2*x
+2025-01-11 21:53:58,100 - __main__ - DEBUG - Visualizing expression: 2*x
+2025-01-11 21:54:20,145 - __main__ - INFO - Initializing Calculator Application
+2025-01-11 21:54:29,734 - __main__ - INFO - MATLAB engine started successfully
+2025-01-11 21:55:20,726 - __main__ - DEBUG - Visualizing expression: x^3+2*x+1
+2025-01-11 21:56:01,270 - __main__ - DEBUG - Visualizing expression: x^3
+2025-01-11 21:56:04,497 - __main__ - INFO - MATLAB engine terminated
+2025-01-11 21:57:10,032 - __main__ - INFO - Initializing Calculator Application
+2025-01-11 21:57:31,250 - __main__ - INFO - MATLAB engine started successfully
+2025-01-11 21:57:38,731 - __main__ - DEBUG - Original expression: 'sin(x)'
+2025-01-11 21:57:38,735 - __main__ - DEBUG - Original expression: 'sin(x)'
+2025-01-11 21:57:38,737 - __main__ - DEBUG - After binom conversion: 'sin(x)'
+2025-01-11 21:57:38,738 - __main__ - DEBUG - Converted integral expression: 'sin(x)'
+2025-01-11 21:57:38,738 - __main__ - DEBUG - After explicit multiplication: 'sin(x)'
+2025-01-11 21:57:38,738 - __main__ - DEBUG - Final MATLAB expression: 'sin(x)'
+2025-01-11 21:57:38,738 - __main__ - DEBUG - Converted to SymPy expression: 'sin(x)'
+2025-01-11 21:57:38,738 - __main__ - DEBUG - Converted to MATLAB expression: 'sin(x)'
+2025-01-11 21:57:38,741 - __main__ - DEBUG - After shortcut conversion: sin(x)
+2025-01-11 21:57:38,741 - __main__ - DEBUG - Final MATLAB expression: 'sin(x)'
+2025-01-11 21:57:38,910 - __main__ - DEBUG - Raw result from MATLAB: 'sin(x)'
+2025-01-11 21:57:39,600 - __main__ - DEBUG - Simplified Result: 'sin(x'
+2025-01-11 21:57:39,601 - __main__ - DEBUG - Displayed Result: sin(x
+2025-01-11 21:57:41,315 - __main__ - DEBUG - Visualizing expression: sin(x)
+2025-01-11 21:58:10,921 - __main__ - INFO - MATLAB engine terminated
+2025-01-11 22:14:52,607 - __main__ - INFO - Initializing Calculator Application
+2025-01-11 22:15:04,841 - __main__ - INFO - MATLAB engine started successfully
+2025-01-11 22:15:15,285 - __main__ - DEBUG - Original expression: 'sin(x)'
+2025-01-11 22:15:15,286 - __main__ - DEBUG - Original expression: 'sin(x)'
+2025-01-11 22:15:15,287 - __main__ - DEBUG - After binom conversion: 'sin(x)'
+2025-01-11 22:15:15,288 - __main__ - DEBUG - Converted integral expression: 'sin(x)'
+2025-01-11 22:15:15,288 - __main__ - DEBUG - After explicit multiplication: 'sin(x)'
+2025-01-11 22:15:15,288 - __main__ - DEBUG - Final MATLAB expression: 'sin(x)'
+2025-01-11 22:15:15,288 - __main__ - DEBUG - Converted to SymPy expression: 'sin(x)'
+2025-01-11 22:15:15,288 - __main__ - DEBUG - Converted to MATLAB expression: 'sin(x)'
+2025-01-11 22:15:15,294 - __main__ - DEBUG - After shortcut conversion: sin(x)
+2025-01-11 22:15:15,295 - __main__ - DEBUG - Final MATLAB expression: 'sind(x)'
+2025-01-11 22:15:15,560 - __main__ - DEBUG - Raw result from MATLAB: 'sin((x*pi)/180)'
+2025-01-11 22:15:15,998 - __main__ - DEBUG - Simplified Result: 'sin(0.0174533*x'
+2025-01-11 22:15:15,999 - __main__ - DEBUG - Displayed Result: sin(0.0174533*x)
+2025-01-11 22:15:22,897 - __main__ - INFO - MATLAB engine terminated
+2025-01-11 22:15:45,761 - __main__ - INFO - Initializing Calculator Application
+2025-01-11 22:15:55,119 - __main__ - INFO - MATLAB engine started successfully
+2025-01-11 22:17:29,582 - __main__ - DEBUG - Original expression: 'sin(x)'
+2025-01-11 22:17:29,585 - __main__ - DEBUG - Original expression: 'sin(x)'
+2025-01-11 22:17:29,588 - __main__ - DEBUG - After binom conversion: 'sin(x)'
+2025-01-11 22:17:29,588 - __main__ - DEBUG - Converted integral expression: 'sin(x)'
+2025-01-11 22:17:29,589 - __main__ - DEBUG - After explicit multiplication: 'sin(x)'
+2025-01-11 22:17:29,589 - __main__ - DEBUG - Final MATLAB expression: 'sin(x)'
+2025-01-11 22:17:29,589 - __main__ - DEBUG - Converted to SymPy expression: 'sin(x)'
+2025-01-11 22:17:29,589 - __main__ - DEBUG - Converted to MATLAB expression: 'sin(x)'
+2025-01-11 22:17:29,594 - __main__ - DEBUG - After shortcut conversion: sin(x)
+2025-01-11 22:17:29,594 - __main__ - DEBUG - Final MATLAB expression: 'sin(x)'
+2025-01-11 22:17:29,911 - __main__ - DEBUG - Raw result from MATLAB: 'sin(x)'
+2025-01-11 22:17:30,690 - __main__ - DEBUG - Simplified Result: 'sin(x'
+2025-01-11 22:17:30,692 - __main__ - DEBUG - Displayed Result: sin(x)
+2025-01-11 22:17:31,888 - __main__ - DEBUG - Visualizing expression: sin(x)
+2025-01-11 22:22:12,433 - __main__ - INFO - MATLAB engine terminated
+2025-01-11 22:43:59,697 - __main__ - INFO - Initializing Calculator Application
+2025-01-11 22:44:12,180 - __main__ - INFO - MATLAB engine started successfully
+2025-01-11 22:45:21,096 - __main__ - INFO - Initializing Calculator Application
+2025-01-11 22:45:31,512 - __main__ - INFO - MATLAB engine started successfully
+2025-01-11 22:45:39,029 - __main__ - DEBUG - Original expression: 'tan(x)'
+2025-01-11 22:45:39,035 - __main__ - DEBUG - Original expression: 'tan(x)'
+2025-01-11 22:45:39,039 - __main__ - DEBUG - After binom conversion: 'tan(x)'
+2025-01-11 22:45:39,039 - __main__ - DEBUG - Converted integral expression: 'tan(x)'
+2025-01-11 22:45:39,040 - __main__ - DEBUG - After explicit multiplication: 'tan(x)'
+2025-01-11 22:45:39,040 - __main__ - DEBUG - Final MATLAB expression: 'tan(x)'
+2025-01-11 22:45:39,040 - __main__ - DEBUG - Converted to SymPy expression: 'tan(x)'
+2025-01-11 22:45:39,040 - __main__ - DEBUG - Converted to MATLAB expression: 'tan(x)'
+2025-01-11 22:45:39,048 - __main__ - DEBUG - After shortcut conversion: tan(x)
+2025-01-11 22:45:39,048 - __main__ - DEBUG - Final MATLAB expression: 'tand(x)'
+2025-01-11 22:45:39,442 - __main__ - DEBUG - Raw result from MATLAB: 'tan((x*pi)/180)'
+2025-01-11 22:45:39,931 - __main__ - DEBUG - Simplified Result: 'tan(0.0174533*x'
+2025-01-11 22:45:39,935 - __main__ - DEBUG - Displayed Result: tan(0.0174533*x)
+2025-01-11 22:45:41,371 - __main__ - DEBUG - Visualizing expression: tan(x)
+2025-01-11 22:46:05,866 - __main__ - INFO - MATLAB engine terminated
+2025-01-11 22:51:22,564 - __main__ - INFO - Initializing Calculator Application
+2025-01-11 22:53:56,983 - __main__ - INFO - Initializing Calculator Application
+2025-01-11 22:54:15,721 - __main__ - INFO - MATLAB engine started successfully
+2025-01-11 22:54:28,480 - __main__ - DEBUG - Visualizing expression: cos(x)
+2025-01-11 22:54:46,839 - __main__ - INFO - MATLAB engine terminated
+2025-01-11 23:00:53,678 - __main__ - INFO - Initializing Calculator Application
+2025-01-11 23:01:09,764 - __main__ - INFO - MATLAB engine started successfully
+2025-01-11 23:01:23,266 - __main__ - DEBUG - Original expression: 'x^2 + 2x + 1'
+2025-01-11 23:01:23,269 - __main__ - DEBUG - Original expression: 'x^2 + 2x + 1'
+2025-01-11 23:01:23,272 - __main__ - DEBUG - After binom conversion: 'x^2 + 2x + 1'
+2025-01-11 23:01:23,272 - __main__ - DEBUG - Converted integral expression: 'x^2 + 2x + 1'
+2025-01-11 23:01:23,273 - __main__ - DEBUG - After explicit multiplication: 'x^2 + 2*x + 1'
+2025-01-11 23:01:23,273 - __main__ - DEBUG - Final MATLAB expression: 'x^2 + 2*x + 1'
+2025-01-11 23:01:23,273 - __main__ - DEBUG - Converted to SymPy expression: 'x^2 + 2*x + 1'
+2025-01-11 23:01:23,273 - __main__ - DEBUG - Converted to MATLAB expression: 'x^2 + 2*x + 1'
+2025-01-11 23:01:23,277 - __main__ - DEBUG - After shortcut conversion: x^2 + 2*x + 1
+2025-01-11 23:01:23,277 - __main__ - DEBUG - Final MATLAB expression: 'x^2 + 2*x + 1'
+2025-01-11 23:01:23,482 - __main__ - DEBUG - Raw result from MATLAB: '2*x + x^2 + 1'
+2025-01-11 23:01:23,911 - __main__ - DEBUG - Simplified Result: '(x + 1.0)^2'
+2025-01-11 23:01:23,913 - __main__ - DEBUG - Displayed Result: (x + 1.0)^2
+2025-01-11 23:01:25,242 - __main__ - DEBUG - Visualizing expression: x^2+2*x+1
+2025-01-11 23:07:11,716 - __main__ - INFO - MATLAB engine terminated
+2025-01-11 23:11:49,105 - __main__ - INFO - Initializing Calculator Application
+2025-01-11 23:12:05,612 - __main__ - INFO - MATLAB engine started successfully
+2025-01-11 23:16:52,852 - __main__ - DEBUG - Original expression: 'x^2 + 2x + 1'
+2025-01-11 23:16:52,854 - __main__ - DEBUG - Original expression: 'x^2 + 2x + 1'
+2025-01-11 23:16:52,857 - __main__ - DEBUG - After binom conversion: 'x^2 + 2x + 1'
+2025-01-11 23:16:52,857 - __main__ - DEBUG - Converted integral expression: 'x^2 + 2x + 1'
+2025-01-11 23:16:52,857 - __main__ - DEBUG - After explicit multiplication: 'x^2 + 2*x + 1'
+2025-01-11 23:16:52,857 - __main__ - DEBUG - Final MATLAB expression: 'x^2 + 2*x + 1'
+2025-01-11 23:16:52,857 - __main__ - DEBUG - Converted to SymPy expression: 'x^2 + 2*x + 1'
+2025-01-11 23:16:52,857 - __main__ - DEBUG - Converted to MATLAB expression: 'x^2 + 2*x + 1'
+2025-01-11 23:16:52,861 - __main__ - DEBUG - After shortcut conversion: x^2 + 2*x + 1
+2025-01-11 23:16:52,861 - __main__ - DEBUG - Final MATLAB expression: 'x^2 + 2*x + 1'
+2025-01-11 23:16:53,229 - __main__ - DEBUG - Raw result from MATLAB: '2*x + x^2 + 1'
+2025-01-11 23:16:53,826 - __main__ - DEBUG - Simplified Result: '(x + 1.0)^2'
+2025-01-11 23:16:53,828 - __main__ - DEBUG - Displayed Result: (x + 1.0)^2
+2025-01-11 23:16:54,658 - __main__ - DEBUG - Visualizing expression: x^2+2*x+1
+2025-01-11 23:17:48,318 - __main__ - INFO - MATLAB engine terminated
+2025-01-11 23:25:59,505 - __main__ - INFO - Initializing Calculator Application
+2025-01-11 23:26:11,815 - __main__ - INFO - MATLAB engine started successfully
+2025-01-11 23:27:36,400 - __main__ - DEBUG - Visualizing expression: arcsin(x)
+2025-01-11 23:27:52,155 - __main__ - DEBUG - Original expression: 'arcsin(x)'
+2025-01-11 23:27:52,157 - __main__ - DEBUG - Original expression: 'arcsin(x)'
+2025-01-11 23:27:52,173 - __main__ - DEBUG - After binom conversion: 'arcsin(x)'
+2025-01-11 23:27:52,174 - __main__ - DEBUG - Converted integral expression: 'arcsin(x)'
+2025-01-11 23:27:52,175 - __main__ - DEBUG - After explicit multiplication: 'arcsin(x)'
+2025-01-11 23:27:52,175 - __main__ - DEBUG - Final MATLAB expression: 'arcsin(x)'
+2025-01-11 23:27:52,175 - __main__ - DEBUG - Converted to SymPy expression: 'arcsin(x)'
+2025-01-11 23:27:52,175 - __main__ - DEBUG - Converted to MATLAB expression: 'arcsin(x)'
+2025-01-11 23:27:52,178 - __main__ - DEBUG - After shortcut conversion: arcsin(x)
+2025-01-11 23:27:52,178 - __main__ - DEBUG - Final MATLAB expression: 'arcsin(x)'
+2025-01-11 23:27:52,882 - __main__ - DEBUG - Raw result from MATLAB: 'Unexpected Error'
+2025-01-11 23:27:53,232 - __main__ - DEBUG - Simplified Result: 'UnexpectedError'
+2025-01-11 23:27:53,233 - __main__ - DEBUG - Displayed Result: UnexpectedError
+2025-01-11 23:33:26,146 - __main__ - INFO - MATLAB engine terminated
+2025-01-11 23:33:43,780 - __main__ - INFO - Initializing Calculator Application
+2025-01-11 23:33:56,634 - __main__ - INFO - MATLAB engine started successfully
+2025-01-11 23:34:08,338 - __main__ - DEBUG - Original expression: 'arcsin(-1)'
+2025-01-11 23:34:08,339 - __main__ - DEBUG - Original expression: 'arcsin(-1)'
+2025-01-11 23:34:08,345 - __main__ - DEBUG - After binom conversion: 'arcsin(-1)'
+2025-01-11 23:34:08,346 - __main__ - DEBUG - Converted integral expression: 'arcsin(-1)'
+2025-01-11 23:34:08,347 - __main__ - DEBUG - After explicit multiplication: 'arcsin(-1)'
+2025-01-11 23:34:08,347 - __main__ - DEBUG - Final MATLAB expression: 'arcsin(-1)'
+2025-01-11 23:34:08,347 - __main__ - DEBUG - Converted to SymPy expression: 'arcsin(-1)'
+2025-01-11 23:34:08,347 - __main__ - DEBUG - Converted to MATLAB expression: 'arcsin(-1)'
+2025-01-11 23:34:08,352 - __main__ - DEBUG - After shortcut conversion: asin(-1)
+2025-01-11 23:34:08,353 - __main__ - DEBUG - Final MATLAB expression: 'asin(-1)'
+2025-01-11 23:34:08,661 - __main__ - DEBUG - Raw result from MATLAB: 'Unexpected Error'
+2025-01-11 23:34:09,036 - __main__ - DEBUG - Simplified Result: 'UnexpectedError'
+2025-01-11 23:34:09,037 - __main__ - DEBUG - Displayed Result: UnexpectedError
+2025-01-11 23:35:35,211 - __main__ - INFO - MATLAB engine terminated
+2025-01-11 23:38:02,299 - __main__ - INFO - Initializing Calculator Application
+2025-01-11 23:38:19,959 - __main__ - INFO - MATLAB engine started successfully
+2025-01-11 23:39:55,443 - __main__ - DEBUG - Original expression: 'arcsin(-1)'
+2025-01-11 23:39:55,446 - __main__ - DEBUG - Original expression: 'arcsin(-1)'
+2025-01-11 23:39:55,448 - __main__ - DEBUG - After binom conversion: 'arcsin(-1)'
+2025-01-11 23:39:55,448 - __main__ - DEBUG - Converted integral expression: 'arcsin(-1)'
+2025-01-11 23:39:55,449 - __main__ - DEBUG - After explicit multiplication: 'arcsin(-1)'
+2025-01-11 23:39:55,449 - __main__ - DEBUG - Final MATLAB expression: 'arcsin(-1)'
+2025-01-11 23:39:55,449 - __main__ - DEBUG - Converted to SymPy expression: 'arcsin(-1)'
+2025-01-11 23:39:55,449 - __main__ - DEBUG - Converted to MATLAB expression: 'arcsin(-1)'
+2025-01-11 23:39:55,452 - __main__ - DEBUG - After shortcut conversion: asin(-1)
+2025-01-11 23:39:55,452 - __main__ - DEBUG - Final MATLAB expression: 'asin(-1)'
+2025-01-11 23:39:55,633 - __main__ - DEBUG - Raw result from MATLAB: '-1.570796'
+2025-01-11 23:39:56,295 - __main__ - DEBUG - Simplified Result: '-1.5708'
+2025-01-11 23:39:56,298 - __main__ - DEBUG - Displayed Result: -1.5708
+2025-01-11 23:40:09,055 - __main__ - DEBUG - Original expression: 'arcsin(x)'
+2025-01-11 23:40:09,056 - __main__ - DEBUG - Original expression: 'arcsin(x)'
+2025-01-11 23:40:09,057 - __main__ - DEBUG - After binom conversion: 'arcsin(x)'
+2025-01-11 23:40:09,057 - __main__ - DEBUG - Converted integral expression: 'arcsin(x)'
+2025-01-11 23:40:09,057 - __main__ - DEBUG - After explicit multiplication: 'arcsin(x)'
+2025-01-11 23:40:09,057 - __main__ - DEBUG - Final MATLAB expression: 'arcsin(x)'
+2025-01-11 23:40:09,057 - __main__ - DEBUG - Converted to SymPy expression: 'arcsin(x)'
+2025-01-11 23:40:09,057 - __main__ - DEBUG - Converted to MATLAB expression: 'arcsin(x)'
+2025-01-11 23:40:09,058 - __main__ - DEBUG - After shortcut conversion: asin(x)
+2025-01-11 23:40:09,058 - __main__ - DEBUG - Final MATLAB expression: 'asin(x)'
+2025-01-11 23:40:09,147 - __main__ - DEBUG - Raw result from MATLAB: 'arcsin(x)'
+2025-01-11 23:40:09,360 - __main__ - DEBUG - Simplified Result: 'arcsin(x'
+2025-01-11 23:40:09,360 - __main__ - DEBUG - Displayed Result: arcsin(x)
+2025-01-11 23:40:10,523 - __main__ - DEBUG - Visualizing expression: arcsin(x)
+2025-01-11 23:45:08,443 - __main__ - INFO - MATLAB engine terminated

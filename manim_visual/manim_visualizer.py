@@ -2,6 +2,7 @@ from manim import *
 import logging
 import numpy as np
 import re
+from sympy import Symbol, sympify
 
 class MathVisualizer:
     """Handles mathematical visualizations using Manim."""
@@ -21,73 +22,87 @@ class MathVisualizer:
 
     class FunctionScene(Scene):
         """Base scene for function visualization."""
-        def __init__(self, func_str: str, x_range=(-10, 10), y_range=(-5, 5), logger=None, **kwargs):
-            super().__init__(**kwargs)
+        def __init__(self, func_str, x_range=(-10, 10), y_range=(-5, 5), logger=None):
+            super().__init__()
             self.func_str = func_str
             self.x_range = x_range
             self.y_range = y_range
-            self.logger = logger
-            
-            if self.logger:
-                self.logger.debug(f"Creating FunctionScene with function: {func_str}")
+            self.logger = logger or logging.getLogger(__name__)
 
         def construct(self):
-            # Create the axes
-            axes = Axes(
-                x_range=self.x_range,
-                y_range=self.y_range,
-                axis_config={"color": BLUE},
-                x_length=10,
-                y_length=6
-            )
-            
             try:
-                if self.logger:
-                    self.logger.debug(f"Plotting function: {self.func_str}")
+                # Create the axes with larger dimensions
+                axes = Axes(
+                    x_range=[self.x_range[0], self.x_range[1], 1],
+                    y_range=[self.y_range[0], self.y_range[1], 1],
+                    axis_config={
+                        "color": BLUE,
+                        "stroke_width": 2,
+                        "include_numbers": True,
+                        "numbers_to_exclude": [],
+                        "font_size": 24  # Increased font size for better visibility
+                    },
+                    x_length=12,
+                    y_length=8,
+                    tips=True
+                ).scale(1.2)  # Scale the entire axes after creation
+
+                # Center the axes in the frame
+                axes.center()
                 
-                # Create a safe evaluation function
-                def safe_eval(x):
-                    safe_dict = {
-                        "x": x,
-                        "np": np,
-                        "sin": np.sin,
-                        "cos": np.cos,
-                        "tan": np.tan,
-                        "exp": np.exp,
-                        "log": np.log,
-                        "sqrt": np.sqrt,
-                        "pi": np.pi,
-                        "e": np.e
-                    }
-                    return eval(self.func_str, {"__builtins__": {}}, safe_dict)
-                
-                # Create the graph
-                graph = axes.plot(safe_eval, color=WHITE)
-                
-                # Add labels
-                x_label = axes.get_x_axis_label("x")
-                y_label = axes.get_y_axis_label("y")
-                
-                # Create animation
-                self.play(Create(axes), Create(x_label), Create(y_label))
-                self.play(Create(graph))
-                
-                # Pause at the end to show the complete graph
-                self.wait(1)
-                
+                # Add labels with larger size
+                x_label = axes.get_x_axis_label("x").scale(1.2)
+                y_label = axes.get_y_axis_label("y").scale(1.2)
+
+                # Convert the function string to a lambda function
+                # Replace ^ with ** for Python syntax
+                func_str = self.func_str.replace('^', '**')
+                try:
+                    # Create a safe lambda function
+                    x = Symbol('x')
+                    expr = sympify(self.func_str)
+                    func = lambda x: float(expr.subs('x', x))
+                except Exception as e:
+                    self.logger.error(f"Error parsing function: {e}")
+                    return
+
+                # Create the graph with discontinuity handling
+                try:
+                    graph = axes.plot(
+                        lambda x: func(x),
+                        color=YELLOW,
+                        x_range=[self.x_range[0], self.x_range[1], 0.01],
+                        use_smoothing=True,
+                        discontinuities=[],
+                        dt=0.01
+                    )
+
+                    # Create labels for the graph
+                    graph_label = MathTex(self.func_str).scale(1.2).next_to(graph, UP)
+
+                    # Add all elements to the scene with animations
+                    self.play(Create(axes), run_time=1)
+                    self.play(Create(graph), run_time=2)
+                    self.play(Write(graph_label), run_time=1)
+                    
+                    # Add a pause at the end
+                    self.wait(2)
+
+                except Exception as e:
+                    self.logger.error(f"Error creating graph: {e}")
+                    error_text = Text(f"Error: {str(e)}", color=RED).scale(0.8)
+                    self.add(error_text)
+                    self.wait(2)
+
             except Exception as e:
-                if self.logger:
-                    self.logger.error(f"Error in function visualization: {e}")
-                self.add(Text(f"Error: {str(e)}").scale(0.5))
+                self.logger.error(f"Error in visualization: {e}")
+                error_text = Text("Error visualizing function", color=RED)
+                self.add(error_text)
+                self.wait(2)
 
     def visualize_function(self, func_str: str, x_range: tuple = (-10, 10), y_range: tuple = (-5, 5)):
         """
         Create a visualization of a mathematical function.
-        
-        Args:
-            func_str (str): String representation of the function (e.g., "x**2")
-            x_range (tuple): Range for x-axis (default: (-10, 10))
-            y_range (tuple): Range for y-axis (default: (-5, 5))
         """
         try:
             self.logger.info(f"Visualizing function: {func_str}")
@@ -97,9 +112,10 @@ class MathVisualizer:
             if not func_str:
                 raise ValueError("Empty function string")
             
-            # Handle implicit multiplication (e.g., "1/2 x" -> "1/2*x")
-            func_str = re.sub(r'(\d+)\s+([a-zA-Z])', r'\1*\2', func_str)
-            func_str = re.sub(r'(\d+)/(\d+)\s+([a-zA-Z])', r'(\1/\2)*\3', func_str)
+            # Handle implicit multiplication and clean up the expression
+            func_str = re.sub(r'(\d+)\s*([a-zA-Z])', r'\1*\2', func_str)  # Convert "2x" to "2*x"
+            func_str = re.sub(r'(\d+)/(\d+)\s*([a-zA-Z])', r'(\1/\2)*\3', func_str)
+            func_str = re.sub(r'\s+', '', func_str)  # Remove all whitespace
             
             # Replace common mathematical notations
             replacements = {
@@ -117,11 +133,15 @@ class MathVisualizer:
             for old, new in replacements.items():
                 func_str = func_str.replace(old, new)
             
+            # Ensure the expression contains 'x'
+            if 'x' not in func_str:
+                func_str = f"{func_str}+0*x"  # Add a zero term with x for constant functions
+                
             self.logger.debug(f"Processed function string: {func_str}")
             
-            # Define a safe evaluation context with common mathematical functions
+            # Define a safe evaluation context
             safe_dict = {
-                "x": 0,
+                "x": np.linspace(-1, 1, 10),  # Test array
                 "np": np,
                 "sin": np.sin,
                 "cos": np.cos,
@@ -133,10 +153,9 @@ class MathVisualizer:
                 "e": np.e
             }
             
-            # Test evaluation with a sample value
-            x = 0  # Test value
+            # Test evaluation with numpy array
             try:
-                eval(func_str, {"__builtins__": {}}, {**safe_dict, "x": x})
+                eval(func_str, {"__builtins__": {}}, safe_dict)
             except Exception as e:
                 self.logger.error(f"Invalid function syntax: {e}")
                 raise ValueError(f"Invalid function syntax: {e}")

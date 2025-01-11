@@ -1,3 +1,10 @@
 venv/
 __pycache__/
 *.pyc 
+media/
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.nosync
+.noindex 

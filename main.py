@@ -16,6 +16,7 @@ from matlab_interface.auto_simplify import AutoSimplify
 from matlab_interface.display import Display
 from ip_check.ip_check import IPCheck
 from manim_visual.manim_visualizer import MathVisualizer
+from ui.visualization_window import VisualizationWindow
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -72,7 +73,7 @@ def _configure_logger():
     formatter = logging.Formatter('%(levelname)s: %(message)s')
     console_handler.setFormatter(formatter)
     root_logger.addHandler(console_handler)
-
+    
     # Set specific loggers to WARNING
     logging.getLogger('matlab_interface').setLevel(logging.WARNING)
     logging.getLogger('__main__').setLevel(logging.WARNING)
@@ -522,9 +523,39 @@ class CalculatorApp(QWidget, LatexCalculation):
             args = [self.sympy_to_matlab(arg) for arg in expr.args]
             
             function_handlers = {
+                # Regular trig functions
                 'sin': lambda args: f"sind({args[0]})" if self.combo_angle.currentText() == 'Degree' else f"sin({args[0]})",
                 'cos': lambda args: f"cosd({args[0]})" if self.combo_angle.currentText() == 'Degree' else f"cos({args[0]})",
                 'tan': lambda args: f"tand({args[0]})" if self.combo_angle.currentText() == 'Degree' else f"tan({args[0]})",
+                'csc': lambda args: f"csc({args[0]})",
+                'sec': lambda args: f"sec({args[0]})",
+                'cot': lambda args: f"cot({args[0]})",
+                
+                # Inverse trig functions
+                'asin': lambda args: f"asind({args[0]})" if self.combo_angle.currentText() == 'Degree' else f"asin({args[0]})",
+                'arcsin': lambda args: f"asind({args[0]})" if self.combo_angle.currentText() == 'Degree' else f"asin({args[0]})",
+                'acos': lambda args: f"acosd({args[0]})" if self.combo_angle.currentText() == 'Degree' else f"acos({args[0]})",
+                'arccos': lambda args: f"acosd({args[0]})" if self.combo_angle.currentText() == 'Degree' else f"acos({args[0]})",
+                'atan': lambda args: f"atand({args[0]})" if self.combo_angle.currentText() == 'Degree' else f"atan({args[0]})",
+                'arctan': lambda args: f"atand({args[0]})" if self.combo_angle.currentText() == 'Degree' else f"atan({args[0]})",
+                
+                # Hyperbolic functions
+                'sinh': lambda args: f"sinh({args[0]})",
+                'cosh': lambda args: f"cosh({args[0]})",
+                'tanh': lambda args: f"tanh({args[0]})",
+                'csch': lambda args: f"csch({args[0]})",
+                'sech': lambda args: f"sech({args[0]})",
+                'coth': lambda args: f"coth({args[0]})",
+                
+                # Inverse hyperbolic functions
+                'asinh': lambda args: f"asinh({args[0]})",
+                'arcsinh': lambda args: f"asinh({args[0]})",
+                'acosh': lambda args: f"acosh({args[0]})",
+                'arccosh': lambda args: f"acosh({args[0]})",
+                'atanh': lambda args: f"atanh({args[0]})",
+                'arctanh': lambda args: f"atanh({args[0]})",
+                
+                # Other functions
                 'log': lambda args: f"log({args[0]})",
                 'sqrt': lambda args: f"sqrt({args[0]})",
                 'Abs': lambda args: f"abs({args[0]})",
@@ -822,6 +853,10 @@ class CalculatorApp(QWidget, LatexCalculation):
             displayed_result = displayed_result.replace('sind(', 'sin(')
             displayed_result = displayed_result.replace('tand(', 'tan(')
 
+            # Ensure the result ends with a closing parenthesis if needed
+            if displayed_result.count('(') > displayed_result.count(')'):
+                displayed_result += ')'
+
             self.result_display.setText(displayed_result)
             self.logger.debug(f"Displayed Result: {displayed_result}")
 
@@ -991,14 +1026,31 @@ class CalculatorApp(QWidget, LatexCalculation):
                 QMessageBox.warning(self, "Error", "Please enter an expression to visualize.")
                 return
                 
-            # Convert LaTeX/MATLAB expression to Python expression
-            python_expr = self.convert_to_python_expr(expr)
+            # Clean up the expression for visualization
+            expr = expr.replace('ln', 'log')  # Convert ln to log
+            expr = re.sub(r'(\d+)\s*([a-zA-Z])', r'\1*\2', expr)  # Convert "2x" to "2*x"
+            expr = re.sub(r'\s+', '', expr)  # Remove whitespace
             
-            # Visualize based on current mode
+            # Handle special cases
+            if "==" in expr:
+                # Extract left side of equation
+                expr = expr.split("==")[0]
+            
             if "d/dx" in expr or "diff" in expr:
-                self.visualizer.visualize_derivative(python_expr)
-            else:
-                self.visualizer.visualize_function(python_expr)
+                QMessageBox.information(self, "Info", "Derivative visualization not yet implemented")
+                return
+            
+            self.logger.debug(f"Visualizing expression: {expr}")
+            
+            # Create or show visualization window
+            if not hasattr(self, 'viz_window') or self.viz_window is None:
+                self.viz_window = VisualizationWindow(self)
+            
+            # Show window and visualize function
+            self.viz_window.show()
+            self.viz_window.raise_()  # Bring window to front
+            self.viz_window.activateWindow()  # Activate the window
+            self.viz_window.visualize_function(expr)
                 
         except Exception as e:
             QMessageBox.critical(self, "Visualization Error", str(e))

@@ -57,7 +57,7 @@ class UIComponents:
 
     def _setup_window(self):
         """Set up the main window properties."""
-        self.parent.setWindowTitle('Scientific Calculator')
+        self.parent.setWindowTitle('VorTeX Calculator')
         self.parent.setGeometry(100, 100, 700, 500)
 
     def _create_top_buttons(self):

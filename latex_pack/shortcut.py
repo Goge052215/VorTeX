@@ -48,15 +48,36 @@ class ExpressionShortcuts:
         'csc': r'csc',
         'sec': r'sec',
         'cot': r'cot',
-        'arcsin': r'arcsin',
-        'arccos': r'arccos',
-        'arctan': r'arctan',
+        'arcsin': r'asin',
+        'arccos': r'acos',
+        'arctan': r'atan',
+        'arccsc': r'acsc',
+        'arcsec': r'asec',
+        'arccot': r'acot',
+        'asin': r'asin',
+        'acos': r'acos',
+        'atan': r'atan',
         'ln': r'ln',
         'lg': r'log_{10}',  # base-10 logarithm
         'log': r'log',
         'log10': r'log_{10}',  # Explicit base-10 log
         'log2': r'log_{2}',    # Base-2 log
         'logn': r'log_{n}',    # Base-n log
+        'sinh': r'sinh',
+        'cosh': r'cosh',
+        'tanh': r'tanh',
+        'csch': r'csch',
+        'sech': r'sech',
+        'coth': r'coth',
+        'arcsinh': r'asinh',
+        'arccosh': r'acosh',
+        'arctanh': r'atanh',
+        'arccsch': r'acsch',
+        'arcsech': r'asech',
+        'arccoth': r'acoth',
+        'asinh': r'asinh',
+        'acosh': r'acosh',
+        'atanh': r'atanh',
     }
     
     # Fraction shortcuts
