@@ -31,72 +31,154 @@ class MathVisualizer:
 
         def construct(self):
             try:
-                # Create the axes with larger dimensions
+                if 'e^' in self.func_str:
+                    self.x_range = [-2, 2, 1]
+                    self.y_range = [-1, 8, 1]
+                
                 axes = Axes(
-                    x_range=[self.x_range[0], self.x_range[1], 1],
-                    y_range=[self.y_range[0], self.y_range[1], 1],
+                    x_range=self.x_range,
+                    y_range=self.y_range,
                     axis_config={
                         "color": BLUE,
                         "stroke_width": 2,
                         "include_numbers": True,
                         "numbers_to_exclude": [],
-                        "font_size": 24  # Increased font size for better visibility
+                        "font_size": 20,
+                        "include_tip": True,
+                        "tip_width": 0.15,
+                        "tip_height": 0.15
                     },
-                    x_length=12,
-                    y_length=8,
+                    x_length=10,
+                    y_length=6,
                     tips=True
-                ).scale(1.2)  # Scale the entire axes after creation
+                )
 
-                # Center the axes in the frame
-                axes.center()
+                axes.shift(LEFT * 1)
                 
-                # Add labels with larger size
-                x_label = axes.get_x_axis_label("x").scale(1.2)
-                y_label = axes.get_y_axis_label("y").scale(1.2)
+                x_label = axes.get_x_axis_label("x").scale(0.8)
+                y_label = axes.get_y_axis_label("y").scale(0.8)
 
-                # Convert the function string to a lambda function
-                # Replace ^ with ** for Python syntax
-                func_str = self.func_str.replace('^', '**')
                 try:
-                    # Create a safe lambda function
-                    x = Symbol('x')
-                    expr = sympify(self.func_str)
-                    func = lambda x: float(expr.subs('x', x))
-                except Exception as e:
-                    self.logger.error(f"Error parsing function: {e}")
-                    return
+                    display_expr = self.func_str
+                    display_expr = re.sub(r'log(\d+)\(([^)]+)\)', r'\\log_{\1} \2', display_expr)
+                    display_expr = re.sub(r'log\(([^)]+)\)', r'\\ln \1', display_expr)
+                    display_expr = re.sub(r'ln\(([^)]+)\)', r'\\ln \1', display_expr)
 
-                # Create the graph with discontinuity handling
-                try:
-                    graph = axes.plot(
-                        lambda x: func(x),
-                        color=YELLOW,
-                        x_range=[self.x_range[0], self.x_range[1], 0.01],
-                        use_smoothing=True,
-                        discontinuities=[],
-                        dt=0.01
-                    )
-
-                    # Create labels for the graph
-                    graph_label = MathTex(self.func_str).scale(1.2).next_to(graph, UP)
-
-                    # Add all elements to the scene with animations
-                    self.play(Create(axes), run_time=1)
-                    self.play(Create(graph), run_time=2)
-                    self.play(Write(graph_label), run_time=1)
+                    trig_functions = {
+                        'arcsin': 'sin^{-1}',
+                        'arccos': 'cos^{-1}',
+                        'arctan': 'tan^{-1}',
+                        'arccot': 'cot^{-1}',
+                        'arcsec': 'sec^{-1}',
+                        'arccsc': 'csc^{-1}',
+                        'sin': 'sin',
+                        'cos': 'cos',
+                        'tan': 'tan',
+                        'cot': 'cot',
+                        'sec': 'sec',
+                        'csc': 'csc'
+                    }
                     
-                    # Add a pause at the end
-                    self.wait(2)
+                    hyperbolic_functions = {
+                        'arcsinh': 'sinh^{-1}',
+                        'arccosh': 'cosh^{-1}',
+                        'arctanh': 'tanh^{-1}',
+                        'arccoth': 'coth^{-1}',
+                        'sinh': 'sinh',
+                        'cosh': 'cosh',
+                        'tanh': 'tanh',
+                        'coth': 'coth'
+                    }
+                    
+                    for func, latex_func in trig_functions.items():
+                        display_expr = re.sub(
+                            rf'{func}\(([^)]+)\)',
+                            rf'\\{latex_func} \1',
+                            display_expr
+                        )
+                    
+                    for func, latex_func in hyperbolic_functions.items():
+                        display_expr = re.sub(
+                            rf'{func}\(([^)]+)\)',
+                            rf'\\{latex_func} \1',
+                            display_expr
+                        )
+                    
+                    # Convert the expression for computation
+                    expr_str = re.sub(r'\\log_(\d+)\s+([^)]+)', r'log(\2)/log(\1)', display_expr)
+                    expr_str = re.sub(r'\\ln\s+([^)]+)', r'log(\1)', expr_str)
+                    
+                    # Handle equation case (contains '=')
+                    if '=' in expr_str:
+                        left_side, right_side = expr_str.split('=')
+                        expr_str = f"({left_side})-({right_side})"
+                    else:
+                        expr_str = self.func_str
+
+                    expr_str = re.sub(r'e\^(\([^)]+\)|\w+)', lambda m: f'exp{m.group(1)}', expr_str)
+                    expr_str = re.sub(r'log(\d+)\(([^)]+)\)', lambda m: f'log({m.group(2)})/log({m.group(1)})', expr_str)
+                    
+                    # Create a safe lambda function using numpy for evaluation
+                    import numpy as np
+                    x = Symbol('x')
+                    expr = sympify(expr_str)
+                    
+                    def safe_eval(x_val):
+                        try:
+                            result = float(expr.subs('x', x_val))
+                            if abs(result) > self.y_range[1] or np.isnan(result) or np.isinf(result):
+                                return None
+                            return result
+                        except:
+                            return None
+
+                    x_vals = np.linspace(self.x_range[0], self.x_range[1], 2000)
+                    y_vals = [safe_eval(x_val) for x_val in x_vals]
+                    
+                    valid_points = [(x, y) for x, y in zip(x_vals, y_vals) if y is not None]
+                    if valid_points:
+                        x_coords, y_coords = zip(*valid_points)
+                        
+                        graph = VMobject()
+                        graph.set_points_smoothly([
+                            axes.c2p(x, y) for x, y in zip(x_coords, y_coords)
+                        ])
+                        graph.set_color(YELLOW)
+
+                        x_right = self.x_range[0] + (self.x_range[1] - self.x_range[0]) * 0.7
+                        try:
+                            y_right = safe_eval(x_right)
+                            if y_right is None:
+                                y_right = self.y_range[1] * 0.7
+                            y_offset = (self.y_range[1] - self.y_range[0]) * 0.1
+                            y_label_pos = min(y_right + y_offset, self.y_range[1] * 0.8)
+                        except:
+                            y_label_pos = self.y_range[1] * 0.7
+                        
+                        label = MathTex(display_expr).scale(0.8)
+                        label.next_to(graph, RIGHT, buff=0.5)
+                        
+                        self.add(graph, label)
+
+                        # Add all elements to the scene with animations
+                        self.play(Create(axes), run_time=1)
+                        self.play(Write(x_label), Write(y_label), run_time=0.5)
+                        self.play(Create(graph), run_time=2)
+                        self.play(Write(label), run_time=1)
+                        
+                        self.wait(2)
+                    else:
+                        raise ValueError("No valid points to plot")
 
                 except Exception as e:
                     self.logger.error(f"Error creating graph: {e}")
-                    error_text = Text(f"Error: {str(e)}", color=RED).scale(0.8)
+                    error_text = Text(f"Error: {str(e)}", color=RED).scale(0.6)
                     self.add(error_text)
                     self.wait(2)
 
             except Exception as e:
                 self.logger.error(f"Error in visualization: {e}")
-                error_text = Text("Error visualizing function", color=RED)
+                error_text = Text("Error visualizing function", color=RED).scale(0.6)
                 self.add(error_text)
                 self.wait(2)
 
@@ -113,9 +195,9 @@ class MathVisualizer:
                 raise ValueError("Empty function string")
             
             # Handle implicit multiplication and clean up the expression
-            func_str = re.sub(r'(\d+)\s*([a-zA-Z])', r'\1*\2', func_str)  # Convert "2x" to "2*x"
+            func_str = re.sub(r'(\d+)\s*([a-zA-Z])', r'\1*\2', func_str)
             func_str = re.sub(r'(\d+)/(\d+)\s*([a-zA-Z])', r'(\1/\2)*\3', func_str)
-            func_str = re.sub(r'\s+', '', func_str)  # Remove all whitespace
+            func_str = re.sub(r'\s+', '', func_str)
             
             # Replace common mathematical notations
             replacements = {
@@ -135,13 +217,12 @@ class MathVisualizer:
             
             # Ensure the expression contains 'x'
             if 'x' not in func_str:
-                func_str = f"{func_str}+0*x"  # Add a zero term with x for constant functions
+                func_str = f"{func_str}+0*x"
                 
             self.logger.debug(f"Processed function string: {func_str}")
             
-            # Define a safe evaluation context
             safe_dict = {
-                "x": np.linspace(-1, 1, 10),  # Test array
+                "x": np.linspace(-1, 1, 10),
                 "np": np,
                 "sin": np.sin,
                 "cos": np.cos,
@@ -153,14 +234,12 @@ class MathVisualizer:
                 "e": np.e
             }
             
-            # Test evaluation with numpy array
             try:
                 eval(func_str, {"__builtins__": {}}, safe_dict)
             except Exception as e:
                 self.logger.error(f"Invalid function syntax: {e}")
                 raise ValueError(f"Invalid function syntax: {e}")
             
-            # Create and render the scene
             scene = self.FunctionScene(func_str, x_range, y_range, logger=self.logger)
             scene.render()
             

@@ -73,8 +73,7 @@ def _configure_logger():
     formatter = logging.Formatter('%(levelname)s: %(message)s')
     console_handler.setFormatter(formatter)
     root_logger.addHandler(console_handler)
-    
-    # Set specific loggers to WARNING
+
     logging.getLogger('matlab_interface').setLevel(logging.WARNING)
     logging.getLogger('__main__').setLevel(logging.WARNING)
 
@@ -122,10 +121,7 @@ def parse_latex_expression(latex_expr):
     # Check if it's an equation (contains '=')
     is_equation = '=' in latex_expr
     if is_equation:
-        # Convert single '=' to '==' for MATLAB equation solving
-        # But first ensure we don't double up existing '=='
         latex_expr = latex_expr.replace('==', '=').replace('=', '==')
-        # Move everything to left side of equation
         left_side, right_side = latex_expr.split('==')
         latex_expr = f"solve({left_side} - ({right_side}), x)"
         logger.debug(f"Converted equation to solve format: {latex_expr}")
@@ -149,9 +145,7 @@ def parse_latex_expression(latex_expr):
     def replace_derivative(match):
         var = match.group(1)
         expr = match.group(2).strip()
-        # Ensure multiplication is explicit in the expression
         expr = re.sub(r'(\d)([a-zA-Z])', r'\1*\2', expr)
-        # Convert Python-style power operator to MATLAB
         expr = expr.replace('^', '.^')
         return f"diff({expr}, {var})"
 
@@ -161,9 +155,7 @@ def parse_latex_expression(latex_expr):
         order = match.group(1)
         var = match.group(2)
         expr = match.group(4).strip()
-        # Ensure multiplication is explicit in the expression
         expr = re.sub(r'(\d)([a-zA-Z])', r'\1*\2', expr)
-        # Convert Python-style power operator to MATLAB
         expr = expr.replace('^', '.^')
         return f"diff({expr}, {var}, {order})"
 
@@ -171,7 +163,6 @@ def parse_latex_expression(latex_expr):
     latex_expr = re.sub(higher_derivative_pattern, replace_higher_derivative, latex_expr)
     latex_expr = re.sub(derivative_pattern, replace_derivative, latex_expr)
 
-    # Ensure multiplication is explicit for remaining terms
     latex_expr = re.sub(r'(\d)([a-zA-Z])', r'\1*\2', latex_expr)
     logger.debug(f"After explicit multiplication: '{latex_expr}'")
 
@@ -189,25 +180,18 @@ class CalculatorApp(QWidget, LatexCalculation):
         """Initialize the calculator application."""
         super().__init__()
         
-        # Configure logging - modified to prevent duplicate logs
         logger = logging.getLogger(__name__)
-        # Clear any existing handlers
         logger.handlers.clear()
         
-        # Only add handlers if they don't exist
         if not logger.handlers:
-            # Configure logging format
             formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
             
-            # File handler
             file_handler = logging.FileHandler('calculator.log')
             file_handler.setFormatter(formatter)
             
-            # Stream handler
             stream_handler = logging.StreamHandler()
             stream_handler.setFormatter(formatter)
             
-            # Add handlers and set level
             logger.addHandler(file_handler)
             logger.addHandler(stream_handler)
             logger.setLevel(logging.DEBUG)
@@ -222,10 +206,9 @@ class CalculatorApp(QWidget, LatexCalculation):
         self._init_theme()
         self.matrix_memory = {}
 
-        # Set the font for result_display to Menlo
-        self.result_display.setFont(QFont(FONT_NAME, FONT_SIZE))  # Change font to Menlo with size 14
-        self.result_display.setWordWrap(True)  # Enable word wrap
-        self.result_display.setTextInteractionFlags(Qt.TextSelectableByMouse)  # Make text selectable
+        self.result_display.setFont(QFont(FONT_NAME, FONT_SIZE))
+        self.result_display.setWordWrap(True)
+        self.result_display.setTextInteractionFlags(Qt.TextSelectableByMouse)
 
         self.display = Display(
             self.result_display,
@@ -234,7 +217,6 @@ class CalculatorApp(QWidget, LatexCalculation):
             bold=True
         ) 
         
-        # Start MATLAB engine
         try:
             self.eng = matlab.engine.start_matlab()
             self.evaluator = EvaluateExpression(self.eng)
@@ -246,13 +228,10 @@ class CalculatorApp(QWidget, LatexCalculation):
 
         self.sympy_converter = SympyToMatlab()
         
-        # Add this line to store the current logarithm type
         self.current_log_type = None
 
-        # Initialize visualizer
         self.visualizer = MathVisualizer()
         
-        # Add visualization button
         self.viz_button = QPushButton("Visualize")
         self.viz_button.clicked.connect(self.handle_visualization)
         
@@ -274,26 +253,22 @@ class CalculatorApp(QWidget, LatexCalculation):
         menu.exec_(self.theme_button.mapToGlobal(self.theme_button.rect().bottomLeft()))
     
     def set_theme(self, theme):
-        # Theme getter mapping
         theme_getters = {
             "tokyo_night": get_tokyo_night_theme,
             "aura": get_aura_theme,
             "light": get_light_theme
         }
         
-        # Get theme data using the mapping
         theme_getter = theme_getters.get(theme)
         if not theme_getter:
-            return  # Invalid theme name
+            return
         
         theme_data = theme_getter()
         
-        # Apply theme styles in one go
         self.setStyleSheet(theme_data["main_widget"])
         self.theme_button.setStyleSheet(theme_data["theme_button"])
         self.legend_button.setStyleSheet(theme_data["theme_button"])
         
-        # Update legend window if it exists
         if self.legend_window:
             self.legend_window.update_colors(
                 theme_data["text_color"], 
@@ -312,20 +287,16 @@ class CalculatorApp(QWidget, LatexCalculation):
             mode (str): The selected mode ('Matrix', 'LaTeX', or 'Matlab')
         """
         try:
-            # Create UiConfig instance and initialize mode configurations
             ui_config = UiConfig()
-            ui_config.mode_config(self)  # Pass the calculator instance
+            ui_config.mode_config(self)
             
-            # Get configuration for current mode
             config = ui_config.mode_configs.get(mode, ui_config.mode_configs['LaTeX'])
             
-            # Apply visibility changes
             for widget in config['show']:
                 widget.show()
             for widget in config['hide']:
                 widget.hide()
             
-            # Set window dimensions
             height, width = config['dimensions']
             self.setFixedHeight(height)
             self.setFixedWidth(width)
@@ -341,12 +312,10 @@ class CalculatorApp(QWidget, LatexCalculation):
             QMessageBox.warning(self, "Input Error", "Please enter a matrix.")
             return
         
-        # Check if the matrix text is properly formatted
         if not (matrix_text.startswith('[') and matrix_text.endswith(']')):
             QMessageBox.warning(self, "Format Error", "Matrix must be enclosed in square brackets []")
             return
         
-        # Check for proper matrix format with semicolons
         if ';' not in matrix_text and matrix_text.count('[') == 1:
             QMessageBox.warning(self, "Format Error", "For matrices with multiple rows, use semicolons to separate rows.\nExample: [1 2; 3 4]")
             return
@@ -354,7 +323,6 @@ class CalculatorApp(QWidget, LatexCalculation):
         name, ok = QInputDialog.getText(self, 'Store Matrix', 'Enter a name for this matrix:')
         if ok and name:
             try:
-                # Try to create and validate the matrix
                 validation_cmd = (
                     f"try, "
                     f"temp_matrix = {matrix_text}; "
@@ -371,7 +339,7 @@ class CalculatorApp(QWidget, LatexCalculation):
                 QMessageBox.information(self, "Success", f"Matrix '{name}' stored successfully.")
                 
             except matlab.engine.MatlabExecutionError as me:
-                error_msg = str(me).split('\n')[-1]  # Get the last line of the error message
+                error_msg = str(me).split('\n')[-1]
                 QMessageBox.critical(self, "MATLAB Error", f"Invalid matrix: {error_msg}\n\nPlease ensure:\n- Matrix is properly formatted\n- All elements are numbers\n- Rows have equal length")
             except Exception as e:
                 QMessageBox.critical(self, "Error", f"An error occurred: {str(e)}")
@@ -417,7 +385,6 @@ class CalculatorApp(QWidget, LatexCalculation):
             
             self.logger.debug(f"Integral function: {func}, variable: {var}")
             
-            # Handle logarithm conversions
             func = self._convert_logarithms(func)
             
             if len(expr.limits) == 0:
@@ -446,23 +413,17 @@ class CalculatorApp(QWidget, LatexCalculation):
         """Handle derivative expressions."""
         self.logger.debug(f"Handling derivative expression: {expr}")
         try:
-            # Get the function being differentiated
             func = self.sympy_to_matlab(expr.expr)
             
-            # Get the variable and order of differentiation
             var = str(expr.variables[0])
             
-            # Handle order of derivative
             if hasattr(expr, 'order'):
                 order = expr.order
             else:
-                # Count the number of times the same variable appears
                 order = sum(1 for v in expr.variables if str(v) == var)
             
-            # Convert logarithms if present
             func = self._convert_logarithms(func)
             
-            # Create MATLAB derivative command
             if order > 1:
                 result = f"diff({func}, {var}, {order})"
             else:
@@ -612,13 +573,9 @@ class CalculatorApp(QWidget, LatexCalculation):
             str: The converted expression string.
         """
         if for_display:
-            # Convert MATLAB 'log(x)' (natural log) to 'ln(x)' for display
             expr_str = re.sub(r'\blog\s*\(', 'ln(', expr_str)
-            # Ensure 'log10(x)' remains unchanged for display
         else:
-            # Convert 'ln(x)' to 'log(x)' for MATLAB evaluation
             expr_str = re.sub(r'\bln\s*\(', 'log(', expr_str)
-            # Convert 'log(x, 10)' or similar to 'log10(x)' if necessary
             expr_str = re.sub(r'\blog\s*\(\s*x\s*,\s*10\s*\)', 'log10(x)', expr_str)
         
         return expr_str
@@ -695,10 +652,8 @@ class CalculatorApp(QWidget, LatexCalculation):
             return "Operation Failed."
 
         if isinstance(result, list):
-            # For matrix/list results, format as a string representation
             return str(result)
         else:
-            # For scalar results like Determinant or Rank
             return str(result)
 
     def handle_matrix_calculation(self):
@@ -709,11 +664,9 @@ class CalculatorApp(QWidget, LatexCalculation):
             QMessageBox.critical(self, "Input Error", "Please enter a matrix.")
             return
         
-        # Check if the input is a stored matrix name
         if matrix_text in self.matrix_memory:
             matrix_text = self.matrix_memory[matrix_text]
 
-        # Evaluate the matrix in MATLAB
         try:
             self.eng.eval(f"matrix = {matrix_text};", nargout=0)
         except matlab.engine.MatlabExecutionError as me:
@@ -747,10 +700,8 @@ class CalculatorApp(QWidget, LatexCalculation):
                 QMessageBox.warning(self, "Operation Warning", f"Operation '{operation}' is not supported.")
                 return
 
-            # Convert result to string for display
             result = self.format_matrix_result(result, operation)
 
-            # Set the result label text and font
             self.result_label.setText(f"Result: {result}")
             self.result_label.setFont(QFont("Arial", 13, QFont.Bold))
 
@@ -816,20 +767,16 @@ class CalculatorApp(QWidget, LatexCalculation):
         try:
             self.logger.debug(f"Original expression: '{expression}'")
 
-            # Parse the LaTeX-like expression to SymPy
             sympy_expr = parse_latex_expression(expression)
             self.logger.debug(f"Converted to SymPy expression: '{sympy_expr}'")
 
-            # Convert the SymPy expression to MATLAB
             sympy_to_matlab_converter = SympyToMatlab()
             matlab_expression = sympy_to_matlab_converter.sympy_to_matlab(sympy_expr)
             self.logger.debug(f"Converted to MATLAB expression: '{matlab_expression}'")
 
-            # Apply Expression Shortcuts
             matlab_expression = ExpressionShortcuts.convert_shortcut(matlab_expression)
             self.logger.debug(f"After shortcut conversion: {matlab_expression}")
 
-            # Handle trigonometric functions based on angle mode
             if angle_mode == 'Degree':
                 matlab_expression = re.sub(r'\bsin\((.*?)\)', lambda m: f"sind({m.group(1)})", matlab_expression)
                 matlab_expression = re.sub(r'\bcos\((.*?)\)', lambda m: f"cosd({m.group(1)})", matlab_expression)
@@ -837,23 +784,18 @@ class CalculatorApp(QWidget, LatexCalculation):
 
             self.logger.debug(f"Final MATLAB expression: '{matlab_expression}'")
 
-            # Evaluate the expression in MATLAB
             result = self.evaluator.evaluate_matlab_expression(matlab_expression)
             self.logger.debug(f"Raw result from MATLAB: '{result}'")
 
-            # Optionally, further simplify using AutoSimplify
             simplified_result = self.auto_simplify.simplify_expression(result)
             self.logger.debug(f"Simplified Result: '{simplified_result}'")
 
-            # Convert 'log(x)' to 'ln(x)' for display
             displayed_result = simplified_result.replace('log(', 'ln(')
 
-            # Convert trigonometric functions back for display
             displayed_result = displayed_result.replace('cosd(', 'cos(')
             displayed_result = displayed_result.replace('sind(', 'sin(')
             displayed_result = displayed_result.replace('tand(', 'tan(')
 
-            # Ensure the result ends with a closing parenthesis if needed
             if displayed_result.count('(') > displayed_result.count(')'):
                 displayed_result += ')'
 
@@ -866,7 +808,6 @@ class CalculatorApp(QWidget, LatexCalculation):
 
     def evaluate_expression(self, matlab_expression):
         """Evaluate the expression using the MATLAB engine."""
-        # This method calls the EvaluateExpression class
         return self.evaluator.evaluate_matlab_expression(matlab_expression)
 
     def _is_numeric_expression(self, sympy_expr):
@@ -892,11 +833,9 @@ class CalculatorApp(QWidget, LatexCalculation):
             sympy.Expr: The parsed SymPy expression.
         """
         try:
-            # Preprocess the expression
             processed_expr = EvaluateExpression.preprocess_expression(expression)
             self.logger.debug(f"Processed expression for SymPy: {processed_expr}")
             
-            # Sympify the transformed expression
             sympy_expr = sy.sympify(processed_expr, evaluate=False)
             return sympy_expr
 
@@ -912,23 +851,17 @@ class CalculatorApp(QWidget, LatexCalculation):
             return
 
         try:
-            # Handle trigonometric functions based on angle mode
             if self.combo_angle.currentText() == 'Degree':
-                # Convert trig functions to degree versions
                 input_text = re.sub(r'\bsin\((.*?)\)', lambda m: f"sind({m.group(1)})", input_text)
                 input_text = re.sub(r'\bcos\((.*?)\)', lambda m: f"cosd({m.group(1)})", input_text)
                 input_text = re.sub(r'\btan\((.*?)\)', lambda m: f"tand({m.group(1)})", input_text)
 
-            # Convert ln to log for MATLAB processing
             input_text = input_text.replace('ln(', 'log(')
 
-            # Assign the expression to a MATLAB variable
             self.eng.eval(f"result = {input_text};", nargout=0)
 
-            # Evaluate the expression
             result = self.eng.eval("result", nargout=1)
 
-            # Convert symbolic result to string if necessary
             if isinstance(result, matlab.object):
                 result = self.eng.eval("char(result)", nargout=1)
             elif isinstance(result, (int, float)):
@@ -936,11 +869,9 @@ class CalculatorApp(QWidget, LatexCalculation):
             else:
                 result = str(result)
 
-            # Replace 'inf' with the infinity symbol '∞'
             if 'inf' in result:
                 result = result.replace('inf', '∞')
 
-            # Post-process the result: replace all instances of log with ln
             result = result.replace('log(', 'ln(')
             result = result.replace('==', '=')
 
@@ -964,7 +895,6 @@ class CalculatorApp(QWidget, LatexCalculation):
     def calculate_matrix(self):
         """Handle the calculation for matrix operations."""
         try:
-            # Retrieve the matrix text and selected operation
             matrix_text = self.matrix_input.toPlainText().strip()
             operation = self.combo_matrix_op.currentText()
             
@@ -972,11 +902,9 @@ class CalculatorApp(QWidget, LatexCalculation):
                 QMessageBox.warning(self, "Input Error", "Please enter a matrix.")
                 return
             
-            # Check if the input is a stored matrix name
             if matrix_text in self.matrix_memory:
                 matrix_text = self.matrix_memory[matrix_text]
 
-            # Evaluate the matrix in MATLAB
             self.eng.eval(f"matrix = {matrix_text};", nargout=0)
             
             # Perform the selected operation
@@ -986,15 +914,15 @@ class CalculatorApp(QWidget, LatexCalculation):
 
             elif operation == 'Inverse':
                 result = self.eng.eval("inv(matrix)", nargout=1)
-                result = np.round(np.array(result), 2).tolist()  # Round each element to 2 decimal places
+                result = np.round(np.array(result), 2).tolist()
 
             elif operation == 'Eigenvalues':
                 result = self.eng.eval("eig(matrix)", nargout=1)
-                result = np.round(np.array(result), 2).tolist()  # Round each eigenvalue to 2 decimal places
+                result = np.round(np.array(result), 2).tolist()
 
             elif operation == 'Rank':
                 result = self.eng.eval("rank(matrix)", nargout=1)
-                result = int(result)  # Rank is always an integer, no rounding needed
+                result = int(result)
 
             elif operation in ['Multiply', 'Add', 'Subtract', 'Divide']:
                 result = self.handle_matrix_arithmetic(operation)
@@ -1006,10 +934,8 @@ class CalculatorApp(QWidget, LatexCalculation):
                 QMessageBox.warning(self, "Operation Warning", f"Operation '{operation}' is not supported.")
                 return
 
-            # Convert result to string for display
             result_str = self.format_matrix_result(result, operation)
 
-            # Set the result in the result_display text area
             self.result_display.setText(result_str)
             self.result_display.setFont(QFont(FONT_NAME, FONT_SIZE))
 
@@ -1026,14 +952,11 @@ class CalculatorApp(QWidget, LatexCalculation):
                 QMessageBox.warning(self, "Error", "Please enter an expression to visualize.")
                 return
                 
-            # Clean up the expression for visualization
-            expr = expr.replace('ln', 'log')  # Convert ln to log
-            expr = re.sub(r'(\d+)\s*([a-zA-Z])', r'\1*\2', expr)  # Convert "2x" to "2*x"
-            expr = re.sub(r'\s+', '', expr)  # Remove whitespace
+            expr = expr.replace('ln', 'log') 
+            expr = re.sub(r'(\d+)\s*([a-zA-Z])', r'\1*\2', expr) 
+            expr = re.sub(r'\s+', '', expr) 
             
-            # Handle special cases
             if "==" in expr:
-                # Extract left side of equation
                 expr = expr.split("==")[0]
             
             if "d/dx" in expr or "diff" in expr:
@@ -1045,19 +968,16 @@ class CalculatorApp(QWidget, LatexCalculation):
             # Create or show visualization window
             if not hasattr(self, 'viz_window') or self.viz_window is None:
                 self.viz_window = VisualizationWindow(self)
-            
-            # Show window and visualize function
-            self.viz_window.show()
-            self.viz_window.raise_()  # Bring window to front
-            self.viz_window.activateWindow()  # Activate the window
-            self.viz_window.visualize_function(expr)
+                self.viz_window.show()
+                self.viz_window.raise_()
+                self.viz_window.activateWindow()
+                self.viz_window.visualize_function(expr)
                 
         except Exception as e:
             QMessageBox.critical(self, "Visualization Error", str(e))
             
     def convert_to_python_expr(self, expr: str) -> str:
         """Convert LaTeX/MATLAB expression to Python expression."""
-        # Replace common mathematical functions
         replacements = {
             'sin': 'np.sin',
             'cos': 'np.cos',

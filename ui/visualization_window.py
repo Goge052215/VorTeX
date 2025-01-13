@@ -17,22 +17,19 @@ class VisualizationWindow(QMainWindow):
         self.logger = logging.getLogger(__name__)
         self.current_function = None
         
-        # Create media player and video widget
+        # Media player and video widget
         self.media_player = QMediaPlayer(self)
         self.video_widget = QVideoWidget(self)
         self.media_player.setVideoOutput(self.video_widget)
         
-        # Connect media player signals
         self.media_player.stateChanged.connect(self.media_state_changed)
         self.media_player.positionChanged.connect(self.position_changed)
         self.media_player.durationChanged.connect(self.duration_changed)
         
-        # Instantiate MathVisualizer
         self.visualizer = MathVisualizer()
         
         self._init_ui()
         
-        # Clean up any existing media files
         self._cleanup_manim_files()
 
     def _init_ui(self):
@@ -43,17 +40,14 @@ class VisualizationWindow(QMainWindow):
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
         main_layout = QVBoxLayout(central_widget)
-        
-        # Controls layout
+
         controls_layout = QHBoxLayout()
         
-        # X Range Input
         self.x_range_label = QLabel("X Range:")
         self.x_range_input = QLineEdit("(-10, 10)")
         controls_layout.addWidget(self.x_range_label)
         controls_layout.addWidget(self.x_range_input)
         
-        # Y Range Input
         self.y_range_label = QLabel("Y Range:")
         self.y_range_input = QLineEdit("(-5, 5)")
         controls_layout.addWidget(self.y_range_label)
@@ -64,23 +58,19 @@ class VisualizationWindow(QMainWindow):
         self.play_button.clicked.connect(self.toggle_animation)
         controls_layout.addWidget(self.play_button)
         
-        # Replay button
         self.replay_button = QPushButton("Replay")
         self.replay_button.clicked.connect(self.replay_animation)
         controls_layout.addWidget(self.replay_button)
         
-        # Position slider
         self.position_slider = QSlider(Qt.Horizontal)
         self.position_slider.setRange(0, 0)
         self.position_slider.sliderMoved.connect(self.set_position)
         controls_layout.addWidget(self.position_slider)
         
-        # Update Button
         self.update_button = QPushButton("Update Plot")
         self.update_button.clicked.connect(self.update_plot)
         controls_layout.addWidget(self.update_button)
         
-        # Function input field
         self.function_label = QLabel("Function:")
         self.function_input = QLineEdit()
         controls_layout.addWidget(self.function_label)
@@ -105,9 +95,7 @@ class VisualizationWindow(QMainWindow):
         else:
             self.play_button.setText("Play")
             
-        # When media reaches the end (StoppedState)
         if state == QMediaPlayer.StoppedState:
-            # Set position to just before the end (last frame)
             duration = self.media_player.duration()
             if duration > 0:
                 self.media_player.setPosition(duration - 1)
@@ -143,14 +131,10 @@ class VisualizationWindow(QMainWindow):
         """Update the plot based on user input."""
         try:
             if self.current_function:
-                # Stop current playback and clear media
                 self.media_player.stop()
                 self.media_player.setMedia(QMediaContent())
-                
-                # Clean up existing files
                 self._cleanup_manim_files()
                 
-                # Get new ranges and visualize
                 x_range = eval(self.x_range_input.text())
                 y_range = eval(self.y_range_input.text())
                 self.visualize_function(self.current_function, x_range, y_range)
@@ -163,47 +147,37 @@ class VisualizationWindow(QMainWindow):
     def visualize_function(self, func_str: str, x_range: tuple = (-10, 10), y_range: tuple = (-5, 5)):
         """Visualize a function using MathVisualizer."""
         try:
-            # Stop current playback and clear media
             self.media_player.stop()
             self.media_player.setMedia(QMediaContent())
             
-            # Clean up existing files
             self._cleanup_manim_files()
             
-            # Update current function and UI
             self.current_function = func_str
             self.function_input.setText(func_str)
             self.x_range_input.setText(str(x_range))
             self.y_range_input.setText(str(y_range))
             
-            # Create media directory
             media_dir = os.path.join(os.getcwd(), "media")
             video_dir = os.path.join(media_dir, "videos", "1080p60")
             os.makedirs(video_dir, exist_ok=True)
             
-            # Set Manim configuration
             config.media_dir = media_dir
             config.video_dir = video_dir
             
-            # Create and render the scene
             scene = self.visualizer.FunctionScene(func_str, x_range=x_range, y_range=y_range, logger=self.logger)
             scene.render()
             
-            # Get the path to the rendered video
             video_path = os.path.join(video_dir, "FunctionScene.mp4")
             
             if os.path.exists(video_path):
-                # Set up the media player with the new video
                 self.media_player.setMedia(
                     QMediaContent(QUrl.fromLocalFile(os.path.abspath(video_path)))
                 )
                 self.play_button.setEnabled(True)
                 self.replay_button.setEnabled(True)
                 
-                # Connect to mediaStatusChanged signal to handle end of media
                 self.media_player.mediaStatusChanged.connect(self._handle_media_status)
                 
-                # Start playing automatically
                 self.media_player.play()
                 self.play_button.setText("Pause")
             else:
@@ -217,7 +191,6 @@ class VisualizationWindow(QMainWindow):
     def _handle_media_status(self, status):
         """Handle media status changes."""
         if status == QMediaPlayer.EndOfMedia:
-            # Set position to just before the end (last frame)
             duration = self.media_player.duration()
             if duration > 0:
                 self.media_player.setPosition(duration - 1)
@@ -227,18 +200,13 @@ class VisualizationWindow(QMainWindow):
     def closeEvent(self, event):
         """Handle window close event."""
         try:
-            # Stop media player
             self.media_player.stop()
             self.media_player.setMedia(QMediaContent())
             
-            # Clean up Manim files
             self._cleanup_manim_files()
             
-            # Hide instead of close
-            event.ignore()
-            self.hide()
+            event.accept()
             
-            # Clear parent's reference
             if hasattr(self.parent(), 'viz_window'):
                 self.parent().viz_window = None
             

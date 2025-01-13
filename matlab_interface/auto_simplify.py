@@ -63,8 +63,15 @@ class AutoSimplify:
             # Define a sequence of simplification commands
             simplification_commands = [
                 "expr = str2sym(expr);",             # Convert string to symbolic
+                "expr = vpa(expr, 'Digits', 10);",   # Set precision to prevent decimal conversion
                 "expr = simplify(expr, 'Steps', 50);", # Simplify with specified steps
-                "expr = vpa(expr, 6);",              # Convert to variable-precision arithmetic with 6 decimal places
+                # Keep expressions in symbolic form
+                "expr = sym(expr);",
+                # Convert any remaining decimals to fractions or symbolic constants
+                "expr = vpa(expr, 'Digits', 10);",
+                "expr = simplify(expr, 'IgnoreAnalyticConstraints', true);",
+                # Final simplification
+                "expr = simplify(expr);",
             ]
             
             # Execute each simplification command
@@ -97,17 +104,32 @@ class AutoSimplify:
             
         self.logger.debug(f"Original expression before cleaning: '{expr}'")
         
+        # Common numerical values to replace with pi
+        pi_replacements = {
+            '3.14159265359': 'π',
+            '0.0174533': 'π/180',
+            '0.785398': 'π/4',
+            '1.5708': 'π/2',
+            '3.14159': 'π',
+            '6.28319': '2π',
+            'pi': 'π'
+        }
+        
+        # Replace numerical values with pi symbols
+        for num, pi_expr in pi_replacements.items():
+            expr = expr.replace(num, pi_expr)
+        
         # Remove unnecessary multiplications by 1.0
         expr = expr.replace('*1.0', '')
         expr = expr.replace('1.0*', '')
         
-        # Convert 'exp(x)' to 'e^x' for display, without extra parenthesis
+        # Convert 'exp(x)' to 'e^x' for display
         expr = re.sub(r'exp\((.*?)\)', lambda m: f'e^{m.group(1)}', expr).rstrip(')')
         
         # Replace 'log' with 'ln' for natural logarithm
         expr = expr.replace('log(', 'ln(')
         
-        # Ensure multiplication is clearly formatted (e.g., remove '1*' before variables)
+        # Ensure multiplication is clearly formatted
         expr = re.sub(r'\b1\*\s*([a-zA-Z])', r'\1', expr)
         
         self.logger.debug(f"Final cleaned expression: '{expr}'")

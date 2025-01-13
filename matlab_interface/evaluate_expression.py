@@ -38,9 +38,7 @@ class EvaluateExpression:
         """
         Precompile regular expressions for efficiency.
         """
-        # Precompile regex patterns
         self.ln_pattern = re.compile(r'\bln\s*\(')
-        # Update trig patterns to only match explicit degree functions
         self.trig_patterns = {
             re.compile(r'\bsind\s*\('): 'sind(',
             re.compile(r'\bcosd\s*\('): 'cosd(',
@@ -76,11 +74,8 @@ class EvaluateExpression:
             str: The preprocessed expression.
         """
         original_expr = expression
-        # Use compiled regex patterns
         expression = self.ln_pattern.sub('log(', expression)
         
-        # Only convert to degree functions if explicitly specified with 'd' suffix
-        # e.g., 'sind(x)' stays as 'sind(x)', but 'sin(x)' stays as 'sin(x)'
         for trig_regex, degree_func in self.trig_patterns.items():
             expression = trig_regex.sub(degree_func, expression)
         
@@ -88,7 +83,6 @@ class EvaluateExpression:
         expression = self.log_base_pattern.sub(r'log(\2)/log(\1)', expression)
         expression = self.mul_pattern.sub(r'\1*\2', expression)
         
-        # Handle exponential expressions without adding extra parenthesis
         if 'e^' in expression:
             expression = expression.replace('e^', 'exp(')
             if not expression.endswith(')'):
@@ -119,7 +113,6 @@ class EvaluateExpression:
             except ValueError:
                 pass
         
-        # Handle special cases
         special_cases = {
             'inf': '∞',
             '+inf': '∞',
@@ -128,10 +121,8 @@ class EvaluateExpression:
         }
         result_str = special_cases.get(result_str.lower(), result_str)
         
-        # Clean up symbolic results
         result_str = result_str.replace('*1.0', '').replace('1.0*', '').replace('.0', '')
         
-        # Convert exp(x) to e^x and other symbolizations
         symbolizations = {
             'exp(': 'e^',
             'asin(': 'arcsin(',
@@ -143,13 +134,11 @@ class EvaluateExpression:
         # Handle trigonometric functions with proper parentheses
         trig_funcs = ['sin', 'cos', 'tan', 'csc', 'sec', 'cot']
         for func in trig_funcs:
-            # Match the function and its argument, preserving nested parentheses
             pattern = f'{func}\\(([^()]*(?:\\([^()]*\\)[^()]*)*)\\)'
             matches = list(re.finditer(pattern, result_str))
-            for match in reversed(matches):  # Process from right to left
+            for match in reversed(matches):
                 full_match = match.group(0)
                 arg = match.group(1)
-                # Ensure proper parentheses around the argument
                 if '(' not in arg and ')' not in arg:
                     result_str = result_str.replace(full_match, f'{func}({arg})')
         
@@ -188,8 +177,6 @@ class EvaluateExpression:
         
         # Extract variable names (one or more letters)
         variables = set(re.findall(r'\b[a-zA-Z]+\b', expression_clean))
-        
-        # Remove MATLAB reserved keywords and function names
         reserved_keywords = {'int', 'diff', 'syms', 'log', 'sin', 'cos', 'tan', 
                              'exp', 'sqrt', 'abs', 'sind', 'cosd', 'tand', 'symsum', 
                              'prod', 'solve'}
@@ -213,95 +200,128 @@ class EvaluateExpression:
         self._symbolic_vars.add(var)
         self.logger.debug(f"Declared symbolic variable: {var}")
 
-    def evaluate_matlab_expression(self, expression):
+    def _format_exponential(self, expr_str):
+        """Convert exp() notation to e^x notation."""
+        def replace_exp(match):
+            content = match.group(1)
+            if '+' in content or '-' in content or '*' in content or '/' in content:
+                return f"e^({content})"
+            return f"e^{content}"
+
+        pattern = r'exp\(((?:[^()]+|\([^()]*\))*)\)'
+        return re.sub(pattern, replace_exp, expr_str)
+
+    def _simplify_log_expression(self, expr_str):
+        """Simplify logarithmic expressions."""
+        try:
+            # General pattern for log(x)/log(base)
+            log_pattern = r'log\(([\w\d\+\-\*\/\(\)]+)\)/log\(([\d\.]+)\)'
+            
+            def log_replacement(match):
+                numerator = match.group(1)  # The expression inside first log
+                base = match.group(2)       # The base number
+                
+                # Handle special cases
+                if base == '10':
+                    return f'log10({numerator})'
+                elif base == '2':
+                    return f'log2({numerator})'
+                elif base == 'e':
+                    return f'ln({numerator})'
+                else:
+                    return f'log{base}({numerator})'  # Convert to logn(x) format
+            
+            # Apply the general log simplification
+            expr_str = re.sub(log_pattern, log_replacement, expr_str)
+            
+            # Also handle MATLAB's fraction format
+            fraction_pattern = r'\((\d+)\*log\(([\w\d\+\-\*\/\(\)]+)\)\)/(\d+)'
+            
+            def fraction_replacement(match):
+                num = int(match.group(1))
+                expr = match.group(2)
+                denom = int(match.group(3))
+                
+                # Calculate the ratio and round to nearest integer if close
+                ratio = num / denom
+                if abs(ratio - round(ratio)) < 1e-10:  # If very close to an integer
+                    base = round(ratio)
+                    return f'log{base}({expr})'
+                else:
+                    # Keep original form if not a recognizable ratio
+                    return f'log({expr})/log({num}/{denom})'
+            
+            expr_str = re.sub(fraction_pattern, fraction_replacement, expr_str)
+            
+            return expr_str
+        except Exception as e:
+            self.logger.error(f"Error simplifying log expression: {e}")
+            return expr_str
+
+    def evaluate_matlab_expression(self, expr):
         """Evaluate a MATLAB expression."""
         try:
-            # Preprocess the expression
-            preprocessed_expr = self._preprocess_expression(expression)
+            # Clean up the expression
+            expr = self._preprocess_expression(expr)
+            self.logger.debug(f"Converted '{expr}' to '{expr}'")
             
-            # Define known function names to exclude from variable declarations
-            function_names = {
-                'sin', 'cos', 'tan', 'asin', 'acos', 'atan', 
-                'sinh', 'cosh', 'tanh', 'asinh', 'acosh', 'atanh',
+            # Define MATLAB keywords and functions to exclude
+            matlab_keywords = {
+                'solve', 'simplify', 'expand', 'factor', 'collect',
+                'sin', 'cos', 'tan', 'asin', 'acos', 'atan',
                 'sind', 'cosd', 'tand', 'asind', 'acosd', 'atand',
-                'log', 'exp', 'sqrt', 'abs', 'csc', 'sec', 'cot',
-                'acsc', 'asec', 'acot', 'csch', 'sech', 'coth',
-                'acsch', 'asech', 'acoth'
+                'sinh', 'cosh', 'tanh', 'asinh', 'acosh', 'atanh',
+                'log', 'log10', 'log2', 'exp', 'sqrt', 'abs', 'sym', 'syms',
+                'diff', 'int', 'limit', 'subs', 'pi', 'i'
             }
             
-            # Extract and declare symbolic variables
-            variables = self._extract_variables(preprocessed_expr)
-            # Filter out function names from variables
-            variables = [var for var in variables if var not in function_names]
+            # Extract variables using more precise regex
+            variables = set(re.findall(r'(?<![a-zA-Z])[a-zA-Z_]\w*(?!\w*\()', expr)) - matlab_keywords
+            self.logger.debug(f"Extracted variables from expression: {variables}")
             
-            for var in variables:
-                self._declare_symbolic_variable(var)
+            # Declare symbolic variables in MATLAB
+            if variables:
+                var_str = ' '.join(variables)
+                self.logger.debug(f"Declaring symbolic variable in MATLAB: syms {var_str}")
+                self.eng.eval(f"syms {var_str}", nargout=0)
+                self.logger.debug(f"Declared symbolic variable: {var_str}")
             
-            # Create the MATLAB command
-            matlab_cmd = f"temp_result = {preprocessed_expr};"
-            self.logger.debug(f"Executing MATLAB command: {matlab_cmd}")
-            self.eng.eval(matlab_cmd, nargout=0)
-
-            # Check if the result is symbolic
-            is_symbolic = self.eng.eval("isa(temp_result, 'sym')", nargout=1)
-            self.logger.debug(f"Is the result symbolic? {is_symbolic}")
-
-            if is_symbolic:
-                # Get the result as a string first
-                result = self.eng.eval("char(temp_result)", nargout=1)
+            # Execute the MATLAB command
+            command = f"temp_result = {expr};"
+            self.logger.debug(f"Executing MATLAB command: {command}")
+            self.eng.eval(command, nargout=0)
+            
+            if expr.startswith('solve('):
+                self.eng.eval("temp_result = vpa(temp_result, 4);", nargout=0)
+                num_solutions = self.eng.eval("length(temp_result)", nargout=1)
                 
-                # Check if it's a complicated fraction
-                if '/' in result:
-                    numerator, denominator = result.split('/')
-                    # If either number is too long (more than 10 digits), convert to decimal
-                    if len(numerator) > 10 or len(denominator) > 10:
-                        # Convert to decimal with 6 decimal places
-                        self.eng.eval("temp_decimal = double(temp_result);", nargout=0)
-                        decimal_result = float(self.eng.eval("temp_decimal", nargout=1))
-                        result = f"{decimal_result:.6f}"
+                solutions = []
+                for i in range(int(num_solutions)):
+                    solution = self.eng.eval(f"char(temp_result({i+1}))", nargout=1)
+                    solution = self._format_exponential(solution)
+                    solution = self._simplify_log_expression(solution)
+                    solutions.append(f"x{i+1} = {solution}")
                 
-                # Try to convert to float and format if it's a decimal number
-                try:
-                    float_val = float(result)
-                    if float_val != int(float_val):  # If it's truly a decimal
-                        # Ensure the leading zero is preserved
-                        result = f"{float_val:.6f}".rstrip('0').rstrip('.')
-                except ValueError:
-                    pass  # Not a number, keep original string
-                
+                result = '\n'.join(solutions)
             else:
-                result = str(self.eng.eval("temp_result", nargout=1))
-                # Format numeric results
-                try:
-                    float_val = float(result)
-                    if float_val != int(float_val):  # If it's truly a decimal
-                        # Ensure the leading zero is preserved
-                        result = f"{float_val:.6f}".rstrip('0').rstrip('.')
-                except ValueError:
-                    pass  # Not a number, keep original string
-
-            self.logger.debug(f"Raw MATLAB result: {result}")
-
-            # Post-process the result
-            result = self._postprocess_result(result, is_numeric=not is_symbolic)
-            self.logger.debug(f"Final result: {result}")
-
-            return result
-
-        except matlab.engine.EngineError as e:
-            self.logger.error(f"MATLAB Engine Error: {e}")
-            return "MATLAB Engine Error"
-        except re.error as e:
-            self.logger.error(f"Regex Error: {e}")
-            return "Regex Error"
+                is_symbolic = self.eng.eval("isa(temp_result, 'sym')", nargout=1)
+                if is_symbolic:
+                    result = str(self.eng.eval("char(temp_result)", nargout=1))
+                else:
+                    result = str(self.eng.eval("num2str(temp_result)", nargout=1))
+                
+                # Apply both exponential and logarithm simplifications
+                result = self._format_exponential(result)
+                result = self._simplify_log_expression(result)
+            
+            # Clean up workspace
+            self.eng.eval("clear temp_result", nargout=0)
+            
+            return result.strip()
+            
         except Exception as e:
-            self.logger.error(f"Unexpected Error: {e}")
+            self.logger.error(f"Unexpected Error: {str(e)}")
             return "Unexpected Error"
-
-        finally:
-            # Clean up the workspace in a single call
-            clean_cmd = "clear temp_result temp_decimal"
-            self.eng.eval(clean_cmd, nargout=0)
 
     def __enter__(self):
         return self
@@ -329,8 +349,6 @@ class EvaluateExpression:
         
         # Convert 'exp(x)' to 'e^x' for display, ensuring no extra parenthesis
         expr = re.sub(r'exp\((.*?)\)', r'e^\1', expr)
-        
-        # Other cleaning operations...
         expr = expr.replace('*1.0', '').replace('1.0*', '')
         expr = expr.replace('log(', 'ln(')
         expr = re.sub(r'\b1\*\s*([a-zA-Z])', r'\1', expr)
