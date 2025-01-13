@@ -35,31 +35,26 @@ class MathVisualizer:
                     self.x_range = [-2, 2, 1]
                     self.y_range = [-1, 8, 1]
                 
+                # Create axes with extended y-axis
                 axes = Axes(
-                    x_range=self.x_range,
-                    y_range=self.y_range,
-                    axis_config={
-                        "color": BLUE,
-                        "stroke_width": 2,
-                        "include_numbers": True,
-                        "numbers_to_exclude": [],
-                        "font_size": 20,
-                        "include_tip": True,
-                        "tip_width": 0.15,
-                        "tip_height": 0.15
-                    },
-                    x_length=10,
-                    y_length=6,
-                    tips=True
-                )
+                    x_range=[self.x_range[0], self.x_range[1], (self.x_range[1] - self.x_range[0]) / 10],
+                    y_range=[self.y_range[0], self.y_range[1], (self.y_range[1] - self.y_range[0]) / 10],
+                    tips=True,
+                    y_length=8,  # Increase y-axis length
+                    axis_config={"include_numbers": False}
+                ).scale(0.8)
 
-                axes.shift(LEFT * 1)
+                axes.center()
                 
                 x_label = axes.get_x_axis_label("x").scale(0.8)
                 y_label = axes.get_y_axis_label("y").scale(0.8)
 
                 try:
                     display_expr = self.func_str
+                    # Add new regex replacement for multiplication
+                    display_expr = re.sub(r'(\d+)\*([a-zA-Z])', r'\1\2', display_expr)
+                    
+                    # Existing display_expr processing
                     display_expr = re.sub(r'log(\d+)\(([^)]+)\)', r'\\log_{\1} \2', display_expr)
                     display_expr = re.sub(r'log\(([^)]+)\)', r'\\ln \1', display_expr)
                     display_expr = re.sub(r'ln\(([^)]+)\)', r'\\ln \1', display_expr)
@@ -158,7 +153,7 @@ class MathVisualizer:
                         label = MathTex(display_expr).scale(0.8)
                         label.next_to(graph, RIGHT, buff=0.5)
                         
-                        self.add(graph, label)
+                        self.add(axes, graph, label)
 
                         # Add all elements to the scene with animations
                         self.play(Create(axes), run_time=1)

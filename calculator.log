@@ -5797,3 +5797,77 @@ x3 = 1.0
 2025-01-13 15:13:24,187 - __main__ - INFO - Initializing Calculator Application
 2025-01-13 15:13:38,981 - __main__ - INFO - MATLAB engine started successfully
 2025-01-13 15:14:19,710 - __main__ - DEBUG - Visualizing expression: sin(x)
+2025-01-13 15:47:00,858 - __main__ - INFO - Initializing Calculator Application
+2025-01-13 15:47:16,213 - __main__ - INFO - MATLAB engine started successfully
+2025-01-13 15:47:40,585 - __main__ - DEBUG - Visualizing expression: cos(x)
+2025-01-13 15:48:39,439 - __main__ - INFO - MATLAB engine terminated
+2025-01-13 15:49:52,199 - __main__ - INFO - Initializing Calculator Application
+2025-01-13 15:50:04,731 - __main__ - INFO - MATLAB engine started successfully
+2025-01-13 15:50:09,795 - __main__ - DEBUG - Visualizing expression: cos(x)
+2025-01-13 15:50:58,139 - __main__ - INFO - MATLAB engine terminated
+2025-01-13 15:51:18,699 - __main__ - INFO - Initializing Calculator Application
+2025-01-13 15:51:30,543 - __main__ - INFO - MATLAB engine started successfully
+2025-01-13 15:52:45,523 - __main__ - DEBUG - Visualizing expression: cos(x)
+2025-01-13 15:58:28,611 - __main__ - INFO - MATLAB engine terminated
+2025-01-13 15:58:43,679 - __main__ - INFO - Initializing Calculator Application
+2025-01-13 15:58:56,560 - __main__ - INFO - MATLAB engine started successfully
+2025-01-13 15:59:02,949 - __main__ - DEBUG - Visualizing expression: cos(x)
+2025-01-13 16:01:15,435 - __main__ - INFO - MATLAB engine terminated
+2025-01-13 16:03:16,057 - __main__ - INFO - Initializing Calculator Application
+2025-01-13 16:03:29,170 - __main__ - INFO - MATLAB engine started successfully
+2025-01-13 16:03:35,448 - __main__ - DEBUG - Visualizing expression: cos(x)
+2025-01-13 16:06:25,808 - __main__ - INFO - MATLAB engine terminated
+2025-01-13 16:06:41,546 - __main__ - INFO - Initializing Calculator Application
+2025-01-13 16:06:58,704 - __main__ - INFO - MATLAB engine started successfully
+2025-01-13 16:09:44,702 - __main__ - DEBUG - Visualizing expression: log2(x)
+2025-01-13 16:18:43,908 - __main__ - DEBUG - Original expression: 'int 1/(x^5+1) dx'
+2025-01-13 16:18:43,910 - __main__ - DEBUG - Original expression: 'int 1/(x^5+1) dx'
+2025-01-13 16:18:43,913 - __main__ - DEBUG - After binom conversion: 'int 1/(x^5+1) dx'
+2025-01-13 16:18:43,914 - __main__ - DEBUG - Converted integral expression: 'int(1/(x^5+1), x)'
+2025-01-13 16:18:43,915 - __main__ - DEBUG - After explicit multiplication: 'int(1/(x^5+1), x)'
+2025-01-13 16:18:43,915 - __main__ - DEBUG - Final MATLAB expression: 'int(1/(x^5+1), x)'
+2025-01-13 16:18:43,915 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/(x^5+1), x)'
+2025-01-13 16:18:43,915 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/(x^5+1), x)'
+2025-01-13 16:18:43,920 - __main__ - DEBUG - After shortcut conversion: int(1/(x^5+1), x)
+2025-01-13 16:18:43,921 - __main__ - DEBUG - Final MATLAB expression: 'int(1/(x^5+1), x)'
+2025-01-13 16:18:44,874 - __main__ - DEBUG - Raw result from MATLAB: 'log(x + 1)/5 - log(x - 5^(1/2)/4 - (2^(1/2)*(5^(1/2) - 5)^(1/2))/4 - 1/4)*(5^(1/2)/20 + (2^(1/2)*(5^(1/2) - 5)^(1/2))/20 + 1/20) - log(x - 5^(1/2)/4 + (2^(1/2)*(5^(1/2) - 5)^(1/2))/4 - 1/4)*(5^(1/2)/20 - (2^(1/2)*(5^(1/2) - 5)^(1/2))/20 + 1/20) - log(x - (2^(1/2)*(- 5^(1/2) - 5)^(1/2))/4 + 5^(1/2)/4 - 1/4)*((2^(1/2)*(- 5^(1/2) - 5)^(1/2))/20 - 5^(1/2)/20 + 1/20) + log(x + (2^(1/2)*(- 5^(1/2) - 5)^(1/2))/4 + 5^(1/2)/4 - 1/4)*((2^(1/2)*(- 5^(1/2) - 5)^(1/2))/20 + 5^(1/2)/20 - 1/20)'
+2025-01-13 16:18:45,558 - __main__ - DEBUG - Simplified Result: 'log(x + 1)/5 - log(x - 5^(1/2)/4 - (2^(1/2)*(5^(1/2) - 5)^(1/2))/4 - 1/4)*(5^(1/2)/20 + (2^(1/2)*(5^(1/2) - 5)^(1/2))/20 + 1/20) - log(x - 5^(1/2)/4 + (2^(1/2)*(5^(1/2) - 5)^(1/2))/4 - 1/4)*(5^(1/2)/20 - (2^(1/2)*(5^(1/2) - 5)^(1/2))/20 + 1/20) - log(x - (2^(1/2)*(- 5^(1/2) - 5)^(1/2))/4 + 5^(1/2)/4 - 1/4)*((2^(1/2)*(- 5^(1/2) - 5)^(1/2))/20 - 5^(1/2)/20 + 1/20) + log(x + (2^(1/2)*(- 5^(1/2) - 5)^(1/2))/4 + 5^(1/2)/4 - 1/4)*((2^(1/2)*(- 5^(1/2) - 5)^(1/2))/20 + 5^(1/2)/20 - 1/20)'
+2025-01-13 16:18:45,560 - __main__ - DEBUG - Displayed Result: ln(x + 1)/5 - ln(x - 5^(1/2)/4 - (2^(1/2)*(5^(1/2) - 5)^(1/2))/4 - 1/4)*(5^(1/2)/20 + (2^(1/2)*(5^(1/2) - 5)^(1/2))/20 + 1/20) - ln(x - 5^(1/2)/4 + (2^(1/2)*(5^(1/2) - 5)^(1/2))/4 - 1/4)*(5^(1/2)/20 - (2^(1/2)*(5^(1/2) - 5)^(1/2))/20 + 1/20) - ln(x - (2^(1/2)*(- 5^(1/2) - 5)^(1/2))/4 + 5^(1/2)/4 - 1/4)*((2^(1/2)*(- 5^(1/2) - 5)^(1/2))/20 - 5^(1/2)/20 + 1/20) + ln(x + (2^(1/2)*(- 5^(1/2) - 5)^(1/2))/4 + 5^(1/2)/4 - 1/4)*((2^(1/2)*(- 5^(1/2) - 5)^(1/2))/20 + 5^(1/2)/20 - 1/20)
+2025-01-13 16:19:48,472 - __main__ - INFO - Initializing Calculator Application
+2025-01-13 16:20:03,566 - __main__ - INFO - MATLAB engine started successfully
+2025-01-13 16:20:52,335 - __main__ - INFO - MATLAB engine terminated
+2025-01-13 16:21:08,995 - __main__ - INFO - Initializing Calculator Application
+2025-01-13 16:21:27,516 - __main__ - ERROR - Failed to start MATLAB engine: Unable to launch MVM server: License Error: Licensing shutdown
+2025-01-13 16:21:42,050 - __main__ - INFO - Initializing Calculator Application
+2025-01-13 16:21:52,525 - __main__ - INFO - MATLAB engine started successfully
+2025-01-13 16:22:09,840 - __main__ - DEBUG - Visualizing expression: log(2*x)
+2025-01-13 16:27:34,196 - __main__ - INFO - MATLAB engine terminated
+2025-01-13 16:27:44,083 - __main__ - INFO - Initializing Calculator Application
+2025-01-13 16:27:56,013 - __main__ - INFO - MATLAB engine started successfully
+2025-01-13 16:30:11,547 - __main__ - DEBUG - Visualizing expression: log(x)
+2025-01-13 16:32:23,396 - __main__ - INFO - MATLAB engine terminated
+2025-01-13 16:32:36,606 - __main__ - INFO - Initializing Calculator Application
+2025-01-13 16:32:47,679 - __main__ - INFO - MATLAB engine started successfully
+2025-01-13 16:33:07,325 - __main__ - DEBUG - Visualizing expression: log(x)
+2025-01-13 16:34:22,930 - __main__ - INFO - MATLAB engine terminated
+2025-01-13 16:36:02,875 - __main__ - INFO - Initializing Calculator Application
+2025-01-13 16:36:15,374 - __main__ - INFO - MATLAB engine started successfully
+2025-01-13 16:36:53,567 - __main__ - DEBUG - Visualizing expression: log(x)
+2025-01-13 16:37:53,261 - __main__ - INFO - MATLAB engine terminated
+2025-01-13 16:38:04,808 - __main__ - INFO - Initializing Calculator Application
+2025-01-13 16:38:18,919 - __main__ - INFO - MATLAB engine started successfully
+2025-01-13 16:38:53,886 - __main__ - DEBUG - Visualizing expression: log(x)
+2025-01-13 16:39:10,064 - __main__ - INFO - MATLAB engine terminated
+2025-01-13 16:42:55,304 - __main__ - INFO - Initializing Calculator Application
+2025-01-13 16:43:08,357 - __main__ - INFO - MATLAB engine started successfully
+2025-01-13 16:44:10,550 - __main__ - DEBUG - Visualizing expression: log(x)
+2025-01-13 16:45:50,553 - __main__ - INFO - MATLAB engine terminated
+2025-01-13 16:45:57,566 - __main__ - INFO - Initializing Calculator Application
+2025-01-13 16:46:07,680 - __main__ - INFO - MATLAB engine started successfully
+2025-01-13 16:46:43,157 - __main__ - DEBUG - Visualizing expression: log(x)
+2025-01-13 16:47:23,801 - __main__ - DEBUG - Visualizing expression: log(2*x)
+2025-01-13 16:48:25,546 - __main__ - INFO - MATLAB engine terminated
+2025-01-13 16:52:38,716 - __main__ - INFO - Initializing Calculator Application
+2025-01-13 16:52:52,583 - __main__ - INFO - MATLAB engine started successfully
+2025-01-13 16:53:01,172 - __main__ - DEBUG - Visualizing expression: log(2*x)
+2025-01-13 16:53:22,076 - __main__ - INFO - MATLAB engine terminated

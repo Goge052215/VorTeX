@@ -52,7 +52,7 @@ class UiConfig:
                     calculator.calculate_button,
                     calculator.visualize_button  # Hide visualize button in Matrix mode
                 ],
-                'dimensions': (500, 700)  # (height, width)
+                'dimensions': (600, 700)  # (height, width)
             },
             'Matlab': {
                 'show': [
@@ -69,7 +69,7 @@ class UiConfig:
                     calculator.recall_matrix_button,
                     calculator.calculate_matrix_button
                 ],
-                'dimensions': (500, 700)  # (height, width)
+                'dimensions': (600, 700)  # (height, width)
             },
             'LaTeX': {
                 'show': [
@@ -86,7 +86,8 @@ class UiConfig:
                     calculator.recall_matrix_button,
                     calculator.calculate_matrix_button
                 ],
-                'dimensions': (500, 700)  # (height, width)
+                'dimensions': (600, 700)  # (height, width)
             }
         }
+
 

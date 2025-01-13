@@ -35,7 +35,7 @@ class VisualizationWindow(QMainWindow):
     def _init_ui(self):
         """Initialize the visualization window UI."""
         self.setWindowTitle('Mathematical Visualization')
-        self.setGeometry(200, 200, 800, 600)
+        self.setGeometry(200, 200, 1000, 600)
         
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
