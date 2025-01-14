@@ -129,8 +129,8 @@ A powerful mathematical workbench that fuses **MATLAB**'s symbolic computation, 
 | $\log_{10}(x)$ | `\log_{10}(x)` | `log10(x)` |
 | $\log_{n}(x)$  | `\log_{n}(x)`  | `logn(x)`  |
 | $\alpha, \beta, \gamma, \dots$ | `\alpha, \beta, \gamma, ...` | `alpha, beta, gamma, ...` |
-| $\displaystyle\sum_{i = a}^{b-a} f(x_i)$         | `\sum_{i = a}^{b-a} f(x_i)` | `sum (a to b) f(x)`      |
-| $\displaystyle\prod_{i = a}^{b-a} f(x_i)$      | `\prod_{i = a}^{b-a} f(x_i)` | `prod (a to b) f(x)`     |
+| $\displaystyle\sum_{i = a}^{b} f(x_i)$         | `\sum_{i = a}^{b} f(x_i)` | `sum (a to b) f(x)`      |
+| $\displaystyle\prod_{i = a}^{b} f(x_i)$      | `\prod_{i = a}^{b} f(x_i)` | `prod (a to b) f(x)`     |
 | $\displaystyle\lim_{x \to a} f(x)$         | `\lim_{x \to a} f(x)` | `lim (x to a) f(x)`      |
 | $\displaystyle\lim_{x \to a^+} f(x)$       | `\lim_{x \to a^+} f(x)` | `lim (x to a+) f(x)`      |
 | $\displaystyle\lim_{x \to a^-} f(x)$       | `\lim_{x \to a^-} f(x)` | `lim (x to a-) f(x)`      |

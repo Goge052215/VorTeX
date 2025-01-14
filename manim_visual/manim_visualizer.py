@@ -22,25 +22,24 @@ class MathVisualizer:
 
     class FunctionScene(Scene):
         """Base scene for function visualization."""
-        def __init__(self, func_str, x_range=(-10, 10), y_range=(-5, 5), logger=None):
+        def __init__(self, func_str, x_range=(-10, 10), y_range=(-5, 5), display_text=None, logger=None):
             super().__init__()
             self.func_str = func_str
+            self.display_text = display_text or func_str
             self.x_range = x_range
             self.y_range = y_range
-            self.logger = logger or logging.getLogger(__name__)
+            self.logger = logger
 
         def construct(self):
             try:
-                if 'e^' in self.func_str:
-                    self.x_range = [-2, 2, 1]
-                    self.y_range = [-1, 8, 1]
-                
-                # Create axes with extended y-axis
+                if isinstance(self.func_str, tuple):
+                    self.func_str = self.func_str[0]
+
                 axes = Axes(
                     x_range=[self.x_range[0], self.x_range[1], (self.x_range[1] - self.x_range[0]) / 10],
                     y_range=[self.y_range[0], self.y_range[1], (self.y_range[1] - self.y_range[0]) / 10],
                     tips=True,
-                    y_length=8,  # Increase y-axis length
+                    y_length=8,
                     axis_config={"include_numbers": False}
                 ).scale(0.8)
 
@@ -51,10 +50,14 @@ class MathVisualizer:
 
                 try:
                     display_expr = self.func_str
-                    # Add new regex replacement for multiplication
+                    display_expr = "y=" + display_expr
+                    
+                    # Add specific handling for e^x notation
+                    display_expr = re.sub(r'e\^x', r'e^{x}', display_expr)
+                    display_expr = re.sub(r'exp\(x\)', r'e^{x}', display_expr)
+                    
                     display_expr = re.sub(r'(\d+)\*([a-zA-Z])', r'\1\2', display_expr)
                     
-                    # Existing display_expr processing
                     display_expr = re.sub(r'log(\d+)\(([^)]+)\)', r'\\log_{\1} \2', display_expr)
                     display_expr = re.sub(r'log\(([^)]+)\)', r'\\ln \1', display_expr)
                     display_expr = re.sub(r'ln\(([^)]+)\)', r'\\ln \1', display_expr)
@@ -112,6 +115,10 @@ class MathVisualizer:
 
                     expr_str = re.sub(r'e\^(\([^)]+\)|\w+)', lambda m: f'exp{m.group(1)}', expr_str)
                     expr_str = re.sub(r'log(\d+)\(([^)]+)\)', lambda m: f'log({m.group(2)})/log({m.group(1)})', expr_str)
+                    
+                    # Update expression string handling for e^x
+                    expr_str = self.func_str
+                    expr_str = re.sub(r'e\^x', r'exp(x)', expr_str)
                     
                     # Create a safe lambda function using numpy for evaluation
                     import numpy as np

@@ -115,7 +115,32 @@ def parse_latex_expression(latex_expr):
     logger.debug(f"Original expression: '{latex_expr}'")
 
     # Add explicit multiplication for expressions like "1/2 x" -> "1/2 * x"
-    latex_expr = re.sub(r'(\d+)\s+([a-zA-Z])', r'\1*\2', latex_expr)
+    # But avoid adding multiplication inside function calls like sum() or prod()
+    def add_multiplication(expr):
+        # Don't modify content inside function calls
+        parts = []
+        last_end = 0
+        stack = []
+        
+        for i, char in enumerate(expr):
+            if char == '(':
+                if not stack:  # Start of a new function call
+                    parts.append(re.sub(r'(\d+)\s+([a-zA-Z])', r'\1*\2', expr[last_end:i]))
+                stack.append(i)
+            elif char == ')':
+                if stack:
+                    if len(stack) == 1:  # End of the function call
+                        parts.append(expr[stack[0]:i+1])
+                        last_end = i + 1
+                    stack.pop()
+        
+        # Handle the remaining part
+        if last_end < len(expr):
+            parts.append(re.sub(r'(\d+)\s+([a-zA-Z])', r'\1*\2', expr[last_end:]))
+        
+        return ''.join(parts)
+
+    latex_expr = add_multiplication(latex_expr)
     latex_expr = re.sub(r'(\d+)/(\d+)\s+([a-zA-Z])', r'(\1/\2)*\3', latex_expr)
     
     # Check if it's an equation (contains '=')
@@ -131,7 +156,7 @@ def parse_latex_expression(latex_expr):
     def replace_binom(match):
         n = match.group(1)
         k = match.group(2)
-        return f"nchoosek({n}, {k})"
+        return f"nchoosek({n},{k})"
     
     latex_expr = re.sub(binom_pattern, replace_binom, latex_expr)
     logger.debug(f"After binom conversion: '{latex_expr}'")
@@ -978,21 +1003,42 @@ class CalculatorApp(QWidget, LatexCalculation):
             
     def convert_to_python_expr(self, expr: str) -> str:
         """Convert LaTeX/MATLAB expression to Python expression."""
-        replacements = {
-            'sin': 'np.sin',
-            'cos': 'np.cos',
-            'tan': 'np.tan',
-            'exp': 'np.exp',
-            'log': 'np.log',
-            'sqrt': 'np.sqrt',
-            '^': '**',
-            'pi': 'np.pi'
-        }
-        
-        for old, new in replacements.items():
-            expr = expr.replace(old, new)
+        try:
+            # Handle negative fractions in base
+            if expr.startswith('(-') and ')^' in expr:
+                base, power = expr.split(')^')
+                base = base[1:]  # Remove the leading (
+                # Convert fraction to decimal for the base
+                if '/' in base:
+                    num, den = map(float, base.split('/'))
+                    decimal_base = num / den
+                    return f"({decimal_base})**{power}"
             
-        return expr
+            # Original replacements for other cases
+            replacements = {
+                'sind': 'np.sin',
+                'cosd': 'np.cos',
+                'tand': 'np.tan',
+                'sin': 'np.sin',
+                'cos': 'np.cos',
+                'tan': 'np.tan',
+                'exp': 'np.exp',
+                'log': 'np.log',
+                'sqrt': 'np.sqrt',
+                '^': '**',
+                'pi': 'np.pi',
+                'e': 'np.e'
+            }
+            
+            # Apply standard replacements
+            for old, new in replacements.items():
+                expr = re.sub(rf'\b{old}\b', new, expr)
+            
+            return expr
+            
+        except Exception as e:
+            self.logger.error(f"Error converting expression: {e}")
+            return expr
 
 if __name__ == '__main__':
     _configure_logger()

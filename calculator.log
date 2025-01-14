@@ -5871,3 +5871,486 @@ x3 = 1.0
 2025-01-13 16:52:52,583 - __main__ - INFO - MATLAB engine started successfully
 2025-01-13 16:53:01,172 - __main__ - DEBUG - Visualizing expression: log(2*x)
 2025-01-13 16:53:22,076 - __main__ - INFO - MATLAB engine terminated
+2025-01-13 19:49:04,706 - __main__ - INFO - Initializing Calculator Application
+2025-01-13 19:49:20,261 - __main__ - INFO - MATLAB engine started successfully
+2025-01-13 19:51:01,626 - __main__ - DEBUG - Original expression: 'sum (1 to inf) (-1/2)^n'
+2025-01-13 19:51:01,629 - __main__ - DEBUG - Original expression: 'sum (1 to inf) (-1/2)^n'
+2025-01-13 19:51:01,631 - __main__ - DEBUG - After binom conversion: 'sum (1*to inf) (-1/2)^n'
+2025-01-13 19:51:01,632 - __main__ - DEBUG - Converted integral expression: 'sum (1*to inf) (-1/2)^n'
+2025-01-13 19:51:01,633 - __main__ - DEBUG - After explicit multiplication: 'sum (1*to inf) (-1/2)^n'
+2025-01-13 19:51:01,633 - __main__ - DEBUG - Final MATLAB expression: 'sum (1*to inf) (-1/2)^n'
+2025-01-13 19:51:01,633 - __main__ - DEBUG - Converted to SymPy expression: 'sum (1*to inf) (-1/2)^n'
+2025-01-13 19:51:01,633 - __main__ - DEBUG - Converted to MATLAB expression: 'sum (1*to inf) (-1/2)^n'
+2025-01-13 19:51:01,637 - __main__ - DEBUG - After shortcut conversion: sum (1*\to inf) (-1/2)^n
+2025-01-13 19:51:01,637 - __main__ - DEBUG - Final MATLAB expression: 'sum (1*\to inf) (-1/2)^n'
+2025-01-13 19:51:01,924 - __main__ - DEBUG - Raw result from MATLAB: 'Unexpected Error'
+2025-01-13 19:51:02,199 - __main__ - DEBUG - Simplified Result: 'Unexpected Error'
+2025-01-13 19:51:02,201 - __main__ - DEBUG - Displayed Result: Unexpected Error
+2025-01-13 19:51:13,733 - __main__ - DEBUG - Original expression: 'prod(1 to 100) x^2'
+2025-01-13 19:51:13,733 - __main__ - DEBUG - Original expression: 'prod(1 to 100) x^2'
+2025-01-13 19:51:13,733 - __main__ - DEBUG - After binom conversion: 'prod(1*to 100) x^2'
+2025-01-13 19:51:13,733 - __main__ - DEBUG - Converted integral expression: 'prod(1*to 100) x^2'
+2025-01-13 19:51:13,733 - __main__ - DEBUG - After explicit multiplication: 'prod(1*to 100) x^2'
+2025-01-13 19:51:13,734 - __main__ - DEBUG - Final MATLAB expression: 'prod(1*to 100) x^2'
+2025-01-13 19:51:13,734 - __main__ - DEBUG - Converted to SymPy expression: 'prod(1*to 100) x^2'
+2025-01-13 19:51:13,734 - __main__ - DEBUG - Converted to MATLAB expression: 'prod(1*to 100) x^2'
+2025-01-13 19:51:13,734 - __main__ - DEBUG - After shortcut conversion: prod(1*\to 100) x^2
+2025-01-13 19:51:13,734 - __main__ - DEBUG - Final MATLAB expression: 'prod(1*\to 100) x^2'
+2025-01-13 19:51:13,779 - __main__ - DEBUG - Raw result from MATLAB: 'Unexpected Error'
+2025-01-13 19:51:13,850 - __main__ - DEBUG - Simplified Result: 'Unexpected Error'
+2025-01-13 19:51:13,850 - __main__ - DEBUG - Displayed Result: Unexpected Error
+2025-01-13 19:51:40,806 - __main__ - DEBUG - Visualizing expression: sin(x)
+2025-01-13 19:52:31,466 - __main__ - DEBUG - Visualizing expression: log(2*x)
+2025-01-13 22:20:09,683 - __main__ - INFO - MATLAB engine terminated
+2025-01-13 22:30:19,709 - __main__ - INFO - Initializing Calculator Application
+2025-01-13 22:30:35,514 - __main__ - INFO - MATLAB engine started successfully
+2025-01-13 22:30:45,267 - __main__ - DEBUG - Original expression: 'prod (1 to 100) x^2'
+2025-01-13 22:30:45,268 - __main__ - DEBUG - Original expression: 'prod (1 to 100) x^2'
+2025-01-13 22:30:45,271 - __main__ - DEBUG - After binom conversion: 'prod (1*to 100) x^2'
+2025-01-13 22:30:45,271 - __main__ - DEBUG - Converted integral expression: 'prod (1*to 100) x^2'
+2025-01-13 22:30:45,272 - __main__ - DEBUG - After explicit multiplication: 'prod (1*to 100) x^2'
+2025-01-13 22:30:45,272 - __main__ - DEBUG - Final MATLAB expression: 'prod (1*to 100) x^2'
+2025-01-13 22:30:45,272 - __main__ - DEBUG - Converted to SymPy expression: 'prod (1*to 100) x^2'
+2025-01-13 22:30:45,272 - __main__ - DEBUG - Converted to MATLAB expression: 'prod (1*to 100) x^2'
+2025-01-13 22:30:45,277 - __main__ - DEBUG - After shortcut conversion: prod (1*\to 100) x^2
+2025-01-13 22:30:45,277 - __main__ - DEBUG - Final MATLAB expression: 'prod (1*\to 100) x^2'
+2025-01-13 22:30:45,356 - __main__ - DEBUG - Raw result from MATLAB: 'Unexpected Error'
+2025-01-13 22:30:45,548 - __main__ - DEBUG - Simplified Result: 'Unexpected Error'
+2025-01-13 22:30:45,548 - __main__ - DEBUG - Displayed Result: Unexpected Error
+2025-01-13 22:36:15,574 - __main__ - INFO - MATLAB engine terminated
+2025-01-13 22:36:28,804 - __main__ - INFO - Initializing Calculator Application
+2025-01-13 22:36:41,037 - __main__ - INFO - MATLAB engine started successfully
+2025-01-13 22:37:14,150 - __main__ - DEBUG - Original expression: 'prod (1 to 100) x^2'
+2025-01-13 22:37:14,151 - __main__ - DEBUG - Original expression: 'prod (1 to 100) x^2'
+2025-01-13 22:37:14,153 - __main__ - DEBUG - After binom conversion: 'prod (1*to 100) x^2'
+2025-01-13 22:37:14,153 - __main__ - DEBUG - Converted integral expression: 'prod (1*to 100) x^2'
+2025-01-13 22:37:14,154 - __main__ - DEBUG - After explicit multiplication: 'prod (1*to 100) x^2'
+2025-01-13 22:37:14,154 - __main__ - DEBUG - Final MATLAB expression: 'prod (1*to 100) x^2'
+2025-01-13 22:37:14,154 - __main__ - DEBUG - Converted to SymPy expression: 'prod (1*to 100) x^2'
+2025-01-13 22:37:14,154 - __main__ - DEBUG - Converted to MATLAB expression: 'prod (1*to 100) x^2'
+2025-01-13 22:37:14,158 - __main__ - DEBUG - After shortcut conversion: prod (1*: 100) x^2
+2025-01-13 22:37:14,159 - __main__ - DEBUG - Final MATLAB expression: 'prod (1*: 100) x^2'
+2025-01-13 22:37:14,239 - __main__ - DEBUG - Raw result from MATLAB: 'Unexpected Error'
+2025-01-13 22:37:14,406 - __main__ - DEBUG - Simplified Result: 'Unexpected Error'
+2025-01-13 22:37:14,406 - __main__ - DEBUG - Displayed Result: Unexpected Error
+2025-01-13 22:40:13,288 - __main__ - INFO - MATLAB engine terminated
+2025-01-13 22:40:40,859 - __main__ - INFO - Initializing Calculator Application
+2025-01-13 22:40:53,966 - __main__ - INFO - MATLAB engine started successfully
+2025-01-13 22:41:27,608 - __main__ - DEBUG - Visualizing expression: prod(1*to100)x^2
+2025-01-13 22:41:31,866 - __main__ - DEBUG - Original expression: 'prod (1 to 100) x^2'
+2025-01-13 22:41:31,866 - __main__ - DEBUG - Original expression: 'prod (1 to 100) x^2'
+2025-01-13 22:41:31,866 - __main__ - DEBUG - After binom conversion: 'prod (1*to 100) x^2'
+2025-01-13 22:41:31,867 - __main__ - DEBUG - Converted integral expression: 'prod (1*to 100) x^2'
+2025-01-13 22:41:31,867 - __main__ - DEBUG - After explicit multiplication: 'prod (1*to 100) x^2'
+2025-01-13 22:41:31,867 - __main__ - DEBUG - Final MATLAB expression: 'prod (1*to 100) x^2'
+2025-01-13 22:41:31,867 - __main__ - DEBUG - Converted to SymPy expression: 'prod (1*to 100) x^2'
+2025-01-13 22:41:31,867 - __main__ - DEBUG - Converted to MATLAB expression: 'prod (1*to 100) x^2'
+2025-01-13 22:41:31,869 - __main__ - DEBUG - After shortcut conversion: prod (1*\to 100) x^2
+2025-01-13 22:41:31,869 - __main__ - DEBUG - Final MATLAB expression: 'prod (1*\to 100) x^2'
+2025-01-13 22:41:32,017 - __main__ - DEBUG - Raw result from MATLAB: 'Unexpected Error'
+2025-01-13 22:41:32,221 - __main__ - DEBUG - Simplified Result: 'Unexpected Error'
+2025-01-13 22:41:32,222 - __main__ - DEBUG - Displayed Result: Unexpected Error
+2025-01-13 22:47:00,918 - __main__ - INFO - MATLAB engine terminated
+2025-01-13 22:47:08,088 - __main__ - INFO - Initializing Calculator Application
+2025-01-13 22:47:16,281 - __main__ - INFO - MATLAB engine started successfully
+2025-01-13 22:47:23,389 - __main__ - DEBUG - Original expression: 'prod (1 to 100) x^2'
+2025-01-13 22:47:23,390 - __main__ - DEBUG - Original expression: 'prod (1 to 100) x^2'
+2025-01-13 22:47:23,391 - __main__ - DEBUG - After binom conversion: 'prod (1*to 100) x^2'
+2025-01-13 22:47:23,391 - __main__ - DEBUG - Converted integral expression: 'prod (1*to 100) x^2'
+2025-01-13 22:47:23,392 - __main__ - DEBUG - After explicit multiplication: 'prod (1*to 100) x^2'
+2025-01-13 22:47:23,392 - __main__ - DEBUG - Final MATLAB expression: 'prod (1*to 100) x^2'
+2025-01-13 22:47:23,392 - __main__ - DEBUG - Converted to SymPy expression: 'prod (1*to 100) x^2'
+2025-01-13 22:47:23,392 - __main__ - DEBUG - Converted to MATLAB expression: 'prod (1*to 100) x^2'
+2025-01-13 22:47:23,395 - __main__ - DEBUG - After shortcut conversion: prod (1*: 100) x^2
+2025-01-13 22:47:23,396 - __main__ - DEBUG - Final MATLAB expression: 'prod (1*: 100) x^2'
+2025-01-13 22:47:23,474 - __main__ - DEBUG - Raw result from MATLAB: 'Unexpected Error'
+2025-01-13 22:47:23,634 - __main__ - DEBUG - Simplified Result: 'Unexpected Error'
+2025-01-13 22:47:23,635 - __main__ - DEBUG - Displayed Result: Unexpected Error
+2025-01-13 22:47:48,913 - __main__ - INFO - MATLAB engine terminated
+2025-01-13 22:47:56,571 - __main__ - INFO - Initializing Calculator Application
+2025-01-13 22:48:02,747 - __main__ - INFO - MATLAB engine started successfully
+2025-01-13 22:48:07,131 - __main__ - DEBUG - Original expression: 'prod (1 to 100) x^2'
+2025-01-13 22:48:07,132 - __main__ - DEBUG - Original expression: 'prod (1 to 100) x^2'
+2025-01-13 22:48:07,133 - __main__ - DEBUG - After binom conversion: 'prod (1*to 100) x^2'
+2025-01-13 22:48:07,134 - __main__ - DEBUG - Converted integral expression: 'prod (1*to 100) x^2'
+2025-01-13 22:48:07,134 - __main__ - DEBUG - After explicit multiplication: 'prod (1*to 100) x^2'
+2025-01-13 22:48:07,134 - __main__ - DEBUG - Final MATLAB expression: 'prod (1*to 100) x^2'
+2025-01-13 22:48:07,134 - __main__ - DEBUG - Converted to SymPy expression: 'prod (1*to 100) x^2'
+2025-01-13 22:48:07,134 - __main__ - DEBUG - Converted to MATLAB expression: 'prod (1*to 100) x^2'
+2025-01-13 22:48:07,138 - __main__ - DEBUG - After shortcut conversion: prod (1*: 100) x^2
+2025-01-13 22:48:07,138 - __main__ - DEBUG - Final MATLAB expression: 'prod (1*: 100) x^2'
+2025-01-13 22:48:07,219 - __main__ - DEBUG - Raw result from MATLAB: 'Unexpected Error'
+2025-01-13 22:48:07,399 - __main__ - DEBUG - Simplified Result: 'Unexpected Error'
+2025-01-13 22:48:07,400 - __main__ - DEBUG - Displayed Result: Unexpected Error
+2025-01-13 22:51:36,844 - __main__ - INFO - MATLAB engine terminated
+2025-01-13 22:51:58,480 - __main__ - INFO - Initializing Calculator Application
+2025-01-13 22:52:07,629 - __main__ - INFO - MATLAB engine started successfully
+2025-01-13 22:52:28,675 - __main__ - DEBUG - Original expression: 'prod(1 to 10) x'
+2025-01-13 22:52:28,676 - __main__ - DEBUG - Original expression: 'prod(1 to 10) x'
+2025-01-13 22:52:28,677 - __main__ - DEBUG - After binom conversion: 'prod(1*to 10) x'
+2025-01-13 22:52:28,678 - __main__ - DEBUG - Converted integral expression: 'prod(1*to 10) x'
+2025-01-13 22:52:28,679 - __main__ - DEBUG - After explicit multiplication: 'prod(1*to 10) x'
+2025-01-13 22:52:28,679 - __main__ - DEBUG - Final MATLAB expression: 'prod(1*to 10) x'
+2025-01-13 22:52:28,679 - __main__ - DEBUG - Converted to SymPy expression: 'prod(1*to 10) x'
+2025-01-13 22:52:28,679 - __main__ - DEBUG - Converted to MATLAB expression: 'prod(1*to 10) x'
+2025-01-13 22:52:28,683 - __main__ - DEBUG - After shortcut conversion: prod(1*\to 10) x
+2025-01-13 22:52:28,684 - __main__ - DEBUG - Final MATLAB expression: 'prod(1*\to 10) x'
+2025-01-13 22:52:28,779 - __main__ - DEBUG - Raw result from MATLAB: 'Unexpected Error'
+2025-01-13 22:52:28,964 - __main__ - DEBUG - Simplified Result: 'Unexpected Error'
+2025-01-13 22:52:28,964 - __main__ - DEBUG - Displayed Result: Unexpected Error
+2025-01-13 22:54:34,982 - __main__ - INFO - MATLAB engine terminated
+2025-01-13 22:54:43,538 - __main__ - INFO - Initializing Calculator Application
+2025-01-13 22:54:52,102 - __main__ - INFO - MATLAB engine started successfully
+2025-01-13 22:54:59,788 - __main__ - DEBUG - Original expression: 'prod(1 to 10) x'
+2025-01-13 22:54:59,789 - __main__ - DEBUG - Original expression: 'prod(1 to 10) x'
+2025-01-13 22:54:59,791 - __main__ - DEBUG - After binom conversion: 'prod(1*to 10) x'
+2025-01-13 22:54:59,791 - __main__ - DEBUG - Converted integral expression: 'prod(1*to 10) x'
+2025-01-13 22:54:59,792 - __main__ - DEBUG - After explicit multiplication: 'prod(1*to 10) x'
+2025-01-13 22:54:59,792 - __main__ - DEBUG - Final MATLAB expression: 'prod(1*to 10) x'
+2025-01-13 22:54:59,792 - __main__ - DEBUG - Converted to SymPy expression: 'prod(1*to 10) x'
+2025-01-13 22:54:59,792 - __main__ - DEBUG - Converted to MATLAB expression: 'prod(1*to 10) x'
+2025-01-13 22:54:59,796 - __main__ - DEBUG - After shortcut conversion: prod(1*\to 10) x
+2025-01-13 22:54:59,797 - __main__ - DEBUG - Final MATLAB expression: 'prod(1*\to 10) x'
+2025-01-13 22:54:59,868 - __main__ - DEBUG - Raw result from MATLAB: 'Unexpected Error'
+2025-01-13 22:55:00,032 - __main__ - DEBUG - Simplified Result: 'Unexpected Error'
+2025-01-13 22:55:00,033 - __main__ - DEBUG - Displayed Result: Unexpected Error
+2025-01-13 22:59:24,562 - __main__ - INFO - Initializing Calculator Application
+2025-01-13 22:59:31,817 - __main__ - INFO - MATLAB engine started successfully
+2025-01-13 22:59:43,521 - __main__ - DEBUG - Original expression: 'prod(1 to 10) x'
+2025-01-13 22:59:43,521 - __main__ - DEBUG - Original expression: 'prod(1 to 10) x'
+2025-01-13 22:59:43,523 - __main__ - DEBUG - After binom conversion: 'prod(1*to 10) x'
+2025-01-13 22:59:43,524 - __main__ - DEBUG - Converted integral expression: 'prod(1*to 10) x'
+2025-01-13 22:59:43,525 - __main__ - DEBUG - After explicit multiplication: 'prod(1*to 10) x'
+2025-01-13 22:59:43,525 - __main__ - DEBUG - Final MATLAB expression: 'prod(1*to 10) x'
+2025-01-13 22:59:43,525 - __main__ - DEBUG - Converted to SymPy expression: 'prod(1*to 10) x'
+2025-01-13 22:59:43,525 - __main__ - DEBUG - Converted to MATLAB expression: 'prod(1*to 10) x'
+2025-01-13 22:59:43,530 - __main__ - DEBUG - After shortcut conversion: prod(1*\to 10) x
+2025-01-13 22:59:43,531 - __main__ - DEBUG - Final MATLAB expression: 'prod(1*\to 10) x'
+2025-01-13 22:59:43,604 - __main__ - DEBUG - Raw result from MATLAB: 'Unexpected Error'
+2025-01-13 22:59:43,774 - __main__ - DEBUG - Simplified Result: 'Unexpected Error'
+2025-01-13 22:59:43,774 - __main__ - DEBUG - Displayed Result: Unexpected Error
+2025-01-13 23:01:19,295 - __main__ - INFO - MATLAB engine terminated
+2025-01-13 23:01:27,176 - __main__ - INFO - Initializing Calculator Application
+2025-01-13 23:01:35,742 - __main__ - INFO - MATLAB engine started successfully
+2025-01-13 23:01:43,466 - __main__ - DEBUG - Original expression: 'prod(1 to 10) x'
+2025-01-13 23:01:43,466 - __main__ - DEBUG - Original expression: 'prod(1 to 10) x'
+2025-01-13 23:01:43,467 - __main__ - DEBUG - After binom conversion: 'prod(1*to 10) x'
+2025-01-13 23:01:43,468 - __main__ - DEBUG - Converted integral expression: 'prod(1*to 10) x'
+2025-01-13 23:01:43,469 - __main__ - DEBUG - After explicit multiplication: 'prod(1*to 10) x'
+2025-01-13 23:01:43,469 - __main__ - DEBUG - Final MATLAB expression: 'prod(1*to 10) x'
+2025-01-13 23:01:43,469 - __main__ - DEBUG - Converted to SymPy expression: 'prod(1*to 10) x'
+2025-01-13 23:01:43,469 - __main__ - DEBUG - Converted to MATLAB expression: 'prod(1*to 10) x'
+2025-01-13 23:01:43,474 - __main__ - DEBUG - After shortcut conversion: prod(1*\to 10) x
+2025-01-13 23:01:43,474 - __main__ - DEBUG - Final MATLAB expression: 'prod(1*\to 10) x'
+2025-01-13 23:01:43,514 - __main__ - DEBUG - Raw result from MATLAB: 'Unexpected Error'
+2025-01-13 23:01:43,650 - __main__ - DEBUG - Simplified Result: 'Unexpected Error'
+2025-01-13 23:01:43,651 - __main__ - DEBUG - Displayed Result: Unexpected Error
+2025-01-13 23:03:33,632 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2025-01-13 23:03:33,634 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2025-01-13 23:03:33,634 - __main__ - DEBUG - After binom conversion: 'int 1/x dx'
+2025-01-13 23:03:33,635 - __main__ - DEBUG - Converted integral expression: 'int(1/x, x)'
+2025-01-13 23:03:33,635 - __main__ - DEBUG - After explicit multiplication: 'int(1/x, x)'
+2025-01-13 23:03:33,635 - __main__ - DEBUG - Final MATLAB expression: 'int(1/x, x)'
+2025-01-13 23:03:33,635 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/x, x)'
+2025-01-13 23:03:33,635 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/x, x)'
+2025-01-13 23:03:33,636 - __main__ - DEBUG - After shortcut conversion: int(1/x, x)
+2025-01-13 23:03:33,636 - __main__ - DEBUG - Final MATLAB expression: 'int(1/x, x)'
+2025-01-13 23:03:33,763 - __main__ - DEBUG - Raw result from MATLAB: 'log(x)'
+2025-01-13 23:03:33,922 - __main__ - DEBUG - Simplified Result: 'log(x)'
+2025-01-13 23:03:33,922 - __main__ - DEBUG - Displayed Result: ln(x)
+2025-01-13 23:03:35,614 - __main__ - INFO - MATLAB engine terminated
+2025-01-13 23:03:48,120 - __main__ - INFO - Initializing Calculator Application
+2025-01-13 23:03:55,314 - __main__ - INFO - MATLAB engine started successfully
+2025-01-13 23:04:01,381 - __main__ - DEBUG - Original expression: 'sum(1 to 100) x'
+2025-01-13 23:04:01,382 - __main__ - DEBUG - Original expression: 'sum(1 to 100) x'
+2025-01-13 23:04:01,383 - __main__ - DEBUG - After binom conversion: 'sum(1*to 100) x'
+2025-01-13 23:04:01,384 - __main__ - DEBUG - Converted integral expression: 'sum(1*to 100) x'
+2025-01-13 23:04:01,384 - __main__ - DEBUG - After explicit multiplication: 'sum(1*to 100) x'
+2025-01-13 23:04:01,385 - __main__ - DEBUG - Final MATLAB expression: 'sum(1*to 100) x'
+2025-01-13 23:04:01,385 - __main__ - DEBUG - Converted to SymPy expression: 'sum(1*to 100) x'
+2025-01-13 23:04:01,385 - __main__ - DEBUG - Converted to MATLAB expression: 'sum(1*to 100) x'
+2025-01-13 23:04:01,389 - __main__ - DEBUG - After shortcut conversion: sum(1*\to 100) x
+2025-01-13 23:04:01,390 - __main__ - DEBUG - Final MATLAB expression: 'sum(1*\to 100) x'
+2025-01-13 23:04:01,441 - __main__ - DEBUG - Raw result from MATLAB: 'Unexpected Error'
+2025-01-13 23:04:01,594 - __main__ - DEBUG - Simplified Result: 'Unexpected Error'
+2025-01-13 23:04:01,595 - __main__ - DEBUG - Displayed Result: Unexpected Error
+2025-01-13 23:09:28,456 - __main__ - INFO - MATLAB engine terminated
+2025-01-13 23:09:35,668 - __main__ - INFO - Initializing Calculator Application
+2025-01-13 23:09:43,197 - __main__ - INFO - MATLAB engine started successfully
+2025-01-13 23:09:50,025 - __main__ - DEBUG - Original expression: 'sum(1 to 100) x'
+2025-01-13 23:09:50,025 - __main__ - DEBUG - Original expression: 'sum(1 to 100) x'
+2025-01-13 23:09:50,026 - __main__ - DEBUG - After binom conversion: 'sum(1*to 100) x'
+2025-01-13 23:09:50,027 - __main__ - DEBUG - Converted integral expression: 'sum(1*to 100) x'
+2025-01-13 23:09:50,027 - __main__ - DEBUG - After explicit multiplication: 'sum(1*to 100) x'
+2025-01-13 23:09:50,027 - __main__ - DEBUG - Final MATLAB expression: 'sum(1*to 100) x'
+2025-01-13 23:09:50,028 - __main__ - DEBUG - Converted to SymPy expression: 'sum(1*to 100) x'
+2025-01-13 23:09:50,028 - __main__ - DEBUG - Converted to MATLAB expression: 'sum(1*to 100) x'
+2025-01-13 23:09:50,032 - __main__ - DEBUG - After shortcut conversion: sum(1*\to 100) x
+2025-01-13 23:09:50,033 - __main__ - DEBUG - Final MATLAB expression: 'sum(1*\to 100) x'
+2025-01-13 23:09:50,073 - __main__ - DEBUG - Raw result from MATLAB: 'Unexpected Error'
+2025-01-13 23:09:50,210 - __main__ - DEBUG - Simplified Result: 'Unexpected Error'
+2025-01-13 23:09:50,210 - __main__ - DEBUG - Displayed Result: Unexpected Error
+2025-01-13 23:12:59,188 - __main__ - INFO - MATLAB engine terminated
+2025-01-13 23:13:05,597 - __main__ - INFO - Initializing Calculator Application
+2025-01-13 23:13:12,468 - __main__ - INFO - MATLAB engine started successfully
+2025-01-13 23:13:16,205 - __main__ - DEBUG - Original expression: 'sum(1 to 100) x'
+2025-01-13 23:13:16,205 - __main__ - DEBUG - Original expression: 'sum(1 to 100) x'
+2025-01-13 23:13:16,206 - __main__ - DEBUG - After binom conversion: 'sum(1 to 100) x'
+2025-01-13 23:13:16,207 - __main__ - DEBUG - Converted integral expression: 'sum(1 to 100) x'
+2025-01-13 23:13:16,208 - __main__ - DEBUG - After explicit multiplication: 'sum(1 to 100) x'
+2025-01-13 23:13:16,208 - __main__ - DEBUG - Final MATLAB expression: 'sum(1 to 100) x'
+2025-01-13 23:13:16,208 - __main__ - DEBUG - Converted to SymPy expression: 'sum(1 to 100) x'
+2025-01-13 23:13:16,208 - __main__ - DEBUG - Converted to MATLAB expression: 'sum(1 to 100) x'
+2025-01-13 23:13:16,213 - __main__ - DEBUG - After shortcut conversion: symsum(x, k, 1, 100)
+2025-01-13 23:13:16,213 - __main__ - DEBUG - Final MATLAB expression: 'symsum(x, k, 1, 100)'
+2025-01-13 23:13:16,287 - __main__ - DEBUG - Raw result from MATLAB: '100*x'
+2025-01-13 23:13:16,424 - __main__ - DEBUG - Simplified Result: '100*x'
+2025-01-13 23:13:16,425 - __main__ - DEBUG - Displayed Result: 100*x
+2025-01-13 23:14:08,326 - __main__ - INFO - MATLAB engine terminated
+2025-01-13 23:26:33,032 - __main__ - INFO - Initializing Calculator Application
+2025-01-13 23:26:43,166 - __main__ - INFO - MATLAB engine started successfully
+2025-01-13 23:26:49,347 - __main__ - DEBUG - Original expression: 'sum(1 to 100) x'
+2025-01-13 23:26:49,348 - __main__ - DEBUG - Original expression: 'sum(1 to 100) x'
+2025-01-13 23:26:49,350 - __main__ - DEBUG - After binom conversion: 'sum(1 to 100) x'
+2025-01-13 23:26:49,351 - __main__ - DEBUG - Converted integral expression: 'sum(1 to 100) x'
+2025-01-13 23:26:49,351 - __main__ - DEBUG - After explicit multiplication: 'sum(1 to 100) x'
+2025-01-13 23:26:49,351 - __main__ - DEBUG - Final MATLAB expression: 'sum(1 to 100) x'
+2025-01-13 23:26:49,351 - __main__ - DEBUG - Converted to SymPy expression: 'sum(1 to 100) x'
+2025-01-13 23:26:49,352 - __main__ - DEBUG - Converted to MATLAB expression: 'sum(1 to 100) x'
+2025-01-13 23:26:49,357 - __main__ - DEBUG - After shortcut conversion: symsum(x, x, 1, 100)
+2025-01-13 23:26:49,357 - __main__ - DEBUG - Final MATLAB expression: 'symsum(x, x, 1, 100)'
+2025-01-13 23:26:49,832 - __main__ - DEBUG - Raw result from MATLAB: '5050'
+2025-01-13 23:26:50,029 - __main__ - DEBUG - Simplified Result: '5050'
+2025-01-13 23:26:50,030 - __main__ - DEBUG - Displayed Result: 5050
+2025-01-13 23:26:55,394 - __main__ - DEBUG - Original expression: 'prod(1 to 100) x'
+2025-01-13 23:26:55,394 - __main__ - DEBUG - Original expression: 'prod(1 to 100) x'
+2025-01-13 23:26:55,395 - __main__ - DEBUG - After binom conversion: 'prod(1 to 100) x'
+2025-01-13 23:26:55,395 - __main__ - DEBUG - Converted integral expression: 'prod(1 to 100) x'
+2025-01-13 23:26:55,395 - __main__ - DEBUG - After explicit multiplication: 'prod(1 to 100) x'
+2025-01-13 23:26:55,395 - __main__ - DEBUG - Final MATLAB expression: 'prod(1 to 100) x'
+2025-01-13 23:26:55,395 - __main__ - DEBUG - Converted to SymPy expression: 'prod(1 to 100) x'
+2025-01-13 23:26:55,395 - __main__ - DEBUG - Converted to MATLAB expression: 'prod(1 to 100) x'
+2025-01-13 23:26:55,395 - __main__ - DEBUG - After shortcut conversion: prod(sym(x.*ones(1,100-1+1)))
+2025-01-13 23:26:55,395 - __main__ - DEBUG - Final MATLAB expression: 'prod(sym(x.*ones(1,100-1+1)))'
+2025-01-13 23:26:55,444 - __main__ - DEBUG - Raw result from MATLAB: 'x^100'
+2025-01-13 23:26:55,485 - __main__ - DEBUG - Simplified Result: 'x^100'
+2025-01-13 23:26:55,485 - __main__ - DEBUG - Displayed Result: x^100
+2025-01-13 23:30:57,767 - __main__ - INFO - MATLAB engine terminated
+2025-01-13 23:32:25,579 - __main__ - INFO - Initializing Calculator Application
+2025-01-13 23:32:34,830 - __main__ - INFO - MATLAB engine started successfully
+2025-01-13 23:32:48,797 - __main__ - DEBUG - Original expression: 'prod(1 to inf) (-1/2)^x'
+2025-01-13 23:32:48,798 - __main__ - DEBUG - Original expression: 'prod(1 to inf) (-1/2)^x'
+2025-01-13 23:32:48,800 - __main__ - DEBUG - After binom conversion: 'prod(1 to inf) (-1/2)^x'
+2025-01-13 23:32:48,801 - __main__ - DEBUG - Converted integral expression: 'prod(1 to inf) (-1/2)^x'
+2025-01-13 23:32:48,802 - __main__ - DEBUG - After explicit multiplication: 'prod(1 to inf) (-1/2)^x'
+2025-01-13 23:32:48,802 - __main__ - DEBUG - Final MATLAB expression: 'prod(1 to inf) (-1/2)^x'
+2025-01-13 23:32:48,802 - __main__ - DEBUG - Converted to SymPy expression: 'prod(1 to inf) (-1/2)^x'
+2025-01-13 23:32:48,802 - __main__ - DEBUG - Converted to MATLAB expression: 'prod(1 to inf) (-1/2)^x'
+2025-01-13 23:32:48,807 - __main__ - DEBUG - After shortcut conversion: prod(1 \to inf) (-1/2)^x
+2025-01-13 23:32:48,807 - __main__ - DEBUG - Final MATLAB expression: 'prod(1 \to inf) (-1/2)^x'
+2025-01-13 23:32:48,879 - __main__ - DEBUG - Raw result from MATLAB: 'Unexpected Error'
+2025-01-13 23:32:49,033 - __main__ - DEBUG - Simplified Result: 'Unexpected Error'
+2025-01-13 23:32:49,033 - __main__ - DEBUG - Displayed Result: Unexpected Error
+2025-01-13 23:33:21,611 - __main__ - DEBUG - Original expression: 'sum(1 to inf) (-1/2)^x'
+2025-01-13 23:33:21,612 - __main__ - DEBUG - Original expression: 'sum(1 to inf) (-1/2)^x'
+2025-01-13 23:33:21,613 - __main__ - DEBUG - After binom conversion: 'sum(1 to inf) (-1/2)^x'
+2025-01-13 23:33:21,613 - __main__ - DEBUG - Converted integral expression: 'sum(1 to inf) (-1/2)^x'
+2025-01-13 23:33:21,613 - __main__ - DEBUG - After explicit multiplication: 'sum(1 to inf) (-1/2)^x'
+2025-01-13 23:33:21,613 - __main__ - DEBUG - Final MATLAB expression: 'sum(1 to inf) (-1/2)^x'
+2025-01-13 23:33:21,613 - __main__ - DEBUG - Converted to SymPy expression: 'sum(1 to inf) (-1/2)^x'
+2025-01-13 23:33:21,613 - __main__ - DEBUG - Converted to MATLAB expression: 'sum(1 to inf) (-1/2)^x'
+2025-01-13 23:33:21,614 - __main__ - DEBUG - After shortcut conversion: sum(1 \to inf) (-1/2)^x
+2025-01-13 23:33:21,614 - __main__ - DEBUG - Final MATLAB expression: 'sum(1 \to inf) (-1/2)^x'
+2025-01-13 23:33:21,662 - __main__ - DEBUG - Raw result from MATLAB: 'Unexpected Error'
+2025-01-13 23:33:21,707 - __main__ - DEBUG - Simplified Result: 'Unexpected Error'
+2025-01-13 23:33:21,708 - __main__ - DEBUG - Displayed Result: Unexpected Error
+2025-01-13 23:33:29,893 - __main__ - DEBUG - Original expression: 'sum(1 to 10) x'
+2025-01-13 23:33:29,894 - __main__ - DEBUG - Original expression: 'sum(1 to 10) x'
+2025-01-13 23:33:29,894 - __main__ - DEBUG - After binom conversion: 'sum(1 to 10) x'
+2025-01-13 23:33:29,894 - __main__ - DEBUG - Converted integral expression: 'sum(1 to 10) x'
+2025-01-13 23:33:29,894 - __main__ - DEBUG - After explicit multiplication: 'sum(1 to 10) x'
+2025-01-13 23:33:29,894 - __main__ - DEBUG - Final MATLAB expression: 'sum(1 to 10) x'
+2025-01-13 23:33:29,894 - __main__ - DEBUG - Converted to SymPy expression: 'sum(1 to 10) x'
+2025-01-13 23:33:29,895 - __main__ - DEBUG - Converted to MATLAB expression: 'sum(1 to 10) x'
+2025-01-13 23:33:29,896 - __main__ - DEBUG - After shortcut conversion: symsum(x, x, 1, 10)
+2025-01-13 23:33:29,896 - __main__ - DEBUG - Final MATLAB expression: 'symsum(x, x, 1, 10)'
+2025-01-13 23:33:30,374 - __main__ - DEBUG - Raw result from MATLAB: '55'
+2025-01-13 23:33:30,444 - __main__ - DEBUG - Simplified Result: '55'
+2025-01-13 23:33:30,444 - __main__ - DEBUG - Displayed Result: 55
+2025-01-13 23:35:10,292 - __main__ - DEBUG - Original expression: 'prod(1 to 10) x'
+2025-01-13 23:35:10,293 - __main__ - DEBUG - Original expression: 'prod(1 to 10) x'
+2025-01-13 23:35:10,294 - __main__ - DEBUG - After binom conversion: 'prod(1 to 10) x'
+2025-01-13 23:35:10,294 - __main__ - DEBUG - Converted integral expression: 'prod(1 to 10) x'
+2025-01-13 23:35:10,294 - __main__ - DEBUG - After explicit multiplication: 'prod(1 to 10) x'
+2025-01-13 23:35:10,294 - __main__ - DEBUG - Final MATLAB expression: 'prod(1 to 10) x'
+2025-01-13 23:35:10,294 - __main__ - DEBUG - Converted to SymPy expression: 'prod(1 to 10) x'
+2025-01-13 23:35:10,294 - __main__ - DEBUG - Converted to MATLAB expression: 'prod(1 to 10) x'
+2025-01-13 23:35:10,295 - __main__ - DEBUG - After shortcut conversion: prod(x, x, 1, 10)
+2025-01-13 23:35:10,295 - __main__ - DEBUG - Final MATLAB expression: 'prod(x, x, 1, 10)'
+2025-01-13 23:35:10,355 - __main__ - DEBUG - Raw result from MATLAB: 'Unexpected Error'
+2025-01-13 23:35:10,397 - __main__ - DEBUG - Simplified Result: 'Unexpected Error'
+2025-01-13 23:35:10,398 - __main__ - DEBUG - Displayed Result: Unexpected Error
+2025-01-13 23:39:04,322 - __main__ - INFO - MATLAB engine terminated
+2025-01-13 23:39:34,853 - __main__ - INFO - Initializing Calculator Application
+2025-01-13 23:39:44,347 - __main__ - INFO - MATLAB engine started successfully
+2025-01-13 23:40:10,057 - __main__ - DEBUG - Original expression: 'prod(1 to 10) x'
+2025-01-13 23:40:10,058 - __main__ - DEBUG - Original expression: 'prod(1 to 10) x'
+2025-01-13 23:40:10,059 - __main__ - DEBUG - After binom conversion: 'prod(1 to 10) x'
+2025-01-13 23:40:10,059 - __main__ - DEBUG - Converted integral expression: 'prod(1 to 10) x'
+2025-01-13 23:40:10,060 - __main__ - DEBUG - After explicit multiplication: 'prod(1 to 10) x'
+2025-01-13 23:40:10,060 - __main__ - DEBUG - Final MATLAB expression: 'prod(1 to 10) x'
+2025-01-13 23:40:10,060 - __main__ - DEBUG - Converted to SymPy expression: 'prod(1 to 10) x'
+2025-01-13 23:40:10,060 - __main__ - DEBUG - Converted to MATLAB expression: 'prod(1 to 10) x'
+2025-01-13 23:40:10,065 - __main__ - DEBUG - After shortcut conversion: prod(arrayfun(@(k) subs(x, x, k), 1:10))
+2025-01-13 23:40:10,065 - __main__ - DEBUG - Final MATLAB expression: 'prod(arrayfun(@(k) subs(x, x, k), 1:10))'
+2025-01-13 23:40:10,227 - __main__ - DEBUG - Raw result from MATLAB: '3628800'
+2025-01-13 23:40:10,386 - __main__ - DEBUG - Simplified Result: '3628800'
+2025-01-13 23:40:10,387 - __main__ - DEBUG - Displayed Result: 3628800
+2025-01-13 23:40:23,738 - __main__ - DEBUG - Original expression: 'prod(1 to inf) (-1/2)^x'
+2025-01-13 23:40:23,739 - __main__ - DEBUG - Original expression: 'prod(1 to inf) (-1/2)^x'
+2025-01-13 23:40:23,740 - __main__ - DEBUG - After binom conversion: 'prod(1 to inf) (-1/2)^x'
+2025-01-13 23:40:23,740 - __main__ - DEBUG - Converted integral expression: 'prod(1 to inf) (-1/2)^x'
+2025-01-13 23:40:23,740 - __main__ - DEBUG - After explicit multiplication: 'prod(1 to inf) (-1/2)^x'
+2025-01-13 23:40:23,740 - __main__ - DEBUG - Final MATLAB expression: 'prod(1 to inf) (-1/2)^x'
+2025-01-13 23:40:23,740 - __main__ - DEBUG - Converted to SymPy expression: 'prod(1 to inf) (-1/2)^x'
+2025-01-13 23:40:23,740 - __main__ - DEBUG - Converted to MATLAB expression: 'prod(1 to inf) (-1/2)^x'
+2025-01-13 23:40:23,740 - __main__ - DEBUG - After shortcut conversion: prod(1 \to inf) (-1/2)^x
+2025-01-13 23:40:23,741 - __main__ - DEBUG - Final MATLAB expression: 'prod(1 \to inf) (-1/2)^x'
+2025-01-13 23:40:23,791 - __main__ - DEBUG - Raw result from MATLAB: 'Unexpected Error'
+2025-01-13 23:40:23,831 - __main__ - DEBUG - Simplified Result: 'Unexpected Error'
+2025-01-13 23:40:23,831 - __main__ - DEBUG - Displayed Result: Unexpected Error
+2025-01-13 23:40:36,106 - __main__ - DEBUG - Original expression: 'prod(1 to 12) (-1/2)^x'
+2025-01-13 23:40:36,107 - __main__ - DEBUG - Original expression: 'prod(1 to 12) (-1/2)^x'
+2025-01-13 23:40:36,108 - __main__ - DEBUG - After binom conversion: 'prod(1 to 12) (-1/2)^x'
+2025-01-13 23:40:36,108 - __main__ - DEBUG - Converted integral expression: 'prod(1 to 12) (-1/2)^x'
+2025-01-13 23:40:36,108 - __main__ - DEBUG - After explicit multiplication: 'prod(1 to 12) (-1/2)^x'
+2025-01-13 23:40:36,108 - __main__ - DEBUG - Final MATLAB expression: 'prod(1 to 12) (-1/2)^x'
+2025-01-13 23:40:36,108 - __main__ - DEBUG - Converted to SymPy expression: 'prod(1 to 12) (-1/2)^x'
+2025-01-13 23:40:36,108 - __main__ - DEBUG - Converted to MATLAB expression: 'prod(1 to 12) (-1/2)^x'
+2025-01-13 23:40:36,109 - __main__ - DEBUG - After shortcut conversion: prod(arrayfun(@(k) subs((-1/2)^x, x, k), 1:12))
+2025-01-13 23:40:36,109 - __main__ - DEBUG - Final MATLAB expression: 'prod(arrayfun(@(k) subs((-1/2)^x, x, k), 1:12))'
+2025-01-13 23:40:36,244 - __main__ - DEBUG - Raw result from MATLAB: '1/302231454903657293676544'
+2025-01-13 23:40:36,281 - __main__ - DEBUG - Simplified Result: '1/302231454903657293676544'
+2025-01-13 23:40:36,281 - __main__ - DEBUG - Displayed Result: 1/302231454903657293676544
+2025-01-14 10:33:19,236 - __main__ - INFO - MATLAB engine terminated
+2025-01-14 10:35:35,354 - __main__ - INFO - Initializing Calculator Application
+2025-01-14 10:35:45,372 - __main__ - INFO - MATLAB engine started successfully
+2025-01-14 10:37:47,243 - __main__ - DEBUG - Original expression: 'prod(1 to inf) (-1/2)^x'
+2025-01-14 10:37:47,245 - __main__ - DEBUG - Original expression: 'prod(1 to inf) (-1/2)^x'
+2025-01-14 10:37:47,247 - __main__ - DEBUG - After binom conversion: 'prod(1 to inf) (-1/2)^x'
+2025-01-14 10:37:47,248 - __main__ - DEBUG - Converted integral expression: 'prod(1 to inf) (-1/2)^x'
+2025-01-14 10:37:47,249 - __main__ - DEBUG - After explicit multiplication: 'prod(1 to inf) (-1/2)^x'
+2025-01-14 10:37:47,249 - __main__ - DEBUG - Final MATLAB expression: 'prod(1 to inf) (-1/2)^x'
+2025-01-14 10:37:47,249 - __main__ - DEBUG - Converted to SymPy expression: 'prod(1 to inf) (-1/2)^x'
+2025-01-14 10:37:47,249 - __main__ - DEBUG - Converted to MATLAB expression: 'prod(1 to inf) (-1/2)^x'
+2025-01-14 10:37:47,255 - __main__ - DEBUG - After shortcut conversion: limit(prod(arrayfun(@(k) subs((-1/2)^x, x, k), 1:100)), 100, Inf)
+2025-01-14 10:37:47,255 - __main__ - DEBUG - Final MATLAB expression: 'limit(prod(arrayfun(@(k) subs((-1/2)^x, x, k), 1:100)), 100, Inf)'
+2025-01-14 10:37:48,359 - __main__ - DEBUG - Raw result from MATLAB: 'Unexpected Error'
+2025-01-14 10:37:48,548 - __main__ - DEBUG - Simplified Result: 'Unexpected Error'
+2025-01-14 10:37:48,549 - __main__ - DEBUG - Displayed Result: Unexpected Error
+2025-01-14 10:39:06,966 - __main__ - DEBUG - Original expression: 'lim(x to 3) x^2'
+2025-01-14 10:39:06,971 - __main__ - DEBUG - Original expression: 'lim(x to 3) x^2'
+2025-01-14 10:39:06,973 - __main__ - DEBUG - After binom conversion: 'lim(x to 3) x^2'
+2025-01-14 10:39:06,973 - __main__ - DEBUG - Converted integral expression: 'lim(x to 3) x^2'
+2025-01-14 10:39:06,973 - __main__ - DEBUG - After explicit multiplication: 'lim(x to 3) x^2'
+2025-01-14 10:39:06,973 - __main__ - DEBUG - Final MATLAB expression: 'lim(x to 3) x^2'
+2025-01-14 10:39:06,973 - __main__ - DEBUG - Converted to SymPy expression: 'lim(x to 3) x^2'
+2025-01-14 10:39:06,973 - __main__ - DEBUG - Converted to MATLAB expression: 'lim(x to 3) x^2'
+2025-01-14 10:39:06,975 - __main__ - DEBUG - After shortcut conversion: limit(x^2, x, 3)
+2025-01-14 10:39:06,975 - __main__ - DEBUG - Final MATLAB expression: 'limit(x^2, x, 3)'
+2025-01-14 10:39:07,423 - __main__ - DEBUG - Raw result from MATLAB: '9'
+2025-01-14 10:39:07,756 - __main__ - DEBUG - Simplified Result: '9'
+2025-01-14 10:39:07,759 - __main__ - DEBUG - Displayed Result: 9
+2025-01-14 10:39:09,357 - __main__ - INFO - MATLAB engine terminated
+2025-01-14 10:39:19,601 - __main__ - INFO - Initializing Calculator Application
+2025-01-14 10:39:27,325 - __main__ - INFO - MATLAB engine started successfully
+2025-01-14 10:40:18,806 - __main__ - DEBUG - Original expression: 'prod(1 to inf) (-1/2)^x'
+2025-01-14 10:40:18,811 - __main__ - DEBUG - Original expression: 'prod(1 to inf) (-1/2)^x'
+2025-01-14 10:40:18,816 - __main__ - DEBUG - After binom conversion: 'prod(1 to inf) (-1/2)^x'
+2025-01-14 10:40:18,817 - __main__ - DEBUG - Converted integral expression: 'prod(1 to inf) (-1/2)^x'
+2025-01-14 10:40:18,818 - __main__ - DEBUG - After explicit multiplication: 'prod(1 to inf) (-1/2)^x'
+2025-01-14 10:40:18,818 - __main__ - DEBUG - Final MATLAB expression: 'prod(1 to inf) (-1/2)^x'
+2025-01-14 10:40:18,818 - __main__ - DEBUG - Converted to SymPy expression: 'prod(1 to inf) (-1/2)^x'
+2025-01-14 10:40:18,818 - __main__ - DEBUG - Converted to MATLAB expression: 'prod(1 to inf) (-1/2)^x'
+2025-01-14 10:40:18,822 - __main__ - DEBUG - After shortcut conversion: limit(sym(prod(arrayfun(@(k) subs((-1/2)^x, x, k), 1:n))), n, Inf)
+2025-01-14 10:40:18,822 - __main__ - DEBUG - Final MATLAB expression: 'limit(sym(prod(arrayfun(@(k) subs((-1/2)^x, x, k), 1:n))), n, Inf)'
+2025-01-14 10:40:19,458 - __main__ - DEBUG - Raw result from MATLAB: 'Unexpected Error'
+2025-01-14 10:40:19,688 - __main__ - DEBUG - Simplified Result: 'Unexpected Error'
+2025-01-14 10:40:19,692 - __main__ - DEBUG - Displayed Result: Unexpected Error
+2025-01-14 10:41:28,384 - __main__ - INFO - MATLAB engine terminated
+2025-01-14 10:41:36,774 - __main__ - INFO - Initializing Calculator Application
+2025-01-14 10:41:45,949 - __main__ - INFO - MATLAB engine started successfully
+2025-01-14 10:43:56,921 - __main__ - DEBUG - Original expression: 'prod(1 to inf) (-1/2)^x'
+2025-01-14 10:43:56,923 - __main__ - DEBUG - Original expression: 'prod(1 to inf) (-1/2)^x'
+2025-01-14 10:43:56,926 - __main__ - DEBUG - After binom conversion: 'prod(1 to inf) (-1/2)^x'
+2025-01-14 10:43:56,926 - __main__ - DEBUG - Converted integral expression: 'prod(1 to inf) (-1/2)^x'
+2025-01-14 10:43:56,927 - __main__ - DEBUG - After explicit multiplication: 'prod(1 to inf) (-1/2)^x'
+2025-01-14 10:43:56,927 - __main__ - DEBUG - Final MATLAB expression: 'prod(1 to inf) (-1/2)^x'
+2025-01-14 10:43:56,927 - __main__ - DEBUG - Converted to SymPy expression: 'prod(1 to inf) (-1/2)^x'
+2025-01-14 10:43:56,927 - __main__ - DEBUG - Converted to MATLAB expression: 'prod(1 to inf) (-1/2)^x'
+2025-01-14 10:43:56,931 - __main__ - DEBUG - After shortcut conversion: exp(symsum(log((-1/2)^x), x, 1, Inf))
+2025-01-14 10:43:56,931 - __main__ - DEBUG - Final MATLAB expression: 'exp(symsum(log((-1/2)^x), x, 1, Inf))'
+2025-01-14 10:43:58,029 - __main__ - DEBUG - Raw result from MATLAB: '(-1/2)^(Inf/2)*(-1/2)^(Inf^2/2)'
+2025-01-14 10:43:58,387 - __main__ - DEBUG - Simplified Result: '(-1/2)^(Inf/2)*(-1/2)^(Inf^2/2)'
+2025-01-14 10:43:58,393 - __main__ - DEBUG - Displayed Result: (-1/2)^(Inf/2)*(-1/2)^(Inf^2/2)
+2025-01-14 10:50:12,691 - __main__ - INFO - MATLAB engine terminated
+2025-01-14 10:50:18,834 - __main__ - INFO - Initializing Calculator Application
+2025-01-14 10:50:29,400 - __main__ - INFO - MATLAB engine started successfully
+2025-01-14 10:50:43,416 - __main__ - DEBUG - Original expression: 'prod(1 to inf) (-1/2)^x'
+2025-01-14 10:50:43,417 - __main__ - DEBUG - Original expression: 'prod(1 to inf) (-1/2)^x'
+2025-01-14 10:50:43,419 - __main__ - DEBUG - After binom conversion: 'prod(1 to inf) (-1/2)^x'
+2025-01-14 10:50:43,420 - __main__ - DEBUG - Converted integral expression: 'prod(1 to inf) (-1/2)^x'
+2025-01-14 10:50:43,420 - __main__ - DEBUG - After explicit multiplication: 'prod(1 to inf) (-1/2)^x'
+2025-01-14 10:50:43,420 - __main__ - DEBUG - Final MATLAB expression: 'prod(1 to inf) (-1/2)^x'
+2025-01-14 10:50:43,421 - __main__ - DEBUG - Converted to SymPy expression: 'prod(1 to inf) (-1/2)^x'
+2025-01-14 10:50:43,421 - __main__ - DEBUG - Converted to MATLAB expression: 'prod(1 to inf) (-1/2)^x'
+2025-01-14 10:50:43,425 - __main__ - DEBUG - After shortcut conversion: exp(symsum(log((-1/2)^x), x, 1, Inf))
+2025-01-14 10:50:43,426 - __main__ - DEBUG - Final MATLAB expression: 'exp(symsum(log((-1/2)^x), x, 1, Inf))'
+2025-01-14 10:50:44,048 - __main__ - DEBUG - Raw result from MATLAB: '(-1/2)^(Inf/2)*(-1/2)^(Inf^2/2)'
+2025-01-14 10:50:44,294 - __main__ - DEBUG - Simplified Result: '(-1/2)^(Inf/2)*(-1/2)^(Inf^2/2)'
+2025-01-14 10:50:44,296 - __main__ - DEBUG - Displayed Result: (-1/2)^(Inf/2)*(-1/2)^(Inf^2/2)
+2025-01-14 10:51:15,278 - __main__ - DEBUG - Original expression: '(-1/2)^x'
+2025-01-14 10:51:15,280 - __main__ - DEBUG - Original expression: '(-1/2)^x'
+2025-01-14 10:51:15,280 - __main__ - DEBUG - After binom conversion: '(-1/2)^x'
+2025-01-14 10:51:15,280 - __main__ - DEBUG - Converted integral expression: '(-1/2)^x'
+2025-01-14 10:51:15,281 - __main__ - DEBUG - After explicit multiplication: '(-1/2)^x'
+2025-01-14 10:51:15,281 - __main__ - DEBUG - Final MATLAB expression: '(-1/2)^x'
+2025-01-14 10:51:15,281 - __main__ - DEBUG - Converted to SymPy expression: '(-1/2)^x'
+2025-01-14 10:51:15,281 - __main__ - DEBUG - Converted to MATLAB expression: '(-1/2)^x'
+2025-01-14 10:51:15,282 - __main__ - DEBUG - After shortcut conversion: (-1/2)^x
+2025-01-14 10:51:15,282 - __main__ - DEBUG - Final MATLAB expression: '(-1/2)^x'
+2025-01-14 10:51:15,322 - __main__ - DEBUG - Raw result from MATLAB: '(-1/2)^x'
+2025-01-14 10:51:15,363 - __main__ - DEBUG - Simplified Result: '(-1/2)^x'
+2025-01-14 10:51:15,363 - __main__ - DEBUG - Displayed Result: (-1/2)^x
+2025-01-14 10:51:16,473 - __main__ - DEBUG - Visualizing expression: (-1/2)^x
+2025-01-14 10:52:25,965 - __main__ - INFO - MATLAB engine terminated
+2025-01-14 10:57:14,316 - __main__ - INFO - Initializing Calculator Application
+2025-01-14 10:57:24,760 - __main__ - INFO - MATLAB engine started successfully
+2025-01-14 10:57:35,246 - __main__ - DEBUG - Visualizing expression: (-1/2)^x
+2025-01-14 10:58:19,228 - __main__ - DEBUG - Visualizing expression: 2^x
+2025-01-14 11:02:27,606 - __main__ - INFO - MATLAB engine terminated
+2025-01-14 11:02:35,095 - __main__ - INFO - Initializing Calculator Application
+2025-01-14 11:02:44,977 - __main__ - INFO - MATLAB engine started successfully
+2025-01-14 11:05:00,681 - __main__ - DEBUG - Visualizing expression: (-1/2)^x
+2025-01-14 11:05:20,126 - __main__ - DEBUG - Visualizing expression: e^x
+2025-01-14 11:11:04,435 - __main__ - INFO - MATLAB engine terminated
+2025-01-14 11:11:12,890 - __main__ - INFO - Initializing Calculator Application
+2025-01-14 11:11:22,079 - __main__ - INFO - MATLAB engine started successfully
+2025-01-14 11:11:28,753 - __main__ - DEBUG - Visualizing expression: log3(x)
+2025-01-14 11:11:49,558 - __main__ - INFO - MATLAB engine terminated
+2025-01-14 11:11:57,153 - __main__ - INFO - Initializing Calculator Application
+2025-01-14 11:12:03,122 - __main__ - INFO - MATLAB engine started successfully
+2025-01-14 11:12:32,275 - __main__ - DEBUG - Visualizing expression: log3(x)
+2025-01-14 11:12:52,284 - __main__ - INFO - MATLAB engine terminated
+2025-01-14 11:14:43,261 - __main__ - INFO - Initializing Calculator Application
+2025-01-14 11:14:51,737 - __main__ - INFO - MATLAB engine started successfully
+2025-01-14 11:15:48,626 - __main__ - DEBUG - Visualizing expression: e^x
+2025-01-14 11:17:54,283 - __main__ - INFO - MATLAB engine terminated
+2025-01-14 11:18:03,898 - __main__ - INFO - Initializing Calculator Application
+2025-01-14 11:18:12,997 - __main__ - INFO - MATLAB engine started successfully
+2025-01-14 11:18:20,665 - __main__ - DEBUG - Visualizing expression: e^x
+2025-01-14 11:46:16,264 - __main__ - INFO - MATLAB engine terminated
+2025-01-14 11:47:55,900 - __main__ - INFO - Initializing Calculator Application
+2025-01-14 11:48:10,177 - __main__ - INFO - MATLAB engine started successfully
+2025-01-14 11:48:56,695 - __main__ - DEBUG - Visualizing expression: x^2+2*x+1
+2025-01-14 11:49:33,941 - __main__ - INFO - MATLAB engine terminated

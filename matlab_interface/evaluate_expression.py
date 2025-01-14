@@ -74,6 +74,8 @@ class EvaluateExpression:
             str: The preprocessed expression.
         """
         original_expr = expression
+
+        expression = ExpressionShortcuts.convert_sum_prod_expression(expression)
         expression = self.ln_pattern.sub('log(', expression)
         
         for trig_regex, degree_func in self.trig_patterns.items():
@@ -172,15 +174,26 @@ class EvaluateExpression:
             self.logger.error("Expression is not a string")
             raise TypeError("Expression must be a string")
 
-        # Combine patterns to remove derivatives and functions in one step
-        expression_clean = re.sub(r'd\^?\d*/d[a-zA-Z]+|\b(?:sin|cos|tan|log|exp|sqrt|abs|sind|cosd|tand)\b', '', expression)
-        
+        # Remove derivatives and common functions
+        expression_clean = re.sub(
+            r'd\^?\d*/d[a-zA-Z]+|\b(?:sin|cos|tan|log|exp|sqrt|abs|sind|cosd|tand)\b',
+            '',
+            expression
+        )
+
         # Extract variable names (one or more letters)
-        variables = set(re.findall(r'\b[a-zA-Z]+\b', expression_clean))
-        reserved_keywords = {'int', 'diff', 'syms', 'log', 'sin', 'cos', 'tan', 
-                             'exp', 'sqrt', 'abs', 'sind', 'cosd', 'tand', 'symsum', 
-                             'prod', 'solve'}
-        variables = variables - reserved_keywords
+        variables = set(re.findall(r'\b[A-Za-z]+\b', expression_clean))
+        
+        # Define reserved keywords (both lowercase and uppercase for 'inf')
+        reserved_keywords = {
+            'int', 'diff', 'syms', 'log', 'sin', 'cos', 'tan', 
+            'exp', 'sqrt', 'abs', 'sind', 'cosd', 'tand', 'symsum', 
+            'prod', 'solve', 'inf', 'Inf'
+        }
+        
+        # Exclude reserved keywords in a case-insensitive manner
+        variables = {v for v in variables if v.lower() not in {k.lower() for k in reserved_keywords}}
+        
         self.logger.debug(f"Extracted variables from expression: {variables}")
         return sorted(variables)
 
@@ -263,20 +276,22 @@ class EvaluateExpression:
         try:
             # Clean up the expression
             expr = self._preprocess_expression(expr)
-            self.logger.debug(f"Converted '{expr}' to '{expr}'")
             
-            # Define MATLAB keywords and functions to exclude
+            self.logger.debug(f"Processing expression: {expr}")
+            
+            # Extract variables (excluding MATLAB keywords and function names)
             matlab_keywords = {
                 'solve', 'simplify', 'expand', 'factor', 'collect',
                 'sin', 'cos', 'tan', 'asin', 'acos', 'atan',
                 'sind', 'cosd', 'tand', 'asind', 'acosd', 'atand',
                 'sinh', 'cosh', 'tanh', 'asinh', 'acosh', 'atanh',
                 'log', 'log10', 'log2', 'exp', 'sqrt', 'abs', 'sym', 'syms',
-                'diff', 'int', 'limit', 'subs', 'pi', 'i'
+                'diff', 'int', 'limit', 'subs', 'pi', 'i', 'to', 'prod', 'sum',
+                'arrayfun'  # Add other MATLAB functions as needed
             }
             
-            # Extract variables using more precise regex
-            variables = set(re.findall(r'(?<![a-zA-Z])[a-zA-Z_]\w*(?!\w*\()', expr)) - matlab_keywords
+            # Extract variables using more precise regex that excludes function names
+            variables = set(re.findall(r'(?<![a-zA-Z])([a-zA-Z_]\w*)(?!\w*\()', expr)) - matlab_keywords
             self.logger.debug(f"Extracted variables from expression: {variables}")
             
             # Declare symbolic variables in MATLAB

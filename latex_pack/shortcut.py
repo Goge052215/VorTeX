@@ -145,7 +145,7 @@ class ExpressionShortcuts:
         return all_shortcuts
     
     @classmethod
-    def     convert_shortcut(cls, text):
+    def convert_shortcut(cls, text):
         """
         Convert shortcuts in text to their LaTeX equivalents.
         
@@ -284,24 +284,42 @@ class ExpressionShortcuts:
     @staticmethod
     def convert_sum_prod_expression(expr):
         """Convert sum and prod expressions to MATLAB format."""
-        # Enhanced pattern to handle spaces and case insensitivity
-        sum_pattern = r'(?i)sum\s*\(\s*(\d+)\s*to\s*(\d+)\s*\)\s*([^\n]+)'
-        
-        def replace_sum(match):
-            start, end, function = match.groups()
-            return f"symsum({function}, x, {start}, {end})"
+        def extract_variable(expr_str):
+            """Helper function to extract variable from expression"""
+            vars = re.findall(r'(?<![a-zA-Z])([a-zA-Z])(?![a-zA-Z])', expr_str)
+            reserved = {'e', 'i', 'n', 'inf', 'Inf'}
+            vars = [v for v in vars if v not in reserved]
+            return vars[0] if vars else 'x'
 
-        expr = re.sub(sum_pattern, replace_sum, expr)
-        
-        # Adjust prod pattern to use a loop or symbolic product
-        prod_pattern = r'(?i)prod\s*\(\s*(\d+)\s*to\s*(\d+)\s*\)\s*([^\n]+)'
-        
+        # Handle regular product expressions: prod(1 to inf) x
+        prod_pattern = r'prod\s*\(\s*(\d+)\s*to\s*(inf|Inf|\d+)\s*\)\s*([^\n]+)'
         def replace_prod(match):
-            start, end, function = match.groups()
-            # Use a loop or symbolic product function
-            return f"prod(arrayfun(@(x) {function}, {start}:{end}))"
-
+            start = match.group(1).strip()
+            end = match.group(2).strip().lower()
+            expr_part = match.group(3).strip()
+            var = extract_variable(expr_part)
+            
+            # Handle infinity case differently
+            if end == 'inf':
+                # Use symsum with log for infinite products
+                return f"exp(symsum(log({expr_part}), {var}, {start}, Inf))"
+            else:
+                return f"prod(arrayfun(@(k) subs({expr_part}, {var}, k), {start}:{end}))"
+        
         expr = re.sub(prod_pattern, replace_prod, expr)
+        
+        # Handle sum expressions
+        sum_pattern = r'sum\s*\(\s*(\d+)\s*to\s*(inf|Inf|\d+)\s*\)\s*([^\n]+)'
+        def replace_sum(match):
+            start = match.group(1).strip()
+            end = match.group(2).strip().lower()
+            expr_part = match.group(3).strip()
+            var = extract_variable(expr_part)
+            # Convert 'inf' to 'Inf' for MATLAB
+            end = 'Inf' if end == 'inf' else end
+            return f"symsum({expr_part}, {var}, {start}, {end})"
+        
+        expr = re.sub(sum_pattern, replace_sum, expr)
         
         return expr
 

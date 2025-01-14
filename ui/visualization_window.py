@@ -16,6 +16,7 @@ class VisualizationWindow(QMainWindow):
         super().__init__(parent)
         self.logger = logging.getLogger(__name__)
         self.current_function = None
+        self.current_python_expr = None
         
         # Media player and video widget
         self.media_player = QMediaPlayer(self)
@@ -144,7 +145,7 @@ class VisualizationWindow(QMainWindow):
             self.logger.error(f"Error updating plot: {e}")
             QMessageBox.critical(self, "Error", f"Failed to update plot: {str(e)}")
 
-    def visualize_function(self, func_str: str, x_range: tuple = (-10, 10), y_range: tuple = (-5, 5)):
+    def visualize_function(self, func_str: str, python_expr: str = None, x_range: tuple = (-10, 10), y_range: tuple = (-5, 5)):
         """Visualize a function using MathVisualizer."""
         try:
             self.media_player.stop()
@@ -153,6 +154,7 @@ class VisualizationWindow(QMainWindow):
             self._cleanup_manim_files()
             
             self.current_function = func_str
+            self.current_python_expr = python_expr if python_expr else func_str
             self.function_input.setText(func_str)
             self.x_range_input.setText(str(x_range))
             self.y_range_input.setText(str(y_range))
@@ -164,7 +166,13 @@ class VisualizationWindow(QMainWindow):
             config.media_dir = media_dir
             config.video_dir = video_dir
             
-            scene = self.visualizer.FunctionScene(func_str, x_range=x_range, y_range=y_range, logger=self.logger)
+            scene = self.visualizer.FunctionScene(
+                self.current_python_expr,
+                x_range=x_range, 
+                y_range=y_range, 
+                display_text=self.current_function,
+                logger=self.logger
+            )
             scene.render()
             
             video_path = os.path.join(video_dir, "FunctionScene.mp4")
