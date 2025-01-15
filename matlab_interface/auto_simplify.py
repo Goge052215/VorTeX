@@ -44,58 +44,105 @@ class AutoSimplify:
             self.logger.error(f"Error initializing symbolic variables: {e}")
             raise
 
-    def simplify_expression(self, expr_str):
-        """
-        Simplify a mathematical expression using MATLAB's symbolic toolbox.
-        
-        Args:
-            expr_str (str): The expression to simplify.
-            
-        Returns:
-            str: The simplified expression.
-        """
+    def simplify_expression(self, expr):
+        """Simplify the given mathematical expression."""
         try:
-            self.logger.debug(f"Simplifying expression: '{expr_str}'")
+            # Convert expression to string
+            expr_str = str(expr)
             
-            # Assign the expression to MATLAB workspace
-            self.eng.workspace['expr'] = expr_str
+            # If the input is already a multi-line result, just round it
+            if '\n' in expr_str and ('=' in expr_str):
+                return self._round_multiline_result(expr_str)
             
-            # Define a sequence of simplification commands
-            simplification_commands = [
-                "expr = str2sym(expr);",             # Convert string to symbolic
-                "expr = vpa(expr, 'Digits', 10);",   # Set precision to prevent decimal conversion
-                "expr = simplify(expr, 'Steps', 50);", # Simplify with specified steps
-                # Keep expressions in symbolic form
-                "expr = sym(expr);",
-                # Convert any remaining decimals to fractions or symbolic constants
-                "expr = vpa(expr, 'Digits', 10);",
-                "expr = simplify(expr, 'IgnoreAnalyticConstraints', true);",
-                # Final simplification
-                "expr = simplify(expr);",
-            ]
+            # Ensure proper MATLAB syntax
+            expr_str = expr_str.replace('=', '==')
             
-            # Execute each simplification command
-            for cmd in simplification_commands:
-                self.logger.debug(f"Executing MATLAB command: {cmd}")
-                self.eng.eval(cmd, nargout=0)
+            # Check if the expression contains 'Inf'
+            if 'Inf' in expr_str or 'inf' in expr_str:
+                return 'Inf'
             
-            # Get the result as a single expression
-            result = self.eng.eval("char(expr)", nargout=1)
-            self.logger.debug(f"Raw MATLAB result: {result}")
+            # Execute the simplification command in MATLAB
+            self.eng.eval(f"syms x; temp_result = {expr_str};", nargout=0)
+            self.eng.eval("temp_result = vpa(simplify(temp_result), 4);", nargout=0)
+            result = self.eng.eval("char(temp_result)", nargout=1)
             
-            # Clean up the result
-            result = self._clean_expression(result)
-            self.logger.debug(f"Simplified Result: '{result}'")
+            # Round the result
+            rounded_result = self._round_result(result)
             
-            return result
-                
+            return rounded_result
+            
         except Exception as e:
             self.logger.error(f"Error during simplification: {e}")
-            return expr_str
-        
-        finally:
-            # Clean up workspace
-            self.eng.eval("clear expr", nargout=0)
+            return expr
+
+    def _round_multiline_result(self, result):
+        """Round numbers in a multi-line result."""
+        try:
+            lines = result.split('\n')
+            rounded_lines = []
+            
+            for line in lines:
+                if '=' in line:
+                    var, value = line.split('=', 1)
+                    value = value.strip()
+                    
+                    # Handle complex numbers
+                    if 'i' in value:
+                        # Extract real and imaginary parts using regex
+                        import re
+                        # Match pattern: real_part [+-] imag_part i
+                        match = re.match(r'([-\d.]+)\s*([+-])\s*([\d.]+)i', value)
+                        if match:
+                            real_part = float(match.group(1))
+                            sign = match.group(2)
+                            imag_part = float(match.group(3))
+                            
+                            if sign == '-':
+                                imag_part = -imag_part
+                                
+                            rounded_value = f"{real_part:.3f} {sign} {abs(imag_part):.3f}i"
+                        else:
+                            # Handle pure imaginary numbers
+                            try:
+                                imag_part = float(value.replace('i', ''))
+                                rounded_value = f"0.000 + {imag_part:.3f}i"
+                            except ValueError:
+                                rounded_value = value  # Keep original if parsing fails
+                    else:
+                        # Handle real numbers
+                        try:
+                            num = float(value)
+                            rounded_value = f"{num:.3f}"
+                        except ValueError:
+                            rounded_value = value
+                    
+                    rounded_lines.append(f"{var.strip()} = {rounded_value}")
+                else:
+                    rounded_lines.append(line)
+            
+            return '\n'.join(rounded_lines)
+            
+        except Exception as e:
+            self.logger.error(f"Error rounding multiline result: {e}")
+            return result
+
+    def _round_result(self, result):
+        """Round numerical values in the result to 3 decimal places."""
+        try:
+            # Handle complex numbers
+            if 'i' in result:
+                return self._round_multiline_result(result)
+            
+            # Use regular expressions to find and round numbers
+            rounded_result = re.sub(
+                r'(\d+\.\d+)',
+                lambda match: f"{float(match.group(0)):.3f}",
+                result
+            )
+            return rounded_result
+        except Exception as e:
+            self.logger.error(f"Error rounding result: {e}")
+            return result
 
     def _clean_expression(self, expr):
         """Clean up the expression."""

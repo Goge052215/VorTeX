@@ -6354,3 +6354,26 @@ x3 = 1.0
 2025-01-14 11:48:10,177 - __main__ - INFO - MATLAB engine started successfully
 2025-01-14 11:48:56,695 - __main__ - DEBUG - Visualizing expression: x^2+2*x+1
 2025-01-14 11:49:33,941 - __main__ - INFO - MATLAB engine terminated
+2025-01-15 12:43:45,887 - __main__ - INFO - Initializing Calculator Application
+2025-01-15 12:43:55,038 - __main__ - INFO - MATLAB engine started successfully
+2025-01-15 12:44:09,019 - __main__ - DEBUG - Original expression: 'x^3 - 3x + 4x^2 = -5'
+2025-01-15 12:44:09,019 - __main__ - DEBUG - Original expression: 'x^3 - 3x + 4x^2 = -5'
+2025-01-15 12:44:09,021 - __main__ - DEBUG - Converted equation to solve format: solve(x^3 - 3x + 4x^2  - ( -5), x)
+2025-01-15 12:44:09,021 - __main__ - DEBUG - After binom conversion: 'solve(x^3 - 3x + 4x^2  - ( -5), x)'
+2025-01-15 12:44:09,022 - __main__ - DEBUG - Converted integral expression: 'solve(x^3 - 3x + 4x^2  - ( -5), x)'
+2025-01-15 12:44:09,022 - __main__ - DEBUG - After explicit multiplication: 'solve(x^3 - 3*x + 4*x^2  - ( -5), x)'
+2025-01-15 12:44:09,022 - __main__ - DEBUG - Final MATLAB expression: 'solve(x^3 - 3*x + 4*x^2  - ( -5), x)'
+2025-01-15 12:44:09,022 - __main__ - DEBUG - Converted to SymPy expression: 'solve(x^3 - 3*x + 4*x^2  - ( -5), x)'
+2025-01-15 12:44:09,023 - __main__ - DEBUG - Converted to MATLAB expression: 'solve(x^3 - 3*x + 4*x^2  - ( -5), x)'
+2025-01-15 12:44:09,028 - __main__ - DEBUG - After shortcut conversion: solve(x^3 - 3*x + 4*x^2  - ( -5), x)
+2025-01-15 12:44:09,028 - __main__ - DEBUG - Final MATLAB expression: 'solve(x^3 - 3*x + 4*x^2  - ( -5), x)'
+2025-01-15 12:44:09,448 - __main__ - DEBUG - Raw result from MATLAB: 'x1 = 0.41723393909229100628976993903052 + 0.92746692812334541322627501358511i
+x2 = 0.41724703301492477303114014830498 - 0.92746461570728122580931085394695i
+x3 = -4.8344809721072152797205490060151'
+2025-01-15 12:44:09,449 - __main__ - DEBUG - Simplified Result: 'x1 = 0.417 + 0.927i
+x2 = 0.417 - 0.927i
+x3 = -4.834'
+2025-01-15 12:44:09,450 - __main__ - DEBUG - Displayed Result: x1 = 0.417 + 0.927i
+x2 = 0.417 - 0.927i
+x3 = -4.834
+2025-01-15 12:45:36,958 - __main__ - INFO - MATLAB engine terminated
