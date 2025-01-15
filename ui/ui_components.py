@@ -90,7 +90,7 @@ class UIComponents:
         self.parent.label_mode.setFixedWidth(100)
         
         self.parent.combo_mode = QComboBox()
-        self.parent.combo_mode.addItems(['LaTeX', 'MATLAB', 'Matrix'])
+        self.parent.combo_mode.addItems(['LaTeX', 'MATLAB', 'SymPy', 'Matrix'])
         self.parent.combo_mode.setFont(QFont("Monaspace Neon", 12))
         self.parent.combo_mode.setFixedWidth(150)
         self.parent.combo_mode.setFixedHeight(30)

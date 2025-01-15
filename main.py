@@ -18,6 +18,7 @@ from ip_check.ip_check import IPCheck
 from manim_visual.manim_visualizer import MathVisualizer
 from ui.visualization_window import VisualizationWindow
 from ui.settings_window import SettingsWindow
+from sympy_pack.sympy_calculation import SympyCalculation
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -239,19 +240,28 @@ class CalculatorApp(QWidget, LatexCalculation):
             bold=True
         ) 
         
+        # Try to initialize MATLAB engine
+        self.matlab_available = False
         try:
             self.eng = matlab.engine.start_matlab()
             self.evaluator = EvaluateExpression(self.eng)
-            self.auto_simplify = AutoSimplify(self.eng)  # Initialize AutoSimplify
+            self.auto_simplify = AutoSimplify(self.eng)
+            self.matlab_available = True
             self.logger.info("MATLAB engine started successfully")
         except Exception as e:
-            self.logger.error(f"Failed to start MATLAB engine: {e}")
-            raise
+            self.logger.warning(f"MATLAB engine not available: {e}")
+            self.logger.info("Switching to SymPy-only mode")
+            QMessageBox.warning(
+                self,
+                "MATLAB Unavailable",
+                "MATLAB engine could not be started. The calculator will run in SymPy-only mode.\n"
+                "Some features may be limited."
+            )
+            # Initialize SymPy calculator as fallback
+            self.sympy_calculator = SympyCalculation()
 
         self.sympy_converter = SympyToMatlab()
-        
         self.current_log_type = None
-
         self.visualizer = MathVisualizer()
         
         self.viz_button = QPushButton("Visualize")
@@ -296,17 +306,24 @@ class CalculatorApp(QWidget, LatexCalculation):
         self.legend_window.show()
 
     def on_mode_changed(self, mode):
-        """Handle UI changes when calculator mode is changed.
-        
-        Args:
-            mode (str): The selected mode ('Matrix', 'LaTeX', or 'Matlab')
-        """
+        """Handle mode change events."""
+        if not self.matlab_available and mode in ['LaTeX', 'MATLAB', 'Matrix']:
+            QMessageBox.information(
+                self,
+                "Mode Unavailable",
+                f"{mode} mode requires MATLAB. Please use SymPy mode or install MATLAB."
+            )
+            self.combo_mode.setCurrentText('SymPy')
+            return
+
         try:
+            # Update UI layout using UiConfig
             ui_config = UiConfig()
             ui_config.mode_config(self)
             
-            config = ui_config.mode_configs.get(mode, ui_config.mode_configs['LaTeX'])
+            config = ui_config.mode_configs.get(mode, ui_config.mode_configs['SymPy'])
             
+            # Apply UI changes
             for widget in config['show']:
                 widget.show()
             for widget in config['hide']:
@@ -315,12 +332,21 @@ class CalculatorApp(QWidget, LatexCalculation):
             height, width = config['dimensions']
             self.setFixedHeight(height)
             self.setFixedWidth(width)
+
+            # Update placeholder text based on mode
+            placeholders = {
+                'LaTeX': 'Enter Simplified LaTeX expression, e.g., 5C2 + sin(pi/2)',
+                'MATLAB': 'Enter MATLAB expression, e.g., nchoosek(5,2) + sin(pi/2)',
+                'SymPy': 'Enter Simplified LaTeX expression, e.g., 5C2 + sin(pi/2)',
+                'Matrix': 'Enter matrix in format: [1 2; 3 4]'
+            }
             
-        except AttributeError as e:
-            print(f"Error in on_mode_changed: {e}")
-            print(f"self.matrix_input: {self.matrix_input}")
-            print(f"self.entry_formula: {self.entry_formula}")
-    
+            self.entry_formula.setPlaceholderText(placeholders.get(mode, placeholders['SymPy']))
+            
+        except Exception as e:
+            self.logger.error(f"Error in mode change: {e}")
+            QMessageBox.critical(self, "Error", f"Error changing mode: {str(e)}")
+
     def store_matrix(self):
         matrix_text = self.matrix_input.toPlainText().strip()
         if not matrix_text:
@@ -643,25 +669,51 @@ class CalculatorApp(QWidget, LatexCalculation):
         return expr_str
 
     def calculate(self):
-        input_mode = self.combo_mode.currentText()
-        angle_mode = self.combo_angle.currentText()
+        """Calculate the result based on the current mode."""
+        try:
+            mode = self.combo_mode.currentText()
+            angle_mode = self.combo_angle.currentText()
+            
+            if not self.matlab_available and mode in ['LaTeX', 'MATLAB', 'Matrix']:
+                QMessageBox.information(
+                    self,
+                    "Mode Unavailable",
+                    f"{mode} mode requires MATLAB. Please use SymPy mode or install MATLAB."
+                )
+                self.combo_mode.setCurrentText('SymPy')
+                return
+            
+            if mode == 'LaTeX':
+                self.handle_latex_calculation(angle_mode)
+            elif mode == 'MATLAB':
+                self.handle_matlab_calculation(angle_mode)
+            elif mode == 'SymPy':
+                self.handle_sympy_calculation(angle_mode)
+            elif mode == 'Matrix':
+                self.calculate_matrix()
+                
+        except Exception as e:
+            self.logger.error(f"Error in calculate: {e}")
+            QMessageBox.critical(self, "Error", f"Error during calculation: {str(e)}")
+
+    def handle_sympy_calculation(self, angle_mode):
+        """Handle SymPy input and calculation."""
+        expression = self.entry_formula.toPlainText().strip()
+        if not expression:
+            QMessageBox.warning(self, "Input Error", "Please enter an expression.")
+            return
 
         try:
-            if input_mode == 'Matrix':
-                self.handle_matrix_calculation()
-            elif input_mode == 'LaTeX':
-                self.handle_latex_calculation(angle_mode)
-            elif input_mode == 'MATLAB':
-                self.handle_matlab_calculation()
-            else:
-                raise ValueError("Unsupported input mode.")
-        except matlab.engine.MatlabExecutionError as me:
-            QMessageBox.critical(self, "MATLAB Error", f"MATLAB Error: {me}")
-        except ValueError as ve:
-            QMessageBox.critical(self, "Value Error", f"Value Error: {ve}")
+            calculator = SympyCalculation()
+            result = calculator.evaluate(expression, angle_mode)
+            
+            self.result_display.setText(result)
+            self.logger.debug(f"SymPy calculation result: {result}")
+
         except Exception as e:
-            QMessageBox.critical(self, "Unexpected Error", f"Unexpected Error: {str(e)}")
-    
+            self.logger.error(f"Error in SymPy calculation: {e}")
+            QMessageBox.critical(self, "Error", f"Error evaluating expression: {str(e)}")
+
     def format_matrix_result(self, result, operation):
         if result is None:
             return "Operation Failed."
@@ -781,7 +833,7 @@ class CalculatorApp(QWidget, LatexCalculation):
 
         try:
             self.logger.debug(f"Original expression: '{expression}'")
-
+                
             sympy_expr = parse_latex_expression(expression)
             self.logger.debug(f"Converted to SymPy expression: '{sympy_expr}'")
 
@@ -808,7 +860,10 @@ class CalculatorApp(QWidget, LatexCalculation):
             result = self.evaluator.evaluate_matlab_expression(matlab_expression)
             self.logger.debug(f"Raw result from MATLAB: '{result}'")
 
-            # Only try to simplify if the result is not a numeric value
+            # Initialize displayed_result with the raw result
+            displayed_result = str(result)
+
+            '''# Try to simplify if it's not a numeric value
             if isinstance(result, str) and not result.replace('.', '').replace('-', '').isdigit():
                 try:
                     simplified_result = self.auto_simplify.simplify_expression(result)
@@ -816,9 +871,7 @@ class CalculatorApp(QWidget, LatexCalculation):
                     displayed_result = simplified_result
                 except Exception as e:
                     self.logger.error(f"Error during simplification: {e}")
-                    displayed_result = result
-            else:
-                displayed_result = str(result)
+                    displayed_result = result'''
 
             displayed_result = displayed_result.replace('log(', 'ln(')
             displayed_result = displayed_result.replace('cosd(', 'cos(')
@@ -880,6 +933,9 @@ class CalculatorApp(QWidget, LatexCalculation):
             return
 
         try:
+            # Apply shortcuts
+            input_text = ExpressionShortcuts.convert_shortcut(input_text)
+            
             if self.combo_angle.currentText() == 'Degree':
                 input_text = re.sub(r'\bsin\((.*?)\)', lambda m: f"sind({m.group(1)})", input_text)
                 input_text = re.sub(r'\bcos\((.*?)\)', lambda m: f"cosd({m.group(1)})", input_text)
@@ -915,8 +971,9 @@ class CalculatorApp(QWidget, LatexCalculation):
     def closeEvent(self, event):
         """Handle the application closing event."""
         try:
-            self.eng.quit()
-            self.logger.info("MATLAB engine terminated")
+            if self.matlab_available:
+                self.eng.quit()
+                self.logger.info("MATLAB engine terminated")
         except Exception as e:
             self.logger.warning(f"Error terminating MATLAB engine: {e}")
         event.accept()

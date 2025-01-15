@@ -16,7 +16,7 @@ class EvaluateExpression:
         self.eng = eng
         self.logger = logging.getLogger(__name__)
         self._configure_logger()
-        self.simplifier = AutoSimplify(eng)
+        # self.simplifier = AutoSimplify(eng)
         self._compile_patterns()
         self._initialize_workspace()
         self._symbolic_vars = set()
@@ -371,3 +371,39 @@ class EvaluateExpression:
         self.logger.debug(f"Final cleaned expression: '{expr}'")
         
         return expr
+
+    def evaluate(self, expression: str) -> str:
+        """Evaluate a mathematical expression using MATLAB."""
+        try:
+            self.logger.debug(f"Processing expression: {expression}")
+            
+            # Extract variables from the expression
+            variables = self._extract_variables(expression)
+            self.logger.debug(f"Extracted variables from expression: {variables}")
+            
+            # Declare symbolic variables in MATLAB
+            for var in variables:
+                self.logger.debug(f"Declaring symbolic variable in MATLAB: syms {var}")
+                self.eng.eval(f"syms {var}", nargout=0)
+                self.logger.debug(f"Declared symbolic variable: {var}")
+            
+            # Execute the MATLAB command
+            command = f"temp_result = {expression};"
+            self.logger.debug(f"Executing MATLAB command: {command}")
+            self.eng.eval(command, nargout=0)
+            
+            # Get the result
+            result = self.eng.eval("char(temp_result)", nargout=1)
+            self.logger.debug(f"Raw result from MATLAB: '{result}'")
+            
+            # Preserve e^x notation
+            if 'exp(' in result:
+                result = result.replace('exp(', 'e^').rstrip(')')
+            elif 'e^' in result:
+                result = result  # Keep e^x as is
+            
+            return result
+            
+        except Exception as e:
+            self.logger.error(f"Error evaluating expression: {e}")
+            raise

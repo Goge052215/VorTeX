@@ -86,7 +86,24 @@ class UiConfig:
                     calculator.recall_matrix_button,
                     calculator.calculate_matrix_button
                 ],
-                'dimensions': (550, 700)  # (height, width)
+                'dimensions': (500, 700)  # (height, width)
+            },
+            'SymPy': {
+                'show': [
+                    calculator.label_formula,
+                    calculator.entry_formula,
+                    calculator.calculate_button,
+                    calculator.visualize_button  # Show visualize button in LaTeX mode
+                ],
+                'hide': [
+                    calculator.matrix_input,
+                    calculator.label_matrix_op,
+                    calculator.combo_matrix_op,
+                    calculator.store_matrix_button,
+                    calculator.recall_matrix_button,
+                    calculator.calculate_matrix_button
+                ],
+                'dimensions': (500, 700)  # (height, width)
             }
         }
 

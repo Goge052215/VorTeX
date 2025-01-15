@@ -6724,3 +6724,219 @@ x3 = -4.834
 2025-01-15 16:51:02,262 - __main__ - DEBUG - Final MATLAB expression: 'limit(sin(x)/x, x, 0)'
 2025-01-15 16:51:02,443 - __main__ - DEBUG - Raw result from MATLAB: '1'
 2025-01-15 16:51:02,443 - __main__ - DEBUG - Displayed Result: 1
+2025-01-15 17:27:13,943 - __main__ - INFO - MATLAB engine terminated
+2025-01-15 18:15:42,946 - __main__ - INFO - Initializing Calculator Application
+2025-01-15 18:16:16,407 - __main__ - INFO - MATLAB engine started successfully
+2025-01-15 18:16:36,557 - __main__ - DEBUG - Original SymPy expression: 'd/dx(x^2)'
+2025-01-15 18:16:36,590 - __main__ - ERROR - Error in SymPy calculation: Sympify of expression 'could not parse '\\frac{d}{dx}(x^2)'' failed, because of exception being raised:
+SyntaxError: unexpected character after line continuation character (<string>, line 1)
+2025-01-15 18:16:46,374 - __main__ - DEBUG - Original expression: 'd/dx(x^2)'
+2025-01-15 18:16:46,376 - __main__ - DEBUG - Original expression: 'd/dx(x^2)'
+2025-01-15 18:16:46,376 - __main__ - DEBUG - After combinatorial conversion: d/dx(x^2)
+2025-01-15 18:16:46,378 - __main__ - DEBUG - Converted integral expression: 'd/dx(x^2)'
+2025-01-15 18:16:46,378 - __main__ - DEBUG - After explicit multiplication: 'diff((x.^2), x)'
+2025-01-15 18:16:46,378 - __main__ - DEBUG - Final MATLAB expression: 'diff((x.^2), x)'
+2025-01-15 18:16:46,379 - __main__ - DEBUG - Converted to SymPy expression: 'diff((x.^2), x)'
+2025-01-15 18:16:46,379 - __main__ - DEBUG - Converted to MATLAB expression: 'diff((x.^2), x)'
+2025-01-15 18:16:46,379 - __main__ - DEBUG - After shortcut conversion: diff((x.^2), x)
+2025-01-15 18:16:46,380 - __main__ - DEBUG - Final MATLAB expression: 'diff((x.^2), x)'
+2025-01-15 18:16:46,824 - __main__ - DEBUG - Raw result from MATLAB: '2*x'
+2025-01-15 18:16:46,969 - __main__ - DEBUG - Simplified Result: '2.000*x'
+2025-01-15 18:16:46,970 - __main__ - DEBUG - Displayed Result: 2.000*x
+2025-01-15 18:19:21,209 - __main__ - INFO - Initializing Calculator Application
+2025-01-15 18:19:34,207 - __main__ - INFO - MATLAB engine started successfully
+2025-01-15 18:19:48,631 - __main__ - DEBUG - Original SymPy expression: 'd/dx(x^2)'
+2025-01-15 18:19:48,639 - __main__ - ERROR - Error in SymPy calculation: 'CalculatorApp' object has no attribute '_apply_shortcuts'
+2025-01-15 18:20:12,019 - __main__ - INFO - MATLAB engine terminated
+2025-01-15 18:20:47,919 - __main__ - INFO - Initializing Calculator Application
+2025-01-15 18:20:59,918 - __main__ - INFO - MATLAB engine started successfully
+2025-01-15 18:21:35,913 - __main__ - DEBUG - Original SymPy expression: 'd/dx(x^2)'
+2025-01-15 18:21:35,915 - __main__ - DEBUG - After shortcuts: 'diff(x^2, x)'
+2025-01-15 18:21:35,978 - __main__ - DEBUG - SymPy calculation result: 2*x
+2025-01-15 18:21:41,380 - __main__ - DEBUG - Original SymPy expression: 'int 1/x dx'
+2025-01-15 18:21:41,381 - __main__ - DEBUG - After shortcuts: 'int 1/x dx'
+2025-01-15 18:21:41,391 - __main__ - ERROR - Error in SymPy calculation: Sympify of expression 'could not parse 'int 1/x dx'' failed, because of exception being raised:
+SyntaxError: invalid syntax (<string>, line 1)
+2025-01-15 18:23:12,831 - __main__ - INFO - MATLAB engine terminated
+2025-01-15 18:35:59,564 - __main__ - INFO - Initializing Calculator Application
+2025-01-15 18:36:11,720 - __main__ - INFO - MATLAB engine started successfully
+2025-01-15 18:36:32,605 - __main__ - ERROR - Error in SymPy calculation: 'CalculatorApp' object has no attribute '_apply_shortcuts'
+2025-01-15 18:37:04,124 - __main__ - INFO - MATLAB engine terminated
+2025-01-15 18:37:16,175 - __main__ - INFO - Initializing Calculator Application
+2025-01-15 18:37:26,459 - __main__ - INFO - MATLAB engine started successfully
+2025-01-15 18:38:50,759 - __main__ - ERROR - Error in SymPy calculation: Invalid derivative format
+2025-01-15 18:41:01,057 - __main__ - INFO - MATLAB engine terminated
+2025-01-15 18:41:12,380 - __main__ - INFO - Initializing Calculator Application
+2025-01-15 18:41:25,112 - __main__ - INFO - MATLAB engine started successfully
+2025-01-15 18:41:54,453 - __main__ - DEBUG - SymPy calculation result: 2*x
+2025-01-15 18:41:59,423 - __main__ - DEBUG - SymPy calculation result: Integral(1/x, x)
+2025-01-15 18:48:18,776 - __main__ - INFO - MATLAB engine terminated
+2025-01-15 18:48:30,521 - __main__ - INFO - Initializing Calculator Application
+2025-01-15 18:48:40,878 - __main__ - INFO - MATLAB engine started successfully
+2025-01-15 18:50:49,723 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2025-01-15 18:50:49,727 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2025-01-15 18:50:49,731 - __main__ - DEBUG - After combinatorial conversion: int 1/x dx
+2025-01-15 18:50:49,732 - __main__ - DEBUG - Converted integral expression: 'int(1/x, x)'
+2025-01-15 18:50:49,733 - __main__ - DEBUG - After explicit multiplication: 'int(1/x, x)'
+2025-01-15 18:50:49,733 - __main__ - DEBUG - Final MATLAB expression: 'int(1/x, x)'
+2025-01-15 18:50:49,733 - __main__ - DEBUG - Converted to SymPy expression: 'int(1/x, x)'
+2025-01-15 18:50:49,733 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/x, x)'
+2025-01-15 18:50:49,738 - __main__ - DEBUG - After shortcut conversion: int(1/x, x)
+2025-01-15 18:50:49,738 - __main__ - DEBUG - Final MATLAB expression: 'int(1/x, x)'
+2025-01-15 18:50:50,000 - __main__ - DEBUG - Raw result from MATLAB: 'log(x)'
+2025-01-15 18:50:50,127 - __main__ - DEBUG - Simplified Result: 'log(x)'
+2025-01-15 18:50:50,128 - __main__ - DEBUG - Displayed Result: ln(x)
+2025-01-15 18:50:57,255 - __main__ - DEBUG - SymPy calculation result: ln(x)
+2025-01-15 18:51:04,132 - __main__ - DEBUG - SymPy calculation result: -1/x
+2025-01-15 18:51:11,523 - __main__ - ERROR - Error in SymPy calculation: Sympify of expression 'could not parse '5C2'' failed, because of exception being raised:
+SyntaxError: invalid syntax (<string>, line 1)
+2025-01-15 18:51:48,058 - __main__ - ERROR - Error in SymPy calculation: Invalid integral format
+2025-01-15 18:51:57,549 - __main__ - ERROR - Error in SymPy calculation: Sympify of expression 'could not parse 'Integral(, x)'' failed, because of exception being raised:
+SyntaxError: invalid syntax (<string>, line 1)
+2025-01-15 18:52:05,970 - __main__ - DEBUG - SymPy calculation result: -1/x
+2025-01-15 20:36:12,832 - __main__ - INFO - MATLAB engine terminated
+2025-01-15 20:39:24,671 - __main__ - INFO - Initializing Calculator Application
+2025-01-15 20:39:36,217 - __main__ - INFO - MATLAB engine started successfully
+2025-01-15 20:40:15,270 - __main__ - ERROR - Error in SymPy calculation: Invalid integral format: Missing integrand in integral
+2025-01-15 20:43:24,640 - __main__ - INFO - MATLAB engine terminated
+2025-01-15 20:43:33,216 - __main__ - INFO - Initializing Calculator Application
+2025-01-15 20:43:50,463 - __main__ - INFO - MATLAB engine started successfully
+2025-01-15 20:43:58,908 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2025-01-15 20:43:58,912 - __main__ - DEBUG - Original expression: 'int ln(x) dx'
+2025-01-15 20:43:58,915 - __main__ - DEBUG - After combinatorial conversion: int ln(x) dx
+2025-01-15 20:43:58,916 - __main__ - DEBUG - Converted integral expression: 'int(ln(x), x)'
+2025-01-15 20:43:58,916 - __main__ - DEBUG - After explicit multiplication: 'int(ln(x), x)'
+2025-01-15 20:43:58,916 - __main__ - DEBUG - Final MATLAB expression: 'int(log(x), x)'
+2025-01-15 20:43:58,916 - __main__ - DEBUG - Converted to SymPy expression: 'int(log(x), x)'
+2025-01-15 20:43:58,916 - __main__ - DEBUG - Converted to MATLAB expression: 'int(log(x), x)'
+2025-01-15 20:43:58,919 - __main__ - DEBUG - After shortcut conversion: int(log(x), x)
+2025-01-15 20:43:58,920 - __main__ - DEBUG - Final MATLAB expression: 'int(log(x), x)'
+2025-01-15 20:43:59,352 - __main__ - DEBUG - Raw result from MATLAB: 'x*(log(x) - 1)'
+2025-01-15 20:43:59,513 - __main__ - DEBUG - Simplified Result: 'x*(log(x) - 1.000)'
+2025-01-15 20:43:59,516 - __main__ - DEBUG - Displayed Result: x*(ln(x) - 1.000)
+2025-01-15 20:44:02,840 - __main__ - DEBUG - SymPy calculation result: x*(ln(x) - 1)
+2025-01-15 20:44:16,431 - __main__ - DEBUG - SymPy calculation result: Piecewise((e^x/ln(e), ((e >= 0) | (e > 1)) & ((e > 1) | (e < 1))), (x, True))
+2025-01-15 20:44:28,149 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-15 20:44:28,150 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-15 20:44:28,150 - __main__ - DEBUG - After combinatorial conversion: int e^x dx
+2025-01-15 20:44:28,151 - __main__ - DEBUG - Converted integral expression: 'int(e^x, x)'
+2025-01-15 20:44:28,151 - __main__ - DEBUG - After explicit multiplication: 'int(e^x, x)'
+2025-01-15 20:44:28,151 - __main__ - DEBUG - Final MATLAB expression: 'int(e^x, x)'
+2025-01-15 20:44:28,151 - __main__ - DEBUG - Converted to SymPy expression: 'int(e^x, x)'
+2025-01-15 20:44:28,151 - __main__ - DEBUG - Converted to MATLAB expression: 'int(e^x, x)'
+2025-01-15 20:44:28,152 - __main__ - DEBUG - After shortcut conversion: int(exp(x), x)
+2025-01-15 20:44:28,152 - __main__ - DEBUG - Final MATLAB expression: 'int(exp(x), x)'
+2025-01-15 20:44:28,380 - __main__ - DEBUG - Raw result from MATLAB: 'e^x'
+2025-01-15 20:44:28,482 - __main__ - DEBUG - Simplified Result: '2.718^x'
+2025-01-15 20:44:28,482 - __main__ - DEBUG - Displayed Result: 2.718^x
+2025-01-15 20:47:48,198 - __main__ - INFO - MATLAB engine terminated
+2025-01-15 20:47:57,681 - __main__ - INFO - Initializing Calculator Application
+2025-01-15 20:48:13,405 - __main__ - INFO - MATLAB engine started successfully
+2025-01-15 20:48:18,669 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-15 20:48:18,670 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-15 20:48:18,673 - __main__ - DEBUG - After combinatorial conversion: int e^x dx
+2025-01-15 20:48:18,674 - __main__ - DEBUG - Converted integral expression: 'int(e^x, x)'
+2025-01-15 20:48:18,675 - __main__ - DEBUG - After explicit multiplication: 'int(e^x, x)'
+2025-01-15 20:48:18,675 - __main__ - DEBUG - Final MATLAB expression: 'int(e^x, x)'
+2025-01-15 20:48:18,675 - __main__ - DEBUG - Converted to SymPy expression: 'int(e^x, x)'
+2025-01-15 20:48:18,675 - __main__ - DEBUG - Converted to MATLAB expression: 'int(e^x, x)'
+2025-01-15 20:48:18,680 - __main__ - DEBUG - After shortcut conversion: int(exp(x), x)
+2025-01-15 20:48:18,680 - __main__ - DEBUG - Final MATLAB expression: 'int(exp(x), x)'
+2025-01-15 20:48:18,909 - __main__ - DEBUG - Raw result from MATLAB: 'e^x'
+2025-01-15 20:48:19,068 - __main__ - DEBUG - Simplified Result: '2.718^x'
+2025-01-15 20:48:19,069 - __main__ - DEBUG - Displayed Result: 2.718^x
+2025-01-15 20:50:19,371 - __main__ - INFO - MATLAB engine terminated
+2025-01-15 20:50:32,339 - __main__ - INFO - Initializing Calculator Application
+2025-01-15 20:50:46,597 - __main__ - INFO - MATLAB engine started successfully
+2025-01-15 20:51:06,642 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-15 20:51:06,644 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-15 20:51:06,647 - __main__ - DEBUG - After combinatorial conversion: int e^x dx
+2025-01-15 20:51:06,648 - __main__ - DEBUG - Converted integral expression: 'int(e^x, x)'
+2025-01-15 20:51:06,649 - __main__ - DEBUG - After explicit multiplication: 'int(e^x, x)'
+2025-01-15 20:51:06,649 - __main__ - DEBUG - Final MATLAB expression: 'int(e^x, x)'
+2025-01-15 20:51:06,649 - __main__ - DEBUG - Converted to SymPy expression: 'int(e^x, x)'
+2025-01-15 20:51:06,649 - __main__ - DEBUG - Converted to MATLAB expression: 'int(e^x, x)'
+2025-01-15 20:51:06,653 - __main__ - DEBUG - After shortcut conversion: int(exp(x), x)
+2025-01-15 20:51:06,654 - __main__ - DEBUG - Final MATLAB expression: 'int(exp(x), x)'
+2025-01-15 20:51:06,984 - __main__ - DEBUG - Raw result from MATLAB: 'e^x'
+2025-01-15 20:51:07,153 - __main__ - DEBUG - Simplified Result: '2.718^x'
+2025-01-15 20:51:07,155 - __main__ - DEBUG - Displayed Result: 2.718^x
+2025-01-15 20:52:44,818 - __main__ - INFO - MATLAB engine terminated
+2025-01-15 20:52:55,911 - __main__ - INFO - Initializing Calculator Application
+2025-01-15 20:53:06,798 - __main__ - INFO - MATLAB engine started successfully
+2025-01-15 20:53:34,624 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-15 20:53:34,625 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-15 20:53:34,628 - __main__ - DEBUG - After combinatorial conversion: int e^x dx
+2025-01-15 20:53:34,629 - __main__ - DEBUG - Converted integral expression: 'int(e^x, x)'
+2025-01-15 20:53:34,630 - __main__ - DEBUG - After explicit multiplication: 'int(e^x, x)'
+2025-01-15 20:53:34,630 - __main__ - DEBUG - Final MATLAB expression: 'int(e^x, x)'
+2025-01-15 20:53:34,630 - __main__ - DEBUG - Converted to SymPy expression: 'int(e^x, x)'
+2025-01-15 20:53:34,630 - __main__ - DEBUG - Converted to MATLAB expression: 'int(e^x, x)'
+2025-01-15 20:53:34,636 - __main__ - DEBUG - After shortcut conversion: int(exp(x), x)
+2025-01-15 20:53:34,636 - __main__ - DEBUG - Final MATLAB expression: 'int(exp(x), x)'
+2025-01-15 20:53:34,919 - __main__ - DEBUG - Raw result from MATLAB: 'e^x'
+2025-01-15 20:53:35,071 - __main__ - DEBUG - Simplified Result: '2.718^x'
+2025-01-15 20:53:35,071 - __main__ - DEBUG - Displayed Result: 2.718^x
+2025-01-15 20:55:12,787 - __main__ - INFO - MATLAB engine terminated
+2025-01-15 20:55:21,908 - __main__ - INFO - Initializing Calculator Application
+2025-01-15 20:55:32,651 - __main__ - INFO - MATLAB engine started successfully
+2025-01-15 20:55:46,963 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-15 20:55:46,965 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-15 20:55:46,967 - __main__ - DEBUG - After combinatorial conversion: int e^x dx
+2025-01-15 20:55:46,968 - __main__ - DEBUG - Converted integral expression: 'int(e^x, x)'
+2025-01-15 20:55:46,969 - __main__ - DEBUG - After explicit multiplication: 'int(e^x, x)'
+2025-01-15 20:55:46,969 - __main__ - DEBUG - Final MATLAB expression: 'int(e^x, x)'
+2025-01-15 20:55:46,969 - __main__ - DEBUG - Converted to SymPy expression: 'int(e^x, x)'
+2025-01-15 20:55:46,969 - __main__ - DEBUG - Converted to MATLAB expression: 'int(e^x, x)'
+2025-01-15 20:55:46,976 - __main__ - DEBUG - After shortcut conversion: int(exp(x), x)
+2025-01-15 20:55:46,976 - __main__ - DEBUG - Final MATLAB expression: 'int(exp(x), x)'
+2025-01-15 20:55:47,198 - __main__ - DEBUG - Raw result from MATLAB: 'e^x'
+2025-01-15 20:55:47,199 - __main__ - ERROR - Error in latex calculation: local variable 'displayed_result' referenced before assignment
+2025-01-15 20:59:50,769 - __main__ - INFO - MATLAB engine terminated
+2025-01-15 21:00:00,150 - __main__ - INFO - Initializing Calculator Application
+2025-01-15 21:00:12,255 - __main__ - INFO - MATLAB engine started successfully
+2025-01-15 21:00:26,365 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-15 21:00:26,367 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-15 21:00:26,370 - __main__ - DEBUG - After combinatorial conversion: int e^x dx
+2025-01-15 21:00:26,371 - __main__ - DEBUG - Converted integral expression: 'int(e^x, x)'
+2025-01-15 21:00:26,372 - __main__ - DEBUG - After explicit multiplication: 'int(e^x, x)'
+2025-01-15 21:00:26,372 - __main__ - DEBUG - Final MATLAB expression: 'int(e^x, x)'
+2025-01-15 21:00:26,372 - __main__ - DEBUG - Converted to SymPy expression: 'int(e^x, x)'
+2025-01-15 21:00:26,372 - __main__ - DEBUG - Converted to MATLAB expression: 'int(e^x, x)'
+2025-01-15 21:00:26,377 - __main__ - DEBUG - After shortcut conversion: int(exp(x), x)
+2025-01-15 21:00:26,377 - __main__ - DEBUG - Final MATLAB expression: 'int(exp(x), x)'
+2025-01-15 21:00:26,951 - __main__ - DEBUG - Raw result from MATLAB: 'e^x'
+2025-01-15 21:00:27,185 - __main__ - DEBUG - Simplified Result: '2.718^x'
+2025-01-15 21:00:27,186 - __main__ - DEBUG - Displayed Result: 2.718^x
+2025-01-15 21:00:52,619 - __main__ - INFO - MATLAB engine terminated
+2025-01-15 21:01:04,544 - __main__ - INFO - Initializing Calculator Application
+2025-01-15 21:01:16,195 - __main__ - INFO - MATLAB engine started successfully
+2025-01-15 21:01:24,631 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-15 21:01:24,632 - __main__ - DEBUG - Original expression: 'int e^x dx'
+2025-01-15 21:01:24,634 - __main__ - DEBUG - After combinatorial conversion: int e^x dx
+2025-01-15 21:01:24,635 - __main__ - DEBUG - Converted integral expression: 'int(e^x, x)'
+2025-01-15 21:01:24,635 - __main__ - DEBUG - After explicit multiplication: 'int(e^x, x)'
+2025-01-15 21:01:24,636 - __main__ - DEBUG - Final MATLAB expression: 'int(e^x, x)'
+2025-01-15 21:01:24,636 - __main__ - DEBUG - Converted to SymPy expression: 'int(e^x, x)'
+2025-01-15 21:01:24,636 - __main__ - DEBUG - Converted to MATLAB expression: 'int(e^x, x)'
+2025-01-15 21:01:24,642 - __main__ - DEBUG - After shortcut conversion: int(exp(x), x)
+2025-01-15 21:01:24,642 - __main__ - DEBUG - Final MATLAB expression: 'int(exp(x), x)'
+2025-01-15 21:01:24,905 - __main__ - DEBUG - Raw result from MATLAB: 'e^x'
+2025-01-15 21:01:24,906 - __main__ - DEBUG - Displayed Result: e^x
+2025-01-15 21:01:34,240 - __main__ - DEBUG - Original expression: 'x^2 + 2x + 1 = 0'
+2025-01-15 21:01:34,241 - __main__ - DEBUG - Original expression: 'x^2 + 2x + 1 = 0'
+2025-01-15 21:01:34,241 - __main__ - DEBUG - After combinatorial conversion: x^2 + 2x + 1 = 0
+2025-01-15 21:01:34,241 - __main__ - DEBUG - Converted equation to solve format: solve(x^2 + 2x + 1  - ( 0), x)
+2025-01-15 21:01:34,241 - __main__ - DEBUG - Converted integral expression: 'solve(x^2 + 2x + 1  - ( 0), x)'
+2025-01-15 21:01:34,242 - __main__ - DEBUG - After explicit multiplication: 'solve(x^2 + 2*x + 1  - ( 0), x)'
+2025-01-15 21:01:34,242 - __main__ - DEBUG - Final MATLAB expression: 'solve(x^2 + 2*x + 1  - ( 0), x)'
+2025-01-15 21:01:34,242 - __main__ - DEBUG - Converted to SymPy expression: 'solve(x^2 + 2*x + 1  - ( 0), x)'
+2025-01-15 21:01:34,242 - __main__ - DEBUG - Converted to MATLAB expression: 'solve(x^2 + 2*x + 1  - ( 0), x)'
+2025-01-15 21:01:34,242 - __main__ - DEBUG - After shortcut conversion: solve(x^2 + 2*x + 1  - ( 0), x)
+2025-01-15 21:01:34,242 - __main__ - DEBUG - Final MATLAB expression: 'solve(x^2 + 2*x + 1  - ( 0), x)'
+2025-01-15 21:01:34,529 - __main__ - DEBUG - Raw result from MATLAB: 'x1 = -1.0
+x2 = -1.0'
+2025-01-15 21:01:34,529 - __main__ - DEBUG - Displayed Result: x1 = -1.0
+x2 = -1.0
+2025-01-15 21:01:45,519 - __main__ - INFO - MATLAB engine terminated
+2025-01-15 21:01:54,227 - __main__ - INFO - Initializing Calculator Application

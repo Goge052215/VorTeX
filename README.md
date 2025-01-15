@@ -23,7 +23,7 @@ Running MATLAB for simple calculations? 💻
 
 ---
 
-A powerful mathematical workbench that fuses **MATLAB**'s symbolic computation, **LaTeX**'s elegant notation, **PyQt5**'s modern interface, and **Manim**'s visualization capabilities into one seamless vortex. *VorTeX* brings together advanced mathematical tools for differentiation, integration, matrix operations, and symbolic computation in an intuitive environment.
+A powerful mathematical workbench that fuses **MATLAB** and **SymPy**'s symbolic computation, **LaTeX**'s elegant notation, **PyQt5**'s modern interface, and **Manim**'s visualization capabilities into one seamless vortex. *VorTeX* brings together advanced mathematical tools for differentiation, integration, matrix operations, and symbolic computation in an intuitive environment.
 
 ---
 
@@ -36,6 +36,7 @@ A powerful mathematical workbench that fuses **MATLAB**'s symbolic computation, 
 - **Trigonometric Functions:** Supports both Degree and Radian modes for trigonometric calculations.
 - **Symbolic Computation:** Handle derivatives and integrals symbolically, providing exact results where possible.
 - **Matrix Operations:** Perform operations such as determinant, inverse, eigenvalues, and more on matrices.
+- **SymPy Integration:** Utilize SymPy's symbolic computation for non-MATLAB users.
 - **Theming:** Multiple UI themes available to customize the appearance of the application.
 - **Logging:** Detailed logging of operations and errors for troubleshooting and analysis.
 - **Auto Simplify:** Automatically simplifies the result of the expression.
@@ -69,6 +70,8 @@ A powerful mathematical workbench that fuses **MATLAB**'s symbolic computation, 
    pip install -r requirements.txt
    ```
 
+   For non-MATLAB users, you can use SymPy instead, we also provided SymPy calculation module for this calculator.
+
    The requirement list is in [requirements.txt](requirements.txt)
 
 5. **Run the Application:**
@@ -83,6 +86,7 @@ A powerful mathematical workbench that fuses **MATLAB**'s symbolic computation, 
    - **$\LaTeX$:** Enter expressions in $\LaTeX$ format for symbolic computation.
    - **MATLAB:** Enter raw MATLAB expressions for direct evaluation.
    - **Matrix:** Perform matrix operations (e.g., determinant, inverse).
+   - **SymPy:** Enter Simplified $\LaTeX$ expressions (for non-MATLAB users).
 
 2. **Select Angle Mode:**
    - **Degree:** Use degree mode for trigonometric functions.
@@ -103,7 +107,7 @@ A powerful mathematical workbench that fuses **MATLAB**'s symbolic computation, 
 
 ## Example Expressions
 
-- **Simplified $\LaTeX$ Mode:**
+- **Simplified $\LaTeX$ Mode, SymPy Mode:**
   - **Differentiation:** `d/dx (x^2)`, `d2/dx2 (x^2)`, etc.
   - **Integration:** `int e^(x) dx`, `int ln(x) dx`, `int x^2 dx`, etc.
   - **Trigonometric:** `sin(30)`, `cos(30)`, `tan(30)`, etc.
@@ -138,7 +142,7 @@ A powerful mathematical workbench that fuses **MATLAB**'s symbolic computation, 
 
 for more shortcuts, see [shortcut.py](latex_pack/shortcut.py)
 
-### Example for $\LaTeX$ Mode
+### Example for $\LaTeX$ Mode, SymPy Mode
 
 1. `int 1/x dx` $\rightarrow$ $\displaystyle \int \frac{1}{x} \text{d}x = \ln(x)$
 2. `int (1 to 3) x^3/(x^2 + 1) dx` $\rightarrow$ $\displaystyle \int_{1}^{3} \frac{x^3}{x^2 + 1} \text{d}x = 4 - \left(\frac{\ln 5}{2}\right)$

@@ -36,7 +36,6 @@ class AutoSimplify:
             # Initialize common variables
             self.eng.eval("syms x y z t a b c n real", nargout=0)
             
-            # Define 'e' as the mathematical constant exp(1)
             self.eng.eval("e = exp(1);", nargout=0)
             
             self.logger.debug("Initialized symbolic variables in MATLAB workspace")
@@ -61,10 +60,18 @@ class AutoSimplify:
             if 'Inf' in expr_str or 'inf' in expr_str:
                 return 'Inf'
             
-            # Execute the simplification command in MATLAB
+            # Check for exponential expressions
+            if 'exp(' in expr_str:
+                expr_str = re.sub(r'exp\((.*?)\)', r'e^\1', expr_str)
+                return expr_str
+            
             self.eng.eval(f"syms x; temp_result = {expr_str};", nargout=0)
             self.eng.eval("temp_result = vpa(simplify(temp_result), 4);", nargout=0)
             result = self.eng.eval("char(temp_result)", nargout=1)
+            
+            if 'e^' in result or 'exp(' in result:
+                result = result.replace('exp(', 'e^')
+                result = result.rstrip(')')
             
             # Round the result
             rounded_result = self._round_result(result)
@@ -166,17 +173,11 @@ class AutoSimplify:
         for num, pi_expr in pi_replacements.items():
             expr = expr.replace(num, pi_expr)
         
-        # Remove unnecessary multiplications by 1.0
         expr = expr.replace('*1.0', '')
         expr = expr.replace('1.0*', '')
         
-        # Convert 'exp(x)' to 'e^x' for display
-        expr = re.sub(r'exp\((.*?)\)', lambda m: f'e^{m.group(1)}', expr).rstrip(')')
-        
-        # Replace 'log' with 'ln' for natural logarithm
         expr = expr.replace('log(', 'ln(')
         
-        # Ensure multiplication is clearly formatted
         expr = re.sub(r'\b1\*\s*([a-zA-Z])', r'\1', expr)
         
         self.logger.debug(f"Final cleaned expression: '{expr}'")
