@@ -87,7 +87,7 @@ def get_aura_theme():
                 color: #edecee;
             }
             QTextEdit, QComboBox {
-                background-color: #1c1b22;
+                background-color: #15141b;
                 color: #edecee;
                 border: 1px solid #6d6d6d;
                 border-radius: 5px;
@@ -135,7 +135,7 @@ def get_aura_theme():
             "button": "#a277ff",
             "button_text": "#15141b",
             "button_hover": "#61ffca",
-            "input_bg": "#1c1b22",
+            "input_bg": "#15141b",
             "border": "#6d6d6d",
             "title": "#edecee"
         }

@@ -1,5 +1,5 @@
 class UiConfig:
-    def config_button(self, theme_callback, legend_callback):
+    def config_button(self, settings_callback, legend_callback):
         """Configure button settings with callbacks.
         
         Args:
@@ -8,13 +8,13 @@ class UiConfig:
         """
         self.button_configs = {
             'theme': {
-                'text': 'Themes',
-                'size': (80, 30),
-                'callback': theme_callback
+                'text': 'Settings',
+                'size': (100, 30),
+                'callback': settings_callback
             },
             'legend': {
-                'text': 'Show Legend',
-                'size': (120, 30),
+                'text': 'Legend',
+                'size': (80, 30),
                 'callback': legend_callback
             }
         }
@@ -52,7 +52,7 @@ class UiConfig:
                     calculator.calculate_button,
                     calculator.visualize_button  # Hide visualize button in Matrix mode
                 ],
-                'dimensions': (600, 700)  # (height, width)
+                'dimensions': (500, 700)  # (height, width)
             },
             'Matlab': {
                 'show': [
@@ -69,7 +69,7 @@ class UiConfig:
                     calculator.recall_matrix_button,
                     calculator.calculate_matrix_button
                 ],
-                'dimensions': (600, 700)  # (height, width)
+                'dimensions': (500, 700)  # (height, width)
             },
             'LaTeX': {
                 'show': [
@@ -86,7 +86,7 @@ class UiConfig:
                     calculator.recall_matrix_button,
                     calculator.calculate_matrix_button
                 ],
-                'dimensions': (600, 700)  # (height, width)
+                'dimensions': (550, 700)  # (height, width)
             }
         }
 

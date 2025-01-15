@@ -21,7 +21,7 @@ class UIComponents:
         self.parent = parent
         self.visualization_window = None  # Initialize the visualization window as None
 
-        self.parent.PLACEHOLDER_TEXT = 'Enter LaTeX expression, e.g., binom{5}{2} + sin(pi/2)\n' \
+        self.parent.PLACEHOLDER_TEXT = 'Enter Simplified LaTeX expression, e.g., 5C2 + sin(pi/2)\n' \
             'Or MATLAB expression, e.g., nchoosek(5,2) + sin(pi/2)'
         self.parent.FORMULA_FONT = QFont("Monaspace Neon", 13)
 
@@ -61,13 +61,13 @@ class UIComponents:
         self.parent.setGeometry(100, 100, 700, 500)
 
     def _create_top_buttons(self):
-        """Create theme and legend buttons."""
+        """Create settings and legend buttons."""
         top_layout = QHBoxLayout()
         
         # Create UiConfig instance and get configurations
         ui_config = UiConfig()
         ui_config.config_button(
-            theme_callback=self.parent.show_theme_menu,
+            settings_callback=self.parent.show_settings,
             legend_callback=self.parent.show_legend
         )
         
@@ -91,7 +91,9 @@ class UIComponents:
         
         self.parent.combo_mode = QComboBox()
         self.parent.combo_mode.addItems(['LaTeX', 'MATLAB', 'Matrix'])
-        self.parent.combo_mode.setFixedWidth(100)
+        self.parent.combo_mode.setFont(QFont("Monaspace Neon", 12))
+        self.parent.combo_mode.setFixedWidth(150)
+        self.parent.combo_mode.setFixedHeight(30)
         self.parent.combo_mode.currentTextChanged.connect(self.parent.on_mode_changed)
         
         mode_layout.addWidget(self.parent.label_mode)
@@ -107,7 +109,9 @@ class UIComponents:
         
         self.parent.combo_angle = QComboBox()
         self.parent.combo_angle.addItems(['Degree', 'Radian'])
-        self.parent.combo_angle.setFixedWidth(100)
+        self.parent.combo_angle.setFont(QFont("Monaspace Neon", 12))
+        self.parent.combo_angle.setFixedWidth(150)
+        self.parent.combo_angle.setFixedHeight(30)
         
         angle_layout.addWidget(self.parent.label_angle)
         angle_layout.addWidget(self.parent.combo_angle)

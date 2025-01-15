@@ -19,9 +19,9 @@ class ExpressionShortcuts:
     
     # Combinatorial shortcuts
     COMBINATORIAL_SHORTCUTS = {
-        'binom': r'nchoosek',  # Convert binom to nchoosek for MATLAB
-        'nCr': r'nchoosek(n,r)',      # Alternative notation
-        'choose': r'nchoosek'  # Another common notation
+        'binom': 'nchoosek',
+        'nCr': 'nchoosek',
+        'choose': 'nchoosek'
     }
     
     # Integral shortcuts
@@ -277,8 +277,10 @@ class ExpressionShortcuts:
     @staticmethod
     def convert_combinatorial_expression(expr):
         """Convert combinatorial expressions to MATLAB format."""
-        # Convert nCr(n, k) or nCr to nchoosek(n, k)
-        expr = re.sub(r'(\d+)C(\d+)', r'nchoosek(\1, \2)', expr)
+        expr = re.sub(r'binom\s*\(([^,]+),([^)]+)\)', r'choose(\1,\2)', expr)
+        expr = re.sub(r'(\w+|\d+|\([^)]+\))C(\w+|\d+|\([^)]+\))', r'choose(\1,\2)', expr)
+        expr = re.sub(r'binom\s*\{([^}]+)\}\s*\{([^}]+)\}', r'choose(\1,\2)', expr)
+        
         return expr
     
     @staticmethod

@@ -122,7 +122,7 @@ A powerful mathematical workbench that fuses **MATLAB**'s symbolic computation, 
 | $\displaystyle\int e^{x} \text{d}x$ | `\int e^{x} dx` | `int e^x dx` |
 | $\displaystyle\int_{a}^{b} f(x) \text{d}x$ | `\int_{a}^{b} f(x) dx` | `int (a to b) f(x) dx` |
 | $\sin, \cos, \tan, \dots$ | `\sin, \cos, \tan, ...` | `sin, cos, tan, ...` |
-| $\displaystyle\binom{n}{r}$ or $^n\text{C}_r$ | `\binom{n}{r}` | `binom(n, r)` |
+| $\displaystyle\binom{n}{r}$ or $^n\text{C}_r$ | `\binom{n}{r}` | `binom(n, r) or nCr` |
 | $\sqrt{x}$  | `\sqrt{x}` | `sqrt(x)` |
 | $\|x\|$  | `\|x\|` | `abs(x)` |
 | $\ln(x)$   | `\ln(x)` | `ln(x)` |
@@ -143,10 +143,11 @@ for more shortcuts, see [shortcut.py](latex_pack/shortcut.py)
 1. `int 1/x dx` $\rightarrow$ $\displaystyle \int \frac{1}{x} \text{d}x = \ln(x)$
 2. `int (1 to 3) x^3/(x^2 + 1) dx` $\rightarrow$ $\displaystyle \int_{1}^{3} \frac{x^3}{x^2 + 1} \text{d}x = 4 - \left(\frac{\ln 5}{2}\right)$
 3. `d2/dx2 (4x^10)` $\rightarrow$ $\displaystyle \frac{\text{d}^2}{\text{d}x^2} (4x^{10}) = 360x^8$
-4. `binom(5, 2)` $\rightarrow$ $\displaystyle \binom{5}{2} = 10$
+4. `binom(5, 2) or 5C2` $\rightarrow$ $\displaystyle \binom{5}{2} = 10$
 5. `tan(90) or tan(pi/2)` $\rightarrow$ $\tan(90) = \infty$
 6. `sum (1 to 100) x` $\rightarrow$ $\displaystyle \sum_{i = 1}^{100} x = 5050$
 7. `prod (2 to 10) ln(x)` $\rightarrow$ $\displaystyle \prod_{i = 2}^{10} \ln(x) = 62.321650$
+8. `lim (x to 0) sin(x)/x` $\rightarrow$ $\displaystyle \lim_{x \to 0} \frac{\sin(x)}{x} = 1$
 
 ### Example for Matrix Mode
 
@@ -198,15 +199,18 @@ Output: `[-0.37, 5.37]`
   - Check environment variables and MATLAB's path settings.
 
 - **Invalid Expression Errors:**
-  - Ensure that your $\LaTeX$ or MATLAB expressions are correctly formatted.
+  - Ensure that your Simplified $\LaTeX$ or MATLAB expressions are correctly formatted.
   - Verify that all necessary functions are supported and properly replaced.
+
+- More issues will be added in the future debugging.
 
 ### Current TODO
 
 - [X] Fixing the limits handling
-- [ ] Fixing the expression handling for $^n\text{C}_r$
+- [X] Fixing the expression handling for $^n\text{C}_r$
 - [X] Fixing the series evaluation
-- [ ] Adding 2D plot
+- [X] Adding 2D plot Manim for functions
+- [ ] 2D plot Manim for calculus
 - [ ] Adding 3D demonstration Manim
 
 ## Contributing

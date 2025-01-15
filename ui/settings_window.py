@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import (
     QDialog, QVBoxLayout, QHBoxLayout, QLabel, 
-    QComboBox, QPushButton, QGroupBox
+    QComboBox, QPushButton, QGroupBox, QWidget
 )
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont
@@ -11,109 +11,239 @@ import logging
 logger = logging.getLogger(__name__)
 
 class SettingsWindow(QDialog):
+    WINDOW_WIDTH = 600
+    WINDOW_HEIGHT = 400
+    FONT_FAMILY = "Arial"
+    FONT_SIZE = 13
+    GROUP_BOX_STYLE = """
+        QGroupBox {
+            margin-top: 1.5em;
+            padding: 15px;
+            background-color: transparent;
+            border-radius: 8px;
+            border: 1px solid #6d6d6d;
+        }
+        QGroupBox::title {
+            subcontrol-origin: margin;
+            left: 10px;
+            padding: 0 5px;
+            color: #edecee;
+        }
+    """
+
     def __init__(self, parent=None):
         super().__init__(parent)
         self.parent = parent
         self.theme_manager = ThemeManager()
-        
-        # Load saved theme
-        saved_theme = self.load_settings()
-        if hasattr(self.parent, 'current_theme'):
-            self.parent.current_theme = saved_theme
-        
+        self.init_settings()
         self.init_ui()
         self.apply_theme()
 
+    def init_settings(self):
+        """Initialize settings from saved configuration"""
+        try:
+            with open('settings.json', 'r') as f:
+                settings = json.load(f)
+                saved_theme = settings.get('theme', 'aura')
+                if hasattr(self.parent, 'current_theme'):
+                    self.parent.current_theme = saved_theme
+        except (FileNotFoundError, json.JSONDecodeError):
+            if hasattr(self.parent, 'current_theme'):
+                self.parent.current_theme = 'aura'
+
     def init_ui(self):
-        self.setWindowTitle('Settings')
-        self.setFixedSize(450, 300)
+        """Initialize the UI components"""
+        layout = QVBoxLayout()
         
-        # Main layout with padding
+        self._create_appearance_group(layout)
+        self._create_about_group(layout)  # Add the about group
+        
+        self.setLayout(layout)
+        self.setWindowTitle("Settings")
+        self.setFixedSize(self.WINDOW_WIDTH, self.WINDOW_HEIGHT)
+
+    def _setup_window(self):
+        """Configure basic window properties"""
+        self.setWindowTitle('Settings')
+        self.setFixedSize(self.WINDOW_WIDTH, self.WINDOW_HEIGHT)
+
+    def _create_main_layout(self):
+        """Create and configure the main layout"""
         layout = QVBoxLayout()
         layout.setContentsMargins(20, 20, 20, 20)
         layout.setSpacing(15)
-        
-        # Create appearance group
+        return layout
+
+    def _get_theme_specific_styles(self, theme_name):
+        """Get theme-specific styles based on the current theme"""
+        if theme_name in ["aura", "tokyo_night"]:
+            return {
+                "group_box": """
+                    QGroupBox {
+                        margin-top: 1.5em;
+                        padding: 15px;
+                        background-color: #1c1b22;
+                        border-radius: 8px;
+                    }
+                    QGroupBox::title {
+                        subcontrol-origin: margin;
+                        left: 10px;
+                        padding: 0 5px;
+                        color: #edecee;
+                    }
+                """,
+                "label_color": "color: #edecee;",
+                "button_style": """
+                    QPushButton {
+                        background-color: #4a90e2;
+                        color: white;
+                        border: none;
+                        border-radius: 8px;
+                        padding: 8px;
+                    }
+                    QPushButton:hover {
+                        background-color: #357abd;
+                    }
+                """
+            }
+        else:  # Light theme
+            return {
+                "group_box": """
+                    QGroupBox {
+                        margin-top: 1.5em;
+                        padding: 15px;
+                        background-color: #e6e6e6;
+                        border-radius: 8px;
+                    }
+                    QGroupBox::title {
+                        subcontrol-origin: margin;
+                        left: 10px;
+                        padding: 0 5px;
+                        color: #333333;
+                    }
+                """,
+                "label_color": "color: #333333;",
+                "button_style": """
+                    QPushButton {
+                        background-color: #4a90e2;
+                        color: white;
+                        border: none;
+                        border-radius: 8px;
+                        padding: 8px;
+                    }
+                    QPushButton:hover {
+                        background-color: #357abd;
+                    }
+                """
+            }
+
+    def _create_appearance_group(self, layout):
+        """Create and configure the appearance settings group"""
         appearance_group = QGroupBox("Appearance")
-        font = QFont("Arial", 13)
-        font.setBold(True)
-        appearance_group.setFont(font)
-        appearance_group.setStyleSheet("""
+        appearance_group.setFont(QFont(self.FONT_FAMILY, self.FONT_SIZE, QFont.Bold))
+        
+        # Get current theme
+        current_theme = getattr(self.parent, 'current_theme', 'aura')
+        
+        # Add theme-specific background color and improved shape
+        group_style = """
             QGroupBox {
                 margin-top: 1.5em;
+                padding: 20px;
+                background-color: #1c1b22;
+                border-radius: 12px;
             }
             QGroupBox::title {
                 subcontrol-origin: margin;
                 left: 10px;
                 padding: 0 5px;
+                color: #edecee;
             }
-        """)
+        """
+        if current_theme == "light":
+            group_style = """
+                QGroupBox {
+                    margin-top: 1.5em;
+                    padding: 20px;
+                    background-color: #e6e6e6;
+                    border-radius: 12px;
+                }
+                QGroupBox::title {
+                    subcontrol-origin: margin;
+                    left: 10px;
+                    padding: 0 5px;
+                    color: #333333;
+                }
+            """
         
+        appearance_group.setStyleSheet(group_style)
         appearance_layout = QVBoxLayout()
         appearance_layout.setSpacing(10)
         appearance_layout.setContentsMargins(15, 15, 15, 15)
-        
-        # Theme selection
+
+        theme_layout = self._create_theme_selection()
+        appearance_layout.addLayout(theme_layout)
+        appearance_group.setLayout(appearance_layout)
+        layout.addWidget(appearance_group)
+        layout.addStretch()
+
+    def _create_theme_selection(self, label_style=None):
+        """Create the theme selection combo box and label"""
         theme_layout = QHBoxLayout()
+        
         theme_label = QLabel("Theme:")
-        theme_label.setFont(QFont("Arial", 13))
+        theme_label.setFont(QFont("Monaspace Neon", 12))
         
         self.theme_combo = QComboBox()
         self.theme_combo.setFont(QFont("Monaspace Neon", 12))
-        self.theme_combo.addItems(["Tokyo night", "Aura", "Light"])
-        self.theme_combo.setFixedHeight(30)
+        theme_display_names = {
+            "tokyo_night": "Tokyo night",
+            "aura": "Aura",
+            "light": "Light"
+        }
+        self.theme_combo.addItems(list(theme_display_names.values()))
+        self.theme_combo.setFixedHeight(35)
+        self.theme_combo.setFixedWidth(200)
         
-        # Set current theme
-        current_theme = self.parent.current_theme if hasattr(self.parent, 'current_theme') else "aura"
-        index = self.theme_combo.findText(current_theme)
+        display_name = theme_display_names.get('aura', "Aura")
+        index = self.theme_combo.findText(display_name, Qt.MatchExactly)
         if index >= 0:
             self.theme_combo.setCurrentIndex(index)
-            
+        
         self.theme_combo.currentTextChanged.connect(self.on_theme_changed)
         
         theme_layout.addWidget(theme_label)
         theme_layout.addWidget(self.theme_combo)
         theme_layout.addStretch()
         
-        appearance_layout.addLayout(theme_layout)
-        appearance_group.setLayout(appearance_layout)
-        
-        # Add groups to main layout
-        layout.addWidget(appearance_group)
-        
-        # Add stretch to push everything to the top
-        layout.addStretch()
-        
-        # Create button row
+        return theme_layout
+
+    def _create_button_row(self, layout):
+        """Create the save and cancel buttons"""
         button_layout = QHBoxLayout()
-        button_layout.setSpacing(10)
-        
-        self.save_button = QPushButton("Save")
-        self.save_button.setFont(QFont("Arial", 13))
-        self.save_button.setFixedSize(100, 35)
-        self.save_button.clicked.connect(self.save_settings)
-        
-        self.cancel_button = QPushButton("Cancel")
-        self.cancel_button.setFont(QFont("Arial", 13))
-        self.cancel_button.setFixedSize(100, 35)
-        self.cancel_button.clicked.connect(self.reject)
-        
-        button_layout.addStretch()
-        button_layout.addWidget(self.save_button)
-        button_layout.addWidget(self.cancel_button)
-        
+        button_layout.setSpacing(15)
+
+        current_theme = getattr(self.parent, 'current_theme', 'aura')
+        styles = self._get_theme_specific_styles(current_theme)
+
+        for button_text, callback in [("Save", self.save_settings), ("Cancel", self.reject)]:
+            button = QPushButton(button_text)
+            button.setFont(QFont(self.FONT_FAMILY, self.FONT_SIZE))
+            button.setFixedSize(150, 40)
+            button.setStyleSheet(styles["button_style"])
+            button.clicked.connect(callback)
+            button_layout.addWidget(button)
+
+        button_layout.insertStretch(0, 1)
         layout.addLayout(button_layout)
-        
-        self.setLayout(layout)
 
     def apply_theme(self):
         """Apply theme to the settings window"""
-        current_theme = self.parent.current_theme
+        current_theme = getattr(self.parent, 'current_theme', 'aura')
+        theme_data = get_aura_theme()
         
         if current_theme == "tokyo_night":
             theme_data = get_tokyo_night_theme()
-        elif current_theme == "aura":
-            theme_data = get_aura_theme()
         elif current_theme == "light":
             theme_data = get_light_theme()
         else:
@@ -125,19 +255,37 @@ class SettingsWindow(QDialog):
         # Apply theme to specific components
         for widget in self.findChildren(QPushButton):
             widget.setStyleSheet(theme_data["theme_button"])
-            
-        for widget in self.findChildren(QComboBox):
-            widget.setStyleSheet(theme_data["combo_box"])
-            
-        for widget in self.findChildren(QLabel):
-            widget.setStyleSheet(theme_data["label"])
-            
+        
+        # Use main_widget style for ComboBox and Labels
+        for widget in self.findChildren((QComboBox, QLabel)):
+            widget.setStyleSheet(theme_data["main_widget"])
+        
+        # Update appearance group background based on theme
+        for group_box in self.findChildren(QGroupBox):
+            if current_theme == "light":
+                group_box.setStyleSheet("""
+                    QGroupBox {
+                        margin-top: 1.5em;
+                        padding: 15px;
+                        background-color: #e6e6e6;
+                        border-radius: 8px;
+                    }
+                    QGroupBox::title {
+                        subcontrol-origin: margin;
+                        left: 10px;
+                        padding: 0 5px;
+                        color: #333333;
+                    }
+                """)
+            else:
+                group_box.setStyleSheet(self.GROUP_BOX_STYLE)
+        
         # Maintain consistent sizing
         self.setFixedSize(self.sizeHint())
 
     def on_theme_changed(self, theme_name):
         """Handle theme change event"""
-        # Convert theme names to the format expected by the theme manager
+        # Convert display names to internal theme names
         theme_map = {
             "Tokyo night": "tokyo_night",
             "Aura": "aura",
@@ -147,13 +295,9 @@ class SettingsWindow(QDialog):
         theme_key = theme_map.get(theme_name, "aura")
         
         if self.parent:
-            # Update the parent's current theme
             self.parent.current_theme = theme_key
-            # Apply the theme to the parent window
             self.parent.set_theme(theme_key)
-            # Apply theme to settings window
             self.apply_theme()
-            # Save the theme preference (optional)
             self.save_theme_preference(theme_key)
 
     def save_settings(self):
@@ -207,3 +351,38 @@ class SettingsWindow(QDialog):
         except Exception as e:
             logger.error(f"Error loading settings: {e}")
             return "aura"
+
+    def _create_about_group(self, layout):
+        """Create and configure the about section"""
+        about_group = QGroupBox("About VorTeX")
+        about_group.setFont(QFont(self.FONT_FAMILY, self.FONT_SIZE, QFont.Bold))
+        
+        # Style for transparent background with border
+        about_style = """
+            QGroupBox {
+                margin-top: 1.5em;
+                padding: 20px;
+                background-color: transparent;
+                border: 1px solid #edecee;
+                border-radius: 12px;
+            }
+            QGroupBox::title {
+                subcontrol-origin: margin;
+                left: 10px;
+                padding: 0 5px;
+                color: #edecee;
+            }
+        """
+        about_group.setStyleSheet(about_style)
+        
+        about_layout = QVBoxLayout()
+        about_layout.setSpacing(10)
+        about_layout.setContentsMargins(15, 15, 15, 15)
+        
+        about_label = QLabel("VorTeX Calculator\nVersion 1.0.1\nCopyright © 2025, George Huang, All rights reserved.\nGitHub: https://github.com/Goge052215/VorTeX")
+        about_label.setFont(QFont("Monaspace Neon", 12))
+        about_layout.addWidget(about_label)
+        
+        about_group.setLayout(about_layout)
+        layout.addWidget(about_group)
+        layout.addStretch()

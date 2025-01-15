@@ -17,6 +17,7 @@ from matlab_interface.display import Display
 from ip_check.ip_check import IPCheck
 from manim_visual.manim_visualizer import MathVisualizer
 from ui.visualization_window import VisualizationWindow
+from ui.settings_window import SettingsWindow
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -114,8 +115,10 @@ def download_fonts():
 def parse_latex_expression(latex_expr):
     logger.debug(f"Original expression: '{latex_expr}'")
 
-    # Add explicit multiplication for expressions like "1/2 x" -> "1/2 * x"
-    # But avoid adding multiplication inside function calls like sum() or prod()
+    # First convert combinatorial expressions before any other processing
+    latex_expr = ExpressionShortcuts.convert_combinatorial_expression(latex_expr)
+    logger.debug(f"After combinatorial conversion: {latex_expr}")
+
     def add_multiplication(expr):
         # Don't modify content inside function calls
         parts = []
@@ -150,18 +153,7 @@ def parse_latex_expression(latex_expr):
         left_side, right_side = latex_expr.split('==')
         latex_expr = f"solve({left_side} - ({right_side}), x)"
         logger.debug(f"Converted equation to solve format: {latex_expr}")
-    
-    # Handle combinatorial expressions (binomial coefficients)
-    binom_pattern = r'binom\{(\d+)\}\{(\d+)\}'
-    def replace_binom(match):
-        n = match.group(1)
-        k = match.group(2)
-        return f"nchoosek({n},{k})"
-    
-    latex_expr = re.sub(binom_pattern, replace_binom, latex_expr)
-    logger.debug(f"After binom conversion: '{latex_expr}'")
 
-    # Preprocess integral expressions
     latex_expr = ExpressionShortcuts.convert_integral_expression(latex_expr)
     logger.debug(f"Converted integral expression: '{latex_expr}'")
 
@@ -191,8 +183,10 @@ def parse_latex_expression(latex_expr):
     latex_expr = re.sub(r'(\d)([a-zA-Z])', r'\1*\2', latex_expr)
     logger.debug(f"After explicit multiplication: '{latex_expr}'")
 
-    # Convert 'ln' to 'log' for MATLAB compatibility
     latex_expr = latex_expr.replace('ln(', 'log(')
+
+    logger.debug(f"Final MATLAB expression: '{latex_expr}'")
+    return latex_expr
 
     logger.debug(f"Final MATLAB expression: '{latex_expr}'")
     return latex_expr
@@ -207,6 +201,9 @@ class CalculatorApp(QWidget, LatexCalculation):
         
         logger = logging.getLogger(__name__)
         logger.handlers.clear()
+        
+        # Initialize current_theme before creating settings window
+        self.current_theme = "aura"
         
         if not logger.handlers:
             formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -264,19 +261,12 @@ class CalculatorApp(QWidget, LatexCalculation):
         """Initialize and set default theme."""
         self.set_theme("aura")
 
+    def show_settings(self):
+        """Show the settings window."""
+        if not hasattr(self, 'settings_window'):
+            self.settings_window = SettingsWindow(self)
+        self.settings_window.show()
 
-    def show_theme_menu(self):
-        menu = QMenu(self)
-        aura_action = menu.addAction("Aura")
-        dark_action = menu.addAction("Tokyo Night")
-        light_action = menu.addAction("Light")
-        
-        aura_action.triggered.connect(lambda: self.set_theme("aura"))
-        dark_action.triggered.connect(lambda: self.set_theme("tokyo_night"))
-        light_action.triggered.connect(lambda: self.set_theme("light"))
-        
-        menu.exec_(self.theme_button.mapToGlobal(self.theme_button.rect().bottomLeft()))
-    
     def set_theme(self, theme):
         theme_getters = {
             "tokyo_night": get_tokyo_night_theme,
@@ -802,21 +792,35 @@ class CalculatorApp(QWidget, LatexCalculation):
             matlab_expression = ExpressionShortcuts.convert_shortcut(matlab_expression)
             self.logger.debug(f"After shortcut conversion: {matlab_expression}")
 
-            if angle_mode == 'Degree':
-                matlab_expression = re.sub(r'\bsin\((.*?)\)', lambda m: f"sind({m.group(1)})", matlab_expression)
-                matlab_expression = re.sub(r'\bcos\((.*?)\)', lambda m: f"cosd({m.group(1)})", matlab_expression)
-                matlab_expression = re.sub(r'\btan\((.*?)\)', lambda m: f"tand({m.group(1)})", matlab_expression)
+            # For limits involving trig functions in degree mode, use radians for calculation
+            if angle_mode == 'Degree' and 'limit' in matlab_expression:
+                # Keep using sin/cos/tan instead of sind/cosd/tand for limits
+                pass
+            else:
+                # For regular calculations, use degree versions of trig functions
+                if angle_mode == 'Degree':
+                    matlab_expression = re.sub(r'\bsin\((.*?)\)', lambda m: f"sind({m.group(1)})", matlab_expression)
+                    matlab_expression = re.sub(r'\bcos\((.*?)\)', lambda m: f"cosd({m.group(1)})", matlab_expression)
+                    matlab_expression = re.sub(r'\btan\((.*?)\)', lambda m: f"tand({m.group(1)})", matlab_expression)
 
             self.logger.debug(f"Final MATLAB expression: '{matlab_expression}'")
 
             result = self.evaluator.evaluate_matlab_expression(matlab_expression)
             self.logger.debug(f"Raw result from MATLAB: '{result}'")
 
-            simplified_result = self.auto_simplify.simplify_expression(result)
-            self.logger.debug(f"Simplified Result: '{simplified_result}'")
+            # Only try to simplify if the result is not a numeric value
+            if isinstance(result, str) and not result.replace('.', '').replace('-', '').isdigit():
+                try:
+                    simplified_result = self.auto_simplify.simplify_expression(result)
+                    self.logger.debug(f"Simplified Result: '{simplified_result}'")
+                    displayed_result = simplified_result
+                except Exception as e:
+                    self.logger.error(f"Error during simplification: {e}")
+                    displayed_result = result
+            else:
+                displayed_result = str(result)
 
-            displayed_result = simplified_result.replace('log(', 'ln(')
-
+            displayed_result = displayed_result.replace('log(', 'ln(')
             displayed_result = displayed_result.replace('cosd(', 'cos(')
             displayed_result = displayed_result.replace('sind(', 'sin(')
             displayed_result = displayed_result.replace('tand(', 'tan(')
