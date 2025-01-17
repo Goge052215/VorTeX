@@ -35,11 +35,50 @@ class SympyCalculation:
         try:
             self.logger.debug(f"Parsing expression: {expression}")
             
+            # Handle harmonic series
+            harmonic_pattern = r'sum\s*\(\s*(\d+)\s*to\s*(?:inf|Inf|(\d+))\s*\)\s*1/([a-zA-Z])'
+            def replace_harmonic(match):
+                start = int(match.group(1))
+                end = match.group(2)  # Will be None for inf/Inf
+                var = match.group(3)
+                
+                if end is None:  # Infinite series
+                    return "oo"  # SymPy's infinity symbol
+                else:  # Finite series
+                    if start == 1:
+                        # For sum from 1 to n, use harmonic number formula
+                        return f"log({end}) + 0.57721566490153286060"
+                    else:
+                        # For sum from k to n
+                        return f"log({end}) - log({start-1})"
+
+            if re.search(harmonic_pattern, expression):
+                expression = re.sub(harmonic_pattern, replace_harmonic, expression)
+                return expression
+            
+            # Handle product expressions
+            prod_pattern = r'prod\s*\(\s*(\d+)\s*to\s*(?:inf|Inf|(\d+))\s*\)\s*([^\n]+)'
+            def replace_prod(match):
+                start = match.group(1)
+                end = match.group(2)  # Will be None for inf/Inf
+                expr_part = match.group(3)
+                
+                if end is None:
+                    return f"Product({expr_part}, (x, {start}, oo))"
+                else:
+                    return f"Product({expr_part}, (x, {start}, {end}))"
+
+            expression = re.sub(prod_pattern, replace_prod, expression)
+            
             if 'C' in expression:
                 expression = self._parse_combination(expression)
             
             elif 'P' in expression:
                 expression = self._parse_permutation(expression)
+            
+            # Add limit handling
+            elif expression.startswith('lim'):
+                expression = self._parse_limit(expression)
             
             # Handle derivatives
             elif any(x in expression for x in ['d/dx', 'd/dy', 'diff(']):
@@ -162,6 +201,55 @@ class SympyCalculation:
         except Exception as e:
             self.logger.error(f"Error parsing derivative: {e}")
             raise ValueError(f"Error parsing derivative: {e}")
+
+    def _parse_limit(self, expression: str) -> str:
+        """Parse limit expressions."""
+        try:
+            # Remove 'lim' and clean up spaces
+            expression = expression.strip()[3:].strip()
+            
+            # Handle lim(x to a) format
+            if expression.startswith('('):
+                # Remove outer parentheses
+                expression = expression[1:].strip()
+                if expression.endswith(')'):
+                    expression = expression[:-1].strip()
+            else:
+                raise ValueError("Limit expression must be in format 'lim(x to a)'")
+            
+            # Split by 'to' keyword
+            parts = expression.split(' to ')
+            if len(parts) != 2:
+                raise ValueError("Missing 'to' keyword in limit expression")
+            
+            var_approach = parts[0].strip()
+            remaining = parts[1].strip()
+            
+            # Find the first space or closing parenthesis after the approach value
+            space_idx = remaining.find(' ')
+            paren_idx = remaining.find(')')
+            
+            # Use the first occurring delimiter
+            if space_idx == -1 and paren_idx == -1:
+                raise ValueError("Missing function in limit expression")
+            elif space_idx == -1:
+                split_idx = paren_idx
+            elif paren_idx == -1:
+                split_idx = space_idx
+            else:
+                split_idx = min(space_idx, paren_idx)
+            
+            approach_val = remaining[:split_idx].strip()
+            function = remaining[split_idx:].strip()
+            
+            # Remove any remaining parentheses from the function
+            function = function.strip('()')
+            
+            return f"limit({function}, {var_approach}, {approach_val})"
+            
+        except Exception as e:
+            self.logger.error(f"Error parsing limit: {e}")
+            raise ValueError(f"Invalid limit format: {str(e)}")
 
     def evaluate(self, expression: str, angle_mode: str = 'Radian') -> str:
         """Evaluate the SymPy expression and return the result."""

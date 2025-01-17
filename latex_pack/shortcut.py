@@ -237,23 +237,35 @@ class ExpressionShortcuts:
             str: Text with integral expressions converted.
         """
         # Convert definite integrals like 'int (a to b) expr dx' to 'int(expr, x, a, b)'
-        definite_integral_pattern = r'int\s*\(([^)]+)\s*to\s*([^)]+)\)\s+(.+?)\s+d([a-zA-Z])'
+        definite_integral_pattern = r'int\s*\(\s*([^\s]+?)\s*to\s*([^\s]+?)\s*\)\s*([^\s]+?)\s*d([a-zA-Z])'
         
         def replace_definite_integral(match):
             lower = match.group(1).strip()
             upper = match.group(2).strip()
             expr = match.group(3).strip()
             var = match.group(4).strip()
+            
+            # Handle function expressions in limits
+            if 'ln' in lower:
+                lower = lower.replace('ln', 'log')
+            if 'ln' in upper:
+                upper = upper.replace('ln', 'log')
+            
             return f'int({expr}, {var}, {lower}, {upper})'
         
         text = re.sub(definite_integral_pattern, replace_definite_integral, text)
         
         # Convert indefinite integrals like 'int expr dx' to 'int(expr, x)'
-        indefinite_integral_pattern = r'int\s+(.+?)\s+d([a-zA-Z])'
+        indefinite_integral_pattern = r'int\s+([^\s]+?)\s+d([a-zA-Z])'
         
         def replace_indefinite_integral(match):
             expr = match.group(1).strip()
             var = match.group(2).strip()
+            
+            # Handle function expressions
+            if 'ln' in expr:
+                expr = expr.replace('ln', 'log')
+            
             return f'int({expr}, {var})'
         
         text = re.sub(indefinite_integral_pattern, replace_indefinite_integral, text)
@@ -293,36 +305,62 @@ class ExpressionShortcuts:
             vars = [v for v in vars if v not in reserved]
             return vars[0] if vars else 'x'
 
-        # Handle regular product expressions: prod(1 to inf) x
-        prod_pattern = r'prod\s*\(\s*(\d+)\s*to\s*(inf|Inf|\d+)\s*\)\s*([^\n]+)'
-        def replace_prod(match):
+        # Handle harmonic series optimization
+        harmonic_pattern = r'sum\s*\(\s*(\d+)\s*to\s*(?:inf|Inf|(\d+))\s*\)\s*1/([a-zA-Z])'
+        def replace_harmonic(match):
+            start = int(match.group(1))
+            end = match.group(2)  # Will be None for inf/Inf
+            var = match.group(3)
+            
+            if end is None:  # Infinite series
+                return "∞"
+            else:  # Finite series
+                if start == 1:
+                    # For sum from 1 to n, evaluate numerically with Euler's constant
+                    return f"double(log({end}) + 0.57721566490153286060)"
+                else:
+                    # For sum from k to n, evaluate numerically
+                    return f"double(log({end}) - log({start-1}))"
+
+        # Apply harmonic series optimization first
+        if re.search(harmonic_pattern, expr):
+            expr = re.sub(harmonic_pattern, replace_harmonic, expr)
+            return expr
+
+        finite_prod_pattern = r'prod\s*\(\s*(\d+)\s*to\s*(\d+)\s*\)\s*([^\n]+)'
+        def replace_finite_prod(match):
             start = match.group(1).strip()
-            end = match.group(2).strip().lower()
+            end = match.group(2).strip()
             expr_part = match.group(3).strip()
             var = extract_variable(expr_part)
             
-            # Handle infinity case differently
-            if end == 'inf':
-                # Use symsum with log for infinite products
-                return f"exp(symsum(log({expr_part}), {var}, {start}, Inf))"
-            else:
-                return f"prod(arrayfun(@(k) subs({expr_part}, {var}, k), {start}:{end}))"
+            return f"prod(arrayfun(@(k) subs({expr_part}, {var}, k), {start}:{end}))"
         
-        expr = re.sub(prod_pattern, replace_prod, expr)
-        
-        # Handle sum expressions
+        inf_prod_pattern = r'prod\s*\(\s*(\d+)\s*to\s*(?:inf|Inf)\s*\)\s*([^\n]+)'
+        def replace_infinite_prod(match):
+            start = match.group(1).strip()
+            expr_part = match.group(2).strip()
+            var = extract_variable(expr_part)
+            
+            return f"symprod({expr_part}, {var}, {start}, Inf)"
+
         sum_pattern = r'sum\s*\(\s*(\d+)\s*to\s*(inf|Inf|\d+)\s*\)\s*([^\n]+)'
         def replace_sum(match):
             start = match.group(1).strip()
             end = match.group(2).strip().lower()
             expr_part = match.group(3).strip()
             var = extract_variable(expr_part)
-            # Convert 'inf' to 'Inf' for MATLAB
             end = 'Inf' if end == 'inf' else end
             return f"symsum({expr_part}, {var}, {start}, {end})"
         
+        # Apply other patterns
+        expr = re.sub(inf_prod_pattern, replace_infinite_prod, expr)
+        expr = re.sub(finite_prod_pattern, replace_finite_prod, expr)
         expr = re.sub(sum_pattern, replace_sum, expr)
-        
+
+        if 'Inf' in expr:
+            expr = f"limit({expr}, x, Inf)"
+
         return expr
 
     @staticmethod

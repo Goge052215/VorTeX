@@ -1,49 +1,34 @@
 import logging
+import socket
+import requests
+from requests.exceptions import RequestException
+from urllib.request import urlopen
 
 logger = logging.getLogger(__name__)
 
 class IPCheck:
+    @staticmethod
     def ip_check():
-        """Check if the user is in mainland China based on IP address."""
+        """Simple check if internet connection is available."""
         try:
+            socket.create_connection(("8.8.8.8", 53), timeout=3)
+            
             try:
-                import requests
-            except ImportError:
-                logger.warning("requests module not found. Installing...")
-                import subprocess
-                try:
-                    subprocess.check_call(['pip', 'install', 'requests'])
-                    import requests
-                except Exception as e:
-                    logger.error(f"Failed to install requests: {e}")
-                    return False
+                response = urlopen('https://api64.ipify.org?format=json', timeout=3)
+                return True
+            except:
+                pass
 
-                # Use a reliable IP geolocation API with rate limit handling
-            response = requests.get('https://ipapi.co/json/', timeout=5)
-            if response.status_code == 429:
-                logger.warning("IP API rate limit reached, using alternative method")
-                # Fall back to ping test
-                return False
-            elif response.status_code == 200:
-                data = response.json()
-                country_code = data.get('country_code')
-                country_name = data.get('country_name')
-                region = data.get('region')
-                city = data.get('city')
-                ip = data.get('ip')
-
-                # Log detailed location info
-                logger.info(f"IP Address: {ip}")
-                logger.info(f"Location: {city}, {region}, {country_name} ({country_code})")
-
-                # Check if in mainland China
-                if country_code == 'CN' and region not in ['Hong Kong', 'Macau', 'Taiwan']:
-                    logger.info("User location: Mainland China")
+            # Third try: Alternative IP service
+            try:
+                response = requests.get('http://ip-api.com/json/', timeout=3)
+                if response.status_code == 200:
                     return True
-                else:
-                    logger.info("User location: Not in Mainland China")
-                    return False
+            except:
+                pass
+
+            return True
+
         except Exception as e:
-            logger.error(f"Error checking location: {str(e)}")
-            # If we can't determine location, fall back to ping test
+            logger.warning(f"Connection check failed: {e}")
             return False

@@ -1,3 +1,28 @@
+'''
+Copyright (c) 2025 George Huang. All Rights Reserved.
+
+This file is main part of the VorTeX Calculator project.
+
+This file and its contents are protected under international copyright laws.
+No part of this file may be reproduced, distributed, or transmitted in any form
+or by any means, including photocopying, recording, or other electronic or
+mechanical methods, without the prior written permission of the copyright owner.
+
+PROPRIETARY AND CONFIDENTIAL
+This file contains proprietary and confidential information. Unauthorized
+copying, distribution, or use of this file, via any medium, is strictly
+prohibited.
+
+LICENSE RESTRICTIONS
+- Commercial use is strictly prohibited without explicit written permission
+- Modifications to this file are not permitted
+- Distribution or sharing of this file is not permitted
+- Private use must maintain all copyright and license notices
+
+Version: 1.0.2
+Last Updated: 2025.1
+'''
+
 import sys
 import re
 import os
@@ -25,7 +50,7 @@ logger = logging.getLogger(__name__)
 
 try:
     from PyQt5.QtWidgets import (
-        QApplication, QWidget, QVBoxLayout, QLabel, QPushButton,
+        QApplication, QWidget, QPushButton,
         QComboBox, QMessageBox, QTextEdit, QHBoxLayout, QGridLayout, 
         QScrollArea, QSpacerItem, QSizePolicy, QMenu, QInputDialog
     )
@@ -64,13 +89,11 @@ FONT_SIZE = 14
 def _configure_logger():
     """Configure the root logger with minimal output."""
     root_logger = logging.getLogger()
-    root_logger.setLevel(logging.WARNING)  # Only show WARNING and above
+    root_logger.setLevel(logging.WARNING)
     
-    # Remove existing handlers
     for handler in root_logger.handlers[:]:
         root_logger.removeHandler(handler)
     
-    # Create console handler with minimal formatter
     console_handler = logging.StreamHandler()
     formatter = logging.Formatter('%(levelname)s: %(message)s')
     console_handler.setFormatter(formatter)
@@ -116,38 +139,51 @@ def download_fonts():
 def parse_latex_expression(latex_expr):
     logger.debug(f"Original expression: '{latex_expr}'")
 
-    # First convert combinatorial expressions before any other processing
     latex_expr = ExpressionShortcuts.convert_combinatorial_expression(latex_expr)
     logger.debug(f"After combinatorial conversion: {latex_expr}")
 
-    def add_multiplication(expr):
-        # Don't modify content inside function calls
+    '''def add_multiplication(expr):
+        # Don't modify content inside function calls and integrals
         parts = []
         last_end = 0
         stack = []
+        in_integral = False
         
-        for i, char in enumerate(expr):
-            if char == '(':
-                if not stack:  # Start of a new function call
+        i = 0
+        while i < len(expr):
+            # Check for integral expressions
+            if expr[i:].startswith('int'):
+                in_integral = True
+                
+            if expr[i] == '(':
+                if not stack and not in_integral:
+                    # Only add multiplication outside integrals
                     parts.append(re.sub(r'(\d+)\s+([a-zA-Z])', r'\1*\2', expr[last_end:i]))
                 stack.append(i)
-            elif char == ')':
+                
+            elif expr[i] == ')':
                 if stack:
-                    if len(stack) == 1:  # End of the function call
+                    if len(stack) == 1:
                         parts.append(expr[stack[0]:i+1])
                         last_end = i + 1
+                        if 'int' in parts[-1]:
+                            in_integral = False
                     stack.pop()
+                    
+            i += 1
         
-        # Handle the remaining part
         if last_end < len(expr):
-            parts.append(re.sub(r'(\d+)\s+([a-zA-Z])', r'\1*\2', expr[last_end:]))
+            # Only add multiplication outside integrals
+            if not in_integral:
+                parts.append(re.sub(r'(\d+)\s+([a-zA-Z])', r'\1*\2', expr[last_end:]))
+            else:
+                parts.append(expr[last_end:])
         
         return ''.join(parts)
 
-    latex_expr = add_multiplication(latex_expr)
+    latex_expr = add_multiplication(latex_expr)'''
     latex_expr = re.sub(r'(\d+)/(\d+)\s+([a-zA-Z])', r'(\1/\2)*\3', latex_expr)
     
-    # Check if it's an equation (contains '=')
     is_equation = '=' in latex_expr
     if is_equation:
         latex_expr = latex_expr.replace('==', '=').replace('=', '==')
@@ -158,7 +194,6 @@ def parse_latex_expression(latex_expr):
     latex_expr = ExpressionShortcuts.convert_integral_expression(latex_expr)
     logger.debug(f"Converted integral expression: '{latex_expr}'")
 
-    # Handle derivative expressions directly
     derivative_pattern = r'd/d([a-zA-Z])\s*([^$]+)'
     def replace_derivative(match):
         var = match.group(1)
@@ -167,7 +202,6 @@ def parse_latex_expression(latex_expr):
         expr = expr.replace('^', '.^')
         return f"diff({expr}, {var})"
 
-    # Handle higher-order derivatives
     higher_derivative_pattern = r'd(\d+)/d([a-zA-Z])\^?(\d*)\s*([^$]+)'
     def replace_higher_derivative(match):
         order = match.group(1)
@@ -177,7 +211,6 @@ def parse_latex_expression(latex_expr):
         expr = expr.replace('^', '.^')
         return f"diff({expr}, {var}, {order})"
 
-    # Try higher-order derivative first, then first-order derivative
     latex_expr = re.sub(higher_derivative_pattern, replace_higher_derivative, latex_expr)
     latex_expr = re.sub(derivative_pattern, replace_derivative, latex_expr)
 
@@ -189,21 +222,16 @@ def parse_latex_expression(latex_expr):
     logger.debug(f"Final MATLAB expression: '{latex_expr}'")
     return latex_expr
 
-    logger.debug(f"Final MATLAB expression: '{latex_expr}'")
-    return latex_expr
-
 class CalculatorApp(QWidget, LatexCalculation):
     """
     Main calculator application window with support for LaTeX, MATLAB, and Matrix operations.
     """
     def __init__(self):
-        """Initialize the calculator application."""
         super().__init__()
         
         logger = logging.getLogger(__name__)
         logger.handlers.clear()
         
-        # Initialize current_theme before creating settings window
         self.current_theme = "aura"
         
         if not logger.handlers:
@@ -240,7 +268,6 @@ class CalculatorApp(QWidget, LatexCalculation):
             bold=True
         ) 
         
-        # Try to initialize MATLAB engine
         self.matlab_available = False
         try:
             self.eng = matlab.engine.start_matlab()
@@ -257,7 +284,6 @@ class CalculatorApp(QWidget, LatexCalculation):
                 "MATLAB engine could not be started. The calculator will run in SymPy-only mode.\n"
                 "Some features may be limited."
             )
-            # Initialize SymPy calculator as fallback
             self.sympy_calculator = SympyCalculation()
 
         self.sympy_converter = SympyToMatlab()
@@ -268,11 +294,9 @@ class CalculatorApp(QWidget, LatexCalculation):
         self.viz_button.clicked.connect(self.handle_visualization)
         
     def _init_theme(self):
-        """Initialize and set default theme."""
         self.set_theme("aura")
 
     def show_settings(self):
-        """Show the settings window."""
         if not hasattr(self, 'settings_window'):
             self.settings_window = SettingsWindow(self)
         self.settings_window.show()
@@ -306,7 +330,6 @@ class CalculatorApp(QWidget, LatexCalculation):
         self.legend_window.show()
 
     def on_mode_changed(self, mode):
-        """Handle mode change events."""
         if not self.matlab_available and mode in ['LaTeX', 'MATLAB', 'Matrix']:
             QMessageBox.information(
                 self,
@@ -317,13 +340,11 @@ class CalculatorApp(QWidget, LatexCalculation):
             return
 
         try:
-            # Update UI layout using UiConfig
             ui_config = UiConfig()
             ui_config.mode_config(self)
             
             config = ui_config.mode_configs.get(mode, ui_config.mode_configs['SymPy'])
             
-            # Apply UI changes
             for widget in config['show']:
                 widget.show()
             for widget in config['hide']:
@@ -333,12 +354,11 @@ class CalculatorApp(QWidget, LatexCalculation):
             self.setFixedHeight(height)
             self.setFixedWidth(width)
 
-            # Update placeholder text based on mode
             placeholders = {
                 'LaTeX': 'Enter Simplified LaTeX expression, e.g., 5C2 + sin(pi/2)',
                 'MATLAB': 'Enter MATLAB expression, e.g., nchoosek(5,2) + sin(pi/2)',
                 'SymPy': 'Enter Simplified LaTeX expression, e.g., 5C2 + sin(pi/2)',
-                'Matrix': 'Enter matrix in format: [1 2; 3 4]'
+                'Matrix': 'Enter matrix in format: [1 2; 3 4] ([row 1; row 2; ...])'
             }
             
             self.entry_formula.setPlaceholderText(placeholders.get(mode, placeholders['SymPy']))
@@ -396,7 +416,6 @@ class CalculatorApp(QWidget, LatexCalculation):
             self.matrix_input.setPlainText(self.matrix_memory[name])
     
     def sympy_to_matlab(self, expr):
-        """Convert SymPy expression to MATLAB format using the SympyToMatlab class."""
         try:
             return self.sympy_converter.sympy_to_matlab(expr)
         except Exception as e:
@@ -404,7 +423,6 @@ class CalculatorApp(QWidget, LatexCalculation):
             raise
 
     def _handle_list_expression(self, expr):
-        """Handle list expressions."""
         self.logger.debug(f"Handling list expression: {expr}")
         try:
             if isinstance(expr, list):
@@ -418,7 +436,6 @@ class CalculatorApp(QWidget, LatexCalculation):
             raise
 
     def _handle_integral(self, expr):
-        """Handle integral expressions."""
         self.logger.debug(f"Handling integral expression: {expr}")
         try:
             func = self.sympy_to_matlab(expr.function)
@@ -451,7 +468,6 @@ class CalculatorApp(QWidget, LatexCalculation):
             raise
 
     def _handle_derivative(self, expr):
-        """Handle derivative expressions."""
         self.logger.debug(f"Handling derivative expression: {expr}")
         try:
             func = self.sympy_to_matlab(expr.expr)
@@ -478,7 +494,6 @@ class CalculatorApp(QWidget, LatexCalculation):
             raise
 
     def _process_derivative_variables(self, variables):
-        """Process variables for derivative expressions."""
         self.logger.debug(f"Processing derivative variables: {variables}")
         try:
             matlab_vars = []
@@ -505,7 +520,6 @@ class CalculatorApp(QWidget, LatexCalculation):
             raise
 
     def _handle_equation(self, expr):
-        """Handle equation expressions."""
         self.logger.debug(f"Handling equation expression: {expr}")
         try:
             lhs = self.sympy_to_matlab(expr.lhs)
@@ -518,14 +532,12 @@ class CalculatorApp(QWidget, LatexCalculation):
             raise
 
     def _handle_function(self, expr):
-        """Handle function expressions."""
         self.logger.debug(f"Handling function expression: {expr}")
         try:
             func_name = expr.func.__name__
             args = [self.sympy_to_matlab(arg) for arg in expr.args]
             
             function_handlers = {
-                # Regular trig functions
                 'sin': lambda args: f"sind({args[0]})" if self.combo_angle.currentText() == 'Degree' else f"sin({args[0]})",
                 'cos': lambda args: f"cosd({args[0]})" if self.combo_angle.currentText() == 'Degree' else f"cos({args[0]})",
                 'tan': lambda args: f"tand({args[0]})" if self.combo_angle.currentText() == 'Degree' else f"tan({args[0]})",
@@ -533,7 +545,6 @@ class CalculatorApp(QWidget, LatexCalculation):
                 'sec': lambda args: f"sec({args[0]})",
                 'cot': lambda args: f"cot({args[0]})",
                 
-                # Inverse trig functions
                 'asin': lambda args: f"asind({args[0]})" if self.combo_angle.currentText() == 'Degree' else f"asin({args[0]})",
                 'arcsin': lambda args: f"asind({args[0]})" if self.combo_angle.currentText() == 'Degree' else f"asin({args[0]})",
                 'acos': lambda args: f"acosd({args[0]})" if self.combo_angle.currentText() == 'Degree' else f"acos({args[0]})",
@@ -541,7 +552,6 @@ class CalculatorApp(QWidget, LatexCalculation):
                 'atan': lambda args: f"atand({args[0]})" if self.combo_angle.currentText() == 'Degree' else f"atan({args[0]})",
                 'arctan': lambda args: f"atand({args[0]})" if self.combo_angle.currentText() == 'Degree' else f"atan({args[0]})",
                 
-                # Hyperbolic functions
                 'sinh': lambda args: f"sinh({args[0]})",
                 'cosh': lambda args: f"cosh({args[0]})",
                 'tanh': lambda args: f"tanh({args[0]})",
@@ -549,7 +559,6 @@ class CalculatorApp(QWidget, LatexCalculation):
                 'sech': lambda args: f"sech({args[0]})",
                 'coth': lambda args: f"coth({args[0]})",
                 
-                # Inverse hyperbolic functions
                 'asinh': lambda args: f"asinh({args[0]})",
                 'arcsinh': lambda args: f"asinh({args[0]})",
                 'acosh': lambda args: f"acosh({args[0]})",
@@ -557,7 +566,6 @@ class CalculatorApp(QWidget, LatexCalculation):
                 'atanh': lambda args: f"atanh({args[0]})",
                 'arctanh': lambda args: f"atanh({args[0]})",
                 
-                # Other functions
                 'log': lambda args: f"log({args[0]})",
                 'sqrt': lambda args: f"sqrt({args[0]})",
                 'Abs': lambda args: f"abs({args[0]})",
@@ -581,22 +589,12 @@ class CalculatorApp(QWidget, LatexCalculation):
             raise
 
     def _process_expression_string(self, expr):
-        """Process and convert expression string to MATLAB format."""
         expr_str = str(expr)
         
-        # Convert logarithms
         expr_str = self._convert_logarithms(expr_str)
-        
-        # Apply function replacements
         expr_str = self._apply_function_replacements(expr_str)
-        
-        # Handle integrals and derivatives
         expr_str = self._handle_integral_derivative_patterns(expr_str)
-        
-        # Process operators and special cases
         expr_str = self._process_operators(expr_str)
-        
-        # Handle combinations and permutations
         expr_str = self._handle_combinations_permutations(expr_str)
         
         return expr_str
@@ -622,7 +620,6 @@ class CalculatorApp(QWidget, LatexCalculation):
         return expr_str
 
     def _apply_function_replacements(self, expr_str):
-        """Apply function replacements using the replacement dictionary."""
         replacements = {
             'ln': 'log', 'log10': 'log10', 'log2': 'log2',
             'sin': 'sin', 'cos': 'cos', 'tan': 'tan',
@@ -637,7 +634,6 @@ class CalculatorApp(QWidget, LatexCalculation):
         return expr_str
 
     def _handle_integral_derivative_patterns(self, expr_str):
-        """Handle integral and derivative patterns."""
         patterns = {
             r'Integral\((.*?), \((.*?), (.*?), (.*?)\)\)': r'integral(@(x) \1, \3, \4)',
             r'Integral\((.*?), (.*?)\)': r'int(\1, \2)',
@@ -649,14 +645,12 @@ class CalculatorApp(QWidget, LatexCalculation):
         return expr_str
 
     def _process_operators(self, expr_str):
-        """Process mathematical operators."""
         expr_str = expr_str.replace('**', '.^')
         expr_str = expr_str.replace('/', './').replace('*', '.*')
         expr_str = expr_str.replace('.*1', '').replace('.*0', '0')
         return expr_str
 
     def _handle_combinations_permutations(self, expr_str):
-        """Handle combinations and permutations patterns."""
         patterns = {
             r'\\binom\s*\{\s*(\d+)\s*\}\s*\{\s*(\d+)\s*\}': r'nchoosek(\1, \2)',
             r'\\choose\s*\{\s*(\d+)\s*\}\s*\{\s*(\d+)\s*\}': r'nchoosek(\1, \2)',
@@ -669,7 +663,6 @@ class CalculatorApp(QWidget, LatexCalculation):
         return expr_str
 
     def calculate(self):
-        """Calculate the result based on the current mode."""
         try:
             mode = self.combo_mode.currentText()
             angle_mode = self.combo_angle.currentText()
@@ -697,7 +690,6 @@ class CalculatorApp(QWidget, LatexCalculation):
             QMessageBox.critical(self, "Error", f"Error during calculation: {str(e)}")
 
     def handle_sympy_calculation(self, angle_mode):
-        """Handle SymPy input and calculation."""
         expression = self.entry_formula.toPlainText().strip()
         if not expression:
             QMessageBox.warning(self, "Input Error", "Please enter an expression.")
@@ -722,7 +714,9 @@ class CalculatorApp(QWidget, LatexCalculation):
             return str(result)
         else:
             return str(result)
-
+        
+    # Deprecated, will be removed soon
+    '''
     def handle_matrix_calculation(self):
         matrix_text = self.matrix_input.toPlainText().strip()
         operation = self.combo_matrix_op.currentText()
@@ -740,22 +734,23 @@ class CalculatorApp(QWidget, LatexCalculation):
             QMessageBox.critical(self, "MATLAB Error", f"Error evaluating matrix: {me}")
             return
         
+        # Give appropriate roundings for specific mode
         try:
             if operation == 'Determinant':
                 result = self.eng.eval("det(matrix)", nargout=1)
-                result = round(float(result), 2)  # Round to 2 decimal places
+                result = round(float(result), 2)
 
             elif operation == 'Inverse':
                 result = self.eng.eval("inv(matrix)", nargout=1)
-                result = np.round(np.array(result), 2).tolist()  # Round each element to 2 decimal places
+                result = np.round(np.array(result), 2).tolist()
 
             elif operation == 'Eigenvalues':
                 result = self.eng.eval("eig(matrix)", nargout=1)
-                result = np.round(np.array(result), 2).tolist()  # Round each eigenvalue to 2 decimal places
+                result = np.round(np.array(result), 2).tolist()
 
             elif operation == 'Rank':
                 result = self.eng.eval("rank(matrix)", nargout=1)
-                result = int(result)  # Rank is always an integer, no rounding needed
+                result = int(result)
 
             elif operation in ['Multiply', 'Add', 'Subtract', 'Divide']:
                 result = self.handle_matrix_arithmetic(operation)
@@ -774,6 +769,7 @@ class CalculatorApp(QWidget, LatexCalculation):
 
         except matlab.engine.MatlabExecutionError as me:
             QMessageBox.critical(self, "MATLAB Error", f"MATLAB Error: {me}")
+    '''
 
     def handle_matrix_arithmetic(self, operation):
         operation_map = {
@@ -844,34 +840,28 @@ class CalculatorApp(QWidget, LatexCalculation):
             matlab_expression = ExpressionShortcuts.convert_shortcut(matlab_expression)
             self.logger.debug(f"After shortcut conversion: {matlab_expression}")
 
-            # For limits involving trig functions in degree mode, use radians for calculation
-            if angle_mode == 'Degree' and 'limit' in matlab_expression:
-                # Keep using sin/cos/tan instead of sind/cosd/tand for limits
-                pass
-            else:
-                # For regular calculations, use degree versions of trig functions
-                if angle_mode == 'Degree':
-                    matlab_expression = re.sub(r'\bsin\((.*?)\)', lambda m: f"sind({m.group(1)})", matlab_expression)
-                    matlab_expression = re.sub(r'\bcos\((.*?)\)', lambda m: f"cosd({m.group(1)})", matlab_expression)
-                    matlab_expression = re.sub(r'\btan\((.*?)\)', lambda m: f"tand({m.group(1)})", matlab_expression)
+            if angle_mode == 'Degree' and 'limit' not in matlab_expression:
+                matlab_expression = re.sub(r'\bsin\((.*?)\)', lambda m: f"sind({m.group(1)})", matlab_expression)
+                matlab_expression = re.sub(r'\bcos\((.*?)\)', lambda m: f"cosd({m.group(1)})", matlab_expression)
+                matlab_expression = re.sub(r'\btan\((.*?)\)', lambda m: f"tand({m.group(1)})", matlab_expression)
 
             self.logger.debug(f"Final MATLAB expression: '{matlab_expression}'")
 
             result = self.evaluator.evaluate_matlab_expression(matlab_expression)
             self.logger.debug(f"Raw result from MATLAB: '{result}'")
 
-            # Initialize displayed_result with the raw result
-            displayed_result = str(result)
+            # Check if the result is a numeric string
+            try:
+                float(result)
+                is_numeric = True
+            except ValueError:
+                is_numeric = False
 
-            '''# Try to simplify if it's not a numeric value
-            if isinstance(result, str) and not result.replace('.', '').replace('-', '').isdigit():
-                try:
-                    simplified_result = self.auto_simplify.simplify_expression(result)
-                    self.logger.debug(f"Simplified Result: '{simplified_result}'")
-                    displayed_result = simplified_result
-                except Exception as e:
-                    self.logger.error(f"Error during simplification: {e}")
-                    displayed_result = result'''
+            # Format the result based on its type
+            if is_numeric:
+                displayed_result = f"{float(result):.3f}"
+            else:
+                displayed_result = result
 
             displayed_result = displayed_result.replace('log(', 'ln(')
             displayed_result = displayed_result.replace('cosd(', 'cos(')
@@ -889,15 +879,12 @@ class CalculatorApp(QWidget, LatexCalculation):
             QMessageBox.critical(self, "Error", f"Error evaluating expression: {str(e)}")
 
     def evaluate_expression(self, matlab_expression):
-        """Evaluate the expression using the MATLAB engine."""
         return self.evaluator.evaluate_matlab_expression(matlab_expression)
 
     def _is_numeric_expression(self, sympy_expr):
-        """Determine if the SymPy expression is numeric."""
         return sympy_expr.is_number
 
     def _extract_function_argument(self, expression):
-        """Extract the function name and its argument."""
         match = re.match(r'([a-zA-Z]+)\s*\(\s*([^\)]+)\s*\)', expression)
         if match:
             func, arg = match.groups()
@@ -933,7 +920,6 @@ class CalculatorApp(QWidget, LatexCalculation):
             return
 
         try:
-            # Apply shortcuts
             input_text = ExpressionShortcuts.convert_shortcut(input_text)
             
             if self.combo_angle.currentText() == 'Degree':
@@ -969,7 +955,6 @@ class CalculatorApp(QWidget, LatexCalculation):
             QMessageBox.critical(self, "Unexpected Error", f"Unexpected Error: {str(e)}")
     
     def closeEvent(self, event):
-        """Handle the application closing event."""
         try:
             if self.matlab_available:
                 self.eng.quit()
@@ -979,7 +964,6 @@ class CalculatorApp(QWidget, LatexCalculation):
         event.accept()
 
     def calculate_matrix(self):
-        """Handle the calculation for matrix operations."""
         try:
             matrix_text = self.matrix_input.toPlainText().strip()
             operation = self.combo_matrix_op.currentText()
@@ -993,10 +977,9 @@ class CalculatorApp(QWidget, LatexCalculation):
 
             self.eng.eval(f"matrix = {matrix_text};", nargout=0)
             
-            # Perform the selected operation
             if operation == 'Determinant':
                 result = self.eng.eval("det(matrix)", nargout=1)
-                result = round(float(result), 2)  # Round to 2 decimal places
+                result = round(float(result), 2)
 
             elif operation == 'Inverse':
                 result = self.eng.eval("inv(matrix)", nargout=1)
@@ -1063,19 +1046,15 @@ class CalculatorApp(QWidget, LatexCalculation):
             QMessageBox.critical(self, "Visualization Error", str(e))
             
     def convert_to_python_expr(self, expr: str) -> str:
-        """Convert LaTeX/MATLAB expression to Python expression."""
         try:
-            # Handle negative fractions in base
             if expr.startswith('(-') and ')^' in expr:
                 base, power = expr.split(')^')
-                base = base[1:]  # Remove the leading (
-                # Convert fraction to decimal for the base
+                base = base[1:]
                 if '/' in base:
                     num, den = map(float, base.split('/'))
                     decimal_base = num / den
                     return f"({decimal_base})**{power}"
             
-            # Original replacements for other cases
             replacements = {
                 'sind': 'np.sin',
                 'cosd': 'np.cos',
@@ -1091,7 +1070,6 @@ class CalculatorApp(QWidget, LatexCalculation):
                 'e': 'np.e'
             }
             
-            # Apply standard replacements
             for old, new in replacements.items():
                 expr = re.sub(rf'\b{old}\b', new, expr)
             

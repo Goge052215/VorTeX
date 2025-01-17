@@ -9,11 +9,8 @@ from typing import NoReturn
 
 
 class PackageImporter:
-    """Class for managing package imports and installations."""
-
     @staticmethod
     def import_pyqt5() -> NoReturn:
-        """Install and import PyQt5 and related packages."""
         try:
             print("Installing PyQt5 and related packages...")
             packages = ["PyQt5", "sympy", "numpy"]
@@ -29,7 +26,6 @@ class PackageImporter:
             from PyQt5.QtGui import QFont, QIcon
             from PyQt5.QtCore import Qt
 
-            # Additional package imports
             import sympy as sy
             import numpy as np
 
@@ -38,7 +34,6 @@ class PackageImporter:
 
     @staticmethod
     def import_matlab() -> NoReturn:
-        """Install and import MATLAB-related packages."""
         try:
             print("Installing MATLAB packages...")
             packages = ["matlab", "matlabengine"]
@@ -52,7 +47,6 @@ class PackageImporter:
 
     @staticmethod
     def import_sympy() -> NoReturn:
-        """Install and import SymPy-related packages."""
         try:
             print("Installing SymPy and related packages...")
             packages = ["sympy", "numpy", "latex2sympy2"]
@@ -69,10 +63,8 @@ class PackageImporter:
 
     @staticmethod
     def import_manim() -> NoReturn:
-        """Install and import Manim-related packages."""
         try:
             print("Installing Manim and related packages...")
-            # First install core dependencies
             core_packages = [
                 "importlib_metadata",
                 "pycairo",
@@ -88,11 +80,9 @@ class PackageImporter:
                 print(f"Installing {package}...")
                 os.system(f"{sys.executable} -m pip install {package}")
 
-            # Then install manim
             print("Installing manim...")
             os.system(f"{sys.executable} -m pip install manim")
 
-            # Verify installations
             import importlib_metadata
             import manim
             print("Manim installation successful!")
