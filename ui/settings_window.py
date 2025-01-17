@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import (
     QDialog, QVBoxLayout, QHBoxLayout, QLabel, 
-    QComboBox, QPushButton, QGroupBox, QWidget
+    QComboBox, QPushButton, QGroupBox, QWidget,
+    QMessageBox
 )
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont
@@ -56,7 +57,8 @@ class SettingsWindow(QDialog):
         layout = QVBoxLayout()
         
         self._create_appearance_group(layout)
-        self._create_about_group(layout)  # Add the about group
+        self._create_logs_group(layout)  # Add the logs group
+        self._create_about_group(layout)
         
         self.setLayout(layout)
         self.setWindowTitle("Settings")
@@ -379,10 +381,94 @@ class SettingsWindow(QDialog):
         about_layout.setSpacing(10)
         about_layout.setContentsMargins(15, 15, 15, 15)
         
-        about_label = QLabel("VorTeX Calculator\nVersion 1.0.1\nCopyright © 2025, George Huang, All rights reserved.\nGitHub: https://github.com/Goge052215/VorTeX")
+        about_label = QLabel("VorTeX Calculator\nVersion 1.0.2\nCopyright © 2025, George Huang, All rights reserved.\nGitHub: https://github.com/Goge052215/VorTeX")
         about_label.setFont(QFont("Monaspace Neon", 12))
         about_layout.addWidget(about_label)
         
         about_group.setLayout(about_layout)
         layout.addWidget(about_group)
         layout.addStretch()
+
+    def _create_logs_group(self, layout):
+        """Create and configure the logs section"""
+        logs_group = QGroupBox("Debug Logs")
+        logs_group.setFont(QFont(self.FONT_FAMILY, self.FONT_SIZE, QFont.Bold))
+        
+        # Style for transparent background with border
+        logs_style = """
+            QGroupBox {
+                margin-top: 1.5em;
+                padding: 20px;
+                background-color: transparent;
+                border: 1px solid #edecee;
+                border-radius: 12px;
+            }
+            QGroupBox::title {
+                subcontrol-origin: margin;
+                left: 10px;
+                padding: 0 5px;
+                color: #edecee;
+            }
+        """
+        logs_group.setStyleSheet(logs_style)
+        
+        logs_layout = QHBoxLayout()
+        logs_layout.setSpacing(10)
+        logs_layout.setContentsMargins(15, 15, 15, 15)
+        
+        view_logs_button = QPushButton("View Logs")
+        view_logs_button.setFont(QFont("Monaspace Neon", 12))
+        view_logs_button.setFixedSize(150, 35)
+        view_logs_button.clicked.connect(self.show_logs)
+        
+        clear_logs_button = QPushButton("Clear Logs")
+        clear_logs_button.setFont(QFont("Monaspace Neon", 12))
+        clear_logs_button.setFixedSize(150, 35)
+        clear_logs_button.clicked.connect(self.clear_logs)
+        
+        logs_layout.addWidget(view_logs_button)
+        logs_layout.addWidget(clear_logs_button)
+        logs_layout.addStretch()
+        
+        logs_group.setLayout(logs_layout)
+        layout.addWidget(logs_group)
+
+    def show_logs(self):
+        """Open a dialog to show the log file contents"""
+        try:
+            log_file_path = 'calculator.log'
+            with open(log_file_path, 'r') as f:
+                log_content = f.read()
+            
+            dialog = QDialog(self)
+            dialog.setWindowTitle("Debug Logs")
+            dialog.setFixedSize(700, 500)
+            
+            layout = QVBoxLayout()
+            
+            from PyQt5.QtWidgets import QTextEdit
+            log_display = QTextEdit()
+            log_display.setReadOnly(True)
+            log_display.setFont(QFont("Monaspace Neon", 11))
+            log_display.setText(log_content)
+            
+            layout.addWidget(log_display)
+            dialog.setLayout(layout)
+            dialog.exec_()
+            
+        except FileNotFoundError:
+            QMessageBox.information(self, "Info", "No log file found.")
+        except Exception as e:
+            logger.error(f"Error showing logs: {e}")
+            QMessageBox.warning(self, "Error", f"Failed to read logs: {str(e)}")
+
+    def clear_logs(self):
+        """Clear the contents of the log file"""
+        try:
+            log_file_path = 'calculator.log'
+            with open(log_file_path, 'w') as f:
+                f.write('')
+            QMessageBox.information(self, "Success", "Logs cleared successfully.")
+        except Exception as e:
+            logger.error(f"Error clearing logs: {e}")
+            QMessageBox.warning(self, "Error", f"Failed to clear logs: {str(e)}")

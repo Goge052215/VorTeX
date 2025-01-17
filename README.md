@@ -105,6 +105,10 @@ A powerful mathematical workbench that fuses **MATLAB** and **SymPy**'s symbolic
    - Click the "Visualize" button to visualize the expression.
    - The expression will be processed under Manim module and displayed in .mp4 file
 
+7. **Settings:**
+   - Click the "Settings" button to open the settings window.
+   - The settings window allows you to customize the application's behavior and appearance, also you can check the debug logs here.
+
 ## Example Expressions
 
 - **Simplified $\LaTeX$ Mode, SymPy Mode:**
