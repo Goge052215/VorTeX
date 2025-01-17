@@ -24,3 +24,126 @@
 2025-01-17 23:55:55,017 - __main__ - DEBUG - Final MATLAB expression: 'limit(symprod((-1/2)^x, x, 1, Inf), x, Inf)'
 2025-01-17 23:55:55,473 - __main__ - DEBUG - Raw result from MATLAB: '0.000'
 2025-01-17 23:55:55,473 - __main__ - DEBUG - Displayed Result: 0.000
+2025-01-18 00:01:55,543 - __main__ - INFO - Initializing Calculator Application
+2025-01-18 00:02:08,857 - __main__ - INFO - MATLAB engine started successfully
+2025-01-18 00:02:37,224 - __main__ - ERROR - Error in SymPy calculation: Sympify of expression 'could not parse 'sum (1 to 100) x'' failed, because of exception being raised:
+SyntaxError: invalid syntax (<string>, line 1)
+2025-01-18 00:05:13,569 - __main__ - INFO - Initializing Calculator Application
+2025-01-18 00:05:25,429 - __main__ - INFO - MATLAB engine started successfully
+2025-01-18 00:05:54,370 - __main__ - ERROR - Error in SymPy calculation: bad escape \i at position 29
+2025-01-18 00:07:18,698 - __main__ - DEBUG - Original expression: 'sum (1 to 100) x'
+2025-01-18 00:07:18,701 - __main__ - DEBUG - Original expression: 'sum (1 to 100) x'
+2025-01-18 00:07:18,705 - __main__ - DEBUG - After combinatorial conversion: sum (1 to 100) x
+2025-01-18 00:07:18,706 - __main__ - DEBUG - Converted integral expression: 'sum (1 to 100) x'
+2025-01-18 00:07:18,707 - __main__ - DEBUG - After explicit multiplication: 'sum (1 to 100) x'
+2025-01-18 00:07:18,707 - __main__ - DEBUG - Final MATLAB expression: 'sum (1 to 100) x'
+2025-01-18 00:07:18,707 - __main__ - DEBUG - Converted to SymPy expression: 'sum (1 to 100) x'
+2025-01-18 00:07:18,707 - __main__ - DEBUG - Converted to MATLAB expression: 'sum (1 to 100) x'
+2025-01-18 00:07:18,713 - __main__ - DEBUG - After shortcut conversion: symsum(x, x, 1, 100)
+2025-01-18 00:07:18,714 - __main__ - DEBUG - Final MATLAB expression: 'symsum(x, x, 1, 100)'
+2025-01-18 00:07:19,830 - __main__ - DEBUG - Raw result from MATLAB: '5050.000'
+2025-01-18 00:07:19,831 - __main__ - DEBUG - Displayed Result: 5050.000
+2025-01-18 00:07:21,715 - __main__ - INFO - MATLAB engine terminated
+2025-01-18 00:07:32,139 - __main__ - INFO - Initializing Calculator Application
+2025-01-18 00:07:41,924 - __main__ - INFO - MATLAB engine started successfully
+2025-01-18 00:08:52,063 - __main__ - DEBUG - SymPy calculation result: 5050.0
+2025-01-18 00:08:56,856 - __main__ - DEBUG - SymPy calculation result: 9.332621544394415e+157
+2025-01-18 00:09:01,714 - __main__ - DEBUG - Original expression: 'prod (1 to 100) x'
+2025-01-18 00:09:01,715 - __main__ - DEBUG - Original expression: 'prod (1 to 100) x'
+2025-01-18 00:09:01,716 - __main__ - DEBUG - After combinatorial conversion: prod (1 to 100) x
+2025-01-18 00:09:01,717 - __main__ - DEBUG - Converted integral expression: 'prod (1 to 100) x'
+2025-01-18 00:09:01,718 - __main__ - DEBUG - After explicit multiplication: 'prod (1 to 100) x'
+2025-01-18 00:09:01,718 - __main__ - DEBUG - Final MATLAB expression: 'prod (1 to 100) x'
+2025-01-18 00:09:01,718 - __main__ - DEBUG - Converted to SymPy expression: 'prod (1 to 100) x'
+2025-01-18 00:09:01,718 - __main__ - DEBUG - Converted to MATLAB expression: 'prod (1 to 100) x'
+2025-01-18 00:09:01,723 - __main__ - DEBUG - After shortcut conversion: prod(arrayfun(@(k) subs(x, x, k), 1:100))
+2025-01-18 00:09:01,724 - __main__ - DEBUG - Final MATLAB expression: 'prod(arrayfun(@(k) subs(x, x, k), 1:100))'
+2025-01-18 00:09:02,645 - __main__ - DEBUG - Raw result from MATLAB: '93326215443875911493429641153271025476455960378469375568488072436831415354406120434712849775186009961604196144199452428732053978392364199758817423534342537216.000'
+2025-01-18 00:09:02,645 - __main__ - DEBUG - Displayed Result: 93326215443875911493429641153271025476455960378469375568488072436831415354406120434712849775186009961604196144199452428732053978392364199758817423534342537216.000
+2025-01-18 00:10:45,846 - __main__ - INFO - MATLAB engine terminated
+2025-01-18 00:10:57,579 - __main__ - INFO - Initializing Calculator Application
+2025-01-18 00:11:06,909 - __main__ - INFO - MATLAB engine started successfully
+2025-01-18 00:11:45,335 - __main__ - DEBUG - Original expression: 'prod (1 to 100) x'
+2025-01-18 00:11:45,338 - __main__ - DEBUG - Original expression: 'prod (1 to 100) x'
+2025-01-18 00:11:45,342 - __main__ - DEBUG - After combinatorial conversion: prod (1 to 100) x
+2025-01-18 00:11:45,343 - __main__ - DEBUG - Converted integral expression: 'prod (1 to 100) x'
+2025-01-18 00:11:45,343 - __main__ - DEBUG - After explicit multiplication: 'prod (1 to 100) x'
+2025-01-18 00:11:45,343 - __main__ - DEBUG - Final MATLAB expression: 'prod (1 to 100) x'
+2025-01-18 00:11:45,343 - __main__ - DEBUG - Converted to SymPy expression: 'prod (1 to 100) x'
+2025-01-18 00:11:45,344 - __main__ - DEBUG - Converted to MATLAB expression: 'prod (1 to 100) x'
+2025-01-18 00:11:45,349 - __main__ - DEBUG - After shortcut conversion: prod(arrayfun(@(k) subs(x, x, k), 1:100))
+2025-01-18 00:11:45,349 - __main__ - DEBUG - Final MATLAB expression: 'prod(arrayfun(@(k) subs(x, x, k), 1:100))'
+2025-01-18 00:11:47,525 - __main__ - DEBUG - Raw result from MATLAB: '93326215443875911493429641153271025476455960378469375568488072436831415354406120434712849775186009961604196144199452428732053978392364199758817423534342537216.000'
+2025-01-18 00:11:47,530 - __main__ - DEBUG - Displayed Result: 93326215443875911493429641153271025476455960378469375568488072436831415354406120434712849775186009961604196144199452428732053978392364199758817423534342537216.000
+2025-01-18 00:14:21,352 - __main__ - INFO - MATLAB engine terminated
+2025-01-18 00:14:32,712 - __main__ - INFO - Initializing Calculator Application
+2025-01-18 00:14:42,741 - __main__ - INFO - MATLAB engine started successfully
+2025-01-18 00:15:04,130 - __main__ - DEBUG - Original expression: 'prod (1 to 100) x'
+2025-01-18 00:15:04,131 - __main__ - DEBUG - Original expression: 'prod (1 to 100) x'
+2025-01-18 00:15:04,133 - __main__ - DEBUG - After combinatorial conversion: prod (1 to 100) x
+2025-01-18 00:15:04,134 - __main__ - DEBUG - Converted integral expression: 'prod (1 to 100) x'
+2025-01-18 00:15:04,135 - __main__ - DEBUG - After explicit multiplication: 'prod (1 to 100) x'
+2025-01-18 00:15:04,135 - __main__ - DEBUG - Final MATLAB expression: 'prod (1 to 100) x'
+2025-01-18 00:15:04,135 - __main__ - DEBUG - Converted to SymPy expression: 'prod (1 to 100) x'
+2025-01-18 00:15:04,135 - __main__ - DEBUG - Converted to MATLAB expression: 'prod (1 to 100) x'
+2025-01-18 00:15:04,146 - __main__ - DEBUG - After shortcut conversion: prod(arrayfun(@(k) subs(x, x, k), 1:100))
+2025-01-18 00:15:04,147 - __main__ - DEBUG - Final MATLAB expression: 'prod(arrayfun(@(k) subs(x, x, k), 1:100))'
+2025-01-18 00:15:05,036 - __main__ - DEBUG - Raw result from MATLAB: '93326215443875911493429641153271025476455960378469375568488072436831415354406120434712849775186009961604196144199452428732053978392364199758817423534342537216.000'
+2025-01-18 00:15:05,037 - __main__ - DEBUG - Displayed Result: 93326215443875911493429641153271025476455960378469375568488072436831415354406120434712849775186009961604196144199452428732053978392364199758817423534342537216.000
+2025-01-18 00:16:51,538 - __main__ - INFO - MATLAB engine terminated
+2025-01-18 00:17:00,913 - __main__ - INFO - Initializing Calculator Application
+2025-01-18 00:17:09,979 - __main__ - INFO - MATLAB engine started successfully
+2025-01-18 00:17:18,270 - __main__ - DEBUG - Original expression: 'prod (1 to 100) x'
+2025-01-18 00:17:18,272 - __main__ - DEBUG - Original expression: 'prod (1 to 100) x'
+2025-01-18 00:17:18,275 - __main__ - DEBUG - After combinatorial conversion: prod (1 to 100) x
+2025-01-18 00:17:18,276 - __main__ - DEBUG - Converted integral expression: 'prod (1 to 100) x'
+2025-01-18 00:17:18,277 - __main__ - DEBUG - After explicit multiplication: 'prod (1 to 100) x'
+2025-01-18 00:17:18,277 - __main__ - DEBUG - Final MATLAB expression: 'prod (1 to 100) x'
+2025-01-18 00:17:18,277 - __main__ - DEBUG - Converted to SymPy expression: 'prod (1 to 100) x'
+2025-01-18 00:17:18,278 - __main__ - DEBUG - Converted to MATLAB expression: 'prod (1 to 100) x'
+2025-01-18 00:17:18,282 - __main__ - DEBUG - After shortcut conversion: prod(arrayfun(@(k) subs(x, x, k), 1:100))
+2025-01-18 00:17:18,283 - __main__ - DEBUG - Final MATLAB expression: 'prod(arrayfun(@(k) subs(x, x, k), 1:100))'
+2025-01-18 00:17:19,081 - __main__ - DEBUG - Raw result from MATLAB: '93326215443875911493429641153271025476455960378469375568488072436831415354406120434712849775186009961604196144199452428732053978392364199758817423534342537216.000'
+2025-01-18 00:17:19,082 - __main__ - DEBUG - Displayed Result: 93326215443875911493429641153271025476455960378469375568488072436831415354406120434712849775186009961604196144199452428732053978392364199758817423534342537216.000
+2025-01-18 00:26:17,414 - __main__ - INFO - Initializing Calculator Application
+2025-01-18 00:26:29,206 - __main__ - INFO - MATLAB engine started successfully
+2025-01-18 00:27:25,186 - __main__ - DEBUG - Original expression: 'prod (1 to 100) x'
+2025-01-18 00:27:25,190 - __main__ - DEBUG - Original expression: 'prod (1 to 100) x'
+2025-01-18 00:27:25,192 - __main__ - DEBUG - After combinatorial conversion: prod (1 to 100) x
+2025-01-18 00:27:25,193 - __main__ - DEBUG - Converted integral expression: 'prod (1 to 100) x'
+2025-01-18 00:27:25,193 - __main__ - DEBUG - After explicit multiplication: 'prod (1 to 100) x'
+2025-01-18 00:27:25,194 - __main__ - DEBUG - Final MATLAB expression: 'prod (1 to 100) x'
+2025-01-18 00:27:25,194 - __main__ - DEBUG - Converted to SymPy expression: 'prod (1 to 100) x'
+2025-01-18 00:27:25,194 - __main__ - DEBUG - Converted to MATLAB expression: 'prod (1 to 100) x'
+2025-01-18 00:27:25,198 - __main__ - DEBUG - After shortcut conversion: prod(arrayfun(@(k) subs(x, x, k), 1:100))
+2025-01-18 00:27:25,198 - __main__ - DEBUG - Final MATLAB expression: 'prod(arrayfun(@(k) subs(x, x, k), 1:100))'
+2025-01-18 00:27:26,664 - __main__ - DEBUG - Raw result from MATLAB: '93326215443875911493429641153271025476455960378469375568488072436831415354406120434712849775186009961604196144199452428732053978392364199758817423534342537216.000'
+2025-01-18 00:27:26,667 - __main__ - DEBUG - Displayed Result: 93326215443875911493429641153271025476455960378469375568488072436831415354406120434712849775186009961604196144199452428732053978392364199758817423534342537216.000
+2025-01-18 00:28:16,252 - __main__ - INFO - MATLAB engine terminated
+2025-01-18 00:30:40,742 - __main__ - INFO - Initializing Calculator Application
+2025-01-18 00:30:51,189 - __main__ - INFO - MATLAB engine started successfully
+2025-01-18 00:32:16,707 - __main__ - DEBUG - Original expression: 'prod (1 to 100) x'
+2025-01-18 00:32:16,709 - __main__ - DEBUG - Original expression: 'prod (1 to 100) x'
+2025-01-18 00:32:16,712 - __main__ - DEBUG - After combinatorial conversion: prod (1 to 100) x
+2025-01-18 00:32:16,714 - __main__ - DEBUG - Converted integral expression: 'prod (1 to 100) x'
+2025-01-18 00:32:16,714 - __main__ - DEBUG - After explicit multiplication: 'prod (1 to 100) x'
+2025-01-18 00:32:16,715 - __main__ - DEBUG - Final MATLAB expression: 'prod (1 to 100) x'
+2025-01-18 00:32:16,715 - __main__ - DEBUG - Converted to SymPy expression: 'prod (1 to 100) x'
+2025-01-18 00:32:16,715 - __main__ - DEBUG - Converted to MATLAB expression: 'prod (1 to 100) x'
+2025-01-18 00:32:16,720 - __main__ - DEBUG - After shortcut conversion: prod(arrayfun(@(k) subs(x, x, k), 1:100))
+2025-01-18 00:32:16,720 - __main__ - DEBUG - Final MATLAB expression: 'prod(arrayfun(@(k) subs(x, x, k), 1:100))'
+2025-01-18 00:32:18,353 - __main__ - DEBUG - Raw result from MATLAB: '93326215443875911493429641153271025476455960378469375568488072436831415354406120434712849775186009961604196144199452428732053978392364199758817423534342537216.000'
+2025-01-18 00:32:18,357 - __main__ - DEBUG - Displayed Result: 9.332622 e+157
+2025-01-18 00:32:26,131 - __main__ - DEBUG - Original expression: 'prod (1 to 10) x'
+2025-01-18 00:32:26,132 - __main__ - DEBUG - Original expression: 'prod (1 to 10) x'
+2025-01-18 00:32:26,132 - __main__ - DEBUG - After combinatorial conversion: prod (1 to 10) x
+2025-01-18 00:32:26,132 - __main__ - DEBUG - Converted integral expression: 'prod (1 to 10) x'
+2025-01-18 00:32:26,132 - __main__ - DEBUG - After explicit multiplication: 'prod (1 to 10) x'
+2025-01-18 00:32:26,132 - __main__ - DEBUG - Final MATLAB expression: 'prod (1 to 10) x'
+2025-01-18 00:32:26,132 - __main__ - DEBUG - Converted to SymPy expression: 'prod (1 to 10) x'
+2025-01-18 00:32:26,133 - __main__ - DEBUG - Converted to MATLAB expression: 'prod (1 to 10) x'
+2025-01-18 00:32:26,133 - __main__ - DEBUG - After shortcut conversion: prod(arrayfun(@(k) subs(x, x, k), 1:10))
+2025-01-18 00:32:26,133 - __main__ - DEBUG - Final MATLAB expression: 'prod(arrayfun(@(k) subs(x, x, k), 1:10))'
+2025-01-18 00:32:26,250 - __main__ - DEBUG - Raw result from MATLAB: '3628800.000'
+2025-01-18 00:32:26,250 - __main__ - DEBUG - Displayed Result: 3628800
+2025-01-18 00:32:34,815 - __main__ - INFO - MATLAB engine terminated

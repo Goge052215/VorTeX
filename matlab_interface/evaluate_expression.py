@@ -132,14 +132,25 @@ class EvaluateExpression:
         """
         if not result_str:
             return "0"
-                
-        if is_numeric:
-            self.logger.debug(f"Numeric result returned: {result_str}")
-            try:
-                float_val = float(result_str)
-                return f"{float_val:.6f}".rstrip('0').rstrip('.')
-            except ValueError:
-                pass
+        
+        # Try to convert to float and format large numbers
+        try:
+            # Remove trailing .000 if present
+            result_str = result_str.rstrip('0').rstrip('.')
+            float_val = float(result_str)
+            
+            # Always format very large or very small numbers in scientific notation
+            if abs(float_val) > 1e10 or abs(float_val) < 1e-10:
+                formatted = f"{float_val:.6e}"
+                # Ensure consistent spacing in scientific notation
+                parts = formatted.split('e')
+                if len(parts) == 2:
+                    return f"{parts[0]} e{parts[1]}"
+                return formatted
+            
+            return f"{float_val:.6f}".rstrip('0').rstrip('.')
+        except ValueError:
+            pass
         
         special_cases = {
             'inf': '∞',

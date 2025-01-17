@@ -870,6 +870,8 @@ class CalculatorApp(QWidget, LatexCalculation):
 
             if displayed_result.count('(') > displayed_result.count(')'):
                 displayed_result += ')'
+            
+            displayed_result = self.evaluator._postprocess_result(displayed_result)
 
             self.result_display.setText(displayed_result)
             self.logger.debug(f"Displayed Result: {displayed_result}")
@@ -939,6 +941,8 @@ class CalculatorApp(QWidget, LatexCalculation):
                 result = f"{result:.4f}"
             else:
                 result = str(result)
+
+            result = self.evaluator._postprocess_result(result)
 
             if 'inf' in result:
                 result = result.replace('inf', '∞')

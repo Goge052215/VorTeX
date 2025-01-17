@@ -62,6 +62,24 @@ class SympyCalculation:
         try:
             self.logger.debug(f"Parsing expression: {expression}")
             
+            # Fix: Update sum pattern to handle spaces more flexibly
+            sum_pattern = r'sum\s*\(\s*(\d+)\s+to\s+(\d+|inf|Inf)\s*\)\s*([^\n]+)'
+            def replace_sum(match):
+                start = match.group(1)
+                end = match.group(2).lower()
+                expr_part = match.group(3)
+                
+                if end == 'inf':
+                    return f"Sum({expr_part}, (x, {start}, oo))"
+                else:
+                    return f"Sum({expr_part}, (x, {start}, {end}))"
+
+            # Remove extra spaces before parsing
+            expression = ' '.join(expression.split())
+            
+            if re.search(sum_pattern, expression):
+                expression = re.sub(sum_pattern, replace_sum, expression)
+            
             harmonic_pattern = r'sum\s*\(\s*(\d+)\s*to\s*(?:inf|Inf|(\d+))\s*\)\s*1/([a-zA-Z])'
             def replace_harmonic(match):
                 start = int(match.group(1))
@@ -112,6 +130,10 @@ class SympyCalculation:
             expression = expression.replace('pi', 'sympy.pi')
             
             expression = expression.replace('^', '**')
+            
+            # Add Sum to math_dict
+            self.math_dict['Sum'] = sympy.Sum
+            self.math_dict['oo'] = sympy.oo
             
             self.logger.debug(f"Parsed expression: {expression}")
             return expression
