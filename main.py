@@ -715,62 +715,6 @@ class CalculatorApp(QWidget, LatexCalculation):
             return str(result)
         else:
             return str(result)
-        
-    # Deprecated, will be removed soon
-    '''
-    def handle_matrix_calculation(self):
-        matrix_text = self.matrix_input.toPlainText().strip()
-        operation = self.combo_matrix_op.currentText()
-        
-        if not matrix_text:
-            QMessageBox.critical(self, "Input Error", "Please enter a matrix.")
-            return
-        
-        if matrix_text in self.matrix_memory:
-            matrix_text = self.matrix_memory[matrix_text]
-
-        try:
-            self.eng.eval(f"matrix = {matrix_text};", nargout=0)
-        except matlab.engine.MatlabExecutionError as me:
-            QMessageBox.critical(self, "MATLAB Error", f"Error evaluating matrix: {me}")
-            return
-        
-        # Give appropriate roundings for specific mode
-        try:
-            if operation == 'Determinant':
-                result = self.eng.eval("det(matrix)", nargout=1)
-                result = round(float(result), 2)
-
-            elif operation == 'Inverse':
-                result = self.eng.eval("inv(matrix)", nargout=1)
-                result = np.round(np.array(result), 2).tolist()
-
-            elif operation == 'Eigenvalues':
-                result = self.eng.eval("eig(matrix)", nargout=1)
-                result = np.round(np.array(result), 2).tolist()
-
-            elif operation == 'Rank':
-                result = self.eng.eval("rank(matrix)", nargout=1)
-                result = int(result)
-
-            elif operation in ['Multiply', 'Add', 'Subtract', 'Divide']:
-                result = self.handle_matrix_arithmetic(operation)
-
-            elif operation == 'Differentiate':
-                result = self.handle_matrix_differentiation()
-
-            else:
-                QMessageBox.warning(self, "Operation Warning", f"Operation '{operation}' is not supported.")
-                return
-
-            result = self.format_matrix_result(result, operation)
-
-            self.result_label.setText(f"Result: {result}")
-            self.result_label.setFont(QFont("Arial", 13, QFont.Bold))
-
-        except matlab.engine.MatlabExecutionError as me:
-            QMessageBox.critical(self, "MATLAB Error", f"MATLAB Error: {me}")
-    '''
 
     def handle_matrix_arithmetic(self, operation):
         operation_map = {
@@ -831,21 +775,53 @@ class CalculatorApp(QWidget, LatexCalculation):
         try:
             self.logger.debug(f"Original expression: '{expression}'")
                 
-            sympy_expr = parse_latex_expression(expression)
-            self.logger.debug(f"Converted to SymPy expression: '{sympy_expr}'")
-
-            # DEPRECATED: Will be removed in future version
-            # matlab_expression = sympy_to_matlab_converter.sympy_to_matlab(sympy_expr)
-            matlab_expression = sympy_expr
+            matlab_expression = parse_latex_expression(expression)
             self.logger.debug(f"Converted to MATLAB expression: '{matlab_expression}'")
-            
+
             matlab_expression = ExpressionShortcuts.convert_shortcut(matlab_expression)
             self.logger.debug(f"After shortcut conversion: {matlab_expression}")
 
-            if angle_mode == 'Degree' and 'limit' not in matlab_expression:
-                matlab_expression = re.sub(r'\bsin\((.*?)\)', lambda m: f"sind({m.group(1)})", matlab_expression)
-                matlab_expression = re.sub(r'\bcos\((.*?)\)', lambda m: f"cosd({m.group(1)})", matlab_expression)
-                matlab_expression = re.sub(r'\btan\((.*?)\)', lambda m: f"tand({m.group(1)})", matlab_expression)
+            if angle_mode == 'Degree':
+                if 'limit' in matlab_expression:
+                    # Handle degree conversion inside limit expressions
+                    matlab_expression = re.sub(r'sin\((.*?)\)', lambda m: f"sin((pi/180)*{m.group(1)})", matlab_expression)
+                    matlab_expression = re.sub(r'cos\((.*?)\)', lambda m: f"cos((pi/180)*{m.group(1)})", matlab_expression)
+                    matlab_expression = re.sub(r'tan\((.*?)\)', lambda m: f"tan((pi/180)*{m.group(1)})", matlab_expression)
+                    matlab_expression = re.sub(r'sec\((.*?)\)', lambda m: f"sec((pi/180)*{m.group(1)})", matlab_expression)
+                    matlab_expression = re.sub(r'csc\((.*?)\)', lambda m: f"csc((pi/180)*{m.group(1)})", matlab_expression)
+                    matlab_expression = re.sub(r'cot\((.*?)\)', lambda m: f"cot((pi/180)*{m.group(1)})", matlab_expression)
+                    matlab_expression = re.sub(r'sinh\((.*?)\)', lambda m: f"sinh((pi/180)*{m.group(1)})", matlab_expression)
+                    matlab_expression = re.sub(r'cosh\((.*?)\)', lambda m: f"cosh((pi/180)*{m.group(1)})", matlab_expression)
+                    matlab_expression = re.sub(r'tanh\((.*?)\)', lambda m: f"tanh((pi/180)*{m.group(1)})", matlab_expression)
+                    matlab_expression = re.sub(r'sech\((.*?)\)', lambda m: f"sech((pi/180)*{m.group(1)})", matlab_expression)
+                    matlab_expression = re.sub(r'csch\((.*?)\)', lambda m: f"csch((pi/180)*{m.group(1)})", matlab_expression)
+                    matlab_expression = re.sub(r'coth\((.*?)\)', lambda m: f"coth((pi/180)*{m.group(1)})", matlab_expression)
+                else:
+                    matlab_expression = re.sub(r'\bsin\((.*?)\)', lambda m: f"sind({m.group(1)})", matlab_expression)
+                    matlab_expression = re.sub(r'\bcos\((.*?)\)', lambda m: f"cosd({m.group(1)})", matlab_expression)
+                    matlab_expression = re.sub(r'\btan\((.*?)\)', lambda m: f"tand({m.group(1)})", matlab_expression)
+                    matlab_expression = re.sub(r'\bsec\((.*?)\)', lambda m: f"secd({m.group(1)})", matlab_expression)
+                    matlab_expression = re.sub(r'\bcsc\((.*?)\)', lambda m: f"cscd({m.group(1)})", matlab_expression)
+                    matlab_expression = re.sub(r'\bcot\((.*?)\)', lambda m: f"cotd({m.group(1)})", matlab_expression)
+                    matlab_expression = re.sub(r'\bsinh\((.*?)\)', lambda m: f"sinh({m.group(1)})", matlab_expression)
+                    matlab_expression = re.sub(r'\bcosh\((.*?)\)', lambda m: f"cosh({m.group(1)})", matlab_expression)
+                    matlab_expression = re.sub(r'\btanh\((.*?)\)', lambda m: f"tanh({m.group(1)})", matlab_expression)
+                    matlab_expression = re.sub(r'\bsech\((.*?)\)', lambda m: f"sech({m.group(1)})", matlab_expression)
+                    matlab_expression = re.sub(r'\bcsch\((.*?)\)', lambda m: f"csch({m.group(1)})", matlab_expression)
+                    matlab_expression = re.sub(r'\bcoth\((.*?)\)', lambda m: f"coth({m.group(1)})", matlab_expression)
+                
+                matlab_expression = re.sub(r'asin\((.*?)\)', lambda m: f"(180/pi)*asin({m.group(1)})", matlab_expression)
+                matlab_expression = re.sub(r'acos\((.*?)\)', lambda m: f"(180/pi)*acos({m.group(1)})", matlab_expression)
+                matlab_expression = re.sub(r'atan\((.*?)\)', lambda m: f"(180/pi)*atan({m.group(1)})", matlab_expression)
+                matlab_expression = re.sub(r'asec\((.*?)\)', lambda m: f"(180/pi)*asec({m.group(1)})", matlab_expression)
+                matlab_expression = re.sub(r'acsc\((.*?)\)', lambda m: f"(180/pi)*acsc({m.group(1)})", matlab_expression)
+                matlab_expression = re.sub(r'acot\((.*?)\)', lambda m: f"(180/pi)*acot({m.group(1)})", matlab_expression)
+                matlab_expression = re.sub(r'asinh\((.*?)\)', lambda m: f"(180/pi)*asinh({m.group(1)})", matlab_expression)
+                matlab_expression = re.sub(r'acosh\((.*?)\)', lambda m: f"(180/pi)*acosh({m.group(1)})", matlab_expression)
+                matlab_expression = re.sub(r'atanh\((.*?)\)', lambda m: f"(180/pi)*atanh({m.group(1)})", matlab_expression)
+                matlab_expression = re.sub(r'asech\((.*?)\)', lambda m: f"(180/pi)*asech({m.group(1)})", matlab_expression)
+                matlab_expression = re.sub(r'acsch\((.*?)\)', lambda m: f"(180/pi)*acsch({m.group(1)})", matlab_expression)
+                matlab_expression = re.sub(r'acoth\((.*?)\)', lambda m: f"(180/pi)*acoth({m.group(1)})", matlab_expression)
 
             self.logger.debug(f"Final MATLAB expression: '{matlab_expression}'")
 

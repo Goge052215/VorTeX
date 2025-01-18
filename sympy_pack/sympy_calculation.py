@@ -263,44 +263,101 @@ class SympyCalculation:
             self.logger.error(f"Error parsing derivative: {e}")
             raise ValueError(f"Error parsing derivative: {e}")
 
-    def _parse_limit(self, expression: str) -> str:
+    def _parse_limit(self, expression: str, angle_mode: str = 'Radian') -> str:
         """Parse limit expressions."""
         try:
-            expression = expression.strip()[3:].strip()
+            # Pattern to match limit expressions including all function types
+            limit_pattern = r'(?i)lim\s*\(\s*([a-zA-Z])\s*to\s*' + \
+                           r'(' + \
+                           r'[-+]?\d*\.?\d+|' + \
+                           r'[-+]?(?:inf(?:ty|inity)?)|' + \
+                           r'[a-zA-Z][a-zA-Z0-9]*|' + \
+                           r'(?:sin|cos|tan|csc|sec|cot|arcsin|arccos|arctan|ln|log|log\d+|sqrt|exp)\s*\([^)]+\)|' + \
+                           r'e\^?[^,\s)]*' + \
+                           r')([+-])?\s*\)\s*' + \
+                           r'((?:[^()]+|\((?:[^()]+|\([^()]*\))*\))*)'
             
-            if expression.startswith('('):
-                expression = expression[1:].strip()
-                if expression.endswith(')'):
-                    expression = expression[:-1].strip()
+            match = re.match(limit_pattern, expression)
+            
+            if match:
+                var, approach, side, function = match.groups()
+                
+                # Handle infinity in approach value
+                if isinstance(approach, str) and re.match(r'(?i)inf(?:ty|inity)?', approach):
+                    approach = 'oo'
+                elif isinstance(approach, str) and re.match(r'(?i)[+-]inf(?:ty|inity)?', approach):
+                    sign = approach[0]
+                    approach = f'{sign}oo'
+                
+                # Handle trigonometric functions in approach value
+                if angle_mode == 'Degree' and '(' in approach:
+                    # Convert regular trig functions to use radians
+                    if any(trig in approach for trig in ['sin(', 'cos(', 'tan(', 'sec(', 'csc(', 'cot(']):
+                        approach = re.sub(r'sin\((.*?)\)', r'sin(pi/180*(\1))', approach)
+                        approach = re.sub(r'cos\((.*?)\)', r'cos(pi/180*(\1))', approach)
+                        approach = re.sub(r'tan\((.*?)\)', r'tan(pi/180*(\1))', approach)
+                        approach = re.sub(r'sec\((.*?)\)', r'sec(pi/180*(\1))', approach)
+                        approach = re.sub(r'csc\((.*?)\)', r'csc(pi/180*(\1))', approach)
+                        approach = re.sub(r'cot\((.*?)\)', r'cot(pi/180*(\1))', approach)
+                    
+                    # Evaluate the approach if it contains trigonometric functions
+                    if any(trig in approach for trig in ['sin(', 'cos(', 'tan(', 'sec(', 'csc(', 'cot(']):
+                        approach_expr = sympify(approach, locals=self.math_dict)
+                        approach = str(approach_expr.evalf())
+                
+                # Format the function part
+                function = function.strip()
+                
+                # Convert function part to radians if in degree mode
+                if angle_mode == 'Degree':
+                    if any(trig in function for trig in ['sin(', 'cos(', 'tan(', 'sec(', 'csc(', 'cot(']):
+                        function = re.sub(r'sin\((.*?)\)', r'sin(pi/180*(\1))', function)
+                        function = re.sub(r'cos\((.*?)\)', r'cos(pi/180*(\1))', function)
+                        function = re.sub(r'tan\((.*?)\)', r'tan(pi/180*(\1))', function)
+                        function = re.sub(r'sec\((.*?)\)', r'sec(pi/180*(\1))', function)
+                        function = re.sub(r'csc\((.*?)\)', r'csc(pi/180*(\1))', function)
+                        function = re.sub(r'cot\((.*?)\)', r'cot(pi/180*(\1))', function)
+                
+                self.logger.debug(f"Limit: {var} -> {approach} of {function}")
+                
+                # Create limit expression
+                limit_expr = f"limit({function}, {var}, {approach})"
+                if side:
+                    if side == '+':
+                        limit_expr = f"limit({function}, {var}, {approach}, dir='+')"
+                    elif side == '-':
+                        limit_expr = f"limit({function}, {var}, {approach}, dir='-')"
+                
+                self.logger.debug(f"Limit expression: {limit_expr}")
+                result = sympify(limit_expr, locals=self.math_dict)
+                
+                # Handle infinity in result
+                if result == sympy.oo:
+                    return "∞"
+                elif result == -sympy.oo:
+                    return "-∞"
+                
+                if isinstance(result, sympy.Basic):
+                    numeric_result = float(N(result))
+                    if angle_mode == 'Degree' and any(trig in function for trig in ['asin', 'acos', 'atan', 'asec', 'acsc', 'acot']):
+                        numeric_result = float(numeric_result * 180 / float(N(pi)))
+                    
+                    # Format based on magnitude
+                    if abs(numeric_result) > 1e10 or (0 < abs(numeric_result) < 1e-10):
+                        formatted = f"{numeric_result:.6e}"
+                        parts = formatted.split('e')
+                        if len(parts) == 2:
+                            return f"{parts[0]} e{parts[1]}"
+                        else:
+                            return formatted
+                    else:
+                        return f"{numeric_result:.6f}".rstrip('0').rstrip('.')
+                
+                return str(result)
+                
             else:
-                raise ValueError("Limit expression must be in format 'lim(x to a)'")
-            
-            parts = expression.split(' to ')
-            if len(parts) != 2:
-                raise ValueError("Missing 'to' keyword in limit expression")
-            
-            var_approach = parts[0].strip()
-            remaining = parts[1].strip()
-            
-            space_idx = remaining.find(' ')
-            paren_idx = remaining.find(')')
-            
-            if space_idx == -1 and paren_idx == -1:
-                raise ValueError("Missing function in limit expression")
-            elif space_idx == -1:
-                split_idx = paren_idx
-            elif paren_idx == -1:
-                split_idx = space_idx
-            else:
-                split_idx = min(space_idx, paren_idx)
-            
-            approach_val = remaining[:split_idx].strip()
-            function = remaining[split_idx:].strip()
-            
-            function = function.strip('()')
-            
-            return f"limit({function}, {var_approach}, {approach_val})"
-            
+                raise ValueError("Invalid limit format")
+                
         except Exception as e:
             self.logger.error(f"Error parsing limit: {e}")
             raise ValueError(f"Invalid limit format: {str(e)}")
@@ -309,6 +366,11 @@ class SympyCalculation:
         """Evaluate the SymPy expression and return the result."""
         try:
             self.logger.debug(f"Evaluating expression: {expression}")
+            
+            # Check if this is a limit expression
+            if expression.startswith('lim'):
+                result = self._parse_limit(expression, angle_mode)
+                return result
             
             parsed_expr = self.parse_expression(expression)
             
@@ -338,7 +400,7 @@ class SympyCalculation:
                         else:
                             result = formatted
                     else:
-                        result = f"{numeric_result:.8f}".rstrip('0').rstrip('.')
+                        result = f"{numeric_result:.6f}".rstrip('0').rstrip('.')
                 else:
                     # For symbolic results, try to simplify
                     result = sympy.simplify(result)

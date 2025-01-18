@@ -612,3 +612,118 @@ x3 = -1.9414277
 x2 = 150.0'
 2025-01-18 19:15:10,030 - __main__ - DEBUG - Displayed Result: x1 = 30
 x2 = 150
+2025-01-18 19:21:30,280 - __main__ - INFO - Initializing Calculator Application
+2025-01-18 19:21:41,142 - __main__ - INFO - MATLAB engine started successfully
+2025-01-18 19:21:53,400 - __main__ - DEBUG - SymPy calculation result: 9
+2025-01-18 19:21:57,234 - __main__ - DEBUG - SymPy calculation result: inf^2
+2025-01-18 19:26:37,945 - __main__ - INFO - MATLAB engine terminated
+2025-01-18 19:26:50,809 - __main__ - INFO - Initializing Calculator Application
+2025-01-18 19:27:02,339 - __main__ - INFO - MATLAB engine started successfully
+2025-01-18 19:27:06,567 - __main__ - DEBUG - Original expression: 'lim (x to inf) x^2'
+2025-01-18 19:27:06,568 - __main__ - DEBUG - Original expression: 'lim (x to inf) x^2'
+2025-01-18 19:27:06,578 - __main__ - DEBUG - After combinatorial conversion: lim (x to inf) x^2
+2025-01-18 19:27:06,579 - __main__ - DEBUG - Converted integral expression: 'lim (x to inf) x^2'
+2025-01-18 19:27:06,580 - __main__ - DEBUG - After explicit multiplication: 'lim (x to inf) x^2'
+2025-01-18 19:27:06,580 - __main__ - DEBUG - Final MATLAB expression: 'lim (x to inf) x^2'
+2025-01-18 19:27:06,580 - __main__ - DEBUG - Converted to SymPy expression: 'lim (x to inf) x^2'
+2025-01-18 19:27:06,580 - __main__ - DEBUG - Converted to MATLAB expression: 'lim (x to inf) x^2'
+2025-01-18 19:27:06,584 - __main__ - DEBUG - After shortcut conversion: limit(x^2, x, inf)
+2025-01-18 19:27:06,584 - __main__ - DEBUG - Final MATLAB expression: 'limit(x^2, x, inf)'
+2025-01-18 19:27:06,782 - __main__ - DEBUG - Raw result from MATLAB: '∞'
+2025-01-18 19:27:06,784 - __main__ - DEBUG - Displayed Result: ∞
+2025-01-18 19:28:18,125 - __main__ - DEBUG - Original expression: 'lim (x to sin(30)) x^2'
+2025-01-18 19:28:18,129 - __main__ - DEBUG - Original expression: 'lim (x to sin(30)) x^2'
+2025-01-18 19:28:18,130 - __main__ - DEBUG - After combinatorial conversion: lim (x to sin(30)) x^2
+2025-01-18 19:28:18,130 - __main__ - DEBUG - Converted integral expression: 'lim (x to sin(30)) x^2'
+2025-01-18 19:28:18,130 - __main__ - DEBUG - After explicit multiplication: 'lim (x to sin(30)) x^2'
+2025-01-18 19:28:18,130 - __main__ - DEBUG - Final MATLAB expression: 'lim (x to sin(30)) x^2'
+2025-01-18 19:28:18,130 - __main__ - DEBUG - Converted to SymPy expression: 'lim (x to sin(30)) x^2'
+2025-01-18 19:28:18,131 - __main__ - DEBUG - Converted to MATLAB expression: 'lim (x to sin(30)) x^2'
+2025-01-18 19:28:18,132 - __main__ - DEBUG - After shortcut conversion: limit(x^2, x, sin(30))
+2025-01-18 19:28:18,132 - __main__ - DEBUG - Final MATLAB expression: 'limit(x^2, x, sin(30))'
+2025-01-18 19:28:18,468 - __main__ - DEBUG - Raw result from MATLAB: '0.97620649'
+2025-01-18 19:28:18,470 - __main__ - DEBUG - Displayed Result: 0.97620649
+2025-01-18 19:30:28,474 - __main__ - INFO - MATLAB engine terminated
+2025-01-18 19:36:57,751 - __main__ - INFO - Initializing Calculator Application
+2025-01-18 19:37:11,164 - __main__ - INFO - MATLAB engine started successfully
+2025-01-18 19:37:24,609 - __main__ - INFO - MATLAB engine terminated
+2025-01-18 19:37:36,651 - __main__ - INFO - Initializing Calculator Application
+2025-01-18 19:37:45,984 - __main__ - INFO - MATLAB engine started successfully
+2025-01-18 19:37:58,905 - __main__ - DEBUG - Original expression: 'sin(30)'
+2025-01-18 19:37:58,907 - __main__ - DEBUG - Original expression: 'sin(30)'
+2025-01-18 19:37:58,909 - __main__ - DEBUG - After combinatorial conversion: sin(30)
+2025-01-18 19:37:58,910 - __main__ - DEBUG - Converted integral expression: 'sin(30)'
+2025-01-18 19:37:58,911 - __main__ - DEBUG - After explicit multiplication: 'sin(30)'
+2025-01-18 19:37:58,911 - __main__ - DEBUG - Final MATLAB expression: 'sin(30)'
+2025-01-18 19:37:58,911 - __main__ - DEBUG - Converted to MATLAB expression: 'sin(30)'
+2025-01-18 19:37:58,917 - __main__ - DEBUG - After shortcut conversion: sin(30)
+2025-01-18 19:37:58,919 - __main__ - DEBUG - Final MATLAB expression: 'sind(30)'
+2025-01-18 19:37:58,949 - __main__ - DEBUG - Raw result from MATLAB: '0.50000000'
+2025-01-18 19:37:58,952 - __main__ - DEBUG - Displayed Result: 0.5
+2025-01-18 19:38:09,267 - __main__ - DEBUG - Original expression: 'lim (x to sin(30)) x^2'
+2025-01-18 19:38:09,268 - __main__ - DEBUG - Original expression: 'lim (x to sin(30)) x^2'
+2025-01-18 19:38:09,268 - __main__ - DEBUG - After combinatorial conversion: lim (x to sin(30)) x^2
+2025-01-18 19:38:09,268 - __main__ - DEBUG - Converted integral expression: 'lim (x to sin(30)) x^2'
+2025-01-18 19:38:09,268 - __main__ - DEBUG - After explicit multiplication: 'lim (x to sin(30)) x^2'
+2025-01-18 19:38:09,268 - __main__ - DEBUG - Final MATLAB expression: 'lim (x to sin(30)) x^2'
+2025-01-18 19:38:09,268 - __main__ - DEBUG - Converted to MATLAB expression: 'lim (x to sin(30)) x^2'
+2025-01-18 19:38:09,269 - __main__ - DEBUG - After shortcut conversion: limit(x^2, x, sin(30))
+2025-01-18 19:38:09,270 - __main__ - DEBUG - Final MATLAB expression: 'limit(x^2, x, sin((pi/180)*30))'
+2025-01-18 19:38:09,404 - __main__ - DEBUG - Raw result from MATLAB: '0.25000000'
+2025-01-18 19:38:09,404 - __main__ - DEBUG - Displayed Result: 0.25
+2025-01-18 19:38:13,788 - __main__ - ERROR - Error in SymPy calculation: Invalid limit format: Sympify of expression 'could not parse 'limit() x^2, x, sin(30)'' failed, because of exception being raised:
+SyntaxError: invalid syntax (<string>, line 1)
+2025-01-18 20:17:12,774 - __main__ - INFO - Initializing Calculator Application
+2025-01-18 20:17:23,288 - __main__ - INFO - MATLAB engine started successfully
+2025-01-18 20:17:35,031 - __main__ - DEBUG - Original expression: 'sin(30)'
+2025-01-18 20:17:35,032 - __main__ - DEBUG - Original expression: 'sin(30)'
+2025-01-18 20:17:35,035 - __main__ - DEBUG - After combinatorial conversion: sin(30)
+2025-01-18 20:17:35,036 - __main__ - DEBUG - Converted integral expression: 'sin(30)'
+2025-01-18 20:17:35,036 - __main__ - DEBUG - After explicit multiplication: 'sin(30)'
+2025-01-18 20:17:35,037 - __main__ - DEBUG - Final MATLAB expression: 'sin(30)'
+2025-01-18 20:17:35,037 - __main__ - DEBUG - Converted to MATLAB expression: 'sin(30)'
+2025-01-18 20:17:35,044 - __main__ - DEBUG - After shortcut conversion: sin(30)
+2025-01-18 20:17:35,047 - __main__ - DEBUG - Final MATLAB expression: 'sind(30)'
+2025-01-18 20:17:35,073 - __main__ - DEBUG - Raw result from MATLAB: '0.50000000'
+2025-01-18 20:17:35,074 - __main__ - DEBUG - Displayed Result: 0.5
+2025-01-18 20:17:52,978 - __main__ - ERROR - Error in SymPy calculation: Invalid limit format: Sympify of expression 'could not parse 'limit() x^2, x, sin(30)'' failed, because of exception being raised:
+SyntaxError: invalid syntax (<string>, line 1)
+2025-01-18 20:19:54,740 - __main__ - INFO - Initializing Calculator Application
+2025-01-18 20:20:07,052 - __main__ - INFO - MATLAB engine started successfully
+2025-01-18 20:20:36,647 - __main__ - ERROR - Error in SymPy calculation: Invalid limit format: Sympify of expression 'could not parse 'limit() x^2, x, sin(30)'' failed, because of exception being raised:
+SyntaxError: invalid syntax (<string>, line 1)
+2025-01-18 20:23:07,881 - __main__ - INFO - Initializing Calculator Application
+2025-01-18 20:23:19,464 - __main__ - INFO - MATLAB engine started successfully
+2025-01-18 20:23:33,301 - __main__ - ERROR - Error in SymPy calculation: Invalid limit format: Sympify of expression 'could not parse 'limit() x^2, x, sin(30)'' failed, because of exception being raised:
+SyntaxError: invalid syntax (<string>, line 1)
+2025-01-18 20:28:08,116 - __main__ - INFO - Initializing Calculator Application
+2025-01-18 20:28:19,282 - __main__ - INFO - MATLAB engine started successfully
+2025-01-18 20:29:35,257 - __main__ - DEBUG - Original expression: 'lim(x to sin(30)) x^2'
+2025-01-18 20:29:35,260 - __main__ - DEBUG - Original expression: 'lim(x to sin(30)) x^2'
+2025-01-18 20:29:35,262 - __main__ - DEBUG - After combinatorial conversion: lim(x to sin(30)) x^2
+2025-01-18 20:29:35,263 - __main__ - DEBUG - Converted integral expression: 'lim(x to sin(30)) x^2'
+2025-01-18 20:29:35,263 - __main__ - DEBUG - After explicit multiplication: 'lim(x to sin(30)) x^2'
+2025-01-18 20:29:35,263 - __main__ - DEBUG - Final MATLAB expression: 'lim(x to sin(30)) x^2'
+2025-01-18 20:29:35,263 - __main__ - DEBUG - Converted to MATLAB expression: 'lim(x to sin(30)) x^2'
+2025-01-18 20:29:35,270 - __main__ - DEBUG - After shortcut conversion: limit(x^2, x, sin(30))
+2025-01-18 20:29:35,272 - __main__ - DEBUG - Final MATLAB expression: 'limit(x^2, x, sin((pi/180)*30))'
+2025-01-18 20:29:35,823 - __main__ - DEBUG - Raw result from MATLAB: '0.25000000'
+2025-01-18 20:29:35,825 - __main__ - DEBUG - Displayed Result: 0.25
+2025-01-18 20:29:38,370 - __main__ - DEBUG - SymPy calculation result: sin(30)**2
+2025-01-18 20:31:43,638 - __main__ - INFO - MATLAB engine terminated
+2025-01-18 20:31:53,985 - __main__ - INFO - Initializing Calculator Application
+2025-01-18 20:32:04,784 - __main__ - INFO - MATLAB engine started successfully
+2025-01-18 20:32:40,247 - __main__ - DEBUG - SymPy calculation result: 0.976206490207579
+2025-01-18 20:38:16,928 - __main__ - INFO - Initializing Calculator Application
+2025-01-18 20:38:28,561 - __main__ - INFO - MATLAB engine started successfully
+2025-01-18 20:38:54,358 - __main__ - DEBUG - SymPy calculation result: 0.976206490207579
+2025-01-18 20:41:57,698 - __main__ - INFO - Initializing Calculator Application
+2025-01-18 20:42:11,395 - __main__ - INFO - MATLAB engine started successfully
+2025-01-18 20:42:56,648 - __main__ - DEBUG - SymPy calculation result: 0.976206
+2025-01-18 20:43:01,921 - __main__ - DEBUG - SymPy calculation result: 0.976206
+2025-01-18 20:45:34,731 - __main__ - INFO - MATLAB engine terminated
+2025-01-18 20:45:44,971 - __main__ - INFO - Initializing Calculator Application
+2025-01-18 20:45:54,819 - __main__ - INFO - MATLAB engine started successfully
+2025-01-18 20:49:25,971 - __main__ - DEBUG - SymPy calculation result: 0.25
+2025-01-18 20:49:32,136 - __main__ - DEBUG - SymPy calculation result: 0.480453
+2025-01-18 20:49:34,696 - __main__ - INFO - MATLAB engine terminated
