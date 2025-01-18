@@ -170,36 +170,71 @@ class SympyCalculation:
         """Parse integral expressions."""
         try:
             expression = expression.strip()
+            self.logger.debug(f"Processing integral expression: {expression}")
             
-            integrand = expression.replace('int', '', 1).replace('dx', '', 1).strip()
+            # Pattern for definite integral: int(a to b) f(x) dx
+            definite_pattern = r'int\s*\(\s*([^,]+)\s+to\s+([^,)]+)\s*\)\s*([^\n]+?)\s*dx'
+            definite_match = re.match(definite_pattern, expression)
             
-            self.logger.debug(f"Extracted integrand: {integrand}")
+            # Pattern for indefinite integral: int f(x) dx
+            indefinite_pattern = r'int\s*([^\n]+?)\s*dx'
+            indefinite_match = re.match(indefinite_pattern, expression)
             
-            if integrand.startswith('('):
-                close_paren = integrand.find(')')
-                if close_paren == -1:
-                    raise ValueError("Missing closing parenthesis in definite integral")
+            if definite_match:
+                lower_limit = definite_match.group(1).strip()
+                upper_limit = definite_match.group(2).strip()
+                integrand = definite_match.group(3).strip()
                 
-                limits = integrand[1:close_paren].split(',')
-                integrand = integrand[close_paren + 1:].strip()
+                if not integrand:
+                    raise ValueError("Missing integrand in definite integral")
+                    
+                # Fix trigonometric expressions
+                integrand = self._fix_trig_expr(integrand)
+                    
+                if 'ln(' in integrand:
+                    integrand = integrand.replace('ln(', 'log(')
+                    
+                self.logger.debug(f"Definite integral: from {lower_limit} to {upper_limit} of {integrand}")
+                return f"Integral({integrand}, (x, {lower_limit}, {upper_limit}))"
                 
-                if len(limits) == 2:
-                    if not integrand:
-                        raise ValueError("Missing integrand in definite integral")
-                    return f"Integral({integrand}, (x, {limits[0].strip()}, {limits[1].strip()}))"
-            
-            if not integrand:
-                raise ValueError("Missing integrand in integral")
-            
-            if 'ln(' in integrand:
-                integrand = integrand.replace('ln(', 'log(')
-            
-            self.logger.debug(f"Final integral expression: Integral({integrand}, x)")
-            return f"Integral({integrand}, x)"
-            
+            elif indefinite_match:
+                integrand = indefinite_match.group(1).strip()
+                self.logger.debug(f"Found indefinite integral with integrand: {integrand}")
+                
+                if not integrand:
+                    raise ValueError("Missing integrand in indefinite integral")
+                    
+                # Fix trigonometric expressions
+                integrand = self._fix_trig_expr(integrand)
+                    
+                if 'ln(' in integrand:
+                    integrand = integrand.replace('ln(', 'log(')
+                    
+                self.logger.debug(f"Indefinite integral of {integrand}")
+                return f"Integral({integrand}, x)"
+                
+            else:
+                raise ValueError("Invalid integral format")
+                
         except Exception as e:
             self.logger.error(f"Error parsing integral: {e}")
             raise ValueError(f"Invalid integral format: {str(e)}")
+
+    def _fix_trig_expr(self, expr: str) -> str:
+        """Fix trigonometric expressions by adding multiplication operator."""
+        # Add multiplication operator between number and x
+        expr = re.sub(r'(\d+)([a-zA-Z])', r'\1*\2', expr)
+        
+        # Add multiplication operator between coefficient and trig functions
+        trig_funcs = ['sin', 'cos', 'tan', 'csc', 'sec', 'cot']
+        for func in trig_funcs:
+            expr = re.sub(rf'(\d+)({func})', rf'\1*{func}', expr)
+        
+        # Fix expressions like sin(2x) to sin(2*x)
+        for func in trig_funcs:
+            expr = re.sub(rf'{func}\((\d+)([a-zA-Z])\)', rf'{func}(\1*\2)', expr)
+        
+        return expr
 
     def _parse_derivative(self, expression: str) -> str:
         """Parse derivative expressions."""
@@ -285,11 +320,25 @@ class SympyCalculation:
                 result = result.doit()
             
             try:
-                if result.is_number:
+                if result == sympy.oo or result == float('inf'):
+                    return "∞"
+                elif result == -sympy.oo or result == float('-inf'):
+                    return "-∞"
+                elif result.is_number:
                     numeric_result = float(N(result))
                     if angle_mode == 'Degree' and any(trig in expression for trig in ['asin', 'acos', 'atan']):
                         numeric_result = float(numeric_result * 180 / float(N(pi)))
-                    result = str(round(numeric_result, 8))
+                    
+                    # Format based on magnitude
+                    if abs(numeric_result) > 1e10 or (0 < abs(numeric_result) < 1e-10):
+                        formatted = f"{numeric_result:.6e}"
+                        parts = formatted.split('e')
+                        if len(parts) == 2:
+                            result = f"{parts[0]} e{parts[1]}"
+                        else:
+                            result = formatted
+                    else:
+                        result = f"{numeric_result:.8f}".rstrip('0').rstrip('.')
                 else:
                     # For symbolic results, try to simplify
                     result = sympy.simplify(result)

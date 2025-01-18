@@ -53,7 +53,7 @@ class UIComponents:
 
     def _setup_window(self):
         self.parent.setWindowTitle('VorTeX Calculator')
-        self.parent.setGeometry(100, 100, 700, 500)
+        self.parent.setGeometry(100, 100, 700, 550)
 
     def _create_top_buttons(self):
         top_layout = QHBoxLayout()

@@ -133,22 +133,47 @@ class EvaluateExpression:
         if not result_str:
             return "0"
         
-        # Try to convert to float and format large numbers
+        # Handle infinity cases first
+        if result_str.lower() in ['inf', '+inf', 'infinity']:
+            return "∞"
+        if result_str.lower() in ['-inf', '-infinity']:
+            return "-∞"
+        
+        # Try to convert to float and format numbers
         try:
+            # Handle multiple variable assignments (e.g., x1 = ..., x2 = ...)
+            if '\n' in result_str:
+                lines = result_str.split('\n')
+                processed_lines = []
+                for line in lines:
+                    if '=' in line:
+                        var, val = line.split('=')
+                        try:
+                            float_val = float(val)
+                            processed_lines.append(f"{var}= {float_val:.8g}")
+                        except ValueError:
+                            processed_lines.append(line)
+                    else:
+                        processed_lines.append(line)
+                return '\n'.join(processed_lines)
+            
             # Remove trailing .000 if present
             result_str = result_str.rstrip('0').rstrip('.')
             float_val = float(result_str)
             
-            # Always format very large or very small numbers in scientific notation
-            if abs(float_val) > 1e10 or abs(float_val) < 1e-10:
-                formatted = f"{float_val:.6e}"
-                # Ensure consistent spacing in scientific notation
+            # Format based on magnitude
+            if float_val == 0:
+                return "0"
+            elif abs(float_val) > 1e10 or abs(float_val) < 1e-3:
+                formatted = f"{float_val:.8e}"
                 parts = formatted.split('e')
                 if len(parts) == 2:
                     return f"{parts[0]} e{parts[1]}"
                 return formatted
             
-            return f"{float_val:.6f}".rstrip('0').rstrip('.')
+            # For regular numbers, use 8 significant figures
+            return f"{float_val:.8g}"
+            
         except ValueError:
             pass
         
@@ -330,7 +355,7 @@ class EvaluateExpression:
                 try:
                     # Try to evaluate the limit numerically
                     self.eng.eval("temp_result = double(temp_result);", nargout=0)
-                    result = str(self.eng.eval("num2str(temp_result, '%.3f')", nargout=1))
+                    result = str(self.eng.eval("num2str(temp_result, '%.8f')", nargout=1))
                     if result == 'Inf':
                         result = '∞'
                     elif result == '-Inf':
@@ -369,7 +394,7 @@ class EvaluateExpression:
                     has_variables = self.eng.eval("isa(temp_result, 'sym') && ~isempty(symvar(temp_result))", nargout=1)
                     
                     if is_numeric:
-                        result = str(self.eng.eval("num2str(double(temp_result), '%.3f')", nargout=1))
+                        result = str(self.eng.eval("num2str(double(temp_result), '%.8f')", nargout=1))
                     elif has_variables:
                         self.eng.eval("temp_result = simplify(temp_result);", nargout=0)
                         result = str(self.eng.eval("char(temp_result)", nargout=1))
@@ -379,7 +404,7 @@ class EvaluateExpression:
                         # For other cases, try to evaluate numerically
                         try:
                             self.eng.eval("temp_result = double(vpa(temp_result, 4));", nargout=0)
-                            result = str(self.eng.eval("num2str(temp_result, '%.3f')", nargout=1))
+                            result = str(self.eng.eval("num2str(temp_result, '%.8f')", nargout=1))
                         except:
                             # If numerical evaluation fails, return symbolic result
                             result = str(self.eng.eval("char(temp_result)", nargout=1))

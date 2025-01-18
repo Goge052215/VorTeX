@@ -286,6 +286,7 @@ class CalculatorApp(QWidget, LatexCalculation):
             )
             self.sympy_calculator = SympyCalculation()
 
+        # DEPRECATED: Will be removed in future version
         self.sympy_converter = SympyToMatlab()
         self.current_log_type = None
         self.visualizer = MathVisualizer()
@@ -833,10 +834,11 @@ class CalculatorApp(QWidget, LatexCalculation):
             sympy_expr = parse_latex_expression(expression)
             self.logger.debug(f"Converted to SymPy expression: '{sympy_expr}'")
 
-            sympy_to_matlab_converter = SympyToMatlab()
-            matlab_expression = sympy_to_matlab_converter.sympy_to_matlab(sympy_expr)
+            # DEPRECATED: Will be removed in future version
+            # matlab_expression = sympy_to_matlab_converter.sympy_to_matlab(sympy_expr)
+            matlab_expression = sympy_expr
             self.logger.debug(f"Converted to MATLAB expression: '{matlab_expression}'")
-
+            
             matlab_expression = ExpressionShortcuts.convert_shortcut(matlab_expression)
             self.logger.debug(f"After shortcut conversion: {matlab_expression}")
 
@@ -859,7 +861,7 @@ class CalculatorApp(QWidget, LatexCalculation):
 
             # Format the result based on its type
             if is_numeric:
-                displayed_result = f"{float(result):.3f}"
+                displayed_result = f"{float(result):.8f}"
             else:
                 displayed_result = result
 
@@ -938,7 +940,7 @@ class CalculatorApp(QWidget, LatexCalculation):
             if isinstance(result, matlab.object):
                 result = self.eng.eval("char(result)", nargout=1)
             elif isinstance(result, (int, float)):
-                result = f"{result:.4f}"
+                result = f"{result:.8f}"
             else:
                 result = str(result)
 
