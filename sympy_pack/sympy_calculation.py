@@ -62,6 +62,11 @@ class SympyCalculation:
         try:
             self.logger.debug(f"Parsing expression: {expression}")
             
+            # Check for equations and inequalities first
+            operators = ['>=', '<=', '>', '<', '=']
+            if any(op in expression for op in operators):
+                return self._handle_equation(expression)
+            
             # Fix: Update sum pattern to handle spaces more flexibly
             sum_pattern = r'sum\s*\(\s*(\d+)\s+to\s+(\d+|inf|Inf)\s*\)\s*([^\n]+)'
             def replace_sum(match):
@@ -344,14 +349,14 @@ class SympyCalculation:
                     
                     # Format based on magnitude
                     if abs(numeric_result) > 1e10 or (0 < abs(numeric_result) < 1e-10):
-                        formatted = f"{numeric_result:.6e}"
+                        formatted = f"{numeric_result:.8e}"
                         parts = formatted.split('e')
                         if len(parts) == 2:
                             return f"{parts[0]} e{parts[1]}"
                         else:
                             return formatted
                     else:
-                        return f"{numeric_result:.6f}".rstrip('0').rstrip('.')
+                        return f"{numeric_result:8f}".rstrip('0').rstrip('.')
                 
                 return str(result)
                 
@@ -393,14 +398,14 @@ class SympyCalculation:
                     
                     # Format based on magnitude
                     if abs(numeric_result) > 1e10 or (0 < abs(numeric_result) < 1e-10):
-                        formatted = f"{numeric_result:.6e}"
+                        formatted = f"{numeric_result:.8e}"
                         parts = formatted.split('e')
                         if len(parts) == 2:
                             result = f"{parts[0]} e{parts[1]}"
                         else:
                             result = formatted
                     else:
-                        result = f"{numeric_result:.6f}".rstrip('0').rstrip('.')
+                        result = f"{numeric_result:.8f}".rstrip('0').rstrip('.')
                 else:
                     # For symbolic results, try to simplify
                     result = sympy.simplify(result)
@@ -435,3 +440,98 @@ class SympyCalculation:
         except Exception as e:
             self.logger.error(f"Error cleaning display: {e}")
             return result
+
+    def _handle_equation(self, expression: str) -> str:
+        """
+        Handle equation and inequality expressions for SymPy evaluation.
+        
+        Args:
+            expression (str): Input equation/inequality expression
+            
+        Returns:
+            str: Processed equation for SymPy
+        """
+        try:
+            # Replace LaTeX equation symbols with SymPy equivalents
+            sympy_eq_symbols = {
+                r'\geq': '>=',
+                r'\leq': '<=',
+                r'\neq': '!=',
+                r'\gg': '>',
+                r'\ll': '<',
+                r'\approx': '==',
+                r'\equiv': '==',
+                r'\propto': '==',
+                r'\sim': '=='
+            }
+            
+            result = expression
+            for latex_sym, sympy_sym in sympy_eq_symbols.items():
+                result = result.replace(latex_sym, sympy_sym)
+            
+            # Convert ^ to ** for exponentiation
+            result = result.replace('^', '**')
+            
+            # Add multiplication operator between number and variable
+            result = re.sub(r'(\d)([a-zA-Z])', r'\1*\2', result)
+            
+            # Handle equations and inequalities
+            operators = ['>=', '<=', '>', '<', '=']
+            for op in operators:
+                if op in result:
+                    # Split and preserve the operator
+                    left_side = result[:result.find(op)].strip()
+                    right_side = result[result.find(op) + len(op):].strip()
+                    
+                    # If right side is empty or just '0', simplify expression
+                    if not right_side or right_side == '0':
+                        equation = left_side
+                    else:
+                        equation = f"{left_side}-({right_side})"
+                        # Clean up unnecessary parentheses around 0
+                        equation = equation.replace('-(0)', '')
+                    
+                    variables = list(Symbol(var) for var in re.findall(r'[a-zA-Z]', equation))
+                    if variables:
+                        var = variables[0]  # Use first variable as solve variable
+                        if op in ['>', '<', '>=', '<=']:
+                            from sympy import solve, Interval
+                            expr = sympify(equation)
+                            
+                            # Solve the inequality directly
+                            if op == '>':
+                                solution = solve(expr > 0, var)
+                            elif op == '<':
+                                solution = solve(expr < 0, var)
+                            elif op == '>=':
+                                solution = solve(expr >= 0, var)
+                            elif op == '<=':
+                                solution = solve(expr <= 0, var)
+                            
+                            # Format the solution
+                            if isinstance(solution, list):
+                                # Sort solutions for better readability
+                                solution.sort(key=lambda x: float(x.evalf()))
+                                # Create inequality ranges
+                                ranges = []
+                                for i in range(len(solution)):
+                                    if i == 0:
+                                        if op in ['<', '<=']:
+                                            ranges.append(f"x < {solution[i]}")
+                                        else:
+                                            ranges.append(f"x > {solution[i]}")
+                                    elif i == len(solution) - 1:
+                                        if op in ['<', '<=']:
+                                            ranges.append(f"x > {solution[i]}")
+                                        else:
+                                            ranges.append(f"x < {solution[i]}")
+                                return " or ".join(ranges)
+                            return str(solution)
+                        else:
+                            return f"solve({equation}, {var})"
+            
+            return result
+            
+        except Exception as e:
+            self.logger.error(f"Error solving inequality: {e}")
+            return expression

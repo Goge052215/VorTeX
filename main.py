@@ -142,46 +142,6 @@ def parse_latex_expression(latex_expr):
     latex_expr = ExpressionShortcuts.convert_combinatorial_expression(latex_expr)
     logger.debug(f"After combinatorial conversion: {latex_expr}")
 
-    '''def add_multiplication(expr):
-        # Don't modify content inside function calls and integrals
-        parts = []
-        last_end = 0
-        stack = []
-        in_integral = False
-        
-        i = 0
-        while i < len(expr):
-            # Check for integral expressions
-            if expr[i:].startswith('int'):
-                in_integral = True
-                
-            if expr[i] == '(':
-                if not stack and not in_integral:
-                    # Only add multiplication outside integrals
-                    parts.append(re.sub(r'(\d+)\s+([a-zA-Z])', r'\1*\2', expr[last_end:i]))
-                stack.append(i)
-                
-            elif expr[i] == ')':
-                if stack:
-                    if len(stack) == 1:
-                        parts.append(expr[stack[0]:i+1])
-                        last_end = i + 1
-                        if 'int' in parts[-1]:
-                            in_integral = False
-                    stack.pop()
-                    
-            i += 1
-        
-        if last_end < len(expr):
-            # Only add multiplication outside integrals
-            if not in_integral:
-                parts.append(re.sub(r'(\d+)\s+([a-zA-Z])', r'\1*\2', expr[last_end:]))
-            else:
-                parts.append(expr[last_end:])
-        
-        return ''.join(parts)
-
-    latex_expr = add_multiplication(latex_expr)'''
     latex_expr = re.sub(r'(\d+)/(\d+)\s+([a-zA-Z])', r'(\1/\2)*\3', latex_expr)
     
     is_equation = '=' in latex_expr
@@ -521,15 +481,29 @@ class CalculatorApp(QWidget, LatexCalculation):
             raise
 
     def _handle_equation(self, expr):
-        self.logger.debug(f"Handling equation expression: {expr}")
+        self.logger.debug(f"Handling equation/inequality expression: {expr}")
         try:
             lhs = self.sympy_to_matlab(expr.lhs)
             rhs = self.sympy_to_matlab(expr.rhs)
-            result = f"{lhs} == {rhs}"
-            self.logger.debug(f"Created equation: {result}")
+            
+            # Determine the operator from the expression
+            if isinstance(expr, sy.core.relational.GreaterThan):
+                operator = ">="
+            elif isinstance(expr, sy.core.relational.StrictGreaterThan):
+                operator = ">"
+            elif isinstance(expr, sy.core.relational.LessThan):
+                operator = "<="
+            elif isinstance(expr, sy.core.relational.StrictLessThan):
+                operator = "<"
+            else:  # Default to equality
+                operator = "=="
+            
+            result = f"{lhs} {operator} {rhs}"
+            self.logger.debug(f"Created equation/inequality: {result}")
             return result
+            
         except Exception as e:
-            self.logger.error(f"Error handling equation: {e}")
+            self.logger.error(f"Error handling equation/inequality: {e}")
             raise
 
     def _handle_function(self, expr):
@@ -601,17 +575,6 @@ class CalculatorApp(QWidget, LatexCalculation):
         return expr_str
 
     def _convert_logarithms(self, expr_str, for_display=False):
-        """
-        Convert different types of logarithms between display and MATLAB formats.
-        
-        Args:
-            expr_str (str): The mathematical expression string.
-            for_display (bool): If True, convert 'log' to 'ln' for user display.
-                                 If False, convert 'ln' to 'log' for MATLAB evaluation.
-                                 
-        Returns:
-            str: The converted expression string.
-        """
         if for_display:
             expr_str = re.sub(r'\blog\s*\(', 'ln(', expr_str)
         else:
@@ -782,46 +745,58 @@ class CalculatorApp(QWidget, LatexCalculation):
             self.logger.debug(f"After shortcut conversion: {matlab_expression}")
 
             if angle_mode == 'Degree':
+                trig_substitutions = {
+                    'limit': {
+                        r'sin\((.*?)\)': r'sin((pi/180)*\1)',
+                        r'cos\((.*?)\)': r'cos((pi/180)*\1)',
+                        r'tan\((.*?)\)': r'tan((pi/180)*\1)',
+                        r'sec\((.*?)\)': r'sec((pi/180)*\1)',
+                        r'csc\((.*?)\)': r'csc((pi/180)*\1)',
+                        r'cot\((.*?)\)': r'cot((pi/180)*\1)',
+                        r'sinh\((.*?)\)': r'sinh((pi/180)*\1)',
+                        r'cosh\((.*?)\)': r'cosh((pi/180)*\1)',
+                        r'tanh\((.*?)\)': r'tanh((pi/180)*\1)',
+                        r'sech\((.*?)\)': r'sech((pi/180)*\1)',
+                        r'csch\((.*?)\)': r'csch((pi/180)*\1)',
+                        r'coth\((.*?)\)': r'coth((pi/180)*\1)'
+                    },
+                    'regular': {
+                        r'\bsin\((.*?)\)': r'sind(\1)',
+                        r'\bcos\((.*?)\)': r'cosd(\1)',
+                        r'\btan\((.*?)\)': r'tand(\1)',
+                        r'\bsec\((.*?)\)': r'secd(\1)',
+                        r'\bcsc\((.*?)\)': r'cscd(\1)',
+                        r'\bcot\((.*?)\)': r'cotd(\1)',
+                        r'\bsinh\((.*?)\)': r'sinh(\1)',
+                        r'\bcosh\((.*?)\)': r'cosh(\1)',
+                        r'\btanh\((.*?)\)': r'tanh(\1)',
+                        r'\bsech\((.*?)\)': r'sech(\1)',
+                        r'\bcsch\((.*?)\)': r'csch(\1)',
+                        r'\bcoth\((.*?)\)': r'coth(\1)'
+                    },
+                    'inverse': {
+                        r'asin\((.*?)\)': r'(180/pi)*asin(\1)',
+                        r'acos\((.*?)\)': r'(180/pi)*acos(\1)',
+                        r'atan\((.*?)\)': r'(180/pi)*atan(\1)',
+                        r'asec\((.*?)\)': r'(180/pi)*asec(\1)',
+                        r'acsc\((.*?)\)': r'(180/pi)*acsc(\1)',
+                        r'acot\((.*?)\)': r'(180/pi)*acot(\1)',
+                        r'asinh\((.*?)\)': r'(180/pi)*asinh(\1)',
+                        r'acosh\((.*?)\)': r'(180/pi)*acosh(\1)',
+                        r'atanh\((.*?)\)': r'(180/pi)*atanh(\1)',
+                        r'asech\((.*?)\)': r'(180/pi)*asech(\1)',
+                        r'acsch\((.*?)\)': r'(180/pi)*acsch(\1)',
+                        r'acoth\((.*?)\)': r'(180/pi)*acoth(\1)'
+                    }
+                }
+
                 if 'limit' in matlab_expression:
-                    # Handle degree conversion inside limit expressions
-                    matlab_expression = re.sub(r'sin\((.*?)\)', lambda m: f"sin((pi/180)*{m.group(1)})", matlab_expression)
-                    matlab_expression = re.sub(r'cos\((.*?)\)', lambda m: f"cos((pi/180)*{m.group(1)})", matlab_expression)
-                    matlab_expression = re.sub(r'tan\((.*?)\)', lambda m: f"tan((pi/180)*{m.group(1)})", matlab_expression)
-                    matlab_expression = re.sub(r'sec\((.*?)\)', lambda m: f"sec((pi/180)*{m.group(1)})", matlab_expression)
-                    matlab_expression = re.sub(r'csc\((.*?)\)', lambda m: f"csc((pi/180)*{m.group(1)})", matlab_expression)
-                    matlab_expression = re.sub(r'cot\((.*?)\)', lambda m: f"cot((pi/180)*{m.group(1)})", matlab_expression)
-                    matlab_expression = re.sub(r'sinh\((.*?)\)', lambda m: f"sinh((pi/180)*{m.group(1)})", matlab_expression)
-                    matlab_expression = re.sub(r'cosh\((.*?)\)', lambda m: f"cosh((pi/180)*{m.group(1)})", matlab_expression)
-                    matlab_expression = re.sub(r'tanh\((.*?)\)', lambda m: f"tanh((pi/180)*{m.group(1)})", matlab_expression)
-                    matlab_expression = re.sub(r'sech\((.*?)\)', lambda m: f"sech((pi/180)*{m.group(1)})", matlab_expression)
-                    matlab_expression = re.sub(r'csch\((.*?)\)', lambda m: f"csch((pi/180)*{m.group(1)})", matlab_expression)
-                    matlab_expression = re.sub(r'coth\((.*?)\)', lambda m: f"coth((pi/180)*{m.group(1)})", matlab_expression)
+                    patterns = {**trig_substitutions['limit'], **trig_substitutions['inverse']}
                 else:
-                    matlab_expression = re.sub(r'\bsin\((.*?)\)', lambda m: f"sind({m.group(1)})", matlab_expression)
-                    matlab_expression = re.sub(r'\bcos\((.*?)\)', lambda m: f"cosd({m.group(1)})", matlab_expression)
-                    matlab_expression = re.sub(r'\btan\((.*?)\)', lambda m: f"tand({m.group(1)})", matlab_expression)
-                    matlab_expression = re.sub(r'\bsec\((.*?)\)', lambda m: f"secd({m.group(1)})", matlab_expression)
-                    matlab_expression = re.sub(r'\bcsc\((.*?)\)', lambda m: f"cscd({m.group(1)})", matlab_expression)
-                    matlab_expression = re.sub(r'\bcot\((.*?)\)', lambda m: f"cotd({m.group(1)})", matlab_expression)
-                    matlab_expression = re.sub(r'\bsinh\((.*?)\)', lambda m: f"sinh({m.group(1)})", matlab_expression)
-                    matlab_expression = re.sub(r'\bcosh\((.*?)\)', lambda m: f"cosh({m.group(1)})", matlab_expression)
-                    matlab_expression = re.sub(r'\btanh\((.*?)\)', lambda m: f"tanh({m.group(1)})", matlab_expression)
-                    matlab_expression = re.sub(r'\bsech\((.*?)\)', lambda m: f"sech({m.group(1)})", matlab_expression)
-                    matlab_expression = re.sub(r'\bcsch\((.*?)\)', lambda m: f"csch({m.group(1)})", matlab_expression)
-                    matlab_expression = re.sub(r'\bcoth\((.*?)\)', lambda m: f"coth({m.group(1)})", matlab_expression)
-                
-                matlab_expression = re.sub(r'asin\((.*?)\)', lambda m: f"(180/pi)*asin({m.group(1)})", matlab_expression)
-                matlab_expression = re.sub(r'acos\((.*?)\)', lambda m: f"(180/pi)*acos({m.group(1)})", matlab_expression)
-                matlab_expression = re.sub(r'atan\((.*?)\)', lambda m: f"(180/pi)*atan({m.group(1)})", matlab_expression)
-                matlab_expression = re.sub(r'asec\((.*?)\)', lambda m: f"(180/pi)*asec({m.group(1)})", matlab_expression)
-                matlab_expression = re.sub(r'acsc\((.*?)\)', lambda m: f"(180/pi)*acsc({m.group(1)})", matlab_expression)
-                matlab_expression = re.sub(r'acot\((.*?)\)', lambda m: f"(180/pi)*acot({m.group(1)})", matlab_expression)
-                matlab_expression = re.sub(r'asinh\((.*?)\)', lambda m: f"(180/pi)*asinh({m.group(1)})", matlab_expression)
-                matlab_expression = re.sub(r'acosh\((.*?)\)', lambda m: f"(180/pi)*acosh({m.group(1)})", matlab_expression)
-                matlab_expression = re.sub(r'atanh\((.*?)\)', lambda m: f"(180/pi)*atanh({m.group(1)})", matlab_expression)
-                matlab_expression = re.sub(r'asech\((.*?)\)', lambda m: f"(180/pi)*asech({m.group(1)})", matlab_expression)
-                matlab_expression = re.sub(r'acsch\((.*?)\)', lambda m: f"(180/pi)*acsch({m.group(1)})", matlab_expression)
-                matlab_expression = re.sub(r'acoth\((.*?)\)', lambda m: f"(180/pi)*acoth({m.group(1)})", matlab_expression)
+                    patterns = {**trig_substitutions['regular'], **trig_substitutions['inverse']}
+
+                for pattern, replacement in patterns.items():
+                    matlab_expression = re.sub(pattern, replacement, matlab_expression)
 
             self.logger.debug(f"Final MATLAB expression: '{matlab_expression}'")
 
@@ -872,15 +847,6 @@ class CalculatorApp(QWidget, LatexCalculation):
         return '', ''
 
     def _parse_expression(self, expression):
-        """
-        Parse the input expression into a SymPy expression.
-        
-        Args:
-            expression (str): The input expression string.
-        
-        Returns:
-            sympy.Expr: The parsed SymPy expression.
-        """
         try:
             processed_expr = EvaluateExpression.preprocess_expression(expression)
             self.logger.debug(f"Processed expression for SymPy: {processed_expr}")
@@ -903,16 +869,57 @@ class CalculatorApp(QWidget, LatexCalculation):
             input_text = ExpressionShortcuts.convert_shortcut(input_text)
             
             if self.combo_angle.currentText() == 'Degree':
-                input_text = re.sub(r'\bsin\((.*?)\)', lambda m: f"sind({m.group(1)})", input_text)
-                input_text = re.sub(r'\bcos\((.*?)\)', lambda m: f"cosd({m.group(1)})", input_text)
-                input_text = re.sub(r'\btan\((.*?)\)', lambda m: f"tand({m.group(1)})", input_text)
+                # Define all substitutions in a single dictionary
+                trig_substitutions = {
+                    # Regular trig functions
+                    'regular': {
+                        r'\bsin\((.*?)\)': r'sind(\1)',
+                        r'\bcos\((.*?)\)': r'cosd(\1)',
+                        r'\btan\((.*?)\)': r'tand(\1)',
+                        r'\bsec\((.*?)\)': r'secd(\1)',
+                        r'\bcsc\((.*?)\)': r'cscd(\1)',
+                        r'\bcot\((.*?)\)': r'cotd(\1)',
+                        r'\bsinh\((.*?)\)': r'sinh(\1)',
+                        r'\bcosh\((.*?)\)': r'cosh(\1)',
+                        r'\btanh\((.*?)\)': r'tanh(\1)',
+                        r'\bsech\((.*?)\)': r'sech(\1)',
+                        r'\bcsch\((.*?)\)': r'csch(\1)',
+                        r'\bcoth\((.*?)\)': r'coth(\1)'
+                    },
+                    # Inverse trig functions
+                    'inverse': {
+                        r'asin\((.*?)\)': r'(180/pi)*asin(\1)',
+                        r'acos\((.*?)\)': r'(180/pi)*acos(\1)',
+                        r'atan\((.*?)\)': r'(180/pi)*atan(\1)',
+                        r'asec\((.*?)\)': r'(180/pi)*asec(\1)',
+                        r'acsc\((.*?)\)': r'(180/pi)*acsc(\1)',
+                        r'acot\((.*?)\)': r'(180/pi)*acot(\1)',
+                        r'asinh\((.*?)\)': r'(180/pi)*asinh(\1)',
+                        r'acosh\((.*?)\)': r'(180/pi)*acosh(\1)',
+                        r'atanh\((.*?)\)': r'(180/pi)*atanh(\1)',
+                        r'asech\((.*?)\)': r'(180/pi)*asech(\1)',
+                        r'acsch\((.*?)\)': r'(180/pi)*acsch(\1)',
+                        r'acoth\((.*?)\)': r'(180/pi)*acoth(\1)'
+                    }
+                }
 
-            input_text = input_text.replace('ln(', 'log(')
+                # Single pass replacement
+                patterns = {**trig_substitutions['regular'], **trig_substitutions['inverse']}
+                for pattern, replacement in patterns.items():
+                    input_text = re.sub(pattern, replacement, input_text)
+
+            # Common substitutions
+            common_substitutions = {
+                'ln(': 'log(',
+            }
+            
+            for old, new in common_substitutions.items():
+                input_text = input_text.replace(old, new)
 
             self.eng.eval(f"result = {input_text};", nargout=0)
-
             result = self.eng.eval("result", nargout=1)
 
+            # Handle result types
             if isinstance(result, matlab.object):
                 result = self.eng.eval("char(result)", nargout=1)
             elif isinstance(result, (int, float)):
@@ -922,11 +929,15 @@ class CalculatorApp(QWidget, LatexCalculation):
 
             result = self.evaluator._postprocess_result(result)
 
-            if 'inf' in result:
-                result = result.replace('inf', '∞')
-
-            result = result.replace('log(', 'ln(')
-            result = result.replace('==', '=')
+            # Post-processing substitutions
+            post_substitutions = {
+                'inf': '∞',
+                'log(': 'ln(',
+                '==': '='
+            }
+            
+            for old, new in post_substitutions.items():
+                result = result.replace(old, new)
 
             self.result_label.setText(f"Result: {result}")
             self.result_label.setFont(QFont(FONT_NAME, FONT_SIZE))

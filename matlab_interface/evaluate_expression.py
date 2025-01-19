@@ -30,6 +30,7 @@ import re
 from functools import lru_cache
 from matlab_interface.auto_simplify import AutoSimplify
 from latex_pack.shortcut import ExpressionShortcuts
+from sympy_pack.sympy_calculation import SympyCalculation
 
 class EvaluateExpression:
     def __init__(self, eng):
@@ -133,15 +134,35 @@ class EvaluateExpression:
         if not result_str:
             return "0"
         
-        # Handle infinity cases first
+        # Handle equation solutions
+        if 'solve(' in result_str and '>' not in result_str and '<' not in result_str:
+            try:
+                # Execute the solve command
+                self.eng.eval(f"temp_result = {result_str};", nargout=0)
+                solution = str(self.eng.eval("char(temp_result)", nargout=1))
+                
+                if solution and solution != '[]':
+                    if ',' in solution:  # Multiple solutions
+                        solutions = solution.split(',')
+                        return ' or '.join(solutions)
+                    return solution
+                return "No solution"
+            except:
+                pass
+        
+        if any(op in result_str for op in ['>', '<', '>=', '<=']):
+            if result_str.endswith('>') or result_str.endswith('<'):
+                result_str = result_str + '0'
+            elif result_str.endswith('> ') or result_str.endswith('< '):
+                result_str = result_str + '0'
+            return result_str
+        
         if result_str.lower() in ['inf', '+inf', 'infinity']:
             return "∞"
         if result_str.lower() in ['-inf', '-infinity']:
             return "-∞"
         
-        # Try to convert to float and format numbers
         try:
-            # Handle multiple variable assignments (e.g., x1 = ..., x2 = ...)
             if '\n' in result_str:
                 lines = result_str.split('\n')
                 processed_lines = []
@@ -157,11 +178,9 @@ class EvaluateExpression:
                         processed_lines.append(line)
                 return '\n'.join(processed_lines)
             
-            # Remove trailing .000 if present
             result_str = result_str.rstrip('0').rstrip('.')
             float_val = float(result_str)
             
-            # Format based on magnitude
             if float_val == 0:
                 return "0"
             elif abs(float_val) > 1e10 or abs(float_val) < 1e-3:
@@ -171,7 +190,6 @@ class EvaluateExpression:
                     return f"{parts[0]} e{parts[1]}"
                 return formatted
             
-            # For regular numbers, use 8 significant figures
             return f"{float_val:.8g}"
             
         except ValueError:
@@ -320,10 +338,105 @@ class EvaluateExpression:
             self.logger.error(f"Error simplifying log expression: {e}")
             return expr_str
 
+    def _handle_equation(self, expression):
+        """
+        Handle equation expressions for MATLAB evaluation.
+        Uses SymPy for inequalities.
+        
+        Args:
+            expression (str): Input equation expression
+            
+        Returns:
+            str: Processed equation for MATLAB/SymPy
+        """
+        from sympy_pack.sympy_calculation import SympyCalculation
+        
+        # Replace LaTeX equation symbols with standard symbols
+        matlab_eq_symbols = {
+            r'\geq': '>=',
+            r'\leq': '<=',
+            r'\neq': '~=',
+            r'\gg': '>>',
+            r'\ll': '<<',
+            r'\approx': '==',
+            r'\equiv': '==',
+            r'\propto': '==',
+            r'\sim': '=='
+        }
+        
+        result = expression
+        for latex_sym, matlab_sym in matlab_eq_symbols.items():
+            result = result.replace(latex_sym, matlab_sym)
+        
+        # Handle inequalities with SymPy
+        inequality_operators = ['>=', '<=', '>', '<']
+        for op in inequality_operators:
+            if op in result:
+                left_side = result[:result.find(op)].strip()
+                right_side = result[result.find(op) + len(op):].strip()
+                
+                # If right side is empty, add '0'
+                if not right_side:
+                    right_side = '0'
+                
+                # Format the inequality for SymPy
+                inequality = f"{left_side} {op} {right_side}"
+                # Replace MATLAB operators with Python operators
+                inequality = inequality.replace('^', '**')
+                inequality = re.sub(r'(\d)([a-zA-Z])', r'\1*\2', inequality)
+                
+                # Use SymPy for inequality solving
+                sympy_calc = SympyCalculation()
+                return sympy_calc.evaluate(inequality)
+        
+        # Handle regular equations with MATLAB
+        if '=' in result:
+            parts = result.split('=')
+            if len(parts) == 2:
+                left_side = parts[0].strip()
+                right_side = parts[1].strip()
+                
+                # Check if this is an equation to solve
+                variables = self._extract_variables(result)
+                if variables:
+                    # Format for MATLAB solve function
+                    equation = f"{left_side}-({right_side})"
+                    var = list(variables)[0]  # Use first variable as solve variable
+                    
+                    # Execute the solve command
+                    solve_cmd = f"solve({equation}, {var})"
+                    self.logger.debug(f"Executing solve command: {solve_cmd}")
+                    self.eng.eval(f"temp_result = {solve_cmd};", nargout=0)
+                    
+                    # Get the solution
+                    solution = str(self.eng.eval("char(temp_result)", nargout=1))
+                    if solution and solution != '[]':
+                        if ',' in solution:  # Multiple solutions
+                            solutions = solution.split(',')
+                            return ' or '.join(f"{var} = {sol.strip()}" for sol in solutions)
+                        return f"{var} = {solution}"
+                    return "No solution"
+                
+                # If no variables, evaluate as equality check
+                return f"({left_side})==({right_side})"
+        
+        return result
+
     def evaluate_matlab_expression(self, expression):
         """Evaluate a MATLAB expression and return the result."""
         try:
             expression = self._preprocess_expression(expression)
+            
+            # Check for inequalities first and route to SymPy
+            inequality_operators = ['>=', '<=', '>', '<']
+            if any(op in expression for op in inequality_operators):
+                from sympy_pack.sympy_calculation import SympyCalculation
+                sympy_calc = SympyCalculation()
+                return sympy_calc.evaluate(expression)
+            
+            # Check for equations
+            if '=' in expression:
+                expression = self._handle_equation(expression)
             
             self.logger.debug(f"Processing expression: {expression}")
             
@@ -417,8 +530,8 @@ class EvaluateExpression:
             return result.strip()
             
         except Exception as e:
-            self.logger.error(f"Unexpected Error: {str(e)}")
-            return str(e)
+            self.logger.error(f"Error evaluating expression: {e}")
+            raise
 
     def __enter__(self):
         return self
@@ -456,6 +569,10 @@ class EvaluateExpression:
         """Evaluate a mathematical expression using MATLAB."""
         try:
             self.logger.debug(f"Processing expression: {expression}")
+            
+            # Check for equations
+            if '=' in expression:
+                expression = self._handle_equation(expression)
             
             variables = self._extract_variables(expression)
             self.logger.debug(f"Extracted variables from expression: {variables}")

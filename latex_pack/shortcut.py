@@ -6,7 +6,6 @@ class ExpressionShortcuts:
     A class containing mappings for mathematical expression shortcuts to their LaTeX equivalents.
     """
     
-    # Derivative shortcuts
     DERIVATIVE_SHORTCUTS = {
         'd/dx': r'\frac{d}{dx}',
         'd/dy': r'\frac{d}{dy}',
@@ -14,31 +13,53 @@ class ExpressionShortcuts:
         'd2/dx2': r'\frac{d^2}{dx^2}',
         'd3/dx3': r'\frac{d^3}{dx^3}',
         'd4/dx4': r'\frac{d^4}{dx^4}',
-        'd5/dx5': r'\frac{d^5}{dx^5}'
+        'd5/dx5': r'\frac{d^5}{dx^5}',
+        'd6/dx6': r'\frac{d^6}{dx^6}',
+        'd7/dx7': r'\frac{d^7}{dx^7}',
+        'd8/dx8': r'\frac{d^8}{dx^8}',
+        'd9/dx9': r'\frac{d^9}{dx^9}',
+        'd10/dx10': r'\frac{d^{10}}{dx^{10}}',
+
+        'd2/dy2': r'\frac{d^2}{dy^2}',
+        'd3/dy3': r'\frac{d^3}{dy^3}',
+        'd4/dy4': r'\frac{d^4}{dy^4}',
+        'd5/dy5': r'\frac{d^5}{dy^5}',
+
+        'd2/dt2': r'\frac{d^2}{dt^2}',
+        'd3/dt3': r'\frac{d^3}{dt^3}',
+        'd4/dt4': r'\frac{d^4}{dt^4}',
+        'd5/dt5': r'\frac{d^5}{dt^5}',
+
+        'dx': r'\frac{d}{dx}',
+        'dy': r'\frac{d}{dy}',
+        'dt': r'\frac{d}{dt}',
+        'd2x': r'\frac{d^2}{dx^2}',
+        'd2y': r'\frac{d^2}{dy^2}',
+        'd2t': r'\frac{d^2}{dt^2}',
+        'd3x': r'\frac{d^3}{dx^3}',
+        'd3y': r'\frac{d^3}{dy^3}',
+        'd3t': r'\frac{d^3}{dt^3}'
     }
     
-    # Combinatorial shortcuts
     COMBINATORIAL_SHORTCUTS = {
         'binom': 'nchoosek',
         'nCr': 'nchoosek',
         'choose': 'nchoosek'
     }
     
-    # Integral shortcuts
     INTEGRAL_SHORTCUTS = {
         'int': 'int',
         'int (a to b)': r'int_{a}^{b}',
         'integral': 'int',
-        'iint': r'\iint',  # Double integral
-        'iiint': r'\iiint',  # Triple integral
-        'oint': r'\oint',  # Contour integral
+        'iint': r'\iint',
+        'iiint': r'\iiint',
+        'oint': r'\oint',
     }
     
-    # Function shortcuts
     FUNCTION_SHORTCUTS = {
         'sqrt': r'\sqrt',
         'root': r'\sqrt',
-        'abs': r'\left|#\right|',  # # will be replaced with the argument
+        'abs': r'\left|#\right|',
         'sin': r'sin',
         'cos': r'cos',
         'tan': r'tan',
@@ -58,11 +79,11 @@ class ExpressionShortcuts:
         'acos': r'acos',
         'atan': r'atan',
         'ln': r'ln',
-        'lg': r'log_{10}',  # base-10 logarithm
+        'lg': r'log_{10}',
         'log': r'log',
-        'log10': r'log_{10}',  # Explicit base-10 log
-        'log2': r'log_{2}',    # Base-2 log
-        'logn': r'log_{n}',    # Base-n log
+        'log10': r'log_{10}',
+        'log2': r'log_{2}',
+        'logn': r'log_{n}',
         'sinh': r'sinh',
         'cosh': r'cosh',
         'tanh': r'tanh',
@@ -80,12 +101,10 @@ class ExpressionShortcuts:
         'atanh': r'atanh',
     }
     
-    # Fraction shortcuts
     FRACTION_SHORTCUTS = {
-        '//': r'\frac{#}{#}',  # #'s will be replaced with numerator and denominator
+        '//': r'\frac{#}{#}',
     }
     
-    # Greek letters
     GREEK_SHORTCUTS = {
         'alpha': 'alpha',
         'beta': 'beta',
@@ -112,7 +131,6 @@ class ExpressionShortcuts:
         'omega': 'omega',
     }
     
-    # Operator shortcuts
     OPERATOR_SHORTCUTS = {
         'sum (a to b)': r'\sum_{a}^{b}',
         'prod (a to b)': r'\prod_{a}^{b}',
@@ -126,14 +144,21 @@ class ExpressionShortcuts:
         'infinity': r'\infty',
     }
     
+    EQUATION_SHORTCUTS = {
+        '=': '=',
+        '>=': r'\geq',
+        '<=': r'\leq',
+        '!=': r'\neq',
+        '>>': r'\gg',
+        '<<': r'\ll',
+        'approx': r'\approx',
+        'equiv': r'\equiv',
+        'prop': r'\propto',
+        'sim': r'\sim',
+    }
+    
     @classmethod
     def get_all_shortcuts(cls):
-        """
-        Get all shortcuts combined into a single dictionary.
-        
-        Returns:
-            dict: Combined dictionary of all shortcuts
-        """
         all_shortcuts = {}
         all_shortcuts.update(cls.DERIVATIVE_SHORTCUTS)
         all_shortcuts.update(cls.COMBINATORIAL_SHORTCUTS)
@@ -142,88 +167,51 @@ class ExpressionShortcuts:
         all_shortcuts.update(cls.FRACTION_SHORTCUTS)
         all_shortcuts.update(cls.GREEK_SHORTCUTS)
         all_shortcuts.update(cls.OPERATOR_SHORTCUTS)
+        all_shortcuts.update(cls.EQUATION_SHORTCUTS)
         return all_shortcuts
     
     @classmethod
     def convert_shortcut(cls, text):
-        """
-        Convert shortcuts in text to their LaTeX equivalents.
-        
-        Args:
-            text (str): Input text containing shortcuts
-            
-        Returns:
-            str: Text with shortcuts converted to LaTeX
-        """
         result = text
         
-        # Don't automatically convert to degree mode
-        # Only convert explicit degree functions
-        if 'sind(' in result or 'cosd(' in result or 'tand(' in result:
-            # Handle only explicit degree functions
-            pass
-        else:
-            # Keep regular trig functions as is
-            pass
-            
-        # Convert exponential expressions first
-        result = cls.convert_exponential_expression(result)
-        logging.debug(f"After exponential conversion: {result}")
-        
-        # Convert integral expressions (without adding backslash)
-        result = cls.convert_integral_expression(result)
-        logging.debug(f"After integral conversion: {result}")
-        
-        # Handle limits before other conversions
-        result = cls.convert_limit_expression(result)
-        logging.debug(f"After limit conversion: {result}")
-        
-        # Handle logarithms with different bases
-        result = cls._convert_logarithms(result)
-        logging.debug(f"After logarithm conversion: {result}")
-
-        # Handle other shortcuts
-        result = cls.convert_combinatorial_expression(result)
-        logging.debug(f"After combinatorial conversion: {result}")
-        
-        result = cls.convert_sum_prod_expression(result)
-        logging.debug(f"After sum and prod conversion: {result}")
-        
-        # Remove LaTeX-style backslashes for MATLAB compatibility
-        result = result.replace('\\', '')
-        logging.debug(f"After removing LaTeX backslashes: {result}")
-
-        # Handle higher-order derivative notation (e.g., "d2/dx2 x^2")
         if text.startswith('d') and ('/' in text or text[1:2].isdigit()):
             parts = text.split(' ', 1)
             if len(parts) == 2:
                 derivative_part, function_part = parts
                 
-                # Handle different derivative notations
                 if '/' in derivative_part:
-                    # Handle d/dx or d2/dx2 notation
-                    order_match = re.match(r'd(\d*)/d([xyz])(\d*)', derivative_part)
+                    order_match = re.match(r'd(\d*)/d([xyzt])(\d*)', derivative_part)
                     if order_match:
                         order = order_match.group(1) or '1'
                         var = order_match.group(2)
-                        result = f"\\frac{{d^{order}}}{{d{var}^{order}}} {function_part}"
+                        power = order_match.group(3) or order  # Use same number for denominator power
+                        return f"\\frac{{d^{order}}}{{d{var}^{power}}} {function_part}"
                 else:
-                    # Handle d2x or dx notation
+                    order_match = re.match(r'd(\d*)([xyzt])', derivative_part)
+                    if order_match:
+                        order = order_match.group(1) or '1'
+                        var = order_match.group(2)
+                        return f"\\frac{{d^{order}}}{{d{var}^{order}}} {function_part}"
                     order_match = re.match(r'd(\d*)([xyz])', derivative_part)
                     if order_match:
                         order = order_match.group(1) or '1'
                         var = order_match.group(2)
-                        result = f"\\frac{{d^{order}}}{{d{var}^{order}}} {function_part}"
-                
-                return result
+                        return f"\\frac{{d^{order}}}{{d{var}^{order}}} {function_part}"
+
+        result = cls.convert_exponential_expression(result)
+        result = cls.convert_integral_expression(result)
+        result = cls.convert_limit_expression(result)
+        result = cls._convert_logarithms(result)
+        result = cls.convert_combinatorial_expression(result)
+        result = cls.convert_sum_prod_expression(result)
         
-        # Handle other shortcuts
-        shortcuts = cls.get_all_shortcuts()
-        for shortcut, latex in shortcuts.items():
-            if shortcut in result and '#' not in latex:
-                result = result.replace(shortcut, latex)
+        shortcuts = {k: v for k, v in cls.get_all_shortcuts().items() if '#' not in v}
         
-        return result
+        if shortcuts:
+            pattern = '|'.join(map(re.escape, sorted(shortcuts.keys(), key=len, reverse=True)))
+            result = re.sub(pattern, lambda m: shortcuts[m.group()], result)
+        
+        return result.replace('\\', '')
     
     @classmethod
     def convert_integral_expression(cls, text):
@@ -236,7 +224,6 @@ class ExpressionShortcuts:
         Returns:
             str: Text with integral expressions converted.
         """
-        # Convert definite integrals like 'int (a to b) expr dx' to 'int(expr, x, a, b)'
         definite_integral_pattern = r'int\s*\(\s*([^\s]+?)\s*to\s*([^\s]+?)\s*\)\s*([^\s]+?)\s*d([a-zA-Z])'
         
         def replace_definite_integral(match):
@@ -255,14 +242,12 @@ class ExpressionShortcuts:
         
         text = re.sub(definite_integral_pattern, replace_definite_integral, text)
         
-        # Convert indefinite integrals like 'int expr dx' to 'int(expr, x)'
         indefinite_integral_pattern = r'int\s+([^\s]+?)\s+d([a-zA-Z])'
         
         def replace_indefinite_integral(match):
             expr = match.group(1).strip()
             var = match.group(2).strip()
             
-            # Handle function expressions
             if 'ln' in expr:
                 expr = expr.replace('ln', 'log')
             
@@ -275,13 +260,8 @@ class ExpressionShortcuts:
     @staticmethod
     def _convert_logarithms(expr):
         """Convert different logarithm notations to MATLAB format."""
-        # Convert lg(x) to log10(x)
         expr = re.sub(r'lg\s*\((.*?)\)', r'log10(\1)', expr)
-        
-        # Keep ln(x) as log(x) for natural logarithm
         expr = re.sub(r'ln\s*\((.*?)\)', r'log(\1)', expr)
-        
-        # Convert logN(x) to log(x)/log(N) for any base N
         expr = re.sub(r'log(\d+)\s*\((.*?)\)', lambda m: f'log({m.group(2)})/log({m.group(1)})', expr)
         
         return expr
@@ -299,61 +279,68 @@ class ExpressionShortcuts:
     def convert_sum_prod_expression(expr):
         """Convert sum and prod expressions to MATLAB format."""
         def extract_variable(expr_str):
-            """Helper function to extract variable from expression"""
             vars = re.findall(r'(?<![a-zA-Z])([a-zA-Z])(?![a-zA-Z])', expr_str)
             reserved = {'e', 'i', 'n', 'inf', 'Inf'}
             vars = [v for v in vars if v not in reserved]
             return vars[0] if vars else 'x'
 
-        # Handle harmonic series optimization
         harmonic_pattern = r'sum\s*\(\s*(\d+)\s*to\s*(?:inf|Inf|(\d+))\s*\)\s*1/([a-zA-Z])'
         def replace_harmonic(match):
             start = int(match.group(1))
-            end = match.group(2)  # Will be None for inf/Inf
+            end = match.group(2)
             var = match.group(3)
             
-            if end is None:  # Infinite series
+            if end is None:
                 return "∞"
-            else:  # Finite series
+            else:
                 if start == 1:
-                    # For sum from 1 to n, evaluate numerically with Euler's constant
                     return f"double(log({end}) + 0.57721566490153286060)"
                 else:
-                    # For sum from k to n, evaluate numerically
                     return f"double(log({end}) - log({start-1}))"
 
-        # Apply harmonic series optimization first
         if re.search(harmonic_pattern, expr):
             expr = re.sub(harmonic_pattern, replace_harmonic, expr)
             return expr
 
-        finite_prod_pattern = r'prod\s*\(\s*(\d+)\s*to\s*(\d+)\s*\)\s*([^\n]+)'
+        finite_prod_pattern = r'prod\s*\(\s*([+-]?\d+|[+-]?inf)\s*to\s*([+-]?\d+|[+-]?inf)\s*\)\s*([^\n]+)'
         def replace_finite_prod(match):
             start = match.group(1).strip()
             end = match.group(2).strip()
             expr_part = match.group(3).strip()
             var = extract_variable(expr_part)
             
+            if 'inf' in start.lower():
+                start = '-Inf' if start.startswith('-') else 'Inf'
+            if 'inf' in end.lower():
+                end = '-Inf' if end.startswith('-') else 'Inf'
+            
             return f"prod(arrayfun(@(k) subs({expr_part}, {var}, k), {start}:{end}))"
         
-        inf_prod_pattern = r'prod\s*\(\s*(\d+)\s*to\s*(?:inf|Inf)\s*\)\s*([^\n]+)'
+        inf_prod_pattern = r'prod\s*\(\s*([+-]?\d+|[+-]?inf)\s*to\s*(?:inf|Inf)\s*\)\s*([^\n]+)'
         def replace_infinite_prod(match):
             start = match.group(1).strip()
             expr_part = match.group(2).strip()
             var = extract_variable(expr_part)
             
+            if 'inf' in start.lower():
+                start = '-Inf' if start.startswith('-') else 'Inf'
+            
             return f"symprod({expr_part}, {var}, {start}, Inf)"
 
-        sum_pattern = r'sum\s*\(\s*(\d+)\s*to\s*(inf|Inf|\d+)\s*\)\s*([^\n]+)'
+        sum_pattern = r'sum\s*\(\s*([+-]?\d+|[+-]?inf)\s*to\s*(inf|Inf|[+-]?\d+)\s*\)\s*([^\n]+)'
         def replace_sum(match):
             start = match.group(1).strip()
             end = match.group(2).strip().lower()
             expr_part = match.group(3).strip()
             var = extract_variable(expr_part)
-            end = 'Inf' if end == 'inf' else end
+            
+            if 'inf' in start.lower():
+                start = '-Inf' if start.startswith('-') else 'Inf'
+            if 'inf' in end:
+                end = '-Inf' if end.startswith('-') else 'Inf'
+            
             return f"symsum({expr_part}, {var}, {start}, {end})"
         
-        # Apply other patterns
         expr = re.sub(inf_prod_pattern, replace_infinite_prod, expr)
         expr = re.sub(finite_prod_pattern, replace_finite_prod, expr)
         expr = re.sub(sum_pattern, replace_sum, expr)
@@ -366,7 +353,6 @@ class ExpressionShortcuts:
     @staticmethod
     def convert_limit_expression(expr):
         """Convert limit expressions to MATLAB format."""
-        # Pattern to match limit expressions including all function types
         limit_pattern = r'(?i)lim\s*\(\s*([a-zA-Z])\s*to\s*' + \
                        r'(' + \
                        r'[-+]?\d*\.?\d+|' + \
@@ -386,41 +372,33 @@ class ExpressionShortcuts:
             elif isinstance(approach, str) and re.match(r'(?i)[+-]inf(?:ty|inity)?', approach):
                 sign = approach[0]
                 approach = f'{sign}inf'
-            # Handle functions in approach
             elif '(' in approach:
-                # Convert trigonometric functions
                 approach = re.sub(r'arcsin\(', r'asin(', approach)
                 approach = re.sub(r'arccos\(', r'acos(', approach)
                 approach = re.sub(r'arctan\(', r'atan(', approach)
-                # Convert logarithms
                 approach = re.sub(r'ln\(', r'log(', approach)
                 if re.match(r'log\d+\(', approach):
                     base = re.match(r'log(\d+)', approach).group(1)
                     arg = re.search(r'\((.*?)\)', approach).group(1)
                     approach = f'log({arg})/log({base})'
-            # Handle exponential e
+
             elif approach.startswith('e^'):
                 approach = f'exp({approach[2:]})'
             elif approach == 'e':
                 approach = 'exp(1)'
             
-            # Format the function part
             function = function.strip()
-            # Convert trigonometric functions
             function = re.sub(r'arcsin\(', r'asin(', function)
             function = re.sub(r'arccos\(', r'acos(', function)
             function = re.sub(r'arctan\(', r'atan(', function)
-            # Convert logarithms
             function = re.sub(r'ln\(', r'log(', function)
             if re.search(r'log\d+\(', function):
                 function = re.sub(r'log(\d+)\((.*?)\)', 
                                 lambda m: f'log({m.group(2)})/log({m.group(1)})', 
                                 function)
-            # Convert exponentials
             if 'e^' in function:
                 function = function.replace('e^', 'exp(') + ')'
             
-            # Handle one-sided limits
             if side:
                 if side == '+':
                     return f"limit({function}, {var}, {approach}, 'right')"
@@ -434,8 +412,37 @@ class ExpressionShortcuts:
 
     @staticmethod
     def convert_exponential_expression(expr):
-        """Convert e^x to exp(x) to ensure correct MATLAB interpretation."""
         pattern = r'\be\^([a-zA-Z0-9\+\-\*/\(\)]+)'
         replacement = r'exp(\1)'
         converted_expr = re.sub(pattern, replacement, expr)
         return converted_expr
+
+    @classmethod
+    def convert_equation(cls, text):
+        """
+        Convert equation expressions to LaTeX format.
+        
+        Args:
+            text (str): Input text containing equation
+            
+        Returns:
+            str: LaTeX formatted equation
+        """
+        result = text
+        
+        if '=' in result:
+            parts = result.split('=')
+            processed_parts = []
+            
+            for part in parts:
+                # Process each side of the equation
+                processed_part = cls.convert_shortcut(part.strip())
+                processed_parts.append(processed_part)
+            
+            result = ' = '.join(processed_parts)
+            
+        for symbol, latex in cls.EQUATION_SHORTCUTS.items():
+            if symbol in result:
+                result = result.replace(symbol, latex)
+        
+        return result
