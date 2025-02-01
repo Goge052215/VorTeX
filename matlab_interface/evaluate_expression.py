@@ -27,10 +27,13 @@ Last Updated: 2025.1
 
 import logging
 import re
-from functools import lru_cache
+from functools import lru_cache, wraps
 from matlab_interface.auto_simplify import AutoSimplify
 from latex_pack.shortcut import ExpressionShortcuts
 from sympy_pack.sympy_calculation import SympyCalculation
+import psutil
+import resource
+from sys import platform as sys_platform
 
 class EvaluateExpression:
     def __init__(self, eng):
@@ -47,6 +50,9 @@ class EvaluateExpression:
         self._compile_patterns()
         self._initialize_workspace()
         self._symbolic_vars = set()
+        self.max_memory = 768 * 1024 * 1024  # 768MB for MATLAB processes
+        self._process = psutil.Process() if psutil else None
+        self._windows_mem_warned = False
 
     def _configure_logger(self):
         """
@@ -102,15 +108,47 @@ class EvaluateExpression:
         """
         original_expr = expression
 
+        latex_trig = {
+            r'\sin': 'sin',
+            r'\cos': 'cos',
+            r'\tan': 'tan',
+            r'\sec': 'sec',
+            r'\csc': 'csc',
+            r'\cot': 'cot',
+            r'\arcsin': 'asin',
+            r'\arccos': 'acos',
+            r'\arctan': 'atan',
+            r'\arcsec': 'asec',
+            r'\arccsc': 'acsc',
+            r'\arccot': 'acot',
+            r'\sinh': 'sinh',
+            r'\cosh': 'cosh',
+            r'\tanh': 'tanh',
+            r'\sech': 'sech',
+            r'\csch': 'csch',
+            r'\coth': 'coth',
+            r'\arcsinh': 'asinh',
+            r'\arccosh': 'acosh',
+            r'\arctanh': 'atanh',
+            r'\arcsech': 'asech',
+            r'\arccsch': 'acsch',
+            r'\arccoth': 'acoth'
+        }
+        
+        for latex_func, matlab_func in latex_trig.items():
+            expression = expression.replace(latex_func, matlab_func)
+
         expression = ExpressionShortcuts.convert_sum_prod_expression(expression)
         expression = self.ln_pattern.sub('log(', expression)
         
         for trig_regex, degree_func in self.trig_patterns.items():
             expression = trig_regex.sub(degree_func, expression)
         
+        expression = re.sub(r'(\d)([a-zA-Z\(])', r'\1*\2', expression)  # 2x → 2*x, 2(x) → 2*(x)
+        expression = re.sub(r'(\))(\d|\w|\()', r'\1*\2', expression)    # (x)2 → (x)*2, (x)(y) → (x)*(y)
+        
         expression = self.log_e_pattern.sub(r'log(\1)', expression)
         expression = self.log_base_pattern.sub(r'log(\2)/log(\1)', expression)
-        expression = self.mul_pattern.sub(r'\1*\2', expression)
         
         if 'e^' in expression:
             expression = expression.replace('e^', 'exp(')
@@ -134,7 +172,6 @@ class EvaluateExpression:
         if not result_str:
             return "0"
         
-        # Handle equation solutions
         if 'solve(' in result_str and '>' not in result_str and '<' not in result_str:
             try:
                 # Execute the solve command
@@ -252,7 +289,7 @@ class EvaluateExpression:
             raise TypeError("Expression must be a string")
         
         expression_clean = re.sub(
-            r'd\^?\d*/d[a-zA-Z]+|\b(?:sin|cos|tan|log|exp|sqrt|abs|sind|cosd|tand)\b',
+            r'd\^?\d*/d[a-zA-Z]+|\b(?:sin|cos|tan|log|exp|sqrt|abs|sind|cosd|tand|sinh|cosh|tanh|sech|csch|coth|asin|acos|atan|asinh|acosh|atanh|asech|acsch|acoth)\b',
             '',
             expression
         )
@@ -300,10 +337,9 @@ class EvaluateExpression:
             log_pattern = r'log\(([\w\d\+\-\*\/\(\)]+)\)/log\(([\d\.]+)\)'
             
             def log_replacement(match):
-                numerator = match.group(1)  # The expression inside first log
-                base = match.group(2)       # The base number
+                numerator = match.group(1)
+                base = match.group(2)
                 
-                # Handle special cases
                 if base == '10':
                     return f'log10({numerator})'
                 elif base == '2':
@@ -341,7 +377,6 @@ class EvaluateExpression:
     def _handle_equation(self, expression):
         """
         Handle equation expressions for MATLAB evaluation.
-        Uses SymPy for inequalities.
         
         Args:
             expression (str): Input equation expression
@@ -349,10 +384,7 @@ class EvaluateExpression:
         Returns:
             str: Processed equation for MATLAB/SymPy
         """
-        from sympy_pack.sympy_calculation import SympyCalculation
-        
-        # Replace LaTeX equation symbols with standard symbols
-        matlab_eq_symbols = {
+        latex_eq_symbols = {
             r'\geq': '>=',
             r'\leq': '<=',
             r'\neq': '~=',
@@ -365,76 +397,173 @@ class EvaluateExpression:
         }
         
         result = expression
-        for latex_sym, matlab_sym in matlab_eq_symbols.items():
+        for latex_sym, matlab_sym in latex_eq_symbols.items():
             result = result.replace(latex_sym, matlab_sym)
         
-        # Handle inequalities with SymPy
         inequality_operators = ['>=', '<=', '>', '<']
-        for op in inequality_operators:
-            if op in result:
-                left_side = result[:result.find(op)].strip()
-                right_side = result[result.find(op) + len(op):].strip()
-                
-                # If right side is empty, add '0'
-                if not right_side:
-                    right_side = '0'
-                
-                # Format the inequality for SymPy
-                inequality = f"{left_side} {op} {right_side}"
-                # Replace MATLAB operators with Python operators
-                inequality = inequality.replace('^', '**')
-                inequality = re.sub(r'(\d)([a-zA-Z])', r'\1*\2', inequality)
-                
-                # Use SymPy for inequality solving
-                sympy_calc = SympyCalculation()
-                return sympy_calc.evaluate(inequality)
+        if any(op in result for op in inequality_operators):
+            for trig_regex, degree_func in self.trig_patterns.items():
+                result = trig_regex.sub(degree_func, result)
+            
+            result = re.sub(r'(\d)([a-zA-Z\(])', r'\1*\2', result)
+            result = re.sub(r'(\))(\d|\w|\()', r'\1*\2', result)
+            
+            return result
         
-        # Handle regular equations with MATLAB
         if '=' in result:
             parts = result.split('=')
             if len(parts) == 2:
                 left_side = parts[0].strip()
                 right_side = parts[1].strip()
                 
-                # Check if this is an equation to solve
                 variables = self._extract_variables(result)
                 if variables:
-                    # Format for MATLAB solve function
                     equation = f"{left_side}-({right_side})"
-                    var = list(variables)[0]  # Use first variable as solve variable
-                    
-                    # Execute the solve command
+                    var = list(variables)[0]
                     solve_cmd = f"solve({equation}, {var})"
                     self.logger.debug(f"Executing solve command: {solve_cmd}")
                     self.eng.eval(f"temp_result = {solve_cmd};", nargout=0)
                     
-                    # Get the solution
                     solution = str(self.eng.eval("char(temp_result)", nargout=1))
                     if solution and solution != '[]':
-                        if ',' in solution:  # Multiple solutions
+                        if ',' in solution:
                             solutions = solution.split(',')
                             return ' or '.join(f"{var} = {sol.strip()}" for sol in solutions)
                         return f"{var} = {solution}"
                     return "No solution"
                 
-                # If no variables, evaluate as equality check
                 return f"({left_side})==({right_side})"
         
         return result
 
+    def _simplify_inequality_result(self, result: str) -> str:
+        """
+        Simplify complex inequality results into a more readable form.
+        
+        Args:
+            result (str): The complex inequality result
+            
+        Returns:
+            str: Simplified inequality expression
+        """
+        try:
+            def simplify_number(match):
+                num = float(match.group(0))
+                if abs(num - round(num)) < 1e-10:
+                    return str(int(num))
+                elif abs(num - (pi := 3.141592653589793)) < 1e-10:
+                    return "π"
+                elif abs(num - pi/2) < 1e-10:
+                    return "π/2"
+                elif abs(num - pi/3) < 1e-10:
+                    return "π/3"
+                elif abs(num - pi/4) < 1e-10:
+                    return "π/4"
+                elif abs(num - pi/6) < 1e-10:
+                    return "π/6"
+                return str(num)
+
+            result = re.sub(r'\d+\.\d+', simplify_number, result)
+            
+            simplifications = [
+                (r'\(\(x < ([\w\./π]+)\) \| \(x < π\)\)', r'x < π'),
+                (r'\(\(x >= 0\) \| \(x < π\)\)', r'x < π'),
+                (r'\(\(x < ([\w\./π]+)\) \| \(x > -[\w\./π]+ \+ π/2\)\)', r'x < \1'),
+                (r'\(\(x >= 0\) \| \(x > -[\w\./π]+ \+ π/2\)\)', r'x ≥ 0'),
+                (r' & ', r' and '),
+                (r' \| ', r' or '),
+            ]
+            
+            for pattern, replacement in simplifications:
+                result = re.sub(pattern, replacement, result)
+            
+            if 'and x < π and' in result:
+                result = result.replace('and x < π and', 'and')
+            if result.startswith('((') and result.endswith('))'):
+                result = result[1:-1]
+            
+            self.logger.debug(f"Simplified inequality result: {result}")
+            return result
+            
+        except Exception as e:
+            self.logger.error(f"Error simplifying inequality result: {e}")
+            return result
+
+    def matlab_memory_safe(self, func):
+        """Decorator for MATLAB memory management"""
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            self = args[0]
+            try:
+                # Set memory limits on Unix-like systems
+                if not sys_platform.startswith('win') and resource:
+                    resource.setrlimit(resource.RLIMIT_AS, 
+                        (self.max_memory, self.max_memory))
+                elif sys_platform.startswith('win') and self._process:
+                    mem_info = self._process.memory_info()
+                    if mem_info.rss > self.max_memory and not self._windows_mem_warned:
+                        self.logger.warning("Approaching Windows memory limits")
+                        self._windows_mem_warned = True
+            except Exception as e:
+                self.logger.error(f"Memory limit setup failed: {e}")
+
+            try:
+                result = func(*args, **kwargs)
+                
+                # MATLAB-specific memory cleanup
+                self.eng.eval("clear ans; pack;", nargout=0)
+                
+                # String output sanitization
+                if len(result) > 2000:
+                    result = result[:2000] + "... [truncated]"
+                    
+                return result.replace('Inf', '∞').replace('NaN', 'undefined')
+                
+            except MemoryError:
+                self.logger.critical("MATLAB memory limit exceeded")
+                return "Error: Exceeded available memory"
+            finally:
+                if 'result' in locals():
+                    del result
+                self.eng.eval("clear temp_result;", nargout=0)
+        return wrapper
+
+    @lru_cache(maxsize=128)
+    @matlab_memory_safe
     def evaluate_matlab_expression(self, expression):
         """Evaluate a MATLAB expression and return the result."""
         try:
             expression = self._preprocess_expression(expression)
             
-            # Check for inequalities first and route to SymPy
             inequality_operators = ['>=', '<=', '>', '<']
             if any(op in expression for op in inequality_operators):
+                matlab_to_standard = {
+                    'sind': 'sin',
+                    'cosd': 'cos',
+                    'tand': 'tan',
+                    'asind': 'asin',
+                    'acosd': 'acos',
+                    'atand': 'atan',
+                    'secd': 'sec',
+                    'cscd': 'csc',
+                    'cotd': 'cot'
+                }
+                
+                sympy_expr = expression
+                for matlab_func, standard_func in matlab_to_standard.items():
+                    sympy_expr = re.sub(rf'\b{matlab_func}\b', standard_func, sympy_expr)
+                
+                self.logger.debug(f"Converting to SymPy format: {sympy_expr}")
+                
                 from sympy_pack.sympy_calculation import SympyCalculation
                 sympy_calc = SympyCalculation()
-                return sympy_calc.evaluate(expression)
+                result = sympy_calc.evaluate(sympy_expr)
+                
+                # Simplify the inequality result
+                if any(op in result for op in ['<', '>', '≤', '≥', '=']):
+                    return self._simplify_inequality_result(result)
+                return result
             
-            # Check for equations
             if '=' in expression:
                 expression = self._handle_equation(expression)
             
@@ -463,10 +592,8 @@ class EvaluateExpression:
             self.logger.debug(f"Executing MATLAB command: {command}")
             self.eng.eval(command, nargout=0)
             
-            # For limit evaluations
             if expression.startswith('limit('):
                 try:
-                    # Try to evaluate the limit numerically
                     self.eng.eval("temp_result = double(temp_result);", nargout=0)
                     result = str(self.eng.eval("num2str(temp_result, '%.8f')", nargout=1))
                     if result == 'Inf':
@@ -474,12 +601,10 @@ class EvaluateExpression:
                     elif result == '-Inf':
                         result = '-∞'
                 except:
-                    # If numerical evaluation fails, return symbolic result
                     result = str(self.eng.eval("char(temp_result)", nargout=1))
                     result = self._format_exponential(result)
                     result = self._simplify_log_expression(result)
             else:
-                # Check if this is an indefinite integral
                 is_indefinite_integral = 'int(' in expression and expression.count(',') == 2
                 
                 if expression.startswith('solve('):
@@ -565,6 +690,8 @@ class EvaluateExpression:
         
         return expr
 
+    @lru_cache(maxsize=64)
+    @matlab_memory_safe
     def evaluate(self, expression: str) -> str:
         """Evaluate a mathematical expression using MATLAB."""
         try:

@@ -65,8 +65,16 @@ class PackageImporter:
     def import_manim() -> NoReturn:
         try:
             print("Installing Manim and related packages...")
+            
+            # First try to use the built-in importlib.metadata
+            try:
+                from importlib import metadata as importlib_metadata
+                print("Using built-in importlib.metadata")
+            except ImportError:
+                print("Installing importlib_metadata package...")
+                os.system(f"{sys.executable} -m pip install importlib_metadata")
+            
             core_packages = [
-                "importlib_metadata",
                 "pycairo",
                 "pangocairo",
                 "manimpango",
@@ -83,14 +91,19 @@ class PackageImporter:
             print("Installing manim...")
             os.system(f"{sys.executable} -m pip install manim")
 
-            import importlib_metadata
+            # Verify installations
             import manim
             print("Manim installation successful!")
-
+            
         except Exception as e:
-            print(f"Error installing/importing Manim packages: {e}")
-            print("\nPlease try installing manually:")
-            print("1. pip install importlib_metadata")
-            print("2. pip install manim")
-            print("3. For macOS: brew install cairo pango ffmpeg")
-            print("4. For Windows: Check Manim installation guide")
+            print(f"Error during Manim installation: {e}")
+            print("\nTry installing manually:")
+            print("pip install manim")
+
+    @staticmethod
+    def import_psutil() -> NoReturn:
+        try:
+            print("Installing psutil...")
+            os.system(f"{sys.executable} -m pip install psutil")
+        except Exception as e:
+            print(f"Error installing/importing psutil: {e}")

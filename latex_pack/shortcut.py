@@ -358,7 +358,7 @@ class ExpressionShortcuts:
                        r'[-+]?\d*\.?\d+|' + \
                        r'[-+]?(?:inf(?:ty|inity)?)|' + \
                        r'[a-zA-Z][a-zA-Z0-9]*|' + \
-                       r'(?:sin|cos|tan|csc|sec|cot|arcsin|arccos|arctan|ln|log|log\d+|sqrt|exp)\s*\([^)]+\)|' + \
+                       r'(?:sin|cos|tan|csc|sec|cot|sinh|cosh|tanh|sech|csch|coth|arcsin|arccos|arctan|arcsec|arccsc|arccot|asinh|acosh|atanh|asech|acsch|acoth|ln|log|log\d+|sqrt|exp)\s*\([^)]+\)|' + \
                        r'e\^?[^,\s)]*' + \
                        r')([+-])?\s*\)\s*' + \
                        r'((?:[^()]+|\((?:[^()]+|\([^()]*\))*\))*)'
@@ -376,6 +376,15 @@ class ExpressionShortcuts:
                 approach = re.sub(r'arcsin\(', r'asin(', approach)
                 approach = re.sub(r'arccos\(', r'acos(', approach)
                 approach = re.sub(r'arctan\(', r'atan(', approach)
+                approach = re.sub(r'arcsec\(', r'asec(', approach)
+                approach = re.sub(r'arccsc\(', r'acsc(', approach)
+                approach = re.sub(r'arccot\(', r'acot(', approach)
+                approach = re.sub(r'arcsinh\(', r'asinh(', approach)
+                approach = re.sub(r'arccosh\(', r'acosh(', approach)
+                approach = re.sub(r'arctanh\(', r'atanh(', approach)
+                approach = re.sub(r'arcsech\(', r'asech(', approach)
+                approach = re.sub(r'arccsch\(', r'acsch(', approach)
+                approach = re.sub(r'arccoth\(', r'acoth(', approach)
                 approach = re.sub(r'ln\(', r'log(', approach)
                 if re.match(r'log\d+\(', approach):
                     base = re.match(r'log(\d+)', approach).group(1)
@@ -391,7 +400,17 @@ class ExpressionShortcuts:
             function = re.sub(r'arcsin\(', r'asin(', function)
             function = re.sub(r'arccos\(', r'acos(', function)
             function = re.sub(r'arctan\(', r'atan(', function)
+            function = re.sub(r'arcsec\(', r'asec(', function)
+            function = re.sub(r'arccsc\(', r'acsc(', function)
+            function = re.sub(r'arccot\(', r'acot(', function)
+            function = re.sub(r'arcsinh\(', r'asinh(', function)
+            function = re.sub(r'arccosh\(', r'acosh(', function)
+            function = re.sub(r'arctanh\(', r'atanh(', function)
+            function = re.sub(r'arcsech\(', r'asech(', function)
+            function = re.sub(r'arccsch\(', r'acsch(', function)
+            function = re.sub(r'arccoth\(', r'acoth(', function)
             function = re.sub(r'ln\(', r'log(', function)
+
             if re.search(r'log\d+\(', function):
                 function = re.sub(r'log(\d+)\((.*?)\)', 
                                 lambda m: f'log({m.group(2)})/log({m.group(1)})', 

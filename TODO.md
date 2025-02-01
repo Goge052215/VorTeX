@@ -6,3 +6,4 @@
 - [X] Equation handling for Sympy, MATLAB, and LaTeX
 - [ ] Trig inequalities for **ALL** mode
 - [ ] Improving 2D *manim* visual
+- [ ] Adding I/O and RAM usage

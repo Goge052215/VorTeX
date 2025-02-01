@@ -26,23 +26,61 @@ Last Updated: 2025.1
 '''
 
 import re
+import sys
 import logging
 from sympy import sympify, N, pi, limit, Symbol, Integral, diff
 from sympy.abc import x, y
 import sympy
+import psutil
+from typing import Optional
+from functools import wraps
+
+IS_WINDOWS = sys.platform in ["win32", "win64"]
+
+try:
+    import resource
+    RESOURCE_AVAILABLE = True
+except ImportError:
+    RESOURCE_AVAILABLE = False
 
 class SympyCalculation:
     """Class to handle SymPy calculations and expression parsing."""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
+        self.max_memory = 512 * 1024 * 1024
+        self.max_output_length = 10000
+        self._process: Optional[psutil.Process] = None
+        try:
+            self._process = psutil.Process()
+        except ImportError:
+            self.logger.warning("psutil not available, memory management disabled")
+        
         self.math_dict = {
             'sin': sympy.sin,
             'cos': sympy.cos,
             'tan': sympy.tan,
+            'sec': sympy.sec,
+            'csc': sympy.csc,
+            'cot': sympy.cot,
             'asin': sympy.asin,
             'acos': sympy.acos,
             'atan': sympy.atan,
+            'arcsec': sympy.asec,
+            'arccsc': sympy.acsc,
+            'arccot': sympy.acot,
+            'sinh': sympy.sinh,
+            'cosh': sympy.cosh,
+            'tanh': sympy.tanh,
+            'sech': sympy.sech,
+            'csch': sympy.csch,
+            'coth': sympy.coth,
+            'asinh': sympy.asinh,
+            'acosh': sympy.acosh,
+            'atanh': sympy.atanh,
+            'arcsinh': sympy.asinh,
+            'arccosh': sympy.acosh,
+            'arctanh': sympy.atanh,
             'log': sympy.log,
             'ln': sympy.log,
             'exp': sympy.exp,
@@ -57,64 +95,49 @@ class SympyCalculation:
             'z': Symbol('z'),
         }
 
+    def memory_safe(func):
+        """Decorator to enforce memory limits"""
+        @wraps(func)
+        def wrapper(self, *args, **kwargs):
+            try:
+                if RESOURCE_AVAILABLE and not IS_WINDOWS:
+                    resource.setrlimit(resource.RLIMIT_AS, 
+                        (self.max_memory, self.max_memory))
+                elif IS_WINDOWS:
+                    process = psutil.Process()
+                    if process.memory_info().rss > self.max_memory:
+                        self.logger.warning("Memory usage high on Windows")
+                        return "Error: System memory limit approached"
+                        
+            except Exception as e:
+                self.logger.warning(f"Memory limit setting failed: {e}")
+            
+            try:
+                return func(self, *args, **kwargs)
+            except MemoryError:
+                self.logger.critical("Memory limit exceeded")
+                return "Error: Calculation exceeded memory limits"
+            finally:
+                if 'result' in locals():
+                    del locals()['result']
+        return wrapper
+
     def parse_expression(self, expression: str) -> str:
         """Parse and prepare the expression for SymPy evaluation."""
         try:
             self.logger.debug(f"Parsing expression: {expression}")
             
-            # Check for equations and inequalities first
             operators = ['>=', '<=', '>', '<', '=']
             if any(op in expression for op in operators):
                 return self._handle_equation(expression)
             
-            # Fix: Update sum pattern to handle spaces more flexibly
-            sum_pattern = r'sum\s*\(\s*(\d+)\s+to\s+(\d+|inf|Inf)\s*\)\s*([^\n]+)'
-            def replace_sum(match):
-                start = match.group(1)
-                end = match.group(2).lower()
-                expr_part = match.group(3)
-                
-                if end == 'inf':
-                    return f"Sum({expr_part}, (x, {start}, oo))"
-                else:
-                    return f"Sum({expr_part}, (x, {start}, {end}))"
-
-            # Remove extra spaces before parsing
             expression = ' '.join(expression.split())
             
-            if re.search(sum_pattern, expression):
-                expression = re.sub(sum_pattern, replace_sum, expression)
-            
-            harmonic_pattern = r'sum\s*\(\s*(\d+)\s*to\s*(?:inf|Inf|(\d+))\s*\)\s*1/([a-zA-Z])'
-            def replace_harmonic(match):
-                start = int(match.group(1))
-                end = match.group(2)  # Will be None for inf/Inf
-                var = match.group(3)
-                
-                if end is None:
-                    return "∞"
-                else:
-                    if start == 1:
-                        return f"log({end}) + 0.57721566490153286060"
-                    else:
-                        return f"log({end}) - log({start-1})"
-
-            if re.search(harmonic_pattern, expression):
-                expression = re.sub(harmonic_pattern, replace_harmonic, expression)
+            expression = self._parse_sum(expression)
+            expression, is_harmonic = self._parse_harmonic(expression)
+            if is_harmonic:
                 return expression
-            
-            prod_pattern = r'prod\s*\(\s*(\d+)\s*to\s*(?:inf|Inf|(\d+))\s*\)\s*([^\n]+)'
-            def replace_prod(match):
-                start = match.group(1)
-                end = match.group(2)
-                expr_part = match.group(3)
-                
-                if end is None:
-                    return f"Product({expr_part}, (x, {start}, oo))"
-                else:
-                    return f"Product({expr_part}, (x, {start}, {end}))"
-
-            expression = re.sub(prod_pattern, replace_prod, expression)
+            expression = self._parse_product(expression)
             
             if 'C' in expression:
                 expression = self._parse_combination(expression)
@@ -133,10 +156,8 @@ class SympyCalculation:
             
             expression = expression.replace('°', '*pi/180')
             expression = expression.replace('pi', 'sympy.pi')
-            
             expression = expression.replace('^', '**')
             
-            # Add Sum to math_dict
             self.math_dict['Sum'] = sympy.Sum
             self.math_dict['oo'] = sympy.oo
             
@@ -147,8 +168,64 @@ class SympyCalculation:
             self.logger.error(f"Error parsing expression: {e}")
             raise
 
+    def _parse_sum(self, expression: str) -> str:
+        """Handle sum expressions."""
+        sum_pattern = r'sum\s*\(\s*(\d+)\s+to\s+(\d+|inf|Inf)\s*\)\s*([^\n]+)'
+        
+        def replace_sum(match):
+            start = match.group(1)
+            end = match.group(2).lower()
+            expr_part = match.group(3)
+            
+            if end == 'inf':
+                return f"Sum({expr_part}, (x, {start}, oo))"
+            elif end == '-inf':
+                return f"Sum({expr_part}, (x, {start}, -oo))"
+            else:
+                return f"Sum({expr_part}, (x, {start}, {end}))"
+        
+        if re.search(sum_pattern, expression):
+            return re.sub(sum_pattern, replace_sum, expression)
+        return expression
+
+    def _parse_harmonic(self, expression: str) -> tuple[str, bool]:
+        """Handle harmonic series expressions."""
+        harmonic_pattern = r'sum\s*\(\s*(\d+)\s*to\s*(?:inf|Inf|(\d+))\s*\)\s*1/([a-zA-Z])'
+        
+        def replace_harmonic(match):
+            start = int(match.group(1))
+            end = match.group(2)
+            var = match.group(3)
+            
+            if end is None:
+                return "∞"
+            else:
+                if start == 1:
+                    return f"log({end}) + 0.57721566490153286060"
+                else:
+                    return f"log({end}) - log({start-1})"
+        
+        if re.search(harmonic_pattern, expression):
+            return re.sub(harmonic_pattern, replace_harmonic, expression), True
+        return expression, False
+
+    def _parse_product(self, expression: str) -> str:
+        """Handle product expressions."""
+        prod_pattern = r'prod\s*\(\s*(\d+)\s*to\s*(?:inf|Inf|(\d+))\s*\)\s*([^\n]+)'
+        
+        def replace_prod(match):
+            start = match.group(1)
+            end = match.group(2)
+            expr_part = match.group(3)
+            
+            if end is None:
+                return f"Product({expr_part}, (x, {start}, oo))"
+            else:
+                return f"Product({expr_part}, (x, {start}, {end}))"
+        
+        return re.sub(prod_pattern, replace_prod, expression)
+
     def _parse_combination(self, expression: str) -> str:
-        """Parse combination expressions (nCr format)."""
         try:
             match = re.search(r'(\d+)C(\d+)', expression)
             if match:
@@ -160,7 +237,6 @@ class SympyCalculation:
             raise ValueError(f"Invalid combination format: {expression}")
 
     def _parse_permutation(self, expression: str) -> str:
-        """Parse permutation expressions (nPr format)."""
         try:
             match = re.search(r'(\d+)P(\d+)', expression)
             if match:
@@ -172,16 +248,13 @@ class SympyCalculation:
             raise ValueError(f"Invalid permutation format: {expression}")
 
     def _parse_integral(self, expression: str) -> str:
-        """Parse integral expressions."""
         try:
             expression = expression.strip()
             self.logger.debug(f"Processing integral expression: {expression}")
             
-            # Pattern for definite integral: int(a to b) f(x) dx
             definite_pattern = r'int\s*\(\s*([^,]+)\s+to\s+([^,)]+)\s*\)\s*([^\n]+?)\s*dx'
             definite_match = re.match(definite_pattern, expression)
             
-            # Pattern for indefinite integral: int f(x) dx
             indefinite_pattern = r'int\s*([^\n]+?)\s*dx'
             indefinite_match = re.match(indefinite_pattern, expression)
             
@@ -193,7 +266,6 @@ class SympyCalculation:
                 if not integrand:
                     raise ValueError("Missing integrand in definite integral")
                     
-                # Fix trigonometric expressions
                 integrand = self._fix_trig_expr(integrand)
                     
                 if 'ln(' in integrand:
@@ -209,7 +281,6 @@ class SympyCalculation:
                 if not integrand:
                     raise ValueError("Missing integrand in indefinite integral")
                     
-                # Fix trigonometric expressions
                 integrand = self._fix_trig_expr(integrand)
                     
                 if 'ln(' in integrand:
@@ -227,15 +298,12 @@ class SympyCalculation:
 
     def _fix_trig_expr(self, expr: str) -> str:
         """Fix trigonometric expressions by adding multiplication operator."""
-        # Add multiplication operator between number and x
         expr = re.sub(r'(\d+)([a-zA-Z])', r'\1*\2', expr)
         
-        # Add multiplication operator between coefficient and trig functions
         trig_funcs = ['sin', 'cos', 'tan', 'csc', 'sec', 'cot']
         for func in trig_funcs:
             expr = re.sub(rf'(\d+)({func})', rf'\1*{func}', expr)
         
-        # Fix expressions like sin(2x) to sin(2*x)
         for func in trig_funcs:
             expr = re.sub(rf'{func}\((\d+)([a-zA-Z])\)', rf'{func}(\1*\2)', expr)
         
@@ -271,13 +339,12 @@ class SympyCalculation:
     def _parse_limit(self, expression: str, angle_mode: str = 'Radian') -> str:
         """Parse limit expressions."""
         try:
-            # Pattern to match limit expressions including all function types
             limit_pattern = r'(?i)lim\s*\(\s*([a-zA-Z])\s*to\s*' + \
                            r'(' + \
                            r'[-+]?\d*\.?\d+|' + \
                            r'[-+]?(?:inf(?:ty|inity)?)|' + \
                            r'[a-zA-Z][a-zA-Z0-9]*|' + \
-                           r'(?:sin|cos|tan|csc|sec|cot|arcsin|arccos|arctan|ln|log|log\d+|sqrt|exp)\s*\([^)]+\)|' + \
+                           r'(?:sin|cos|tan|csc|sec|cot|arcsin|arccos|arctan|arcsec|arccsc|arccot|ln|log|log\d+|sqrt|exp)\s*\([^)]+\)|' + \
                            r'e\^?[^,\s)]*' + \
                            r')([+-])?\s*\)\s*' + \
                            r'((?:[^()]+|\((?:[^()]+|\([^()]*\))*\))*)'
@@ -367,9 +434,26 @@ class SympyCalculation:
             self.logger.error(f"Error parsing limit: {e}")
             raise ValueError(f"Invalid limit format: {str(e)}")
 
+    def _check_memory(self) -> bool:
+        """Check if memory usage is within limits."""
+        try:
+            if self._process:
+                return self._process.memory_info().rss <= self.max_memory
+            return True
+        except Exception as e:
+            self.logger.warning(f"Memory check failed: {e}")
+            return True
+
     def evaluate(self, expression: str, angle_mode: str = 'Radian') -> str:
         """Evaluate the SymPy expression and return the result."""
         try:
+            # Add memory check at start
+            if not self._check_memory():
+                return "Error: System memory limit approached"
+
+            if not expression or expression.isspace():
+                raise ValueError("Empty expression provided")
+            
             self.logger.debug(f"Evaluating expression: {expression}")
             
             # Check if this is a limit expression
@@ -377,13 +461,20 @@ class SympyCalculation:
                 result = self._parse_limit(expression, angle_mode)
                 return result
             
+            if not re.match(r'^[0-9a-zA-Z\s\+\-\*\/\^\(\)\.=<>!]+$', expression):
+                raise ValueError("Invalid characters in expression")
+            
             parsed_expr = self.parse_expression(expression)
+            
+            if not parsed_expr or parsed_expr.isspace():
+                raise ValueError("Failed to parse expression")
             
             result = sympify(parsed_expr, locals=self.math_dict)
             
-            if isinstance(result, sympy.Integral):
-                result = result.doit()
-            elif isinstance(result, sympy.Derivative):
+            # Add memory check after major computations
+            if isinstance(result, (sympy.Integral, sympy.Derivative)):
+                if not self._check_memory():
+                    return "Error: Insufficient memory for computation"
                 result = result.doit()
             
             try:
@@ -410,30 +501,62 @@ class SympyCalculation:
                     # For symbolic results, try to simplify
                     result = sympy.simplify(result)
                     result = str(result)
-            except:
-                result = str(result)
+                
+                # Add output length check
+                if len(result) > self.max_output_length:
+                    self.logger.warning("Truncating large output")
+                    result = result[:self.max_output_length] + "... [truncated]"
+                
+                result = self._clean_display(result, angle_mode)
+                
+                # Final memory check
+                if not self._check_memory():
+                    self.logger.warning("Memory limit exceeded after computation")
+                
+                self.logger.debug(f"Evaluation result: {result}")
+                return result
+                
+            except Exception as e:
+                self.logger.error(f"Error evaluating expression: {e}")
+                return f"Error: {str(e)}"
             
-            result = self._clean_display(result, angle_mode)
-            
-            self.logger.debug(f"Evaluation result: {result}")
-            return result
-            
+        except ValueError as ve:
+            self.logger.error(f"Invalid input: {ve}")
+            return f"Error: {str(ve)}"
         except Exception as e:
             self.logger.error(f"Error evaluating expression: {e}")
-            raise
+            return f"Error: {str(e)}"
 
     def _clean_display(self, result: str, angle_mode: str) -> str:
         """Clean up the display format of the result."""
         try:
-            result = result.replace('log(', 'ln(')
+            # Apply replacements in sequence
+            result = result.replace('oo', '∞')
+            result = re.sub(r'sqrt\((\d+)\)', r'√\1', result)
             result = result.replace('**', '^')
             result = result.replace('exp(1)', 'e')
+            result = result.replace('log(', 'ln(')
+            
+            result = re.sub(
+                r'(?<!\()(-?\d*\.?\d+\s*[+\-]\s*[√]?\d*\.?\d+)(?![\d\s)])', 
+                r'(\1)', 
+                result
+            )
             
             # Handle trigonometric functions in degree mode
             if angle_mode == 'Degree':
-                result = result.replace('sin(', 'sin(')
-                result = result.replace('cos(', 'cos(')
-                result = result.replace('tan(', 'tan(')
+                result = re.sub(r'(sin|cos|tan)\((.*?)\)', r'\1_{deg}(\2)', result)
+            
+            # Final cleanup of redundant parentheses
+            result = re.sub(r'\((√\d+)\)', r'\1', result)
+            result = re.sub(r'\((\d+)\)', r'\1', result)
+            
+            # Unify logical operators: replace SymPy's '|' and '&' with "or" and "and" respectively.
+            result = result.replace('|', ' or ')
+            result = result.replace('&', ' and ')
+            
+            # Remove any extra whitespace.
+            result = re.sub(r'\s+', ' ', result).strip()
             
             return result
             
@@ -452,7 +575,8 @@ class SympyCalculation:
             str: Processed equation for SymPy
         """
         try:
-            # Replace LaTeX equation symbols with SymPy equivalents
+            from sympy import Symbol, Eq, solve, sympify
+             
             sympy_eq_symbols = {
                 r'\geq': '>=',
                 r'\leq': '<=',
@@ -469,69 +593,75 @@ class SympyCalculation:
             for latex_sym, sympy_sym in sympy_eq_symbols.items():
                 result = result.replace(latex_sym, sympy_sym)
             
-            # Convert ^ to ** for exponentiation
             result = result.replace('^', '**')
-            
-            # Add multiplication operator between number and variable
             result = re.sub(r'(\d)([a-zA-Z])', r'\1*\2', result)
             
-            # Handle equations and inequalities
             operators = ['>=', '<=', '>', '<', '=']
             for op in operators:
                 if op in result:
-                    # Split and preserve the operator
                     left_side = result[:result.find(op)].strip()
                     right_side = result[result.find(op) + len(op):].strip()
                     
-                    # If right side is empty or just '0', simplify expression
+                    if any(trig in left_side for trig in ['sin', 'cos', 'tan']):
+                        equation = Eq(sympify(left_side, locals=self.math_dict),
+                                      sympify(right_side, locals=self.math_dict))
+                        variables = [str(s) for s in equation.free_symbols]
+                        if variables:
+                            var = Symbol(variables[0])
+                            solution = solve(equation, var)
+                            if solution:
+                                if op == '=':
+                                    solutions = [f"{var}{i+1} = {sol}" for i, sol in enumerate(solution)]
+                                    return ', '.join(solutions)
+                                else:
+                                    return ', '.join([f"{sol}" for sol in solution])
+                            return f"No solution found for {equation}"
+                    
                     if not right_side or right_side == '0':
                         equation = left_side
                     else:
                         equation = f"{left_side}-({right_side})"
-                        # Clean up unnecessary parentheses around 0
                         equation = equation.replace('-(0)', '')
                     
-                    variables = list(Symbol(var) for var in re.findall(r'[a-zA-Z]', equation))
+                    variables = list(Symbol(s) for s in re.findall(r'[a-zA-Z]', equation))
                     if variables:
-                        var = variables[0]  # Use first variable as solve variable
+                        var_symbol = variables[0]
                         if op in ['>', '<', '>=', '<=']:
-                            from sympy import solve, Interval
                             expr = sympify(equation)
                             
-                            # Solve the inequality directly
+                            # Solve the inequality directly.
                             if op == '>':
-                                solution = solve(expr > 0, var)
+                                solution = solve(expr > 0, var_symbol)
                             elif op == '<':
-                                solution = solve(expr < 0, var)
+                                solution = solve(expr < 0, var_symbol)
                             elif op == '>=':
-                                solution = solve(expr >= 0, var)
+                                solution = solve(expr >= 0, var_symbol)
                             elif op == '<=':
-                                solution = solve(expr <= 0, var)
+                                solution = solve(expr <= 0, var_symbol)
                             
-                            # Format the solution
                             if isinstance(solution, list):
-                                # Sort solutions for better readability
                                 solution.sort(key=lambda x: float(x.evalf()))
-                                # Create inequality ranges
                                 ranges = []
                                 for i in range(len(solution)):
+                                    bound = str(solution[i])
+                                    
                                     if i == 0:
                                         if op in ['<', '<=']:
-                                            ranges.append(f"x < {solution[i]}")
+                                            ranges.append(f"x < {bound}")
                                         else:
-                                            ranges.append(f"x > {solution[i]}")
+                                            ranges.append(f"x > {bound}")
                                     elif i == len(solution) - 1:
                                         if op in ['<', '<=']:
-                                            ranges.append(f"x > {solution[i]}")
+                                            ranges.append(f"x > {bound}")
                                         else:
-                                            ranges.append(f"x < {solution[i]}")
+                                            ranges.append(f"x < {bound}")
                                 return " or ".join(ranges)
                             return str(solution)
                         else:
-                            return f"solve({equation}, {var})"
+                            return f"solve({equation}, {var_symbol})"
             
             return result
             
         except Exception as e:
-            self.logger.error(f"Error solving inequality: {e}")
-            return expression
+            self.logger.error(f"Error solving equation: {e}")
+            return f"Error: {str(e)}"

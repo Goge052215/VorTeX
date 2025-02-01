@@ -23,7 +23,7 @@ class UIComponents:
 
         self.parent.PLACEHOLDER_TEXT = 'Enter Simplified LaTeX expression, e.g., 5C2 + sin(pi/2)\n' \
             'Or MATLAB expression, e.g., nchoosek(5,2) + sin(pi/2)'
-        self.parent.FORMULA_FONT = QFont("Monaspace Neon", 13)
+        self.parent.FORMULA_FONT = QFont("Monaspace Neon", 14)
 
     def init_ui(self):
         """Initialize the calculator's user interface."""

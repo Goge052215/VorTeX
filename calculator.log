@@ -1339,3 +1339,421 @@ SyntaxError: invalid syntax (<string>, line 1)
 2025-01-19 23:16:55,599 - __main__ - DEBUG - Raw result from MATLAB: '(x > -2) & (x < 0)'
 2025-01-19 23:16:55,600 - __main__ - DEBUG - Displayed Result: (x > -2) & (x < 0)
 2025-01-19 23:17:40,226 - __main__ - INFO - MATLAB engine terminated
+2025-01-20 10:06:14,543 - __main__ - INFO - Initializing Calculator Application
+2025-01-20 10:06:29,934 - __main__ - INFO - MATLAB engine started successfully
+2025-01-20 10:06:54,017 - __main__ - DEBUG - Original expression: '-sum (1 to inf) (-1)^x/x'
+2025-01-20 10:06:54,023 - __main__ - DEBUG - Original expression: '-sum (1 to inf) (-1)^x/x'
+2025-01-20 10:06:54,026 - __main__ - DEBUG - After combinatorial conversion: -sum (1 to inf) (-1)^x/x
+2025-01-20 10:06:54,026 - __main__ - DEBUG - Converted integral expression: '-sum (1 to inf) (-1)^x/x'
+2025-01-20 10:06:54,027 - __main__ - DEBUG - After explicit multiplication: '-sum (1 to inf) (-1)^x/x'
+2025-01-20 10:06:54,027 - __main__ - DEBUG - Final MATLAB expression: '-sum (1 to inf) (-1)^x/x'
+2025-01-20 10:06:54,027 - __main__ - DEBUG - Converted to MATLAB expression: '-sum (1 to inf) (-1)^x/x'
+2025-01-20 10:06:54,033 - __main__ - DEBUG - After shortcut conversion: limit(-symsum((-1)^x/x, x, 1, Inf), x, Inf)
+2025-01-20 10:06:54,034 - __main__ - DEBUG - Final MATLAB expression: 'limit(-symsum((-1)^x/x, x, 1, Inf), x, Inf)'
+2025-01-20 10:06:54,918 - __main__ - DEBUG - Raw result from MATLAB: '0.69314718'
+2025-01-20 10:06:54,919 - __main__ - DEBUG - Displayed Result: 0.69314718
+2025-01-20 13:12:09,702 - __main__ - INFO - MATLAB engine terminated
+2025-01-20 20:53:46,477 - __main__ - INFO - Initializing Calculator Application
+2025-01-20 20:53:59,739 - __main__ - INFO - MATLAB engine started successfully
+2025-01-20 20:55:20,459 - __main__ - DEBUG - Original expression: 'x^2 + 2x < 0'
+2025-01-20 20:55:20,463 - __main__ - DEBUG - Original expression: 'x^2 + 2x < 0'
+2025-01-20 20:55:20,467 - __main__ - DEBUG - After combinatorial conversion: x^2 + 2x < 0
+2025-01-20 20:55:20,468 - __main__ - DEBUG - Converted integral expression: 'x^2 + 2x < 0'
+2025-01-20 20:55:20,469 - __main__ - DEBUG - After explicit multiplication: 'x^2 + 2*x < 0'
+2025-01-20 20:55:20,469 - __main__ - DEBUG - Final MATLAB expression: 'x^2 + 2*x < 0'
+2025-01-20 20:55:20,469 - __main__ - DEBUG - Converted to MATLAB expression: 'x^2 + 2*x < 0'
+2025-01-20 20:55:20,477 - __main__ - DEBUG - After shortcut conversion: x^2 + 2*x < 0
+2025-01-20 20:55:20,479 - __main__ - DEBUG - Final MATLAB expression: 'x^2 + 2*x < 0'
+2025-01-20 20:55:20,664 - __main__ - DEBUG - Raw result from MATLAB: '(x > -2) & (x < 0)'
+2025-01-20 20:55:20,667 - __main__ - DEBUG - Displayed Result: (x > -2) & (x < 0)
+2025-01-20 20:55:27,215 - __main__ - DEBUG - Original expression: 'sin(x) < 0.5'
+2025-01-20 20:55:27,215 - __main__ - DEBUG - Original expression: 'sin(x) < 0.5'
+2025-01-20 20:55:27,215 - __main__ - DEBUG - After combinatorial conversion: sin(x) < 0.5
+2025-01-20 20:55:27,216 - __main__ - DEBUG - Converted integral expression: 'sin(x) < 0.5'
+2025-01-20 20:55:27,216 - __main__ - DEBUG - After explicit multiplication: 'sin(x) < 0.5'
+2025-01-20 20:55:27,216 - __main__ - DEBUG - Final MATLAB expression: 'sin(x) < 0.5'
+2025-01-20 20:55:27,216 - __main__ - DEBUG - Converted to MATLAB expression: 'sin(x) < 0.5'
+2025-01-20 20:55:27,216 - __main__ - DEBUG - After shortcut conversion: sin(x) < 0.5
+2025-01-20 20:55:27,217 - __main__ - DEBUG - Final MATLAB expression: 'sind(x) < 0.5'
+2025-01-20 20:55:27,333 - __main__ - DEBUG - Raw result from MATLAB: 'sind(x) < 0.5'
+2025-01-20 20:55:27,333 - __main__ - DEBUG - Displayed Result: sin(x) < 0.5
+2025-01-20 20:55:35,765 - __main__ - DEBUG - SymPy calculation result: ((x < 0.523598775598299) | (x > -0.523598775598299 + pi)) & ((x >= 0) | (x > -0.523598775598299 + pi)) & ((x < 0.523598775598299) | (x < 2*pi)) & ((x >= 0) | (x < 2*pi))
+2025-01-20 21:05:25,842 - __main__ - INFO - MATLAB engine terminated
+2025-01-20 21:05:40,984 - __main__ - INFO - Initializing Calculator Application
+2025-01-20 21:05:52,002 - __main__ - INFO - MATLAB engine started successfully
+2025-01-20 21:06:05,220 - __main__ - DEBUG - Original expression: 'sin(x) < 0.5'
+2025-01-20 21:06:05,223 - __main__ - DEBUG - Original expression: 'sin(x) < 0.5'
+2025-01-20 21:06:05,230 - __main__ - DEBUG - After combinatorial conversion: sin(x) < 0.5
+2025-01-20 21:06:05,230 - __main__ - DEBUG - Converted integral expression: 'sin(x) < 0.5'
+2025-01-20 21:06:05,231 - __main__ - DEBUG - After explicit multiplication: 'sin(x) < 0.5'
+2025-01-20 21:06:05,231 - __main__ - DEBUG - Final MATLAB expression: 'sin(x) < 0.5'
+2025-01-20 21:06:05,231 - __main__ - DEBUG - Converted to MATLAB expression: 'sin(x) < 0.5'
+2025-01-20 21:06:05,236 - __main__ - DEBUG - After shortcut conversion: sin(x) < 0.5
+2025-01-20 21:06:05,238 - __main__ - DEBUG - Final MATLAB expression: 'sind(x) < 0.5'
+2025-01-20 21:06:05,482 - __main__ - DEBUG - Raw result from MATLAB: 'sind(x) < 0.5'
+2025-01-20 21:06:05,485 - __main__ - DEBUG - Displayed Result: sin(x) < 0.5
+2025-01-20 21:06:09,849 - __main__ - ERROR - Error in SymPy calculation: cannot determine truth value of Relational
+2025-01-20 21:07:29,428 - __main__ - INFO - MATLAB engine terminated
+2025-01-20 21:07:39,470 - __main__ - INFO - Initializing Calculator Application
+2025-01-20 21:07:48,292 - __main__ - INFO - MATLAB engine started successfully
+2025-01-20 21:08:03,673 - __main__ - ERROR - Error in SymPy calculation: unsupported operand type(s) for &: 'Float' and 'Zero'
+2025-01-20 21:11:43,398 - __main__ - INFO - Initializing Calculator Application
+2025-01-20 21:11:53,663 - __main__ - INFO - MATLAB engine started successfully
+2025-01-20 21:12:15,859 - __main__ - ERROR - Error in SymPy calculation: Sympify of expression 'could not parse 'No solution'' failed, because of exception being raised:
+SyntaxError: invalid syntax (<string>, line 1)
+2025-01-20 21:12:21,360 - __main__ - INFO - MATLAB engine terminated
+2025-01-20 21:13:23,937 - __main__ - INFO - Initializing Calculator Application
+2025-01-20 21:13:35,422 - __main__ - INFO - MATLAB engine started successfully
+2025-01-20 21:13:54,327 - __main__ - DEBUG - Original expression: 'sin(2x) = 0.5'
+2025-01-20 21:13:54,329 - __main__ - DEBUG - Original expression: 'sin(2x) = 0.5'
+2025-01-20 21:13:54,332 - __main__ - DEBUG - After combinatorial conversion: sin(2x) = 0.5
+2025-01-20 21:13:54,332 - __main__ - DEBUG - Converted equation to solve format: solve(sin(2x)  - ( 0.5), x)
+2025-01-20 21:13:54,332 - __main__ - DEBUG - Converted integral expression: 'solve(sin(2x)  - ( 0.5), x)'
+2025-01-20 21:13:54,332 - __main__ - DEBUG - After explicit multiplication: 'solve(sin(2*x)  - ( 0.5), x)'
+2025-01-20 21:13:54,333 - __main__ - DEBUG - Final MATLAB expression: 'solve(sin(2*x)  - ( 0.5), x)'
+2025-01-20 21:13:54,333 - __main__ - DEBUG - Converted to MATLAB expression: 'solve(sin(2*x)  - ( 0.5), x)'
+2025-01-20 21:13:54,337 - __main__ - DEBUG - After shortcut conversion: solve(sin(2*x)  - ( 0.5), x)
+2025-01-20 21:13:54,339 - __main__ - DEBUG - Final MATLAB expression: 'solve(sind(2*x)  - ( 0.5), x)'
+2025-01-20 21:13:54,886 - __main__ - DEBUG - Raw result from MATLAB: 'x1 = 15.0
+x2 = 75.0'
+2025-01-20 21:13:54,887 - __main__ - DEBUG - Displayed Result: x1 = 15
+x2 = 75
+2025-01-20 21:14:00,903 - __main__ - DEBUG - Original expression: 'sin(2x) < 0.5'
+2025-01-20 21:14:00,903 - __main__ - DEBUG - Original expression: 'sin(2x) < 0.5'
+2025-01-20 21:14:00,903 - __main__ - DEBUG - After combinatorial conversion: sin(2x) < 0.5
+2025-01-20 21:14:00,904 - __main__ - DEBUG - Converted integral expression: 'sin(2x) < 0.5'
+2025-01-20 21:14:00,904 - __main__ - DEBUG - After explicit multiplication: 'sin(2*x) < 0.5'
+2025-01-20 21:14:00,904 - __main__ - DEBUG - Final MATLAB expression: 'sin(2*x) < 0.5'
+2025-01-20 21:14:00,904 - __main__ - DEBUG - Converted to MATLAB expression: 'sin(2*x) < 0.5'
+2025-01-20 21:14:00,904 - __main__ - DEBUG - After shortcut conversion: sin(2*x) < 0.5
+2025-01-20 21:14:00,904 - __main__ - DEBUG - Final MATLAB expression: 'sind(2*x) < 0.5'
+2025-01-20 21:14:01,155 - __main__ - DEBUG - Raw result from MATLAB: 'sind(2*x) < 0.5'
+2025-01-20 21:14:01,155 - __main__ - DEBUG - Displayed Result: sin(2*x) < 0.5
+2025-01-20 21:24:14,406 - __main__ - INFO - MATLAB engine terminated
+2025-01-20 21:24:30,561 - __main__ - INFO - Initializing Calculator Application
+2025-01-20 21:24:39,758 - __main__ - INFO - MATLAB engine started successfully
+2025-01-20 21:24:45,132 - __main__ - DEBUG - Original expression: 'sin(x) < 0.5'
+2025-01-20 21:24:45,133 - __main__ - DEBUG - Original expression: 'sin(x) < 0.5'
+2025-01-20 21:24:45,135 - __main__ - DEBUG - After combinatorial conversion: sin(x) < 0.5
+2025-01-20 21:24:45,136 - __main__ - DEBUG - Converted integral expression: 'sin(x) < 0.5'
+2025-01-20 21:24:45,137 - __main__ - DEBUG - After explicit multiplication: 'sin(x) < 0.5'
+2025-01-20 21:24:45,137 - __main__ - DEBUG - Final MATLAB expression: 'sin(x) < 0.5'
+2025-01-20 21:24:45,137 - __main__ - DEBUG - Converted to MATLAB expression: 'sin(x) < 0.5'
+2025-01-20 21:24:45,147 - __main__ - DEBUG - After shortcut conversion: sin(x) < 0.5
+2025-01-20 21:24:45,149 - __main__ - DEBUG - Final MATLAB expression: 'sind(x) < 0.5'
+2025-01-20 21:24:45,402 - __main__ - DEBUG - Raw result from MATLAB: 'sind(x) < 0.5'
+2025-01-20 21:24:45,403 - __main__ - DEBUG - Displayed Result: sin(x) < 0.5
+2025-01-20 21:24:50,061 - __main__ - DEBUG - SymPy calculation result: ((x < 0.523598775598299) | (x > -0.523598775598299 + pi)) & ((x >= 0) | (x > -0.523598775598299 + pi)) & ((x < 0.523598775598299) | (x < 2*pi)) & ((x >= 0) | (x < 2*pi))
+2025-01-20 21:25:13,312 - __main__ - DEBUG - Original expression: 'sin(x) < 0.5'
+2025-01-20 21:25:13,313 - __main__ - DEBUG - Original expression: 'sin(x) < 0.5'
+2025-01-20 21:25:13,313 - __main__ - DEBUG - After combinatorial conversion: sin(x) < 0.5
+2025-01-20 21:25:13,313 - __main__ - DEBUG - Converted integral expression: 'sin(x) < 0.5'
+2025-01-20 21:25:13,313 - __main__ - DEBUG - After explicit multiplication: 'sin(x) < 0.5'
+2025-01-20 21:25:13,314 - __main__ - DEBUG - Final MATLAB expression: 'sin(x) < 0.5'
+2025-01-20 21:25:13,314 - __main__ - DEBUG - Converted to MATLAB expression: 'sin(x) < 0.5'
+2025-01-20 21:25:13,314 - __main__ - DEBUG - After shortcut conversion: sin(x) < 0.5
+2025-01-20 21:25:13,314 - __main__ - DEBUG - Final MATLAB expression: 'sind(x) < 0.5'
+2025-01-20 21:25:13,412 - __main__ - DEBUG - Raw result from MATLAB: 'sind(x) < 0.5'
+2025-01-20 21:25:13,412 - __main__ - DEBUG - Displayed Result: sin(x) < 0.5
+2025-01-20 21:29:15,891 - __main__ - INFO - Initializing Calculator Application
+2025-01-20 21:29:25,510 - __main__ - INFO - MATLAB engine started successfully
+2025-01-20 21:31:54,122 - __main__ - DEBUG - Original expression: 'sin(x) < 0.5'
+2025-01-20 21:31:54,128 - __main__ - DEBUG - Original expression: 'sin(x) < 0.5'
+2025-01-20 21:31:54,131 - __main__ - DEBUG - After combinatorial conversion: sin(x) < 0.5
+2025-01-20 21:31:54,132 - __main__ - DEBUG - Converted integral expression: 'sin(x) < 0.5'
+2025-01-20 21:31:54,132 - __main__ - DEBUG - After explicit multiplication: 'sin(x) < 0.5'
+2025-01-20 21:31:54,132 - __main__ - DEBUG - Final MATLAB expression: 'sin(x) < 0.5'
+2025-01-20 21:31:54,132 - __main__ - DEBUG - Converted to MATLAB expression: 'sin(x) < 0.5'
+2025-01-20 21:31:54,138 - __main__ - DEBUG - After shortcut conversion: sin(x) < 0.5
+2025-01-20 21:31:54,140 - __main__ - DEBUG - Final MATLAB expression: 'sind(x) < 0.5'
+2025-01-20 21:31:54,531 - __main__ - DEBUG - Raw result from MATLAB: '((x < 0.523598775598299) | (x > -0.523598775598299 + pi)) & ((x >= 0) | (x > -0.523598775598299 + pi)) & ((x < 0.523598775598299) | (x < 2*pi)) & ((x >= 0) | (x < 2*pi))'
+2025-01-20 21:31:54,535 - __main__ - DEBUG - Displayed Result: ((x < 0.523598775598299) | (x > -0.523598775598299 + pi)) & ((x >= 0) | (x > -0.523598775598299 + pi)) & ((x < 0.523598775598299) | (x < 2*pi)) & ((x >= 0) | (x < 2*pi))
+2025-01-20 21:31:57,425 - __main__ - DEBUG - Original expression: 'sin(2x) < 0.5'
+2025-01-20 21:31:57,425 - __main__ - DEBUG - Original expression: 'sin(2x) < 0.5'
+2025-01-20 21:31:57,425 - __main__ - DEBUG - After combinatorial conversion: sin(2x) < 0.5
+2025-01-20 21:31:57,425 - __main__ - DEBUG - Converted integral expression: 'sin(2x) < 0.5'
+2025-01-20 21:31:57,426 - __main__ - DEBUG - After explicit multiplication: 'sin(2*x) < 0.5'
+2025-01-20 21:31:57,426 - __main__ - DEBUG - Final MATLAB expression: 'sin(2*x) < 0.5'
+2025-01-20 21:31:57,426 - __main__ - DEBUG - Converted to MATLAB expression: 'sin(2*x) < 0.5'
+2025-01-20 21:31:57,426 - __main__ - DEBUG - After shortcut conversion: sin(2*x) < 0.5
+2025-01-20 21:31:57,426 - __main__ - DEBUG - Final MATLAB expression: 'sind(2*x) < 0.5'
+2025-01-20 21:31:57,677 - __main__ - DEBUG - Raw result from MATLAB: '((x < 0.261799387799149) | (x < pi)) & ((x >= 0) | (x < pi)) & ((x < 0.261799387799149) | (x > -0.261799387799149 + pi/2)) & ((x >= 0) | (x > -0.261799387799149 + pi/2))'
+2025-01-20 21:31:57,678 - __main__ - DEBUG - Displayed Result: ((x < 0.261799387799149) | (x < pi)) & ((x >= 0) | (x < pi)) & ((x < 0.261799387799149) | (x > -0.261799387799149 + pi/2)) & ((x >= 0) | (x > -0.261799387799149 + pi/2))
+2025-01-20 21:40:12,497 - __main__ - INFO - Initializing Calculator Application
+2025-01-20 21:40:22,957 - __main__ - INFO - MATLAB engine started successfully
+2025-01-20 21:41:27,573 - __main__ - DEBUG - Original expression: 'sin(2x) < 0.5'
+2025-01-20 21:41:27,574 - __main__ - DEBUG - Original expression: 'sin(2x) < 0.5'
+2025-01-20 21:41:27,577 - __main__ - DEBUG - After combinatorial conversion: sin(2x) < 0.5
+2025-01-20 21:41:27,577 - __main__ - DEBUG - Converted integral expression: 'sin(2x) < 0.5'
+2025-01-20 21:41:27,578 - __main__ - DEBUG - After explicit multiplication: 'sin(2*x) < 0.5'
+2025-01-20 21:41:27,578 - __main__ - DEBUG - Final MATLAB expression: 'sin(2*x) < 0.5'
+2025-01-20 21:41:27,578 - __main__ - DEBUG - Converted to MATLAB expression: 'sin(2*x) < 0.5'
+2025-01-20 21:41:27,586 - __main__ - DEBUG - After shortcut conversion: sin(2*x) < 0.5
+2025-01-20 21:41:27,589 - __main__ - DEBUG - Final MATLAB expression: 'sind(2*x) < 0.5'
+2025-01-20 21:41:28,008 - __main__ - DEBUG - Raw result from MATLAB: '(x < 0.261799387799149) or (x < pi)) and ((x >= 0) or (x < pi)) and ((x < 0.261799387799149) or (x > -0.261799387799149 + pi/2)) and ((x >= 0) or (x > -0.261799387799149 + pi/2)'
+2025-01-20 21:41:28,010 - __main__ - DEBUG - Displayed Result: (x < 0.261799387799149) or (x < pi)) and ((x >= 0) or (x < pi)) and ((x < 0.261799387799149) or (x > -0.261799387799149 + pi/2)) and ((x >= 0) or (x > -0.261799387799149 + pi/2)
+2025-01-20 21:41:58,120 - __main__ - DEBUG - Original expression: 'x^3 + 3x^2 - 5x -5 < 0'
+2025-01-20 21:41:58,121 - __main__ - DEBUG - Original expression: 'x^3 + 3x^2 - 5x -5 < 0'
+2025-01-20 21:41:58,122 - __main__ - DEBUG - After combinatorial conversion: x^3 + 3x^2 - 5x -5 < 0
+2025-01-20 21:41:58,122 - __main__ - DEBUG - Converted integral expression: 'x^3 + 3x^2 - 5x -5 < 0'
+2025-01-20 21:41:58,122 - __main__ - DEBUG - After explicit multiplication: 'x^3 + 3*x^2 - 5*x -5 < 0'
+2025-01-20 21:41:58,122 - __main__ - DEBUG - Final MATLAB expression: 'x^3 + 3*x^2 - 5*x -5 < 0'
+2025-01-20 21:41:58,122 - __main__ - DEBUG - Converted to MATLAB expression: 'x^3 + 3*x^2 - 5*x -5 < 0'
+2025-01-20 21:41:58,122 - __main__ - DEBUG - After shortcut conversion: x^3 + 3*x^2 - 5*x -5 < 0
+2025-01-20 21:41:58,123 - __main__ - DEBUG - Final MATLAB expression: 'x^3 + 3*x^2 - 5*x -5 < 0'
+2025-01-20 21:41:58,502 - __main__ - DEBUG - Raw result from MATLAB: '(x < CRootOf(x^3 + 3*x^2 - 5*x - 5, 0)) or ((x > CRootOf(x^3 + 3*x^2 - 5*x - 5, 1)) and (x < CRootOf(x^3 + 3*x^2 - 5*x - 5, 2)))'
+2025-01-20 21:41:58,502 - __main__ - DEBUG - Displayed Result: (x < CRootOf(x^3 + 3*x^2 - 5*x - 5, 0)) or ((x > CRootOf(x^3 + 3*x^2 - 5*x - 5, 1)) and (x < CRootOf(x^3 + 3*x^2 - 5*x - 5, 2)))
+2025-01-20 21:42:05,422 - __main__ - DEBUG - Original expression: 'x^3 + 3x^2 - 5x -5 =0'
+2025-01-20 21:42:05,423 - __main__ - DEBUG - Original expression: 'x^3 + 3x^2 - 5x -5 =0'
+2025-01-20 21:42:05,423 - __main__ - DEBUG - After combinatorial conversion: x^3 + 3x^2 - 5x -5 =0
+2025-01-20 21:42:05,423 - __main__ - DEBUG - Converted equation to solve format: solve(x^3 + 3x^2 - 5x -5  - (0), x)
+2025-01-20 21:42:05,423 - __main__ - DEBUG - Converted integral expression: 'solve(x^3 + 3x^2 - 5x -5  - (0), x)'
+2025-01-20 21:42:05,423 - __main__ - DEBUG - After explicit multiplication: 'solve(x^3 + 3*x^2 - 5*x -5  - (0), x)'
+2025-01-20 21:42:05,423 - __main__ - DEBUG - Final MATLAB expression: 'solve(x^3 + 3*x^2 - 5*x -5  - (0), x)'
+2025-01-20 21:42:05,423 - __main__ - DEBUG - Converted to MATLAB expression: 'solve(x^3 + 3*x^2 - 5*x -5  - (0), x)'
+2025-01-20 21:42:05,424 - __main__ - DEBUG - After shortcut conversion: solve(x^3 + 3*x^2 - 5*x -5  - (0), x)
+2025-01-20 21:42:05,424 - __main__ - DEBUG - Final MATLAB expression: 'solve(x^3 + 3*x^2 - 5*x -5  - (0), x)'
+2025-01-20 21:42:05,794 - __main__ - DEBUG - Raw result from MATLAB: 'x1 = -0.74801200080652097135214262380032
+x2 = 1.6940018401694225680387262400473
+x3 = -3.945989839362900930552768841153'
+2025-01-20 21:42:05,794 - __main__ - DEBUG - Displayed Result: x1 = -0.748012
+x2 = 1.6940018
+x3 = -3.9459898
+2025-01-20 21:42:11,753 - __main__ - DEBUG - SymPy calculation result: [-1 - 8/((-1/2 - sqrt(3)*I/2)*(27 + 3*sqrt(1455)*I)^(1/3)) - (-1/2 - sqrt(3)*I/2)*(27 + 3*sqrt(1455)*I)^(1/3)/3, -1 - (-1/2 + sqrt(3)*I/2)*(27 + 3*sqrt(1455)*I)^(1/3)/3 - 8/((-1/2 + sqrt(3)*I/2)*(27 + 3*sqrt(1455)*I)^(1/3)), -1 - (27 + 3*sqrt(1455)*I)^(1/3)/3 - 8/(27 + 3*sqrt(1455)*I)^(1/3)]
+2025-01-20 21:48:50,096 - __main__ - INFO - Initializing Calculator Application
+2025-01-20 21:49:00,177 - __main__ - INFO - MATLAB engine started successfully
+2025-01-20 21:49:15,993 - __main__ - ERROR - Error in SymPy calculation: Sympify of expression 'could not parse 'sin(2x) '' failed, because of exception being raised:
+SyntaxError: invalid syntax (<string>, line 1)
+2025-01-20 21:49:32,502 - __main__ - ERROR - Error in SymPy calculation: Sympify of expression 'could not parse 'x^3 + 3x + 2x^2 - 5 '' failed, because of exception being raised:
+SyntaxError: invalid syntax (<string>, line 1)
+2025-01-20 21:58:02,248 - __main__ - INFO - Initializing Calculator Application
+2025-01-20 21:58:12,764 - __main__ - INFO - MATLAB engine started successfully
+2025-01-20 21:58:49,069 - __main__ - ERROR - Error in SymPy calculation: Sympify of expression 'could not parse 'sin(2x) '' failed, because of exception being raised:
+SyntaxError: invalid syntax (<string>, line 1)
+2025-01-20 21:59:54,177 - __main__ - INFO - Initializing Calculator Application
+2025-01-20 22:00:04,649 - __main__ - INFO - MATLAB engine started successfully
+2025-01-20 22:00:36,384 - __main__ - ERROR - Error in SymPy calculation: Sympify of expression 'could not parse 'sin(2x) '' failed, because of exception being raised:
+SyntaxError: invalid syntax (<string>, line 1)
+2025-01-20 22:01:13,164 - __main__ - INFO - Initializing Calculator Application
+2025-01-20 22:01:22,223 - __main__ - INFO - MATLAB engine started successfully
+2025-01-20 22:01:39,355 - __main__ - DEBUG - SymPy calculation result: []
+2025-01-20 22:01:42,972 - __main__ - INFO - MATLAB engine terminated
+2025-01-31 11:16:21,139 - __main__ - INFO - Initializing Calculator Application
+2025-01-31 11:16:53,614 - __main__ - INFO - MATLAB engine started successfully
+2025-01-31 11:17:02,612 - __main__ - DEBUG - Original expression: '1+1'
+2025-01-31 11:17:02,616 - __main__ - DEBUG - Original expression: '1+1'
+2025-01-31 11:17:02,620 - __main__ - DEBUG - After combinatorial conversion: 1+1
+2025-01-31 11:17:02,620 - __main__ - DEBUG - Converted integral expression: '1+1'
+2025-01-31 11:17:02,621 - __main__ - DEBUG - After explicit multiplication: '1+1'
+2025-01-31 11:17:02,621 - __main__ - DEBUG - Final MATLAB expression: '1+1'
+2025-01-31 11:17:02,621 - __main__ - DEBUG - Converted to MATLAB expression: '1+1'
+2025-01-31 11:17:02,629 - __main__ - DEBUG - After shortcut conversion: 1+1
+2025-01-31 11:17:02,632 - __main__ - DEBUG - Final MATLAB expression: '1+1'
+2025-01-31 11:17:02,691 - __main__ - DEBUG - Raw result from MATLAB: '2.00000000'
+2025-01-31 11:17:02,692 - __main__ - DEBUG - Displayed Result: 2
+2025-01-31 11:17:24,286 - __main__ - DEBUG - Original expression: 'x^3 + 3x^2 - 5x + 4 = 0'
+2025-01-31 11:17:24,288 - __main__ - DEBUG - Original expression: 'x^3 + 3x^2 - 5x + 4 = 0'
+2025-01-31 11:17:24,288 - __main__ - DEBUG - After combinatorial conversion: x^3 + 3x^2 - 5x + 4 = 0
+2025-01-31 11:17:24,288 - __main__ - DEBUG - Converted equation to solve format: solve(x^3 + 3x^2 - 5x + 4  - ( 0), x)
+2025-01-31 11:17:24,288 - __main__ - DEBUG - Converted integral expression: 'solve(x^3 + 3x^2 - 5x + 4  - ( 0), x)'
+2025-01-31 11:17:24,288 - __main__ - DEBUG - After explicit multiplication: 'solve(x^3 + 3*x^2 - 5*x + 4  - ( 0), x)'
+2025-01-31 11:17:24,288 - __main__ - DEBUG - Final MATLAB expression: 'solve(x^3 + 3*x^2 - 5*x + 4  - ( 0), x)'
+2025-01-31 11:17:24,288 - __main__ - DEBUG - Converted to MATLAB expression: 'solve(x^3 + 3*x^2 - 5*x + 4  - ( 0), x)'
+2025-01-31 11:17:24,289 - __main__ - DEBUG - After shortcut conversion: solve(x^3 + 3*x^2 - 5*x + 4  - ( 0), x)
+2025-01-31 11:17:24,289 - __main__ - DEBUG - Final MATLAB expression: 'solve(x^3 + 3*x^2 - 5*x + 4  - ( 0), x)'
+2025-01-31 11:17:24,789 - __main__ - DEBUG - Raw result from MATLAB: 'x1 = 0.67897369682036394137282161479655 + 0.67591273437839285076916836662568i
+x2 = 0.67897369694731511054040319298976 - 0.67591273436135706435536417219643i
+x3 = -4.3579473937676790519132363883149'
+2025-01-31 11:17:24,790 - __main__ - DEBUG - Displayed Result: x1 = 0.67897369682036394137282161479655 + 0.67591273437839285076916836662568i
+x2 = 0.67897369694731511054040319298976 - 0.67591273436135706435536417219643i
+x3 = -4.3579474
+2025-01-31 11:17:57,788 - __main__ - DEBUG - Original expression: '5x + 45 = -5'
+2025-01-31 11:17:57,790 - __main__ - DEBUG - Original expression: '5x + 45 = -5'
+2025-01-31 11:17:57,791 - __main__ - DEBUG - After combinatorial conversion: 5x + 45 = -5
+2025-01-31 11:17:57,791 - __main__ - DEBUG - Converted equation to solve format: solve(5x + 45  - ( -5), x)
+2025-01-31 11:17:57,791 - __main__ - DEBUG - Converted integral expression: 'solve(5x + 45  - ( -5), x)'
+2025-01-31 11:17:57,791 - __main__ - DEBUG - After explicit multiplication: 'solve(5*x + 45  - ( -5), x)'
+2025-01-31 11:17:57,792 - __main__ - DEBUG - Final MATLAB expression: 'solve(5*x + 45  - ( -5), x)'
+2025-01-31 11:17:57,792 - __main__ - DEBUG - Converted to MATLAB expression: 'solve(5*x + 45  - ( -5), x)'
+2025-01-31 11:17:57,793 - __main__ - DEBUG - After shortcut conversion: solve(5*x + 45  - ( -5), x)
+2025-01-31 11:17:57,793 - __main__ - DEBUG - Final MATLAB expression: 'solve(5*x + 45  - ( -5), x)'
+2025-01-31 11:17:57,936 - __main__ - DEBUG - Raw result from MATLAB: 'x1 = -10.0'
+2025-01-31 11:17:57,937 - __main__ - DEBUG - Displayed Result: x1 = -10
+2025-01-31 11:18:03,187 - __main__ - DEBUG - Visualizing expression: sin(x)
+2025-01-31 11:18:58,788 - __main__ - DEBUG - Original expression: 'sin(30)'
+2025-01-31 11:18:58,790 - __main__ - DEBUG - Original expression: 'sin(30)'
+2025-01-31 11:18:58,791 - __main__ - DEBUG - After combinatorial conversion: sin(30)
+2025-01-31 11:18:58,791 - __main__ - DEBUG - Converted integral expression: 'sin(30)'
+2025-01-31 11:18:58,791 - __main__ - DEBUG - After explicit multiplication: 'sin(30)'
+2025-01-31 11:18:58,791 - __main__ - DEBUG - Final MATLAB expression: 'sin(30)'
+2025-01-31 11:18:58,791 - __main__ - DEBUG - Converted to MATLAB expression: 'sin(30)'
+2025-01-31 11:18:58,792 - __main__ - DEBUG - After shortcut conversion: sin(30)
+2025-01-31 11:18:58,792 - __main__ - DEBUG - Final MATLAB expression: 'sind(30)'
+2025-01-31 11:18:58,963 - __main__ - DEBUG - Raw result from MATLAB: '0.50000000'
+2025-01-31 11:18:58,964 - __main__ - DEBUG - Displayed Result: 0.5
+2025-01-31 11:20:16,820 - __main__ - INFO - MATLAB engine terminated
+2025-02-01 01:34:05,326 - __main__ - INFO - Initializing Calculator Application
+2025-02-01 01:34:37,625 - __main__ - INFO - MATLAB engine started successfully
+2025-02-01 01:44:59,705 - __main__ - ERROR - Error in calculate: handle_matlab_calculation() takes 1 positional argument but 2 were given
+2025-02-01 01:46:55,539 - __main__ - INFO - MATLAB engine terminated
+2025-02-01 01:48:13,780 - __main__ - INFO - Initializing Calculator Application
+2025-02-01 01:48:24,382 - __main__ - INFO - MATLAB engine started successfully
+2025-02-01 01:49:05,140 - __main__ - DEBUG - Original expression: 'sin(x) +1 = 0'
+2025-02-01 01:49:05,144 - __main__ - DEBUG - Original expression: 'sin(x) +1 = 0'
+2025-02-01 01:49:05,147 - __main__ - DEBUG - After combinatorial conversion: sin(x) +1 = 0
+2025-02-01 01:49:05,148 - __main__ - DEBUG - Converted equation to solve format: solve(sin(x) +1  - ( 0), x)
+2025-02-01 01:49:05,148 - __main__ - DEBUG - Converted integral expression: 'solve(sin(x) +1  - ( 0), x)'
+2025-02-01 01:49:05,149 - __main__ - DEBUG - After explicit multiplication: 'solve(sin(x) +1  - ( 0), x)'
+2025-02-01 01:49:05,149 - __main__ - DEBUG - Final MATLAB expression: 'solve(sin(x) +1  - ( 0), x)'
+2025-02-01 01:49:05,149 - __main__ - DEBUG - Converted to MATLAB expression: 'solve(sin(x) +1  - ( 0), x)'
+2025-02-01 01:49:05,156 - __main__ - DEBUG - After shortcut conversion: solve(sin(x) +1  - ( 0), x)
+2025-02-01 01:49:05,158 - __main__ - DEBUG - Final MATLAB expression: 'solve(sind(x) +1  - ( 0), x)'
+2025-02-01 01:49:05,994 - __main__ - DEBUG - Raw result from MATLAB: 'x1 = -90.0'
+2025-02-01 01:49:05,998 - __main__ - DEBUG - Displayed Result: x1 = -90
+2025-02-01 01:53:42,465 - __main__ - ERROR - Error in SymPy calculation: Sympify of expression 'could not parse ''' failed, because of exception being raised:
+SyntaxError: unexpected EOF while parsing (<string>, line 0)
+2025-02-01 01:54:42,234 - __main__ - INFO - MATLAB engine terminated
+2025-02-01 01:54:53,609 - __main__ - INFO - Initializing Calculator Application
+2025-02-01 01:55:04,209 - __main__ - INFO - MATLAB engine started successfully
+2025-02-01 01:55:10,238 - __main__ - DEBUG - SymPy calculation result: Error: Failed to parse expression
+2025-02-01 01:58:33,305 - __main__ - INFO - MATLAB engine terminated
+2025-02-01 01:59:48,365 - __main__ - INFO - Initializing Calculator Application
+2025-02-01 01:59:58,223 - __main__ - INFO - MATLAB engine started successfully
+2025-02-01 02:00:37,180 - __main__ - DEBUG - SymPy calculation result: Error: Sympify of expression 'could not parse 'x = -pi/2, x = 3*pi/2'' failed, because of exception being raised:
+SyntaxError: invalid syntax (<string>, line 1)
+2025-02-01 02:03:02,828 - __main__ - INFO - Initializing Calculator Application
+2025-02-01 02:03:13,219 - __main__ - INFO - MATLAB engine started successfully
+2025-02-01 02:03:33,278 - __main__ - DEBUG - SymPy calculation result: (-pi/2, 3*pi/2)
+2025-02-01 02:06:59,899 - __main__ - INFO - Initializing Calculator Application
+2025-02-01 02:07:09,327 - __main__ - INFO - MATLAB engine started successfully
+2025-02-01 02:09:49,079 - __main__ - DEBUG - Original expression: 'sin(x) +1 = 0'
+2025-02-01 02:09:49,081 - __main__ - DEBUG - Original expression: 'sin(x) +1 = 0'
+2025-02-01 02:09:49,084 - __main__ - DEBUG - After combinatorial conversion: sin(x) +1 = 0
+2025-02-01 02:09:49,084 - __main__ - DEBUG - Converted equation to solve format: solve(sin(x) +1  - ( 0), x)
+2025-02-01 02:09:49,084 - __main__ - DEBUG - Converted integral expression: 'solve(sin(x) +1  - ( 0), x)'
+2025-02-01 02:09:49,085 - __main__ - DEBUG - After explicit multiplication: 'solve(sin(x) +1  - ( 0), x)'
+2025-02-01 02:09:49,085 - __main__ - DEBUG - Final MATLAB expression: 'solve(sin(x) +1  - ( 0), x)'
+2025-02-01 02:09:49,085 - __main__ - DEBUG - Converted to MATLAB expression: 'solve(sin(x) +1  - ( 0), x)'
+2025-02-01 02:09:49,095 - __main__ - DEBUG - After shortcut conversion: solve(sin(x) +1  - ( 0), x)
+2025-02-01 02:09:49,097 - __main__ - DEBUG - Final MATLAB expression: 'solve(sind(x) +1  - ( 0), x)'
+2025-02-01 02:09:49,670 - __main__ - DEBUG - Raw result from MATLAB: 'x1 = -90.0'
+2025-02-01 02:09:49,671 - __main__ - DEBUG - Displayed Result: x1 = -90
+2025-02-01 02:09:54,999 - __main__ - DEBUG - SymPy calculation result: (-pi/2, 3*pi/2)
+2025-02-01 02:12:53,001 - __main__ - INFO - Initializing Calculator Application
+2025-02-01 02:13:04,067 - __main__ - INFO - MATLAB engine started successfully
+2025-02-01 02:17:15,269 - __main__ - DEBUG - SymPy calculation result: (-1.57079632679490, 4.71238898038469)
+2025-02-01 12:01:07,437 - __main__ - INFO - Initializing Calculator Application
+2025-02-01 12:01:18,721 - __main__ - INFO - MATLAB engine started successfully
+2025-02-01 12:01:25,646 - __main__ - INFO - MATLAB engine terminated
+2025-02-01 12:02:47,818 - __main__ - INFO - Initializing Calculator Application
+2025-02-01 12:02:57,767 - __main__ - INFO - MATLAB engine started successfully
+2025-02-01 12:03:09,949 - __main__ - DEBUG - Original expression: 'sin(x) - 1 = 0'
+2025-02-01 12:03:09,950 - __main__ - DEBUG - Original expression: 'sin(x) - 1 = 0'
+2025-02-01 12:03:09,953 - __main__ - DEBUG - After combinatorial conversion: sin(x) - 1 = 0
+2025-02-01 12:03:09,954 - __main__ - DEBUG - Converted equation to solve format: solve(sin(x) - 1  - ( 0), x)
+2025-02-01 12:03:09,954 - __main__ - DEBUG - Converted integral expression: 'solve(sin(x) - 1  - ( 0), x)'
+2025-02-01 12:03:09,955 - __main__ - DEBUG - After explicit multiplication: 'solve(sin(x) - 1  - ( 0), x)'
+2025-02-01 12:03:09,955 - __main__ - DEBUG - Final MATLAB expression: 'solve(sin(x) - 1  - ( 0), x)'
+2025-02-01 12:03:09,955 - __main__ - DEBUG - Converted to MATLAB expression: 'solve(sin(x) - 1  - ( 0), x)'
+2025-02-01 12:03:09,967 - __main__ - DEBUG - After shortcut conversion: solve(sin(x) - 1  - ( 0), x)
+2025-02-01 12:03:09,969 - __main__ - DEBUG - Final MATLAB expression: 'solve(sind(x) - 1  - ( 0), x)'
+2025-02-01 12:03:10,478 - __main__ - DEBUG - Raw result from MATLAB: 'x1 = 90.0'
+2025-02-01 12:03:10,481 - __main__ - DEBUG - Displayed Result: x1 = 90
+2025-02-01 12:03:13,938 - __main__ - DEBUG - SymPy calculation result: 1.57079633
+2025-02-01 12:03:42,891 - __main__ - DEBUG - SymPy calculation result: (-pi/2, 3*pi/2)
+2025-02-01 12:23:34,643 - __main__ - INFO - Initializing Calculator Application
+2025-02-01 12:23:53,743 - __main__ - INFO - MATLAB engine started successfully
+2025-02-01 12:24:18,120 - __main__ - DEBUG - SymPy calculation result: Error: Sympify of expression 'could not parse "Error: free variable 'Symbol' referenced before assignment in enclosing scope"' failed, because of exception being raised:
+SyntaxError: invalid syntax (<string>, line 1)
+2025-02-01 13:16:07,892 - __main__ - INFO - Initializing Calculator Application
+2025-02-01 13:16:19,392 - __main__ - INFO - MATLAB engine started successfully
+2025-02-01 13:16:55,069 - __main__ - DEBUG - Original expression: 'x^2 - 2x < 1'
+2025-02-01 13:16:55,071 - __main__ - DEBUG - Original expression: 'x^2 - 2x < 1'
+2025-02-01 13:16:55,073 - __main__ - DEBUG - After combinatorial conversion: x^2 - 2x < 1
+2025-02-01 13:16:55,074 - __main__ - DEBUG - Converted integral expression: 'x^2 - 2x < 1'
+2025-02-01 13:16:55,075 - __main__ - DEBUG - After explicit multiplication: 'x^2 - 2*x < 1'
+2025-02-01 13:16:55,075 - __main__ - DEBUG - Final MATLAB expression: 'x^2 - 2*x < 1'
+2025-02-01 13:16:55,075 - __main__ - DEBUG - Converted to MATLAB expression: 'x^2 - 2*x < 1'
+2025-02-01 13:16:55,083 - __main__ - DEBUG - After shortcut conversion: x^2 - 2*x < 1
+2025-02-01 13:16:55,086 - __main__ - DEBUG - Final MATLAB expression: 'x^2 - 2*x < 1'
+2025-02-01 13:16:55,105 - __main__ - DEBUG - Raw result from MATLAB: 'Error: Sympify of expression 'could not parse "Error: free variable 'Symbol' referenced before assignment in enclosing scope"' failed, because of exception being raised:
+SyntaxError: invalid syntax (<string>, line 1)'
+2025-02-01 13:16:55,106 - __main__ - DEBUG - Displayed Result: Error: Sympify of expression 'could not parse "Error: free variable 'Symbol' referenced before assignment in enclosing scope"' failed, because of exception being raised:
+SyntaxError: invalid syntax (<string>, line 1)
+2025-02-01 13:16:58,140 - __main__ - DEBUG - SymPy calculation result: Error: Sympify of expression 'could not parse "Error: free variable 'Symbol' referenced before assignment in enclosing scope"' failed, because of exception being raised:
+SyntaxError: invalid syntax (<string>, line 1)
+2025-02-01 13:29:17,761 - __main__ - INFO - MATLAB engine terminated
+2025-02-01 14:22:49,565 - __main__ - INFO - Initializing Calculator Application
+2025-02-01 14:23:01,656 - __main__ - INFO - MATLAB engine started successfully
+2025-02-01 14:24:22,412 - __main__ - DEBUG - SymPy calculation result: (x < -sqrt(2) - 1) | ((x < oo) & (x > -1 + sqrt(2)))
+2025-02-01 14:24:27,086 - __main__ - DEBUG - Original expression: 'x^2 + 2x + 1 > 2'
+2025-02-01 14:24:27,088 - __main__ - DEBUG - Original expression: 'x^2 + 2x + 1 > 2'
+2025-02-01 14:24:27,090 - __main__ - DEBUG - After combinatorial conversion: x^2 + 2x + 1 > 2
+2025-02-01 14:24:27,091 - __main__ - DEBUG - Converted integral expression: 'x^2 + 2x + 1 > 2'
+2025-02-01 14:24:27,091 - __main__ - DEBUG - After explicit multiplication: 'x^2 + 2*x + 1 > 2'
+2025-02-01 14:24:27,091 - __main__ - DEBUG - Final MATLAB expression: 'x^2 + 2*x + 1 > 2'
+2025-02-01 14:24:27,091 - __main__ - DEBUG - Converted to MATLAB expression: 'x^2 + 2*x + 1 > 2'
+2025-02-01 14:24:27,099 - __main__ - DEBUG - After shortcut conversion: x^2 + 2*x + 1 > 2
+2025-02-01 14:24:27,102 - __main__ - DEBUG - Final MATLAB expression: 'x^2 + 2*x + 1 > 2'
+2025-02-01 14:24:27,326 - __main__ - DEBUG - Raw result from MATLAB: '(x < -sqrt(2) - 1) or ((x < oo) and (x > -1 + sqrt(2)))'
+2025-02-01 14:24:27,326 - __main__ - DEBUG - Displayed Result: (x < -sqrt(2) - 1) or ((x < oo) and (x > -1 + sqrt(2)))
+2025-02-01 14:33:40,846 - __main__ - INFO - Initializing Calculator Application
+2025-02-01 14:33:53,247 - __main__ - INFO - MATLAB engine started successfully
+2025-02-01 14:34:05,174 - __main__ - DEBUG - Original expression: 'x^2 + 2x + 1 > 2'
+2025-02-01 14:34:05,179 - __main__ - DEBUG - Original expression: 'x^2 + 2x + 1 > 2'
+2025-02-01 14:34:05,185 - __main__ - DEBUG - After combinatorial conversion: x^2 + 2x + 1 > 2
+2025-02-01 14:34:05,186 - __main__ - DEBUG - Converted integral expression: 'x^2 + 2x + 1 > 2'
+2025-02-01 14:34:05,187 - __main__ - DEBUG - After explicit multiplication: 'x^2 + 2*x + 1 > 2'
+2025-02-01 14:34:05,187 - __main__ - DEBUG - Final MATLAB expression: 'x^2 + 2*x + 1 > 2'
+2025-02-01 14:34:05,187 - __main__ - DEBUG - Converted to MATLAB expression: 'x^2 + 2*x + 1 > 2'
+2025-02-01 14:34:05,193 - __main__ - DEBUG - After shortcut conversion: x^2 + 2*x + 1 > 2
+2025-02-01 14:34:05,195 - __main__ - DEBUG - Final MATLAB expression: 'x^2 + 2*x + 1 > 2'
+2025-02-01 14:34:05,265 - __main__ - DEBUG - Raw result from MATLAB: 'Error: Sympify of expression 'could not parse '((x < ∞) and (-1 + √2 < x)) or ((-∞ < x) and (x < -√2 - 1))'' failed, because of exception being raised:
+SyntaxError: invalid character '∞' (U+221E) (<string>, line 1)'
+2025-02-01 14:34:05,267 - __main__ - DEBUG - Displayed Result: Error: Sympify of expression 'could not parse '((x < ∞) and (-1 + √2 < x)) or ((-∞ < x) and (x < -√2 - 1))'' failed, because of exception being raised:
+SyntaxError: invalid character '∞' (U+221E) (<string>, line 1)
+2025-02-01 14:34:36,628 - __main__ - DEBUG - Original expression: 'x^2 + 2x + 1 = 2'
+2025-02-01 14:34:36,631 - __main__ - DEBUG - Original expression: 'x^2 + 2x + 1 = 2'
+2025-02-01 14:34:36,633 - __main__ - DEBUG - After combinatorial conversion: x^2 + 2x + 1 = 2
+2025-02-01 14:34:36,633 - __main__ - DEBUG - Converted equation to solve format: solve(x^2 + 2x + 1  - ( 2), x)
+2025-02-01 14:34:36,633 - __main__ - DEBUG - Converted integral expression: 'solve(x^2 + 2x + 1  - ( 2), x)'
+2025-02-01 14:34:36,634 - __main__ - DEBUG - After explicit multiplication: 'solve(x^2 + 2*x + 1  - ( 2), x)'
+2025-02-01 14:34:36,634 - __main__ - DEBUG - Final MATLAB expression: 'solve(x^2 + 2*x + 1  - ( 2), x)'
+2025-02-01 14:34:36,634 - __main__ - DEBUG - Converted to MATLAB expression: 'solve(x^2 + 2*x + 1  - ( 2), x)'
+2025-02-01 14:34:36,634 - __main__ - DEBUG - After shortcut conversion: solve(x^2 + 2*x + 1  - ( 2), x)
+2025-02-01 14:34:36,635 - __main__ - DEBUG - Final MATLAB expression: 'solve(x^2 + 2*x + 1  - ( 2), x)'
+2025-02-01 14:34:37,470 - __main__ - DEBUG - Raw result from MATLAB: 'x1 = -2.4142135623696958646178245544434
+x2 = 0.41421356237333384342491626739502'
+2025-02-01 14:34:37,472 - __main__ - DEBUG - Displayed Result: x1 = -2.4142136
+x2 = 0.41421356
+2025-02-01 14:34:56,620 - __main__ - DEBUG - Visualizing expression: x^2+2*x+1=2
+2025-02-01 14:47:16,390 - __main__ - INFO - Initializing Calculator Application
+2025-02-01 14:47:28,102 - __main__ - INFO - MATLAB engine started successfully
+2025-02-01 14:48:30,507 - __main__ - DEBUG - Original expression: 'x^2 + 2x + 1 > 2'
+2025-02-01 14:48:30,510 - __main__ - DEBUG - Original expression: 'x^2 + 2x + 1 > 2'
+2025-02-01 14:48:30,514 - __main__ - DEBUG - After combinatorial conversion: x^2 + 2x + 1 > 2
+2025-02-01 14:48:30,515 - __main__ - DEBUG - Converted integral expression: 'x^2 + 2x + 1 > 2'
+2025-02-01 14:48:30,515 - __main__ - DEBUG - After explicit multiplication: 'x^2 + 2*x + 1 > 2'
+2025-02-01 14:48:30,515 - __main__ - DEBUG - Final MATLAB expression: 'x^2 + 2*x + 1 > 2'
+2025-02-01 14:48:30,515 - __main__ - DEBUG - Converted to MATLAB expression: 'x^2 + 2*x + 1 > 2'
+2025-02-01 14:48:30,522 - __main__ - DEBUG - After shortcut conversion: x^2 + 2*x + 1 > 2
+2025-02-01 14:48:30,524 - __main__ - DEBUG - Final MATLAB expression: 'x^2 + 2*x + 1 > 2'
+2025-02-01 14:48:30,927 - __main__ - DEBUG - Raw result from MATLAB: '(x < -√2 - 1) or ((x < ∞) and (x > -1 + √2))'
+2025-02-01 14:48:30,928 - __main__ - DEBUG - Displayed Result: (x < -√2 - 1) or ((x < ∞) and (x > -1 + √2))
+2025-02-01 14:48:37,534 - __main__ - DEBUG - SymPy calculation result: (x < -√2 - 1) | ((x < ∞) & (x > -1 + √2))
+2025-02-01 14:57:20,686 - __main__ - INFO - Initializing Calculator Application
+2025-02-01 14:57:33,616 - __main__ - INFO - MATLAB engine started successfully
+2025-02-01 14:58:39,460 - __main__ - DEBUG - Original expression: 'x^2 + 2x + 1 > 1'
+2025-02-01 14:58:39,463 - __main__ - DEBUG - Original expression: 'x^2 + 2x + 1 > 1'
+2025-02-01 14:58:39,466 - __main__ - DEBUG - After combinatorial conversion: x^2 + 2x + 1 > 1
+2025-02-01 14:58:39,468 - __main__ - DEBUG - Converted integral expression: 'x^2 + 2x + 1 > 1'
+2025-02-01 14:58:39,468 - __main__ - DEBUG - After explicit multiplication: 'x^2 + 2*x + 1 > 1'
+2025-02-01 14:58:39,468 - __main__ - DEBUG - Final MATLAB expression: 'x^2 + 2*x + 1 > 1'
+2025-02-01 14:58:39,468 - __main__ - DEBUG - Converted to MATLAB expression: 'x^2 + 2*x + 1 > 1'
+2025-02-01 14:58:39,478 - __main__ - DEBUG - After shortcut conversion: x^2 + 2*x + 1 > 1
+2025-02-01 14:58:39,481 - __main__ - DEBUG - Final MATLAB expression: 'x^2 + 2*x + 1 > 1'
+2025-02-01 14:58:39,829 - __main__ - DEBUG - Raw result from MATLAB: '(x < -2) or ((x > 0) and (x < ∞))'
+2025-02-01 14:58:39,831 - __main__ - DEBUG - Displayed Result: (x < -2) or ((x > 0) and (x < ∞))
+2025-02-01 14:58:44,921 - __main__ - DEBUG - SymPy calculation result: (x < -2) | ((x > 0) & (x < ∞))
+2025-02-01 15:03:19,881 - __main__ - INFO - Initializing Calculator Application
+2025-02-01 15:03:32,066 - __main__ - INFO - MATLAB engine started successfully
