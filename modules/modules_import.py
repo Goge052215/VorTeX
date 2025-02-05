@@ -72,7 +72,7 @@ class PackageImporter:
                 print("Using built-in importlib.metadata")
             except ImportError:
                 print("Installing importlib_metadata package...")
-                os.system(f"{sys.executable} -m pip install importlib_metadata")
+                os.system(f"pip install importlib_metadata")
             
             core_packages = [
                 "pycairo",
@@ -107,3 +107,11 @@ class PackageImporter:
             os.system(f"{sys.executable} -m pip install psutil")
         except Exception as e:
             print(f"Error installing/importing psutil: {e}")
+
+    @staticmethod
+    def import_requests() -> NoReturn:
+        try:
+            print("Installing requests...")
+            os.system(f"{sys.executable} -m pip install requests")
+        except Exception as e:
+            print(f"Error installing/importing requests: {e}")

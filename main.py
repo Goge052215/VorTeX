@@ -77,6 +77,18 @@ try:
 except ImportError:
     PackageImporter.import_manim()
 
+try:
+    import psutil
+except ImportError:
+    PackageImporter.import_psutil()
+    import psutil
+
+try:
+    import requests
+except ImportError:
+    PackageImporter.import_requests()
+    import requests
+
 from themes.theme_manager import (
     ThemeManager, get_tokyo_night_theme, 
     get_aura_theme, get_light_theme

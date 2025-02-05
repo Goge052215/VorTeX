@@ -6,3 +6,5 @@ numpy>=1.21.0
 latex2sympy2
 manim>=0.17.2
 psutil
+requests
+importlib_metadata

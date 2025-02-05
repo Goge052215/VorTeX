@@ -1,76 +1,64 @@
 import unittest
+from parameterized import parameterized
 import sympy as sy
 import sys
 import os
+from sympy import Integral, Derivative, Symbol, sin, cos, exp, log
 
 # Add the parent directory to the Python path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from matlab_interface.sympy_to_matlab import SympyToMatlab
 
-class TestSympyToMatlab(unittest.TestCase):
-    def setUp(self):
-        self.converter = SympyToMatlab()
+class TestSympyToMatlabConversion(unittest.TestCase):
+    """Modernized test suite for Sympy-to-MATLAB conversion"""
 
-    def test_indefinite_integral(self):
-        expr = sy.Integral(1/sy.Symbol('x'), sy.Symbol('x'))
-        matlab_expr = self.converter.sympy_to_matlab(expr)
-        self.assertEqual(matlab_expr, "int(1/x, 'x')")
+    @classmethod
+    def setUpClass(cls):
+        cls.converter = SympyToMatlab()
+        cls.x = Symbol('x')
+        cls.y = Symbol('y')
 
-    def test_definite_integral(self):
-        expr = sy.Integral(1/sy.Symbol('x'), (sy.Symbol('x'), 1, 2))
-        matlab_expr = self.converter.sympy_to_matlab(expr)
-        self.assertEqual(matlab_expr, "int(1/x, 'x', 1, 2)")
+    # Region: Parameterized Core Tests
+    @parameterized.expand([
+        ("basic_arithmetic", '2*x + 3', "2*x + 3"),
+        ("indefinite_integral", Integral(1/Symbol('x'), Symbol('x')), "int(1/x, 'x')"),
+        ("definite_integral", Integral(1/Symbol('x'), (Symbol('x'), 1, 2)), 
+         "int(1/x, 'x', 1, 2)"),
+        ("first_derivative", Derivative(sin(Symbol('x')), Symbol('x')), 
+         "diff(sin(x), 'x')"),
+        ("second_derivative", Derivative(sin(Symbol('x')), (Symbol('x'), 2)), 
+         "diff(sin(x), 'x', 2)"),
+        ("natural_log", log(2), "log(2)"),
+        ("log_base_10", log(2, 10), "log(2)/log(10)"),
+        ("log_base_3", log(2, 3), "log(2)/log(3)"),
+        ("third_derivative", Derivative(cos(Symbol('x')), (Symbol('x'), 3)), 
+         "diff(cos(x), 'x', 3)"),
+        ("mixed_expression", Derivative(Integral(exp(Symbol('x')), Symbol('x')), Symbol('x')), 
+         "diff(int(exp(x), 'x'), 'x')"),
+        ("double_integral", Integral(Integral(sin(Symbol('x')), Symbol('x')), Symbol('x')), 
+         "int(int(sin(x), 'x'), 'x')"),
+        ("partial_derivative", Derivative(sin(Symbol('x')*Symbol('y')), Symbol('x')), 
+         "diff(sin(x*y), 'x')"),
+    ])
+    def test_conversion_cases(self, name, expr, expected):
+        """Parameterized test covering all core conversion scenarios"""
+        result = self.converter.sympy_to_matlab(expr)
+        self.assertEqual(result, expected)
 
-    def test_first_derivative(self):
-        expr = sy.Derivative(sy.sin(sy.Symbol('x')), 'x')
-        matlab_expr = self.converter.sympy_to_matlab(expr)
-        self.assertEqual(matlab_expr, "diff(sin(x), 'x')")
+    # Region: Special Cases
+    def test_matrix_expression(self):
+        matrix = sy.Matrix([[self.x**2, 1/self.x], [0, 1]])
+        expected = "[x^2, 1/x; 0, 1]"
+        self.assertEqual(self.converter.sympy_to_matlab(matrix), expected)
 
-    def test_second_derivative(self):
-        expr = sy.Derivative(sy.sin(sy.Symbol('x')), (sy.Symbol('x'), 2))
-        matlab_expr = self.converter.sympy_to_matlab(expr)
-        self.assertEqual(matlab_expr, "diff(sin(x), 'x', 2)")
+    def test_invalid_input(self):
+        with self.assertRaises(ValueError):
+            self.converter.sympy_to_matlab("not_a_sympy_object")
 
-    def test_basic_expression(self):
-        expr = sy.sympify('2*x + 3')
-        matlab_expr = self.converter.sympy_to_matlab(expr)
-        self.assertEqual(matlab_expr, "2*x + 3")
-
-    def test_logarithms(self):
-        expr_ln = sy.log(2)  # Natural log
-        matlab_expr_ln = self.converter.sympy_to_matlab(expr_ln)
-        self.assertEqual(matlab_expr_ln, "log(2)")
-
-        expr_log10 = sy.log(2, 10)  # Base-10 log
-        matlab_expr_log10 = self.converter.sympy_to_matlab(expr_log10)
-        self.assertEqual(matlab_expr_log10, "log(2)/log(10)")
-
-    def test_log_with_other_base(self):
-        expr_log3 = sy.log(2, 3)
-        matlab_expr_log3 = self.converter.sympy_to_matlab(expr_log3)
-        self.assertEqual(matlab_expr_log3, "log(2)/log(3)")
-
-    def test_third_derivative(self):
-        expr = sy.Derivative(sy.cos(sy.Symbol('x')), (sy.Symbol('x'), 3))
-        matlab_expr = self.converter.sympy_to_matlab(expr)
-        self.assertEqual(matlab_expr, "diff(cos(x), 'x', 3)")
-
-    def test_mixed_expression(self):
-        expr = sy.Derivative(sy.Integral(sy.exp(sy.Symbol('x')), sy.Symbol('x')), 'x')
-        matlab_expr = self.converter.sympy_to_matlab(expr)
-        self.assertEqual(matlab_expr, "diff(int(exp(x), 'x'), 'x')")
-
-    def test_multiple_integrals(self):
-        expr = sy.Integral(sy.Integral(sy.sin(sy.Symbol('x')), sy.Symbol('x')), sy.Symbol('x'))
-        matlab_expr = self.converter.sympy_to_matlab(expr)
-        self.assertEqual(matlab_expr, "int(int(sin(x), 'x'), 'x')")
-
-    def test_partial_derivative(self):
-        x, y = sy.symbols('x y')
-        expr = sy.Derivative(sy.sin(x*y), x)
-        matlab_expr = self.converter.sympy_to_matlab(expr)
-        self.assertEqual(matlab_expr, "diff(sin(x*y), 'x')")
+    def test_symbolic_constants(self):
+        expr = sy.exp(sy.pi)
+        self.assertEqual(self.converter.sympy_to_matlab(expr), "exp(pi)")
 
 if __name__ == '__main__':
-    unittest.main()
+    unittest.main(failfast=True, verbosity=2)

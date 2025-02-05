@@ -1757,3 +1757,235 @@ x2 = 0.41421356
 2025-02-01 14:58:44,921 - __main__ - DEBUG - SymPy calculation result: (x < -2) | ((x > 0) & (x < ∞))
 2025-02-01 15:03:19,881 - __main__ - INFO - Initializing Calculator Application
 2025-02-01 15:03:32,066 - __main__ - INFO - MATLAB engine started successfully
+2025-02-01 16:15:23,150 - __main__ - INFO - Initializing Calculator Application
+2025-02-01 16:15:39,247 - __main__ - INFO - MATLAB engine started successfully
+2025-02-01 16:15:50,830 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2025-02-01 16:15:50,833 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2025-02-01 16:15:50,837 - __main__ - DEBUG - After combinatorial conversion: int 1/x dx
+2025-02-01 16:15:50,839 - __main__ - DEBUG - Converted integral expression: 'int(1/x, x)'
+2025-02-01 16:15:50,840 - __main__ - DEBUG - After explicit multiplication: 'int(1/x, x)'
+2025-02-01 16:15:50,840 - __main__ - DEBUG - Final MATLAB expression: 'int(1/x, x)'
+2025-02-01 16:15:50,840 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/x, x)'
+2025-02-01 16:15:50,850 - __main__ - DEBUG - After shortcut conversion: int(1/x, x)
+2025-02-01 16:15:50,851 - __main__ - DEBUG - Final MATLAB expression: 'int(1/x, x)'
+2025-02-01 16:15:51,892 - __main__ - ERROR - Error in latex calculation: Unrecognized function or variable 'pack'.
+
+2025-02-01 16:16:57,318 - __main__ - INFO - Initializing Calculator Application
+2025-02-01 16:17:08,010 - __main__ - INFO - MATLAB engine started successfully
+2025-02-01 16:17:44,071 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2025-02-01 16:17:44,078 - __main__ - DEBUG - Original expression: 'int 1/x dx'
+2025-02-01 16:17:44,082 - __main__ - DEBUG - After combinatorial conversion: int 1/x dx
+2025-02-01 16:17:44,083 - __main__ - DEBUG - Converted integral expression: 'int(1/x, x)'
+2025-02-01 16:17:44,083 - __main__ - DEBUG - After explicit multiplication: 'int(1/x, x)'
+2025-02-01 16:17:44,083 - __main__ - DEBUG - Final MATLAB expression: 'int(1/x, x)'
+2025-02-01 16:17:44,083 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/x, x)'
+2025-02-01 16:17:44,089 - __main__ - DEBUG - After shortcut conversion: int(1/x, x)
+2025-02-01 16:17:44,091 - __main__ - DEBUG - Final MATLAB expression: 'int(1/x, x)'
+2025-02-01 16:17:44,408 - __main__ - DEBUG - Raw result from MATLAB: 'log(x)'
+2025-02-01 16:17:44,412 - __main__ - DEBUG - Displayed Result: ln(x)
+2025-02-01 16:17:59,524 - __main__ - DEBUG - Original expression: 'int (2 to 3) 1/x dx'
+2025-02-01 16:17:59,529 - __main__ - DEBUG - Original expression: 'int (2 to 3) 1/x dx'
+2025-02-01 16:17:59,530 - __main__ - DEBUG - After combinatorial conversion: int (2 to 3) 1/x dx
+2025-02-01 16:17:59,530 - __main__ - DEBUG - Converted integral expression: 'int(1/x, x, 2, 3)'
+2025-02-01 16:17:59,530 - __main__ - DEBUG - After explicit multiplication: 'int(1/x, x, 2, 3)'
+2025-02-01 16:17:59,530 - __main__ - DEBUG - Final MATLAB expression: 'int(1/x, x, 2, 3)'
+2025-02-01 16:17:59,530 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/x, x, 2, 3)'
+2025-02-01 16:17:59,531 - __main__ - DEBUG - After shortcut conversion: int(1/x, x, 2, 3)
+2025-02-01 16:17:59,531 - __main__ - DEBUG - Final MATLAB expression: 'int(1/x, x, 2, 3)'
+2025-02-01 16:17:59,986 - __main__ - DEBUG - Raw result from MATLAB: '0.40546511'
+2025-02-01 16:17:59,987 - __main__ - DEBUG - Displayed Result: 0.40546511
+2025-02-01 16:19:57,378 - __main__ - DEBUG - Original expression: 'sum (2 to 10) 1/x dx'
+2025-02-01 16:19:57,381 - __main__ - DEBUG - Original expression: 'sum (2 to 10) 1/x dx'
+2025-02-01 16:19:57,384 - __main__ - DEBUG - After combinatorial conversion: sum (2 to 10) 1/x dx
+2025-02-01 16:19:57,384 - __main__ - DEBUG - Converted integral expression: 'sum (2 to 10) 1/x dx'
+2025-02-01 16:19:57,384 - __main__ - DEBUG - After explicit multiplication: 'sum (2 to 10) 1/x dx'
+2025-02-01 16:19:57,384 - __main__ - DEBUG - Final MATLAB expression: 'sum (2 to 10) 1/x dx'
+2025-02-01 16:19:57,384 - __main__ - DEBUG - Converted to MATLAB expression: 'sum (2 to 10) 1/x dx'
+2025-02-01 16:19:57,385 - __main__ - DEBUG - After shortcut conversion: double(log(10) - log(1)) frac{d}{dx}
+2025-02-01 16:19:57,386 - __main__ - DEBUG - Final MATLAB expression: 'double(log(10) - log(1)) frac{d}{dx}'
+2025-02-01 16:19:57,903 - __main__ - ERROR - Error in latex calculation: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2025-02-01 16:22:27,435 - __main__ - DEBUG - Original expression: 'sum (2 to 10) 1/x'
+2025-02-01 16:22:27,439 - __main__ - DEBUG - Original expression: 'sum (2 to 10) 1/x'
+2025-02-01 16:22:27,440 - __main__ - DEBUG - After combinatorial conversion: sum (2 to 10) 1/x
+2025-02-01 16:22:27,440 - __main__ - DEBUG - Converted integral expression: 'sum (2 to 10) 1/x'
+2025-02-01 16:22:27,441 - __main__ - DEBUG - After explicit multiplication: 'sum (2 to 10) 1/x'
+2025-02-01 16:22:27,441 - __main__ - DEBUG - Final MATLAB expression: 'sum (2 to 10) 1/x'
+2025-02-01 16:22:27,441 - __main__ - DEBUG - Converted to MATLAB expression: 'sum (2 to 10) 1/x'
+2025-02-01 16:22:27,441 - __main__ - DEBUG - After shortcut conversion: double(log(10) - log(1))
+2025-02-01 16:22:27,442 - __main__ - DEBUG - Final MATLAB expression: 'double(log(10) - log(1))'
+2025-02-01 16:22:27,643 - __main__ - DEBUG - Raw result from MATLAB: '2.30258509'
+2025-02-01 16:22:27,645 - __main__ - DEBUG - Displayed Result: 2.3025851
+2025-02-01 18:13:51,716 - __main__ - INFO - Initializing Calculator Application
+2025-02-01 18:14:11,150 - __main__ - INFO - MATLAB engine started successfully
+2025-02-01 18:14:42,096 - __main__ - DEBUG - Visualizing expression: sin(x)
+2025-02-01 18:20:34,791 - __main__ - INFO - Initializing Calculator Application
+2025-02-01 18:20:53,725 - __main__ - INFO - MATLAB engine started successfully
+2025-02-01 18:53:12,364 - __main__ - INFO - Initializing Calculator Application
+2025-02-01 18:53:23,972 - __main__ - INFO - MATLAB engine started successfully
+2025-02-01 20:00:34,829 - __main__ - INFO - Initializing Calculator Application
+2025-02-01 20:00:58,326 - __main__ - INFO - MATLAB engine started successfully
+2025-02-01 20:03:18,096 - __main__ - DEBUG - Visualizing expression: sin(x)
+2025-02-01 20:04:03,244 - __main__ - DEBUG - Visualizing expression: sin(x)
+2025-02-01 20:04:03,246 - __main__ - DEBUG - Visualizing expression: sin(x)
+2025-02-01 20:04:03,247 - __main__ - DEBUG - Visualizing expression: sin(x)
+2025-02-01 20:04:20,161 - __main__ - INFO - MATLAB engine terminated
+2025-02-01 20:04:45,198 - __main__ - INFO - Initializing Calculator Application
+2025-02-01 20:04:57,639 - __main__ - INFO - MATLAB engine started successfully
+2025-02-01 20:20:07,382 - __main__ - DEBUG - Visualizing expression: sin(x)
+2025-02-01 20:21:33,933 - __main__ - INFO - MATLAB engine terminated
+2025-02-01 20:26:14,410 - __main__ - INFO - Initializing Calculator Application
+2025-02-01 20:26:35,838 - __main__ - INFO - MATLAB engine started successfully
+2025-02-01 20:27:16,383 - __main__ - DEBUG - Visualizing expression: sin(x)
+2025-02-01 20:28:06,293 - __main__ - DEBUG - Visualizing expression: sin(x)
+2025-02-01 20:34:24,878 - __main__ - INFO - Initializing Calculator Application
+2025-02-01 20:34:43,557 - __main__ - INFO - MATLAB engine started successfully
+2025-02-01 20:35:44,522 - __main__ - DEBUG - Visualizing expression: sin(x)
+2025-02-01 20:37:34,759 - __main__ - INFO - MATLAB engine terminated
+2025-02-01 20:37:53,990 - __main__ - INFO - Initializing Calculator Application
+2025-02-01 20:38:06,934 - __main__ - INFO - MATLAB engine started successfully
+2025-02-01 20:42:56,113 - __main__ - DEBUG - Visualizing expression: sin(x)
+2025-02-01 20:48:30,897 - __main__ - INFO - MATLAB engine terminated
+2025-02-01 21:41:47,010 - __main__ - INFO - Initializing Calculator Application
+2025-02-01 21:42:08,770 - __main__ - INFO - MATLAB engine started successfully
+2025-02-01 21:42:47,878 - __main__ - DEBUG - Visualizing expression: sin(x)
+2025-02-01 21:56:25,975 - __main__ - INFO - Initializing Calculator Application
+2025-02-01 21:56:44,531 - __main__ - INFO - MATLAB engine started successfully
+2025-02-01 21:56:49,720 - __main__ - DEBUG - Visualizing expression: sin(x)
+2025-02-01 21:57:23,828 - __main__ - INFO - MATLAB engine terminated
+2025-02-01 22:05:56,118 - __main__ - INFO - Initializing Calculator Application
+2025-02-01 22:06:32,648 - __main__ - INFO - MATLAB engine started successfully
+2025-02-01 22:07:05,629 - __main__ - DEBUG - Original expression: 'int (2 to 3) 1/x dx'
+2025-02-01 22:07:05,631 - __main__ - DEBUG - Original expression: 'int (2 to 3) 1/x dx'
+2025-02-01 22:07:05,634 - __main__ - DEBUG - After combinatorial conversion: int (2 to 3) 1/x dx
+2025-02-01 22:07:05,635 - __main__ - DEBUG - Converted integral expression: 'int(1/x, x, 2, 3)'
+2025-02-01 22:07:05,636 - __main__ - DEBUG - After explicit multiplication: 'int(1/x, x, 2, 3)'
+2025-02-01 22:07:05,636 - __main__ - DEBUG - Final MATLAB expression: 'int(1/x, x, 2, 3)'
+2025-02-01 22:07:05,636 - __main__ - DEBUG - Converted to MATLAB expression: 'int(1/x, x, 2, 3)'
+2025-02-01 22:07:05,643 - __main__ - DEBUG - After shortcut conversion: int(1/x, x, 2, 3)
+2025-02-01 22:07:05,646 - __main__ - DEBUG - Final MATLAB expression: 'int(1/x, x, 2, 3)'
+2025-02-01 22:07:06,308 - __main__ - DEBUG - Raw result from MATLAB: '0.40546511'
+2025-02-01 22:07:06,309 - __main__ - DEBUG - Displayed Result: 0.40546511
+2025-02-01 22:07:15,742 - __main__ - DEBUG - Original expression: 'x^2 +'
+2025-02-01 22:07:15,744 - __main__ - DEBUG - Original expression: 'x^2 +'
+2025-02-01 22:07:15,744 - __main__ - DEBUG - After combinatorial conversion: x^2 +
+2025-02-01 22:07:15,745 - __main__ - DEBUG - Converted integral expression: 'x^2 +'
+2025-02-01 22:07:15,745 - __main__ - DEBUG - After explicit multiplication: 'x^2 +'
+2025-02-01 22:07:15,745 - __main__ - DEBUG - Final MATLAB expression: 'x^2 +'
+2025-02-01 22:07:15,745 - __main__ - DEBUG - Converted to MATLAB expression: 'x^2 +'
+2025-02-01 22:07:15,746 - __main__ - DEBUG - After shortcut conversion: x^2 +
+2025-02-01 22:07:15,747 - __main__ - DEBUG - Final MATLAB expression: 'x^2 +'
+2025-02-01 22:07:15,919 - __main__ - ERROR - Error in latex calculation: Error: Invalid expression. Check for missing or extra characters.
+
+2025-02-01 22:07:22,375 - __main__ - DEBUG - Original expression: 'x^2 - 2x + 1 = 0'
+2025-02-01 22:07:22,375 - __main__ - DEBUG - Original expression: 'x^2 - 2x + 1 = 0'
+2025-02-01 22:07:22,375 - __main__ - DEBUG - After combinatorial conversion: x^2 - 2x + 1 = 0
+2025-02-01 22:07:22,376 - __main__ - DEBUG - Converted equation to solve format: solve(x^2 - 2x + 1  - ( 0), x)
+2025-02-01 22:07:22,376 - __main__ - DEBUG - Converted integral expression: 'solve(x^2 - 2x + 1  - ( 0), x)'
+2025-02-01 22:07:22,376 - __main__ - DEBUG - After explicit multiplication: 'solve(x^2 - 2*x + 1  - ( 0), x)'
+2025-02-01 22:07:22,376 - __main__ - DEBUG - Final MATLAB expression: 'solve(x^2 - 2*x + 1  - ( 0), x)'
+2025-02-01 22:07:22,376 - __main__ - DEBUG - Converted to MATLAB expression: 'solve(x^2 - 2*x + 1  - ( 0), x)'
+2025-02-01 22:07:22,376 - __main__ - DEBUG - After shortcut conversion: solve(x^2 - 2*x + 1  - ( 0), x)
+2025-02-01 22:07:22,376 - __main__ - DEBUG - Final MATLAB expression: 'solve(x^2 - 2*x + 1  - ( 0), x)'
+2025-02-01 22:07:22,624 - __main__ - DEBUG - Raw result from MATLAB: 'x1 = 1.0
+x2 = 1.0'
+2025-02-01 22:07:22,624 - __main__ - DEBUG - Displayed Result: x1 = 1
+x2 = 1
+2025-02-01 22:07:37,859 - __main__ - DEBUG - Original expression: 'x^4 - 2x^2 + 3x + 1 = 0'
+2025-02-01 22:07:37,860 - __main__ - DEBUG - Original expression: 'x^4 - 2x^2 + 3x + 1 = 0'
+2025-02-01 22:07:37,861 - __main__ - DEBUG - After combinatorial conversion: x^4 - 2x^2 + 3x + 1 = 0
+2025-02-01 22:07:37,861 - __main__ - DEBUG - Converted equation to solve format: solve(x^4 - 2x^2 + 3x + 1  - ( 0), x)
+2025-02-01 22:07:37,861 - __main__ - DEBUG - Converted integral expression: 'solve(x^4 - 2x^2 + 3x + 1  - ( 0), x)'
+2025-02-01 22:07:37,861 - __main__ - DEBUG - After explicit multiplication: 'solve(x^4 - 2*x^2 + 3*x + 1  - ( 0), x)'
+2025-02-01 22:07:37,861 - __main__ - DEBUG - Final MATLAB expression: 'solve(x^4 - 2*x^2 + 3*x + 1  - ( 0), x)'
+2025-02-01 22:07:37,861 - __main__ - DEBUG - Converted to MATLAB expression: 'solve(x^4 - 2*x^2 + 3*x + 1  - ( 0), x)'
+2025-02-01 22:07:37,862 - __main__ - DEBUG - After shortcut conversion: solve(x^4 - 2*x^2 + 3*x + 1  - ( 0), x)
+2025-02-01 22:07:37,863 - __main__ - DEBUG - Final MATLAB expression: 'solve(x^4 - 2*x^2 + 3*x + 1  - ( 0), x)'
+2025-02-01 22:07:38,088 - __main__ - DEBUG - Raw result from MATLAB: 'x1 = -0.28231595363408116587712454497134
+x2 = 1.0551928269388723926493889060187 - 0.90785597168716744982582987190855i
+x3 = 1.0551928269363992993254883063812 + 0.90785597168794615574369676844173i
+x4 = -1.8280697002411905260977559761509'
+2025-02-01 22:07:38,089 - __main__ - DEBUG - Displayed Result: x1 = -0.28231595
+x2 = 1.0551928269388723926493889060187 - 0.90785597168716744982582987190855i
+x3 = 1.0551928269363992993254883063812 + 0.90785597168794615574369676844173i
+x4 = -1.8280697
+2025-02-01 22:07:53,344 - __main__ - DEBUG - Visualizing expression: cos(x)
+2025-02-01 22:08:48,750 - __main__ - DEBUG - Original expression: 'sum (1 to inf) 1/x^2'
+2025-02-01 22:08:48,753 - __main__ - DEBUG - Original expression: 'sum (1 to inf) 1/x^2'
+2025-02-01 22:08:48,754 - __main__ - DEBUG - After combinatorial conversion: sum (1 to inf) 1/x^2
+2025-02-01 22:08:48,754 - __main__ - DEBUG - Converted integral expression: 'sum (1 to inf) 1/x^2'
+2025-02-01 22:08:48,755 - __main__ - DEBUG - After explicit multiplication: 'sum (1 to inf) 1/x^2'
+2025-02-01 22:08:48,755 - __main__ - DEBUG - Final MATLAB expression: 'sum (1 to inf) 1/x^2'
+2025-02-01 22:08:48,755 - __main__ - DEBUG - Converted to MATLAB expression: 'sum (1 to inf) 1/x^2'
+2025-02-01 22:08:48,756 - __main__ - DEBUG - After shortcut conversion: ∞^2
+2025-02-01 22:08:48,757 - __main__ - DEBUG - Final MATLAB expression: '∞^2'
+2025-02-01 22:08:48,859 - __main__ - ERROR - Error in latex calculation: Error: Invalid text character. Check for unsupported symbol, invisible character, or pasting of non-ASCII characters.
+
+2025-02-01 22:09:00,809 - __main__ - INFO - MATLAB engine terminated
+2025-02-01 22:12:23,779 - __main__ - INFO - Initializing Calculator Application
+2025-02-01 22:12:42,006 - __main__ - INFO - MATLAB engine started successfully
+2025-02-05 11:03:58,124 - __main__ - INFO - Initializing Calculator Application
+2025-02-05 11:04:17,156 - __main__ - WARNING - MATLAB engine not available: Unable to launch MVM server: License Error: Licensing shutdown
+2025-02-05 11:04:17,157 - __main__ - INFO - Switching to SymPy-only mode
+2025-02-05 11:05:46,335 - __main__ - INFO - Initializing Calculator Application
+2025-02-05 11:09:54,249 - __main__ - INFO - Initializing Calculator Application
+2025-02-05 11:10:00,956 - __main__ - INFO - MATLAB engine started successfully
+2025-02-05 11:10:28,076 - __main__ - DEBUG - Original expression: '2+3'
+2025-02-05 11:10:28,077 - __main__ - DEBUG - Original expression: '2+3'
+2025-02-05 11:10:28,077 - __main__ - DEBUG - After combinatorial conversion: 2+3
+2025-02-05 11:10:28,077 - __main__ - DEBUG - Converted integral expression: '2+3'
+2025-02-05 11:10:28,077 - __main__ - DEBUG - After explicit multiplication: '2+3'
+2025-02-05 11:10:28,078 - __main__ - DEBUG - Final MATLAB expression: '2+3'
+2025-02-05 11:10:28,078 - __main__ - DEBUG - Converted to MATLAB expression: '2+3'
+2025-02-05 11:10:28,081 - __main__ - DEBUG - After shortcut conversion: 2+3
+2025-02-05 11:10:28,082 - __main__ - DEBUG - Final MATLAB expression: '2+3'
+2025-02-05 11:10:28,096 - __main__ - DEBUG - Raw result from MATLAB: '5.00000000'
+2025-02-05 11:10:28,097 - __main__ - DEBUG - Displayed Result: 5
+2025-02-05 11:10:36,661 - __main__ - DEBUG - Original expression: 'int sin(x) dx'
+2025-02-05 11:10:36,662 - __main__ - DEBUG - Original expression: 'int sin(x) dx'
+2025-02-05 11:10:36,662 - __main__ - DEBUG - After combinatorial conversion: int sin(x) dx
+2025-02-05 11:10:36,662 - __main__ - DEBUG - Converted integral expression: 'int(sin(x), x)'
+2025-02-05 11:10:36,662 - __main__ - DEBUG - After explicit multiplication: 'int(sin(x), x)'
+2025-02-05 11:10:36,662 - __main__ - DEBUG - Final MATLAB expression: 'int(sin(x), x)'
+2025-02-05 11:10:36,662 - __main__ - DEBUG - Converted to MATLAB expression: 'int(sin(x), x)'
+2025-02-05 11:10:36,662 - __main__ - DEBUG - After shortcut conversion: int(sin(x), x)
+2025-02-05 11:10:36,662 - __main__ - DEBUG - Final MATLAB expression: 'int(sind(x), x)'
+2025-02-05 11:10:36,984 - __main__ - DEBUG - Raw result from MATLAB: '-(180*cos((x*pi)/180))/pi'
+2025-02-05 11:10:36,985 - __main__ - DEBUG - Displayed Result: -(180*cos((x*pi)/180))/pi
+2025-02-05 15:47:25,781 - __main__ - INFO - Initializing Calculator Application
+2025-02-05 15:47:36,046 - __main__ - INFO - MATLAB engine started successfully
+2025-02-05 15:47:41,586 - __main__ - DEBUG - Original expression: 'int sin(x) dx'
+2025-02-05 15:47:41,587 - __main__ - DEBUG - Original expression: 'int sin(x) dx'
+2025-02-05 15:47:41,588 - __main__ - DEBUG - After combinatorial conversion: int sin(x) dx
+2025-02-05 15:47:41,589 - __main__ - DEBUG - Converted integral expression: 'int(sin(x), x)'
+2025-02-05 15:47:41,590 - __main__ - DEBUG - After explicit multiplication: 'int(sin(x), x)'
+2025-02-05 15:47:41,590 - __main__ - DEBUG - Final MATLAB expression: 'int(sin(x), x)'
+2025-02-05 15:47:41,590 - __main__ - DEBUG - Converted to MATLAB expression: 'int(sin(x), x)'
+2025-02-05 15:47:41,596 - __main__ - DEBUG - After shortcut conversion: int(sin(x), x)
+2025-02-05 15:47:41,598 - __main__ - DEBUG - Final MATLAB expression: 'int(sind(x), x)'
+2025-02-05 15:47:41,899 - __main__ - DEBUG - Raw result from MATLAB: '-(180*cos((x*pi)/180))/pi'
+2025-02-05 15:47:41,899 - __main__ - DEBUG - Displayed Result: -(180*cos((x*pi)/180))/pi
+2025-02-05 15:47:48,173 - __main__ - DEBUG - Original expression: 'int sin(x) dx'
+2025-02-05 15:47:48,173 - __main__ - DEBUG - Original expression: 'int sin(x) dx'
+2025-02-05 15:47:48,174 - __main__ - DEBUG - After combinatorial conversion: int sin(x) dx
+2025-02-05 15:47:48,174 - __main__ - DEBUG - Converted integral expression: 'int(sin(x), x)'
+2025-02-05 15:47:48,174 - __main__ - DEBUG - After explicit multiplication: 'int(sin(x), x)'
+2025-02-05 15:47:48,174 - __main__ - DEBUG - Final MATLAB expression: 'int(sin(x), x)'
+2025-02-05 15:47:48,174 - __main__ - DEBUG - Converted to MATLAB expression: 'int(sin(x), x)'
+2025-02-05 15:47:48,174 - __main__ - DEBUG - After shortcut conversion: int(sin(x), x)
+2025-02-05 15:47:48,174 - __main__ - DEBUG - Final MATLAB expression: 'int(sin(x), x)'
+2025-02-05 15:47:48,254 - __main__ - DEBUG - Raw result from MATLAB: '-cos(x)'
+2025-02-05 15:47:48,254 - __main__ - DEBUG - Displayed Result: -cos(x)
+2025-02-05 15:48:06,692 - __main__ - INFO - Initializing Calculator Application
+2025-02-05 15:48:11,243 - __main__ - INFO - MATLAB engine started successfully
+2025-02-05 15:48:32,889 - __main__ - DEBUG - Original expression: 'int sin(x) dx'
+2025-02-05 15:48:32,890 - __main__ - DEBUG - Original expression: 'int sin(x) dx'
+2025-02-05 15:48:32,891 - __main__ - DEBUG - After combinatorial conversion: int sin(x) dx
+2025-02-05 15:48:32,892 - __main__ - DEBUG - Converted integral expression: 'int(sin(x), x)'
+2025-02-05 15:48:32,892 - __main__ - DEBUG - After explicit multiplication: 'int(sin(x), x)'
+2025-02-05 15:48:32,892 - __main__ - DEBUG - Final MATLAB expression: 'int(sin(x), x)'
+2025-02-05 15:48:32,892 - __main__ - DEBUG - Converted to MATLAB expression: 'int(sin(x), x)'
+2025-02-05 15:48:32,896 - __main__ - DEBUG - After shortcut conversion: int(sin(x), x)
+2025-02-05 15:48:32,898 - __main__ - DEBUG - Final MATLAB expression: 'int(sind(x), x)'
+2025-02-05 15:48:33,211 - __main__ - DEBUG - Raw result from MATLAB: '-(180*cos((x*pi)/180))/pi'
+2025-02-05 15:48:33,212 - __main__ - DEBUG - Displayed Result: -(180*cos((x*pi)/180))/pi

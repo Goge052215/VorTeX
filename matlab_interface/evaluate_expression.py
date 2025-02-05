@@ -35,6 +35,40 @@ import psutil
 import resource
 from sys import platform as sys_platform
 
+def matlab_memory_safe(func):
+    """Decorator for MATLAB memory management"""
+    @wraps(func)
+    def wrapper(self, *args, **kwargs):
+        try:
+            if not sys_platform.startswith('win') and resource:
+                resource.setrlimit(resource.RLIMIT_AS, 
+                    (self.max_memory, self.max_memory))
+            elif sys_platform.startswith('win') and self._process:
+                mem_info = self._process.memory_info()
+                if mem_info.rss > self.max_memory and not self._windows_mem_warned:
+                    self.logger.warning("Approaching Windows memory limits")
+                    self._windows_mem_warned = True
+        except Exception as e:
+            self.logger.error(f"Memory limit setup failed: {e}")
+
+        try:
+            result = func(self, *args, **kwargs)
+            self.eng.eval("clear ans;", nargout=0)
+            
+            if len(result) > 2000:
+                result = result[:2000] + "... [truncated]"
+                
+            return result.replace('Inf', '∞').replace('NaN', 'undefined')
+            
+        except MemoryError:
+            self.logger.critical("MATLAB memory limit exceeded")
+            return "Error: Exceeded available memory"
+        finally:
+            if 'result' in locals():
+                del result
+            self.eng.eval("clear temp_result;", nargout=0)
+    return wrapper
+
 class EvaluateExpression:
     def __init__(self, eng):
         """
@@ -241,6 +275,10 @@ class EvaluateExpression:
         result_str = special_cases.get(result_str.lower(), result_str)
     
         result_str = result_str.replace('*1.0', '').replace('1.0*', '').replace('.0', '')
+        
+        # Convert radian-based expressions back to degree functions
+        degree_pattern = re.compile(r'(\bcos|\bsin|\btan)\(\(\s*([^)]+)\s*\*\s*pi\s*/\s*180\s*\)\)')
+        result_str = degree_pattern.sub(r'\1d(\2)', result_str)
         
         symbolizations = {
             'exp(': 'e^',
@@ -488,45 +526,6 @@ class EvaluateExpression:
         except Exception as e:
             self.logger.error(f"Error simplifying inequality result: {e}")
             return result
-
-    def matlab_memory_safe(self, func):
-        """Decorator for MATLAB memory management"""
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            self = args[0]
-            try:
-                # Set memory limits on Unix-like systems
-                if not sys_platform.startswith('win') and resource:
-                    resource.setrlimit(resource.RLIMIT_AS, 
-                        (self.max_memory, self.max_memory))
-                elif sys_platform.startswith('win') and self._process:
-                    mem_info = self._process.memory_info()
-                    if mem_info.rss > self.max_memory and not self._windows_mem_warned:
-                        self.logger.warning("Approaching Windows memory limits")
-                        self._windows_mem_warned = True
-            except Exception as e:
-                self.logger.error(f"Memory limit setup failed: {e}")
-
-            try:
-                result = func(*args, **kwargs)
-                
-                # MATLAB-specific memory cleanup
-                self.eng.eval("clear ans; pack;", nargout=0)
-                
-                # String output sanitization
-                if len(result) > 2000:
-                    result = result[:2000] + "... [truncated]"
-                    
-                return result.replace('Inf', '∞').replace('NaN', 'undefined')
-                
-            except MemoryError:
-                self.logger.critical("MATLAB memory limit exceeded")
-                return "Error: Exceeded available memory"
-            finally:
-                if 'result' in locals():
-                    del result
-                self.eng.eval("clear temp_result;", nargout=0)
-        return wrapper
 
     @lru_cache(maxsize=128)
     @matlab_memory_safe

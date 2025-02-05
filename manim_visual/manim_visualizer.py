@@ -20,20 +20,56 @@ class MathVisualizer:
             self.logger.addHandler(handler)
             self.logger.setLevel(logging.INFO)
 
+    def install_latex_dependencies(self):
+        """Manually install LaTeX dependencies when needed."""
+        try:
+            import subprocess
+            import os
+            
+            script_dir = os.path.dirname(os.path.abspath(__file__))
+            install_script = os.path.join(script_dir, 'tex_pack_install.bash')
+            
+            if not os.path.exists(install_script):
+                self.logger.error("LaTeX installation script not found")
+                return
+            
+            # Make the script executable
+            os.chmod(install_script, 0o755)
+            
+            # Run the installation script
+            result = subprocess.run([install_script], 
+                                 capture_output=True, 
+                                 text=True)
+            
+            if result.returncode != 0:
+                self.logger.error(f"LaTeX installation failed: {result.stderr}")
+            else:
+                self.logger.info("LaTeX dependencies checked/installed successfully")
+                
+        except Exception as e:
+            self.logger.error(f"Error checking LaTeX dependencies: {e}")
+
     class FunctionScene(Scene):
         """Base scene for function visualization."""
         def __init__(self, func_str, x_range=(-10, 10), y_range=(-5, 5), display_text=None, logger=None):
             super().__init__()
-            self.func_str = func_str
-            self.display_text = display_text or func_str
-            self.x_range = x_range
-            self.y_range = y_range
+            self.func_str = str(func_str)
+            self.display_text = str(display_text or func_str)
+            
+            try:
+                self.x_range = float(x_range[0]), float(x_range[1])
+                self.y_range = float(y_range[0]), float(y_range[1])
+            except:
+                self.logger.warning("Invalid x_range or y_range provided, using default (-10, 10) and (-5, 5)")
+                self.x_range = (-10, 10)
+                self.y_range = (-5, 5)
+            
             self.logger = logger
 
         def construct(self):
             try:
                 if isinstance(self.func_str, tuple):
-                    self.func_str = self.func_str[0]
+                    self.func_str = str(self.func_str[0])
 
                 axes = Axes(
                     x_range=[self.x_range[0], self.x_range[1], (self.x_range[1] - self.x_range[0]) / 10],
@@ -49,10 +85,9 @@ class MathVisualizer:
                 y_label = axes.get_y_axis_label("y").scale(0.8)
 
                 try:
-                    display_expr = self.func_str
+                    display_expr = str(self.func_str)
                     display_expr = "y=" + display_expr
                     
-                    # Add specific handling for e^x notation
                     display_expr = re.sub(r'e\^x', r'e^{x}', display_expr)
                     display_expr = re.sub(r'exp\(x\)', r'e^{x}', display_expr)
                     
@@ -116,22 +151,21 @@ class MathVisualizer:
                     expr_str = re.sub(r'e\^(\([^)]+\)|\w+)', lambda m: f'exp{m.group(1)}', expr_str)
                     expr_str = re.sub(r'log(\d+)\(([^)]+)\)', lambda m: f'log({m.group(2)})/log({m.group(1)})', expr_str)
                     
-                    # Update expression string handling for e^x
-                    expr_str = self.func_str
+                    # Update expression string handling
+                    expr_str = str(self.func_str)
                     expr_str = re.sub(r'e\^x', r'exp(x)', expr_str)
                     
-                    # Create a safe lambda function using numpy for evaluation
-                    import numpy as np
                     x = Symbol('x')
                     expr = sympify(expr_str)
                     
                     def safe_eval(x_val):
                         try:
-                            result = float(expr.subs('x', x_val))
-                            if abs(result) > self.y_range[1] or np.isnan(result) or np.isinf(result):
+                            result = float(expr.subs('x', float(x_val)))
+                            if np.isnan(result) or np.isinf(result):
                                 return None
                             return result
-                        except:
+                        except Exception as e:
+                            self.logger.debug(f"Evaluation error at x={x_val}: {e}")
                             return None
 
                     x_vals = np.linspace(self.x_range[0], self.x_range[1], 2000)
@@ -162,7 +196,6 @@ class MathVisualizer:
                         
                         self.add(axes, graph, label)
 
-                        # Add all elements to the scene with animations
                         self.play(Create(axes), run_time=1)
                         self.play(Write(x_label), Write(y_label), run_time=0.5)
                         self.play(Create(graph), run_time=2)
@@ -173,13 +206,13 @@ class MathVisualizer:
                         raise ValueError("No valid points to plot")
 
                 except Exception as e:
-                    self.logger.error(f"Error creating graph: {e}")
+                    self.logger.error(f"Error creating graph: {str(e)}")
                     error_text = Text(f"Error: {str(e)}", color=RED).scale(0.6)
                     self.add(error_text)
                     self.wait(2)
 
             except Exception as e:
-                self.logger.error(f"Error in visualization: {e}")
+                self.logger.error(f"Error in visualization: {str(e)}")
                 error_text = Text("Error visualizing function", color=RED).scale(0.6)
                 self.add(error_text)
                 self.wait(2)
@@ -201,7 +234,6 @@ class MathVisualizer:
             func_str = re.sub(r'(\d+)/(\d+)\s*([a-zA-Z])', r'(\1/\2)*\3', func_str)
             func_str = re.sub(r'\s+', '', func_str)
             
-            # Replace common mathematical notations
             replacements = {
                 '^': '**',
                 'sin': 'np.sin',
