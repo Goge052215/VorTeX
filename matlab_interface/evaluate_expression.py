@@ -21,8 +21,8 @@ LICENSE RESTRICTIONS
 - Private use must maintain all copyright and license notices
 - Any attempt to reverse engineer the MATLAB interface is prohibited
 
-Version: 1.0.2
-Last Updated: 2025.1
+Version: 1.0.3
+Last Updated: 2025.2
 '''
 
 import logging
@@ -173,13 +173,22 @@ class EvaluateExpression:
             expression = expression.replace(latex_func, matlab_func)
 
         expression = ExpressionShortcuts.convert_sum_prod_expression(expression)
+        expression = ExpressionShortcuts.convert_factorial_expression(expression)
+        
         expression = self.ln_pattern.sub('log(', expression)
         
         for trig_regex, degree_func in self.trig_patterns.items():
             expression = trig_regex.sub(degree_func, expression)
         
-        expression = re.sub(r'(\d)([a-zA-Z\(])', r'\1*\2', expression)  # 2x → 2*x, 2(x) → 2*(x)
-        expression = re.sub(r'(\))(\d|\w|\()', r'\1*\2', expression)    # (x)2 → (x)*2, (x)(y) → (x)*(y)
+        def insert_mul(match):
+            d = match.group(1)
+            l = match.group(2)
+            if l in ['P', 'p']:
+                return d + l
+            return d + '*' + l
+
+        expression = re.sub(r'(\d)(?![Pp]\d)([a-zA-Z\(])', insert_mul, expression)
+        expression = re.sub(r'(\))(\d|\w|\()', r'\1*\2', expression)
         
         expression = self.log_e_pattern.sub(r'log(\1)', expression)
         expression = self.log_base_pattern.sub(r'log(\2)/log(\1)', expression)
@@ -189,6 +198,8 @@ class EvaluateExpression:
             if not expression.endswith(')'):
                 expression += ')'
         
+        expression = ExpressionShortcuts.convert_permutation_expression(expression)
+    
         self.logger.debug(f"Converted '{original_expr}' to '{expression}'")
         return expression
 

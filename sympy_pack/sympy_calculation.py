@@ -21,8 +21,8 @@ LICENSE RESTRICTIONS
 - Private use must maintain all copyright and license notices
 - Any attempt to reverse engineer the MATLAB interface is prohibited
 
-Version: 1.0.2
-Last Updated: 2025.1
+Version: 1.0.3
+Last Updated: 2025.2
 '''
 
 import re

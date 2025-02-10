@@ -19,8 +19,8 @@ LICENSE RESTRICTIONS
 - Distribution or sharing of this file is not permitted
 - Private use must maintain all copyright and license notices
 
-Version: 1.0.2
-Last Updated: 2025.1
+Version: 1.0.3
+Last Updated: 2025.2
 '''
 
 import sys

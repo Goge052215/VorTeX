@@ -204,6 +204,7 @@ class ExpressionShortcuts:
         result = cls._convert_logarithms(result)
         result = cls.convert_combinatorial_expression(result)
         result = cls.convert_sum_prod_expression(result)
+        result = cls.convert_permutation_expression(result)
         
         shortcuts = {k: v for k, v in cls.get_all_shortcuts().items() if '#' not in v}
         
@@ -435,6 +436,20 @@ class ExpressionShortcuts:
         replacement = r'exp(\1)'
         converted_expr = re.sub(pattern, replacement, expr)
         return converted_expr
+
+    @staticmethod
+    def convert_factorial_expression(expr):
+        pattern = r'(\b(?:\d+|[a-zA-Z_]\w*|\([^()]+\))\b)!'
+        return re.sub(pattern, r'factorial(\1)', expr)
+
+    @staticmethod
+    def convert_permutation_expression(expr):
+        pattern = r'(\b(?:\d+|[a-zA-Z_]\w*|\([^()]+\)))(?:\*)?[Pp](?:\*)?((?:\d+|[a-zA-Z_]\w*|\([^()]+\))\b)'
+        def repl(match):
+            n = match.group(1)
+            r = match.group(2)
+            return f'factorial({n})/factorial({n}-{r})'
+        return re.sub(pattern, repl, expr)
 
     @classmethod
     def convert_equation(cls, text):
