@@ -158,10 +158,36 @@ def parse_latex_expression(latex_expr):
     
     is_equation = '=' in latex_expr
     if is_equation:
-        latex_expr = latex_expr.replace('==', '=').replace('=', '==')
-        left_side, right_side = latex_expr.split('==')
-        latex_expr = f"solve({left_side} - ({right_side}), x)"
-        logger.debug(f"Converted equation to solve format: {latex_expr}")
+        # Check if this is a differential equation (either with prime notation or d/dx notation)
+        is_diff_eq = re.search(r"[A-Za-z][A-Za-z0-9_]*'+", latex_expr) or re.search(r'd/d[xyzt]', latex_expr)
+        
+        if is_diff_eq:
+            # Handle differential equation with dsolve directly, skip solve() conversion
+            if re.search(r"[A-Za-z][A-Za-z0-9_]*'+", latex_expr):
+                # Don't convert to solve() format for prime notation
+                # Just make sure it uses == instead of = for MATLAB
+                latex_expr = latex_expr.replace('==', 'DOUBLEEQUALS').replace('=', '==').replace('DOUBLEEQUALS', '==')
+                
+                # Ensure there's something after the equals sign
+                if latex_expr.endswith('=='):
+                    latex_expr += '0'
+                elif '== ' in latex_expr and latex_expr.split('== ')[1].strip() == '':
+                    latex_expr = latex_expr.split('== ')[0] + '== 0'
+                
+                # Let the EvaluateExpression class handle this directly
+                logger.debug(f"Differential equation with prime notation detected, keeping original form: {latex_expr}")
+                return latex_expr
+            else:
+                # For d/dx notation, use ExpressionShortcuts.convert_diff_equation
+                latex_expr = ExpressionShortcuts.convert_diff_equation(latex_expr)
+                logger.debug(f"Converted differential equation using ExpressionShortcuts: {latex_expr}")
+                return latex_expr
+        else:
+            # Regular equation handling (non-differential)
+            latex_expr = latex_expr.replace('==', '=').replace('=', '==')
+            left_side, right_side = latex_expr.split('==')
+            latex_expr = f"solve({left_side} - ({right_side}), x)"
+            logger.debug(f"Converted equation to solve format: {latex_expr}")
 
     latex_expr = ExpressionShortcuts.convert_integral_expression(latex_expr)
     logger.debug(f"Converted integral expression: '{latex_expr}'")
@@ -349,7 +375,7 @@ class CalculatorApp(QWidget, LatexCalculation):
         if not (matrix_text.startswith('[') and matrix_text.endswith(']')):
             QMessageBox.warning(self, "Format Error", "Matrix must be enclosed in square brackets []")
             return
-        
+
         if ';' not in matrix_text and matrix_text.count('[') == 1:
             QMessageBox.warning(self, "Format Error", "For matrices with multiple rows, use semicolons to separate rows.\nExample: [1 2; 3 4]")
             return
@@ -883,7 +909,6 @@ class CalculatorApp(QWidget, LatexCalculation):
             if self.combo_angle.currentText() == 'Degree':
                 # Define all substitutions in a single dictionary
                 trig_substitutions = {
-                    # Regular trig functions
                     'regular': {
                         r'\bsin\((.*?)\)': r'sind(\1)',
                         r'\bcos\((.*?)\)': r'cosd(\1)',

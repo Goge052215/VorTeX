@@ -83,7 +83,7 @@ class AutoSimplify:
             return expr
 
     def _round_multiline_result(self, result):
-        """Round numbers in a multi-line result."""
+        """Round numbers in a multi-line result using intelligent rounding."""
         try:
             lines = result.split('\n')
             rounded_lines = []
@@ -107,19 +107,36 @@ class AutoSimplify:
                             if sign == '-':
                                 imag_part = -imag_part
                                 
-                            rounded_value = f"{real_part:.3f} {sign} {abs(imag_part):.3f}i"
+                            # Use round_numeric_value for each part
+                            rounded_real = self.round_numeric_value(real_part)
+                            rounded_imag = self.round_numeric_value(abs(imag_part))
+                            
+                            if float(real_part) == 0:
+                                if imag_part > 0:
+                                    rounded_value = f"{rounded_imag}i"
+                                else:
+                                    rounded_value = f"-{rounded_imag}i"
+                            else:
+                                if imag_part > 0:
+                                    rounded_value = f"{rounded_real} + {rounded_imag}i"
+                                else:
+                                    rounded_value = f"{rounded_real} - {rounded_imag}i"
                         else:
                             # Handle pure imaginary numbers
                             try:
                                 imag_part = float(value.replace('i', ''))
-                                rounded_value = f"0.000 + {imag_part:.3f}i"
+                                rounded_imag = self.round_numeric_value(abs(imag_part))
+                                if imag_part > 0:
+                                    rounded_value = f"{rounded_imag}i"
+                                else:
+                                    rounded_value = f"-{rounded_imag}i"
                             except ValueError:
                                 rounded_value = value  # Keep original if parsing fails
                     else:
                         # Handle real numbers
                         try:
                             num = float(value)
-                            rounded_value = f"{num:.3f}"
+                            rounded_value = self.round_numeric_value(num)
                         except ValueError:
                             rounded_value = value
                     
@@ -134,19 +151,24 @@ class AutoSimplify:
             return result
 
     def _round_result(self, result):
-        """Round numerical values in the result to 3 decimal places."""
+        """Round numerical values in the result to provide more meaningful representations."""
         try:
             # Handle complex numbers
             if 'i' in result:
                 return self._round_multiline_result(result)
             
-            # Use regular expressions to find and round numbers
-            rounded_result = re.sub(
-                r'(\d+\.\d+)',
-                lambda match: f"{float(match.group(0)):.3f}",
-                result
-            )
-            return rounded_result
+            # Try to convert to float and use round_numeric_value
+            try:
+                value = float(result)
+                return self.round_numeric_value(value)
+            except ValueError:
+                # Not a simple float, use regex to find numbers
+                rounded_result = re.sub(
+                    r'(\d+\.\d+)',
+                    lambda match: self.round_numeric_value(float(match.group(0))),
+                    result
+                )
+                return rounded_result
         except Exception as e:
             self.logger.error(f"Error rounding result: {e}")
             return result
@@ -183,6 +205,79 @@ class AutoSimplify:
         self.logger.debug(f"Final cleaned expression: '{expr}'")
         
         return expr
+        
+    @staticmethod
+    def round_numeric_value(value, tolerance=1e-10):
+        """
+        Apply intelligent rounding to numeric values:
+        1. Round to integers when very close
+        2. Convert to fractions when close to common fractions
+        3. Format floats appropriately otherwise
+        
+        Args:
+            value (float): The numeric value to round
+            tolerance (float): The tolerance for rounding (default: 1e-10)
+            
+        Returns:
+            str: Formatted string representation of the value
+        """
+        # Handle special values
+        if abs(value) < tolerance:
+            return "0"
+            
+        # Round to integer if very close
+        if abs(value - round(value)) < tolerance:
+            return str(int(round(value)))
+            
+        # Check for common fractions
+        common_fractions = [
+            # Halves
+            (0.5, "1/2"),
+            # Quarters
+            (0.25, "1/4"), (0.75, "3/4"),
+            # Thirds
+            (1/3, "1/3"), (2/3, "2/3"),
+            # Fifths
+            (0.2, "1/5"), (0.4, "2/5"), (0.6, "3/5"), (0.8, "4/5"),
+            # Sixths
+            (1/6, "1/6"), (5/6, "5/6"),
+            # Eighths
+            (1/8, "1/8"), (3/8, "3/8"), (5/8, "5/8"), (7/8, "7/8"),
+            # Common square roots
+            (2**0.5, "sqrt(2)"), (3**0.5, "sqrt(3)"), 
+            (0.5*2**0.5, "sqrt(2)/2"), (0.5*3**0.5, "sqrt(3)/2"),
+            (0.25*2**0.5, "sqrt(2)/4"), (0.25*3**0.5, "sqrt(3)/4"),
+            # Pi-related values
+            (3.14159265358979, "pi"), (3.14159265358979/2, "pi/2"), 
+            (3.14159265358979/3, "pi/3"), (3.14159265358979/4, "pi/4"),
+            (3.14159265358979/6, "pi/6")
+        ]
+        
+        for fraction_value, fraction_str in common_fractions:
+            if abs(value - fraction_value) < tolerance:
+                return fraction_str
+                
+        # Handle negative common fractions
+        for fraction_value, fraction_str in common_fractions:
+            if abs(value + fraction_value) < tolerance:
+                return "-" + fraction_str
+                
+        # Handle integer + common fraction
+        for fraction_value, fraction_str in common_fractions:
+            integer_part = int(value)
+            decimal_part = value - integer_part
+            if abs(decimal_part - fraction_value) < tolerance and decimal_part > 0:
+                return f"{integer_part} + {fraction_str}"
+            if abs(decimal_part + fraction_value) < tolerance and decimal_part < 0:
+                return f"{integer_part} - {fraction_str}"
+                
+        # For other values, return formatted float
+        if abs(value) > 1e6 or abs(value) < 1e-6:
+            return f"{value:.8e}"  # Scientific notation for very large/small values
+        else:
+            # Format with appropriate precision avoiding trailing zeros
+            result = f"{value:.10f}".rstrip('0').rstrip('.')
+            return result
 
     def simplify_equation(self, equation: str) -> str:
         """

@@ -8,13 +8,14 @@ from PyQt5.QtGui import QFont
 from themes.theme_manager import ThemeManager, get_aura_theme, get_tokyo_night_theme, get_light_theme
 import json
 import logging
+import matlab.engine
 
 logger = logging.getLogger(__name__)
 
 class SettingsWindow(QDialog):
     WINDOW_WIDTH = 600
     WINDOW_HEIGHT = 400
-    FONT_FAMILY = "Arial"
+    FONT_FAMILY = "Monaspace Neon"
     FONT_SIZE = 13
     GROUP_BOX_STYLE = """
         QGroupBox {
@@ -38,6 +39,7 @@ class SettingsWindow(QDialog):
         self.theme_manager = ThemeManager()
         self.init_settings()
         self.init_ui()
+        self.check_license_validity()  # Auto-check license validity on startup
         self.apply_theme()
 
     def init_settings(self):
@@ -57,7 +59,8 @@ class SettingsWindow(QDialog):
         layout = QVBoxLayout()
         
         self._create_appearance_group(layout)
-        self._create_logs_group(layout)  # Add the logs group
+        self._create_logs_group(layout)
+        self._create_matlab_credentials(layout)
         self._create_about_group(layout)
         
         self.setLayout(layout)
@@ -345,7 +348,7 @@ class SettingsWindow(QDialog):
             default_settings = {
                 "theme": "aura",
                 "input_mode": "LaTeX",
-                "angle_mode": "Degree"
+                "angle_mode": "Radian"
             }
             with open('settings.json', 'w') as f:
                 json.dump(default_settings, f, indent=4)
@@ -353,6 +356,41 @@ class SettingsWindow(QDialog):
         except Exception as e:
             logger.error(f"Error loading settings: {e}")
             return "aura"
+        
+    def _create_matlab_credentials(self, layout):
+        """Create and configure the MATLAB License credentials block"""
+        credentials_group = QGroupBox("MATLAB License")
+        credentials_group.setFont(QFont(self.FONT_FAMILY, self.FONT_SIZE, QFont.Bold))
+        
+        credentials_style = """
+            QGroupBox {
+                margin-top: 1.5em;
+                padding: 20px;
+                background-color: transparent;
+                border: 1px solid #edecee;
+                border-radius: 12px;
+            }
+            QGroupBox::title {
+                subcontrol-origin: margin;
+                left: 10px;
+                padding: 0 5px;
+                color: #edecee;
+            }
+        """
+        credentials_group.setStyleSheet(credentials_style)
+        
+        credentials_layout = QHBoxLayout()
+        credentials_layout.setSpacing(10)
+        credentials_layout.setContentsMargins(15, 15, 15, 15)
+        
+        self.license_status_label = QLabel("License Status: Unknown")
+        self.license_status_label.setFont(QFont("Monaspace Neon", 12))
+        
+        credentials_layout.addWidget(self.license_status_label)
+        credentials_layout.addStretch()
+        credentials_group.setLayout(credentials_layout)
+        
+        layout.addWidget(credentials_group)
 
     def _create_about_group(self, layout):
         """Create and configure the about section"""
@@ -472,3 +510,13 @@ class SettingsWindow(QDialog):
         except Exception as e:
             logger.error(f"Error clearing logs: {e}")
             QMessageBox.warning(self, "Error", f"Failed to clear logs: {str(e)}")
+
+    def check_license_validity(self):
+        """Check MATLAB License validity by sending a request to the MATLAB server"""
+        try:
+            eng = matlab.engine.start_matlab()
+            eng.quit()
+            self.license_status_label.setText("License Status: Valid")
+        except Exception as e:
+            self.license_status_label.setText("License Status: Invalid")
+            logger.error(f"Error checking MATLAB License: {e}")
