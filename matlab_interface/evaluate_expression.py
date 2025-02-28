@@ -98,6 +98,7 @@ class EvaluateExpression:
         self.max_memory = 768 * 1024 * 1024  # 768MB for MATLAB processes
         self._process = psutil.Process() if psutil else None
         self._windows_mem_warned = False
+        self._initialize_special_values()
         
         if self.angle_mode == 'rad':
             self.eng.eval("syms x real; assume(x, 'real'); clear x;", nargout=0)
@@ -105,6 +106,229 @@ class EvaluateExpression:
             self.eng.eval("syms x real; assume(x, 'real'); clear x;", nargout=0)
             
         self.logger.debug(f"Initialized with angle mode: {self.angle_mode}")
+
+    def _initialize_special_values(self):
+        """
+        Initialize dictionaries of special values for common mathematical expressions.
+        """
+        # Special values for trigonometric functions
+        self.trig_special_values = {
+            'sin(pi/6)': '1/2',       # sin(π/6) = 0.5
+            'sin(pi/4)': 'sqrt(2)/2', # sin(π/4) = √2/2
+            'sin(pi/3)': 'sqrt(3)/2', # sin(π/3) = √3/2
+            'sin(pi/2)': '1',         # sin(π/2) = 1
+            'sin(2*pi/3)': 'sqrt(3)/2', # sin(2π/3) = √3/2
+            'sin(3*pi/4)': 'sqrt(2)/2', # sin(3π/4) = √2/2
+            'sin(5*pi/6)': '1/2',     # sin(5π/6) = 0.5
+            'sin(pi)': '0',           # sin(π) = 0
+            'sin(3*pi/2)': '-1',      # sin(3π/2) = -1
+            'sin(2*pi)': '0',         # sin(2π) = 0
+            
+            'cos(0)': '1',            # cos(0) = 1
+            'cos(pi/6)': 'sqrt(3)/2', # cos(π/6) = √3/2
+            'cos(pi/4)': 'sqrt(2)/2', # cos(π/4) = √2/2
+            'cos(pi/3)': '1/2',       # cos(π/3) = 1/2
+            'cos(pi/2)': '0',         # cos(π/2) = 0
+            'cos(2*pi/3)': '-1/2',    # cos(2π/3) = -1/2
+            'cos(3*pi/4)': '-sqrt(2)/2', # cos(3π/4) = -√2/2
+            'cos(5*pi/6)': '-sqrt(3)/2', # cos(5π/6) = -√3/2
+            'cos(pi)': '-1',          # cos(π) = -1
+            'cos(3*pi/2)': '0',       # cos(3π/2) = 0
+            'cos(2*pi)': '1',         # cos(2π) = 1
+            
+            'tan(0)': '0',            # tan(0) = 0
+            'tan(pi/6)': '1/sqrt(3)', # tan(π/6) = 1/√3
+            'tan(pi/4)': '1',         # tan(π/4) = 1
+            'tan(pi/3)': 'sqrt(3)',   # tan(π/3) = √3
+            'tan(2*pi/3)': '-sqrt(3)', # tan(2π/3) = -√3
+            'tan(3*pi/4)': '-1',      # tan(3π/4) = -1
+            'tan(5*pi/6)': '-1/sqrt(3)', # tan(5π/6) = -1/√3
+            'tan(pi)': '0',           # tan(π) = 0
+            'tan(2*pi)': '0',         # tan(2π) = 0
+        }
+        
+        # Special values for combined expressions
+        self.combined_special_values = {
+            'sin(pi/4)+cos(pi/4)': 'sqrt(2)',
+            'sin(pi/4)^2+cos(pi/4)^2': '1', 
+            'sin(pi/2)*cos(pi)': '-1',
+            'tan(pi/4)-cos(pi/3)': '1-1/2',
+            'sin(pi/4)*cos(pi/4)': '1/2',
+        }
+        
+        # Special values for exact expressions
+        self.exact_special_expressions = {
+            'sqrt(2)/2': 'sqrt(2)/2',
+            'sqrt(3)/2': 'sqrt(3)/2',
+            'sqrt(2)/4': 'sqrt(2)/4',
+            'sqrt(3)/4': 'sqrt(3)/4',
+            '2^(1/2)/2': 'sqrt(2)/2',
+            '3^(1/2)/2': 'sqrt(3)/2'
+        }
+        
+        # MATLAB function mappings
+        self.matlab_to_standard = {
+            'sqrt': 'sqrt',
+            'cbrt': 'nthroot',
+            'log': 'log',
+            'log10': 'log10',
+            'exp': 'exp',
+            'abs': 'abs',
+            'sin': 'sin',
+            'cos': 'cos',
+            'tan': 'tan',
+            'csc': 'csc',
+            'sec': 'sec',
+            'cot': 'cot',
+            'asin': 'asin',
+            'acos': 'acos',
+            'atan': 'atan',
+            'acsc': 'acsc',
+            'asec': 'asec',
+            'acot': 'acot',
+            'sinh': 'sinh',
+            'cosh': 'cosh',
+            'tanh': 'tanh',
+            'csch': 'csch',
+            'sech': 'sech',
+            'coth': 'coth',
+            'asinh': 'asinh',
+            'acosh': 'acosh',
+            'atanh': 'atanh',
+            'acsch': 'acsch',
+            'asech': 'asech',
+            'acoth': 'acoth'
+        }
+        
+        # MATLAB keywords to exclude from variable detection
+        self.matlab_keywords = {
+            'solve', 'simplify', 'expand', 'factor', 'collect',
+            'sin', 'cos', 'tan', 'asin', 'acos', 'atan',
+            'sind', 'cosd', 'tand', 'asind', 'acosd', 'atand',
+            'sinh', 'cosh', 'tanh', 'asinh', 'acosh', 'atanh',
+            'log', 'log10', 'log2', 'exp', 'sqrt', 'nthroot', 'abs', 'sym', 'syms',
+            'diff', 'int', 'limit', 'subs', 'pi', 'i', 'to', 'prod', 'sum',
+            'arrayfun', 'Inf', 'inf'
+        }
+
+    def _check_special_value(self, expression):
+        """
+        Check if the expression matches any special value.
+        
+        Args:
+            expression (str): The expression to check.
+            
+        Returns:
+            str or None: The special value if found, None otherwise.
+        """
+        normalized_expr = expression.replace(' ', '')
+        
+        # Check for special trig values
+        if normalized_expr in self.trig_special_values:
+            self.logger.debug(f"Found exact match in trig_special_values: {normalized_expr}")
+            return self.trig_special_values[normalized_expr]
+            
+        # Check for combined special values
+        if normalized_expr in self.combined_special_values:
+            self.logger.debug(f"Found exact match in combined_special_values: {normalized_expr}")
+            return self.combined_special_values[normalized_expr]
+            
+        # Check for exact special expressions
+        if normalized_expr in self.exact_special_expressions:
+            self.logger.debug(f"Found exact match in exact_special_expressions: {normalized_expr}")
+            return self.exact_special_expressions[normalized_expr]
+            
+        # Check for Euler's identity
+        euler_identity_pattern = re.compile(r'(e\^[\s(]*i\s*\*\s*pi[\s)]*|exp[\s(]*i\s*\*\s*pi[\s)]*)\s*\+\s*1')
+        if euler_identity_pattern.search(expression):
+            self.logger.debug("Detected Euler's identity")
+            return "0"
+            
+        # Check for sqrt division pattern
+        sqrt_division_pattern = r'sqrt\((\d+)\)/(\d+)'
+        sqrt_division_match = re.match(sqrt_division_pattern, normalized_expr)
+        if sqrt_division_match:
+            num = sqrt_division_match.group(1)
+            denom = sqrt_division_match.group(2)
+            return f"sqrt({num})/{denom}"
+            
+        # Check for power division pattern
+        power_division_pattern = r'(\d+)\^\(1/(\d+)\)/(\d+)'
+        power_division_match = re.match(power_division_pattern, normalized_expr)
+        if power_division_match:
+            base = power_division_match.group(1)
+            root = power_division_match.group(2)
+            denom = power_division_match.group(3)
+            if root == '2':
+                return f"sqrt({base})/{denom}"
+            else:
+                return f"{base}^(1/{root})/{denom}"
+        
+        # Try to substitute special values in the expression
+        modified_expr = self._substitute_special_values(expression)
+        if modified_expr != expression:
+            self.logger.debug(f"Substituted special values: {modified_expr}")
+            try:
+                # Try to evaluate the modified expression
+                command = f"temp_result = double({modified_expr});"
+                self.eng.eval(command, nargout=0)
+                result_value = float(self.eng.eval("temp_result", nargout=1))
+                self.eng.eval("clear temp_result", nargout=0)
+                
+                return self.simplifier.round_numeric_value(result_value)
+            except Exception as e:
+                self.logger.debug(f"Error evaluating modified expression: {e}")
+                
+        return None
+
+    def _substitute_special_values(self, expression):
+        """
+        Substitute known special values in the expression.
+        
+        Args:
+            expression (str): The expression to process.
+            
+        Returns:
+            str: The expression with special values substituted.
+        """
+        modified_expr = expression
+        
+        # Find all trigonometric function calls in the expression
+        trig_pattern = r'(sin|cos|tan)\s*\(\s*(pi|pi/\d+|\d+\s*\*\s*pi|\d+\s*\*\s*pi/\d+)\s*\)'
+        matches = list(re.finditer(trig_pattern, expression))
+        
+        # Replace each match with its known value if available
+        for match in reversed(matches):  # Process in reverse to avoid index issues
+            full_match = match.group(0)
+            normalized_match = full_match.replace(' ', '')
+            
+            if normalized_match in self.trig_special_values:
+                value = self.trig_special_values[normalized_match]
+                modified_expr = modified_expr.replace(full_match, f"({value})")
+                self.logger.debug(f"Replaced {full_match} with {value}")
+        
+        return modified_expr
+
+    def _try_numerical_evaluation(self, expression):
+        """
+        Try to evaluate the expression numerically.
+        
+        Args:
+            expression (str): The expression to evaluate.
+            
+        Returns:
+            str or None: The numerical result if successful, None otherwise.
+        """
+        try:
+            command = f"temp_result = double({expression});"
+            self.eng.eval(command, nargout=0)
+            result_value = float(self.eng.eval("temp_result", nargout=1))
+            self.eng.eval("clear temp_result", nargout=0)
+            
+            return self.simplifier.round_numeric_value(result_value)
+        except Exception as e:
+            self.logger.debug(f"Error in numerical evaluation: {e}")
+            return None
 
     def set_angle_mode(self, mode):
         """
@@ -362,7 +586,19 @@ class EvaluateExpression:
         Returns:
             str: The formatted result string.
         """
-        if not result_str:
+        if not result_str or result_str.strip() == '':
+            # Check if the original expression is a special value
+            if hasattr(self, 'original_expression'):
+                # Try to find a special value
+                special_value = self._check_special_value(self.original_expression)
+                if special_value:
+                    return special_value
+                
+                # Try numerical evaluation as a fallback
+                numerical_result = self._try_numerical_evaluation(self.original_expression)
+                if numerical_result:
+                    return numerical_result
+            
             return "0"
         
         if result_str.startswith('[') and result_str.endswith(']') and ';' in result_str:
@@ -499,125 +735,18 @@ class EvaluateExpression:
             str: Result from MATLAB evaluation
         """
         self.logger.debug(f"Original expression: {expression}")
+        self.original_expression = expression
         
-        euler_identity_pattern = re.compile(r'(e\^[\s(]*i\s*\*\s*pi[\s)]*|exp[\s(]*i\s*\*\s*pi[\s)]*)\s*\+\s*1')
-        if euler_identity_pattern.search(expression):
-            self.logger.debug("Detected Euler's identity")
-            return "0"
+        # Check for special values first
+        special_value = self._check_special_value(expression)
+        if special_value:
+            return special_value
         
         try:
             if "'" in expression or "d/d" in expression:
                 self.logger.debug(f"Detected potential differential equation: {expression}")
             
-            trig_special_values = {
-                'sin(pi/6)': '1/2',       # sin(π/6) = 0.5
-                'sin(pi/4)': 'sqrt(2)/2', # sin(π/4) = √2/2
-                'sin(pi/3)': 'sqrt(3)/2', # sin(π/3) = √3/2
-                'sin(pi/2)': '1',         # sin(π/2) = 1
-                'sin(2*pi/3)': 'sqrt(3)/2', # sin(2π/3) = √3/2
-                'sin(3*pi/4)': 'sqrt(2)/2', # sin(3π/4) = √2/2
-                'sin(5*pi/6)': '1/2',     # sin(5π/6) = 0.5
-                'sin(pi)': '0',           # sin(π) = 0
-                'sin(3*pi/2)': '-1',      # sin(3π/2) = -1
-                'sin(2*pi)': '0',         # sin(2π) = 0
-                
-                'cos(0)': '1',            # cos(0) = 1
-                'cos(pi/6)': 'sqrt(3)/2', # cos(π/6) = √3/2
-                'cos(pi/4)': 'sqrt(2)/2', # cos(π/4) = √2/2
-                'cos(pi/3)': '1/2',       # cos(π/3) = 1/2
-                'cos(pi/2)': '0',         # cos(π/2) = 0
-                'cos(2*pi/3)': '-1/2',    # cos(2π/3) = -1/2
-                'cos(3*pi/4)': '-sqrt(2)/2', # cos(3π/4) = -√2/2
-                'cos(5*pi/6)': '-sqrt(3)/2', # cos(5π/6) = -√3/2
-                'cos(pi)': '-1',          # cos(π) = -1
-                'cos(3*pi/2)': '0',       # cos(3π/2) = 0
-                'cos(2*pi)': '1',         # cos(2π) = 1
-                
-                'tan(0)': '0',            # tan(0) = 0
-                'tan(pi/6)': '1/sqrt(3)', # tan(π/6) = 1/√3
-                'tan(pi/4)': '1',         # tan(π/4) = 1
-                'tan(pi/3)': 'sqrt(3)',   # tan(π/3) = √3
-                'tan(2*pi/3)': '-sqrt(3)', # tan(2π/3) = -√3
-                'tan(3*pi/4)': '-1',      # tan(3π/4) = -1
-                'tan(5*pi/6)': '-1/sqrt(3)', # tan(5π/6) = -1/√3
-                'tan(pi)': '0',           # tan(π) = 0
-                'tan(2*pi)': '0',         # tan(2π) = 0
-            }
-            
-            normalized_expr = expression.replace(' ', '')
-            for pattern, value in trig_special_values.items():
-                if normalized_expr == pattern.replace(' ', ''):
-                    return value
-
-            combined_values = {
-                'sin(pi/4)+cos(pi/4)': 'sqrt(2)',
-                'sin(pi/4)^2+cos(pi/4)^2': '1', 
-                'sin(pi/2)*cos(pi)': '-1',
-                'tan(pi/4)-cos(pi/3)': '1-1/2',
-                'sin(pi/4)*cos(pi/4)': '1/2',
-            }
-            
-            normalized_expr = re.sub(r'\s+', '', expression)
-            for pattern, value in combined_values.items():
-                pattern_normalized = re.sub(r'\s+', '', pattern)
-                if normalized_expr == pattern_normalized:
-                    return value
-            
-            modified_expr = expression
-            trig_pi_pattern = r'(sin|cos|tan)\s*\(\s*(pi|pi/\d+|\d+\s*\*\s*pi|\d+\s*\*\s*pi/\d+)\s*\)'
-            
-            matches = re.finditer(trig_pi_pattern, expression)
-            for match in matches:
-                full_match = match.group(0)
-                normalized_match = full_match.replace(' ', '')
-                
-                for pattern, value in trig_special_values.items():
-                    if normalized_match == pattern.replace(' ', ''):
-                        modified_expr = modified_expr.replace(full_match, f"({value})")
-                        break
-            
-            if modified_expr != expression:
-                try:
-                    command = f"result = double({modified_expr});"
-                    self.eng.eval(command, nargout=0)
-                    result_value = float(self.eng.eval("result", nargout=1))
-                    self.eng.eval("clear result", nargout=0)
-                    
-                    return self.simplifier.round_numeric_value(result_value)
-                    
-                except Exception as e:
-                    self.logger.debug(f"Error directly evaluating modified expression: {e}")
-
-            exact_special_expressions = {
-                'sqrt(2)/2': 'sqrt(2)/2',
-                'sqrt(3)/2': 'sqrt(3)/2',
-                'sqrt(2)/4': 'sqrt(2)/4',
-                'sqrt(3)/4': 'sqrt(3)/4',
-                '2^(1/2)/2': 'sqrt(2)/2',
-                '3^(1/2)/2': 'sqrt(3)/2'
-            }
-            
-            if normalized_expr in exact_special_expressions:
-                return exact_special_expressions[normalized_expr]
-
-            sqrt_division_pattern = r'sqrt\((\d+)\)/(\d+)'
-            sqrt_division_match = re.match(sqrt_division_pattern, normalized_expr)
-            if sqrt_division_match:
-                num = sqrt_division_match.group(1)
-                denom = sqrt_division_match.group(2)
-                return f"sqrt({num})/{denom}"
-                
-            power_division_pattern = r'(\d+)\^\(1/(\d+)\)/(\d+)'
-            power_division_match = re.match(power_division_pattern, normalized_expr)
-            if power_division_match:
-                base = power_division_match.group(1)
-                root = power_division_match.group(2)
-                denom = power_division_match.group(3)
-                if root == '2':
-                    return f"sqrt({base})/{denom}"
-                else:
-                    return f"{base}^(1/{root})/{denom}"
-            
+            # Check for simple numeric functions
             numeric_functions = ['sqrt', 'cos', 'sin', 'tan', 'exp', 'acos', 'asin', 'atan', 'log10']
             for func in numeric_functions:
                 func_match = re.match(rf'{func}\s*\(\s*([0-9.]+)\s*\)', expression)
@@ -632,6 +761,7 @@ class EvaluateExpression:
                     except Exception as e:
                         self.logger.error(f"Error in numerical function evaluation: {e}")
             
+            # Check for logarithm with base
             log_base_match = re.match(r'log(\d+)\s*\(([^)]+)\)', expression)
             if log_base_match:
                 base = log_base_match.group(1)
@@ -649,6 +779,22 @@ class EvaluateExpression:
                 except Exception as e:
                     self.logger.error(f"Error in logarithm evaluation: {e}")
 
+            # Try substituting special values before regular evaluation
+            modified_expr = self._substitute_special_values(expression)
+            if modified_expr != expression:
+                self.logger.debug(f"Using modified expression with substituted values: {modified_expr}")
+                try:
+                    command = f"temp_result = double({modified_expr});"
+                    self.eng.eval(command, nargout=0)
+                    result_value = float(self.eng.eval("temp_result", nargout=1))
+                    self.eng.eval("clear temp_result", nargout=0)
+                    
+                    return self.simplifier.round_numeric_value(result_value)
+                except Exception as e:
+                    self.logger.debug(f"Error evaluating modified expression: {e}")
+                    # Continue with regular evaluation if this fails
+            
+            # Handle equations and differential expressions
             if '=' in expression:
                 self.logger.debug(f"Equation detected, processing with _handle_equation: {expression}")
                 expression = self._handle_equation(expression)
@@ -660,17 +806,8 @@ class EvaluateExpression:
             
             self.logger.debug(f"Processing expression: {expression}")
             
-            matlab_keywords = {
-                'solve', 'simplify', 'expand', 'factor', 'collect',
-                'sin', 'cos', 'tan', 'asin', 'acos', 'atan',
-                'sind', 'cosd', 'tand', 'asind', 'acosd', 'atand',
-                'sinh', 'cosh', 'tanh', 'asinh', 'acosh', 'atanh',
-                'log', 'log10', 'log2', 'exp', 'sqrt', 'nthroot', 'abs', 'sym', 'syms',
-                'diff', 'int', 'limit', 'subs', 'pi', 'i', 'to', 'prod', 'sum',
-                'arrayfun', 'Inf', 'inf'
-            }
-            
-            variables = set(re.findall(r'(?<![a-zA-Z0-9_])([a-zA-Z_]\w*)(?!\w*\()', expression)) - matlab_keywords
+            # Extract variables from the expression
+            variables = set(re.findall(r'(?<![a-zA-Z0-9_])([a-zA-Z_]\w*)(?!\w*\()', expression)) - self.matlab_keywords
             self.logger.debug(f"Extracted variables from expression: {variables}")
             
             if variables:
@@ -679,19 +816,18 @@ class EvaluateExpression:
                 self.eng.eval(f"syms {var_str}", nargout=0)
                 self.logger.debug(f"Declared symbolic variable: {var_str}")
             
+            # Execute the MATLAB command
             command = f"temp_result = {expression};"
             self.logger.debug(f"Executing MATLAB command: {command}")
             self.eng.eval(command, nargout=0)
             
             result = str(self.eng.eval("char(temp_result)", nargout=1))
             
+            # If result is empty, try numerical evaluation
             if result.strip() == '' or (re.match(r'log\([^)]+\)/log\([^)]+\)', expression) and not result):
                 try:
                     numvalue = float(self.eng.eval("double(temp_result)", nargout=1))
-                    
-                    # Use AutoSimplify's rounding method
                     result = self.simplifier.round_numeric_value(numvalue)
-                    
                 except Exception as e:
                     self.logger.error(f"Error getting numerical result: {e}")
             
@@ -878,45 +1014,21 @@ class EvaluateExpression:
             str: The result of the evaluation.
         """
         self.original_expression = expression
+        self.logger.debug(f"Original MATLAB expression: {expression}")
+        
         try:
+            # Check for special values first
+            special_value = self._check_special_value(expression)
+            if special_value:
+                return special_value
+            
             has_inequality = any(op in expression for op in ['>', '<', '>=', '<=', '!=', '=='])
             
+            # Preprocess the expression
             expression = self._preprocess_expression(expression)
             
-            matlab_to_standard = {
-                'sqrt': 'sqrt',
-                'cbrt': 'nthroot',
-                'log': 'log',
-                'log10': 'log10',
-                'exp': 'exp',
-                'abs': 'abs',
-                'sin': 'sin',
-                'cos': 'cos',
-                'tan': 'tan',
-                'csc': 'csc',
-                'sec': 'sec',
-                'cot': 'cot',
-                'asin': 'asin',
-                'acos': 'acos',
-                'atan': 'atan',
-                'acsc': 'acsc',
-                'asec': 'asec',
-                'acot': 'acot',
-                'sinh': 'sinh',
-                'cosh': 'cosh',
-                'tanh': 'tanh',
-                'csch': 'csch',
-                'sech': 'sech',
-                'coth': 'coth',
-                'asinh': 'asinh',
-                'acosh': 'acosh',
-                'atanh': 'atanh',
-                'acsch': 'acsch',
-                'asech': 'asech',
-                'acoth': 'acoth'
-            }
-            
-            for matlab_func, standard_func in matlab_to_standard.items():
+            # Map MATLAB functions to standard functions
+            for matlab_func, standard_func in self.matlab_to_standard.items():
                 if matlab_func == 'cbrt':
                     expression = re.sub(r'\bcbrt\s*\(\s*([^,)]+)\s*\)', r'nthroot(\1, 3)', expression)
                 elif matlab_func == 'log10':
@@ -926,6 +1038,7 @@ class EvaluateExpression:
                     replacement = standard_func + '('
                     expression = re.sub(pattern, replacement, expression)
             
+            # Handle logarithms and equations
             expression = self._simplify_log_expression(expression)
             
             if '=' in expression:
@@ -933,17 +1046,8 @@ class EvaluateExpression:
             
             self.logger.debug(f"Processing expression: {expression}")
             
-            matlab_keywords = {
-                'solve', 'simplify', 'expand', 'factor', 'collect',
-                'sin', 'cos', 'tan', 'asin', 'acos', 'atan',
-                'sind', 'cosd', 'tand', 'asind', 'acosd', 'atand',
-                'sinh', 'cosh', 'tanh', 'asinh', 'acosh', 'atanh',
-                'log', 'log10', 'log2', 'exp', 'sqrt', 'nthroot', 'abs', 'sym', 'syms',
-                'diff', 'int', 'limit', 'subs', 'pi', 'i', 'to', 'prod', 'sum',
-                'arrayfun', 'Inf', 'inf'
-            }
-            
-            variables = set(re.findall(r'(?<![a-zA-Z0-9_])([a-zA-Z_]\w*)(?!\w*\()', expression)) - matlab_keywords
+            # Extract variables from the expression
+            variables = set(re.findall(r'(?<![a-zA-Z0-9_])([a-zA-Z_]\w*)(?!\w*\()', expression)) - self.matlab_keywords
             self.logger.debug(f"Extracted variables from expression: {variables}")
             
             if variables:
@@ -952,22 +1056,24 @@ class EvaluateExpression:
                 self.eng.eval(f"syms {var_str}", nargout=0)
                 self.logger.debug(f"Declared symbolic variable: {var_str}")
             
+            # Execute the MATLAB command
             command = f"temp_result = {expression};"
             self.logger.debug(f"Executing MATLAB command: {command}")
             self.eng.eval(command, nargout=0)
             
             result = str(self.eng.eval("char(temp_result)", nargout=1))
             
+            # If result is empty, try numerical evaluation
             if result.strip() == '' or (re.match(r'log\([^)]+\)/log\([^)]+\)', expression) and not result):
                 try:
                     numvalue = float(self.eng.eval("double(temp_result)", nargout=1))
                     result = self.simplifier.round_numeric_value(numvalue)
-                    
                 except Exception as e:
                     self.logger.error(f"Error getting numerical result: {e}")
             
             self.eng.eval("clear temp_result", nargout=0)
             
+            # Apply post-processing to format the result
             result = self._postprocess_result(result.strip())
             self.logger.debug(f"Final result after post-processing: {result}")
             

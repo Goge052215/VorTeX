@@ -3346,3 +3346,85 @@ Invalid MATLAB indexing or symbolic function definition. Symbolic function argum
 2025-02-28 12:33:15,011 - __main__ - DEBUG - Raw result from MATLAB: '[1;-17^(1/2)/2-3/2;17^(1/2)/2-3/2]'
 2025-02-28 12:33:15,011 - __main__ - DEBUG - Displayed Result: [1;-17^(1/2)/2-3/2;17^(1/2)/2-3/2]
 2025-02-28 12:33:49,835 - __main__ - INFO - MATLAB engine terminated
+2025-02-28 13:59:38,156 - __main__ - INFO - Initializing Calculator Application
+2025-02-28 13:59:42,934 - __main__ - INFO - MATLAB engine started successfully
+2025-02-28 14:00:03,743 - __main__ - DEBUG - Original expression: 'sin(pi/6)'
+2025-02-28 14:00:03,743 - __main__ - DEBUG - Original expression: 'sin(pi/6)'
+2025-02-28 14:00:03,744 - __main__ - DEBUG - After combinatorial conversion: sin(pi/6)
+2025-02-28 14:00:03,744 - __main__ - DEBUG - Converted integral expression: 'sin(pi/6)'
+2025-02-28 14:00:03,744 - __main__ - DEBUG - After explicit multiplication: 'sin(pi/6)'
+2025-02-28 14:00:03,744 - __main__ - DEBUG - Final MATLAB expression: 'sin(pi/6)'
+2025-02-28 14:00:03,744 - __main__ - DEBUG - Converted to MATLAB expression: 'sin(pi/6)'
+2025-02-28 14:00:03,749 - __main__ - DEBUG - After shortcut conversion: sin(pi/6)
+2025-02-28 14:00:03,749 - __main__ - DEBUG - Final MATLAB expression: 'sin(pi/6)'
+2025-02-28 14:00:03,763 - __main__ - DEBUG - Raw result from MATLAB: ' '
+2025-02-28 14:00:03,764 - __main__ - DEBUG - Displayed Result:  
+2025-02-28 14:02:50,955 - __main__ - INFO - MATLAB engine terminated
+2025-02-28 14:02:58,857 - __main__ - INFO - Initializing Calculator Application
+2025-02-28 14:03:05,300 - __main__ - INFO - MATLAB engine started successfully
+2025-02-28 14:03:13,683 - __main__ - DEBUG - Original expression: 'sin(pi/6)'
+2025-02-28 14:03:13,684 - __main__ - DEBUG - Original expression: 'sin(pi/6)'
+2025-02-28 14:03:13,686 - __main__ - DEBUG - After combinatorial conversion: sin(pi/6)
+2025-02-28 14:03:13,687 - __main__ - DEBUG - Converted integral expression: 'sin(pi/6)'
+2025-02-28 14:03:13,687 - __main__ - DEBUG - After explicit multiplication: 'sin(pi/6)'
+2025-02-28 14:03:13,687 - __main__ - DEBUG - Final MATLAB expression: 'sin(pi/6)'
+2025-02-28 14:03:13,687 - __main__ - DEBUG - Converted to MATLAB expression: 'sin(pi/6)'
+2025-02-28 14:03:13,695 - __main__ - DEBUG - After shortcut conversion: sin(pi/6)
+2025-02-28 14:03:13,695 - __main__ - DEBUG - Final MATLAB expression: 'sin(pi/6)'
+2025-02-28 14:03:13,700 - __main__ - DEBUG - Raw result from MATLAB: '1/2'
+2025-02-28 14:03:13,702 - __main__ - DEBUG - Displayed Result: 1/2
+2025-02-28 14:03:23,939 - __main__ - DEBUG - Original expression: 'sin(pi/6)'
+2025-02-28 14:03:23,939 - __main__ - DEBUG - Original expression: 'sin(pi/6)'
+2025-02-28 14:03:23,940 - __main__ - DEBUG - After combinatorial conversion: sin(pi/6)
+2025-02-28 14:03:23,940 - __main__ - DEBUG - Converted integral expression: 'sin(pi/6)'
+2025-02-28 14:03:23,940 - __main__ - DEBUG - After explicit multiplication: 'sin(pi/6)'
+2025-02-28 14:03:23,940 - __main__ - DEBUG - Final MATLAB expression: 'sin(pi/6)'
+2025-02-28 14:03:23,940 - __main__ - DEBUG - Converted to MATLAB expression: 'sin(pi/6)'
+2025-02-28 14:03:23,941 - __main__ - DEBUG - After shortcut conversion: sin(pi/6)
+2025-02-28 14:03:23,941 - __main__ - DEBUG - Final MATLAB expression: 'sin(pi/6)'
+2025-02-28 14:03:23,941 - __main__ - DEBUG - Raw result from MATLAB: '1/2'
+2025-02-28 14:03:23,941 - __main__ - DEBUG - Displayed Result: 1/2
+2025-02-28 14:03:24,716 - __main__ - DEBUG - Original expression: 'sin(pi/6)'
+2025-02-28 14:03:24,717 - __main__ - DEBUG - Original expression: 'sin(pi/6)'
+2025-02-28 14:03:24,717 - __main__ - DEBUG - After combinatorial conversion: sin(pi/6)
+2025-02-28 14:03:24,717 - __main__ - DEBUG - Converted integral expression: 'sin(pi/6)'
+2025-02-28 14:03:24,717 - __main__ - DEBUG - After explicit multiplication: 'sin(pi/6)'
+2025-02-28 14:03:24,717 - __main__ - DEBUG - Final MATLAB expression: 'sin(pi/6)'
+2025-02-28 14:03:24,717 - __main__ - DEBUG - Converted to MATLAB expression: 'sin(pi/6)'
+2025-02-28 14:03:24,718 - __main__ - DEBUG - After shortcut conversion: sin(pi/6)
+2025-02-28 14:03:24,718 - __main__ - DEBUG - Final MATLAB expression: 'sin(pi/6)'
+2025-02-28 14:03:24,718 - __main__ - DEBUG - Raw result from MATLAB: '1/2'
+2025-02-28 14:03:24,718 - __main__ - DEBUG - Displayed Result: 1/2
+2025-02-28 14:03:24,874 - __main__ - DEBUG - Original expression: 'sin(pi/6)'
+2025-02-28 14:03:24,874 - __main__ - DEBUG - Original expression: 'sin(pi/6)'
+2025-02-28 14:03:24,874 - __main__ - DEBUG - After combinatorial conversion: sin(pi/6)
+2025-02-28 14:03:24,874 - __main__ - DEBUG - Converted integral expression: 'sin(pi/6)'
+2025-02-28 14:03:24,874 - __main__ - DEBUG - After explicit multiplication: 'sin(pi/6)'
+2025-02-28 14:03:24,874 - __main__ - DEBUG - Final MATLAB expression: 'sin(pi/6)'
+2025-02-28 14:03:24,874 - __main__ - DEBUG - Converted to MATLAB expression: 'sin(pi/6)'
+2025-02-28 14:03:24,874 - __main__ - DEBUG - After shortcut conversion: sin(pi/6)
+2025-02-28 14:03:24,874 - __main__ - DEBUG - Final MATLAB expression: 'sin(pi/6)'
+2025-02-28 14:03:24,874 - __main__ - DEBUG - Raw result from MATLAB: '1/2'
+2025-02-28 14:03:24,874 - __main__ - DEBUG - Displayed Result: 1/2
+2025-02-28 14:03:25,220 - __main__ - DEBUG - Original expression: 'sin(pi/6)'
+2025-02-28 14:03:25,220 - __main__ - DEBUG - Original expression: 'sin(pi/6)'
+2025-02-28 14:03:25,220 - __main__ - DEBUG - After combinatorial conversion: sin(pi/6)
+2025-02-28 14:03:25,220 - __main__ - DEBUG - Converted integral expression: 'sin(pi/6)'
+2025-02-28 14:03:25,220 - __main__ - DEBUG - After explicit multiplication: 'sin(pi/6)'
+2025-02-28 14:03:25,220 - __main__ - DEBUG - Final MATLAB expression: 'sin(pi/6)'
+2025-02-28 14:03:25,220 - __main__ - DEBUG - Converted to MATLAB expression: 'sin(pi/6)'
+2025-02-28 14:03:25,221 - __main__ - DEBUG - After shortcut conversion: sin(pi/6)
+2025-02-28 14:03:25,221 - __main__ - DEBUG - Final MATLAB expression: 'sin(pi/6)'
+2025-02-28 14:03:25,221 - __main__ - DEBUG - Raw result from MATLAB: '1/2'
+2025-02-28 14:03:25,221 - __main__ - DEBUG - Displayed Result: 1/2
+2025-02-28 14:03:25,401 - __main__ - DEBUG - Original expression: 'sin(pi/6)'
+2025-02-28 14:03:25,402 - __main__ - DEBUG - Original expression: 'sin(pi/6)'
+2025-02-28 14:03:25,402 - __main__ - DEBUG - After combinatorial conversion: sin(pi/6)
+2025-02-28 14:03:25,402 - __main__ - DEBUG - Converted integral expression: 'sin(pi/6)'
+2025-02-28 14:03:25,402 - __main__ - DEBUG - After explicit multiplication: 'sin(pi/6)'
+2025-02-28 14:03:25,402 - __main__ - DEBUG - Final MATLAB expression: 'sin(pi/6)'
+2025-02-28 14:03:25,402 - __main__ - DEBUG - Converted to MATLAB expression: 'sin(pi/6)'
+2025-02-28 14:03:25,403 - __main__ - DEBUG - After shortcut conversion: sin(pi/6)
+2025-02-28 14:03:25,403 - __main__ - DEBUG - Final MATLAB expression: 'sin(pi/6)'
+2025-02-28 14:03:25,403 - __main__ - DEBUG - Raw result from MATLAB: '1/2'
+2025-02-28 14:03:25,403 - __main__ - DEBUG - Displayed Result: 1/2
