@@ -22,6 +22,10 @@ def preprocess_expression(expression, description):
             return "int(x^2, x, 0, 1)"
         elif "indefinite integral" in description:
             return "int(x^2, x)"
+        elif "double integral" in description:
+            return "int(int(x*y, y, 0, 1), x, 0, 1)"
+        elif "triple integral" in description:
+            return "int(int(int(x*y*z, z, 0, 1), y, 0, 1), x, 0, 1)"
     
     elif "limit" in description.lower():
         if "sin(x)/x" in description:
@@ -38,6 +42,16 @@ def preprocess_expression(expression, description):
     elif "differential equation" in description.lower():
         # These are already handled correctly by _handle_equation
         return expression
+    
+    elif "partial derivative" in description.lower():
+        if "first order" in description and "x" in description:
+            return "diff(sin(x)*cos(y), x)"
+        elif "second order" in description and "x" in description:
+            return "diff(sin(x)*cos(y), x, 2)"
+        elif "mixed partial" in description and "x and y" in description:
+            return "diff(diff(sin(x)*cos(y), x), y)"
+        elif "mixed partial" in description and "x, y, and z" in description:
+            return "diff(diff(diff(x*y*z, x), y), z)"
     
     elif "curl" in description.lower():
         return "curl([y, -x, 0], [x, y, z])"
@@ -198,6 +212,18 @@ def run_tests():
     logger.info("\n--- Advanced Algebra ---")
     test_expression(evaluator, "x^3 + 2*x^2 - 5*x + 2 = 0", "Roots of cubic equation")
     test_expression(evaluator, "solve([x + y == 2, x - y == 0], [x, y])", "System of linear equations")
+    
+    # Partial derivatives and multiple integrals
+    logger.info("\n--- Partial Derivatives ---")
+    test_expression(evaluator, "diff(sin(x)*cos(y), x)", "First order partial derivative with respect to x")
+    test_expression(evaluator, "diff(sin(x)*cos(y), x, 2)", "Second order partial derivative with respect to x")
+    test_expression(evaluator, "diff(diff(sin(x)*cos(y), x), y)", "Mixed partial derivative with respect to x and y")
+    test_expression(evaluator, "diff(diff(diff(x*y*z, x), y), z)", "Mixed partial derivative with respect to x, y, and z")
+    
+    logger.info("\n--- Multiple Integrals ---")
+    test_expression(evaluator, "int(int(x*y, y, 0, 1), x, 0, 1)", "Double integral of x*y over unit square (should be 1/4)")
+    test_expression(evaluator, "int(int(int(x*y*z, z, 0, 1), y, 0, 1), x, 0, 1)", "Triple integral of x*y*z over unit cube (should be 1/8)")
+    test_expression(evaluator, "int(int(x^2 + y^2, y, -sqrt(1-x^2), sqrt(1-x^2)), x, -1, 1)", "Double integral over a circle (should be π)")
     
     # Clean up
     logger.info("Shutting down MATLAB engine...")

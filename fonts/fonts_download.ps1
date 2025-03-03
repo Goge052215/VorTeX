@@ -1,6 +1,41 @@
 $repoUrl = "https://github.com/githubnext/monaspace.git"
 $localPath = "$env:TEMP\monaspace"
 
+# Function to check if Monaspace Neon font is installed
+function Test-FontInstalled {
+    param (
+        [string]$fontName = "Monaspace Neon"
+    )
+    
+    $fontsFolderPath = "$env:windir\Fonts"
+    $registryPath = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts"
+    
+    # Check registry for font
+    $registryFonts = Get-ItemProperty -Path $registryPath
+    foreach ($property in $registryFonts.PSObject.Properties) {
+        if ($property.Name -like "*$fontName*") {
+            Write-Host "Font '$fontName' found in registry: $($property.Name)" -ForegroundColor Green
+            return $true
+        }
+    }
+    
+    # Check font files directly
+    $fontFiles = Get-ChildItem -Path $fontsFolderPath | Where-Object { $_.Name -like "*Monaspace*" }
+    if ($fontFiles.Count -gt 0) {
+        Write-Host "Found $($fontFiles.Count) Monaspace font files in the fonts folder" -ForegroundColor Green
+        return $true
+    }
+    
+    Write-Host "Font '$fontName' not found" -ForegroundColor Yellow
+    return $false
+}
+
+# Check if font is already installed
+if (Test-FontInstalled) {
+    Write-Host "Monaspace Neon font is already installed." -ForegroundColor Green
+    exit 0
+}
+
 try {
     if (!(Get-Command git -ErrorAction SilentlyContinue)) {
         Write-Host "Git is not installed. Please install Git first."

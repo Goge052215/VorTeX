@@ -8,3 +8,6 @@ manim>=0.17.2
 psutil
 requests
 importlib_metadata
+matplotlib
+cairosvg
+pillow

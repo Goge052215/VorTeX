@@ -3,7 +3,7 @@ import logging
 
 class ExpressionShortcuts:
     """
-    A class containing mappings for mathematical expression shortcuts to their LaTeX equivalents.
+    Mappings for math expression shortcuts to LaTeX equivalents.
     """
     
     DERIVATIVE_SHORTCUTS = {
@@ -38,7 +38,45 @@ class ExpressionShortcuts:
         'd2t': r'\frac{d^2}{dt^2}',
         'd3x': r'\frac{d^3}{dx^3}',
         'd3y': r'\frac{d^3}{dy^3}',
-        'd3t': r'\frac{d^3}{dt^3}'
+        'd3t': r'\frac{d^3}{dt^3}',
+        
+        # Partial derivatives
+        'partial/dx': r'\frac{\partial}{\partial x}',
+        'partial/dy': r'\frac{\partial}{\partial y}',
+        'partial/dz': r'\frac{\partial}{\partial z}',
+        'partial/dt': r'\frac{\partial}{\partial t}',
+        'partial2/dx2': r'\frac{\partial^2}{\partial x^2}',
+        'partial2/dy2': r'\frac{\partial^2}{\partial y^2}',
+        'partial2/dz2': r'\frac{\partial^2}{\partial z^2}',
+        'partial2/dt2': r'\frac{\partial^2}{\partial t^2}',
+        'partial2/dxdy': r'\frac{\partial^2}{\partial x \partial y}',
+        'partial2/dxdz': r'\frac{\partial^2}{\partial x \partial z}',
+        'partial2/dydz': r'\frac{\partial^2}{\partial y \partial z}',
+        'partial3/dx3': r'\frac{\partial^3}{\partial x^3}',
+        'partial3/dy3': r'\frac{\partial^3}{\partial y^3}',
+        'partial3/dz3': r'\frac{\partial^3}{\partial z^3}',
+        'partial3/dxdy2': r'\frac{\partial^3}{\partial x \partial y^2}',
+        'partial3/dx2dy': r'\frac{\partial^3}{\partial x^2 \partial y}',
+        'partial3/dxdydz': r'\frac{\partial^3}{\partial x \partial y \partial z}',
+        
+        # Shorthand for partial derivatives
+        'pdx': r'\frac{\partial}{\partial x}',
+        'pdy': r'\frac{\partial}{\partial y}',
+        'pdz': r'\frac{\partial}{\partial z}',
+        'pdt': r'\frac{\partial}{\partial t}',
+        'pd2x': r'\frac{\partial^2}{\partial x^2}',
+        'pd2y': r'\frac{\partial^2}{\partial y^2}',
+        'pd2z': r'\frac{\partial^2}{\partial z^2}',
+        'pd2t': r'\frac{\partial^2}{\partial t^2}',
+        'pd2xy': r'\frac{\partial^2}{\partial x \partial y}',
+        'pd2xz': r'\frac{\partial^2}{\partial x \partial z}',
+        'pd2yz': r'\frac{\partial^2}{\partial y \partial z}',
+        'pd3x': r'\frac{\partial^3}{\partial x^3}',
+        'pd3y': r'\frac{\partial^3}{\partial y^3}',
+        'pd3z': r'\frac{\partial^3}{\partial z^3}',
+        'pd3xy2': r'\frac{\partial^3}{\partial x \partial y^2}',
+        'pd3x2y': r'\frac{\partial^3}{\partial x^2 \partial y}',
+        'pd3xyz': r'\frac{\partial^3}{\partial x \partial y \partial z}',
     }
     
     COMBINATORIAL_SHORTCUTS = {
@@ -54,6 +92,12 @@ class ExpressionShortcuts:
         'iint': r'\iint',
         'iiint': r'\iiint',
         'oint': r'\oint',
+        # Double and triple integrals with limits
+        'iint (a to b, c to d)': r'\iint_{a,c}^{b,d}',
+        'iiint (a to b, c to d, e to f)': r'\iiint_{a,c,e}^{b,d,f}',
+        # Double and triple integrals with variables
+        'double_int': r'\iint',
+        'triple_int': r'\iiint',
     }
     
     FUNCTION_SHORTCUTS = {
@@ -174,8 +218,102 @@ class ExpressionShortcuts:
     def convert_shortcut(cls, text):
         result = text
         
-        if text.startswith('d') and ('/' in text or text[1:2].isdigit()):
-            parts = text.split(' ', 1)
+        # Handle partial derivatives with parentheses: pd2xy(sin(x)*cos(y))
+        pd_paren_pattern = re.compile(r'pd(\d+)([a-zA-Z]+)\(([^)]+)\)')
+        if pd_paren_pattern.search(text):
+            def replace_pd_paren(match):
+                order = match.group(1)
+                vars = match.group(2)
+                expr = match.group(3)
+                
+                if len(vars) == 1:
+                    # Single variable partial
+                    return f"diff({expr}, {vars}, {order})"
+                elif len(vars) == 2 and order == '2':
+                    # Mixed partial
+                    var1 = vars[0]
+                    var2 = vars[1]
+                    return f"diff(diff({expr}, {var1}), {var2})"
+                elif len(vars) == 3 and order == '3':
+                    # Triple mixed partial
+                    var1, var2, var3 = vars
+                    return f"diff(diff(diff({expr}, {var1}), {var2}), {var3})"
+                else:
+                    # Default case
+                    return f"diff({expr}, {vars[0]}, {order})"
+                
+            result = pd_paren_pattern.sub(replace_pd_paren, result)
+            return result
+        
+        # Handle single variable partial derivatives without order number: pdx sin(x)*cos(y)
+        pd_single_pattern = re.compile(r'pd([a-zA-Z])\s+([^$]+)')
+        if pd_single_pattern.search(result):
+            def replace_pd_single(match):
+                var = match.group(1)
+                expr = match.group(2).strip()
+                return f"diff({expr}, {var})"
+                
+            result = pd_single_pattern.sub(replace_pd_single, result)
+            return result
+        
+        # Handle partial derivatives with space: pd2xy sin(x)*cos(y)
+        pd_space_pattern = re.compile(r'pd(\d+)([a-zA-Z]+)\s+([^$]+)')
+        if pd_space_pattern.search(result):
+            def replace_pd_space(match):
+                order = match.group(1)
+                vars = match.group(2)
+                expr = match.group(3).strip()
+                
+                if len(vars) == 1:
+                    # Single variable partial derivative: pd2x sin(x)*cos(y)
+                    return f"diff({expr}, {vars}, {order})"
+                elif len(vars) == 2 and order == '2':
+                    # Mixed partial derivative: pd2xy sin(x)*cos(y)
+                    var1 = vars[0]
+                    var2 = vars[1]
+                    return f"diff(diff({expr}, {var1}), {var2})"
+                elif len(vars) == 3 and order == '3':
+                    # Triple mixed partial: pd3xyz sin(x)*cos(y)*sin(z)
+                    var1, var2, var3 = vars
+                    return f"diff(diff(diff({expr}, {var1}), {var2}), {var3})"
+                else:
+                    # Default case
+                    return f"diff({expr}, {vars[0]}, {order})"
+                
+            result = pd_space_pattern.sub(replace_pd_space, result)
+            return result
+        
+        # Handle standard partial derivative notation: partial/dx sin(x)*cos(y)
+        partial_pattern = re.compile(r'partial(\d*)/d([a-zA-Z])(\d*)\s+([^$]+)')
+        if partial_pattern.search(result):
+            def replace_partial(match):
+                order = match.group(1) or '1'
+                var = match.group(2)
+                power = match.group(3) or order
+                expr = match.group(4).strip()
+                
+                return f"diff({expr}, {var}, {order})"
+                
+            result = partial_pattern.sub(replace_partial, result)
+            return result
+        
+        # Handle mixed partial derivatives: partial2/dxdy sin(x)*cos(y)
+        mixed_partial_pattern = re.compile(r'partial(\d+)/d([a-zA-Z])d([a-zA-Z])\s+([^$]+)')
+        if mixed_partial_pattern.search(result):
+            def replace_mixed_partial(match):
+                order = match.group(1) or '2'
+                var1 = match.group(2)
+                var2 = match.group(3)
+                expr = match.group(4).strip()
+                
+                return f"diff(diff({expr}, {var1}), {var2})"
+                
+            result = mixed_partial_pattern.sub(replace_mixed_partial, result)
+            return result
+        
+        # Handle ordinary derivatives: d/dx sin(x)
+        if result.startswith('d') and ('/' in result or result[1:2].isdigit()):
+            parts = result.split(' ', 1)
             if len(parts) == 2:
                 derivative_part, function_part = parts
                 
@@ -184,20 +322,14 @@ class ExpressionShortcuts:
                     if order_match:
                         order = order_match.group(1) or '1'
                         var = order_match.group(2)
-                        power = order_match.group(3) or order  # Use same number for denominator power
-                        return f"\\frac{{d^{order}}}{{d{var}^{power}}} {function_part}"
+                        return f"diff({function_part}, {var}, {order})"
                 else:
                     order_match = re.match(r'd(\d*)([xyzt])', derivative_part)
                     if order_match:
                         order = order_match.group(1) or '1'
                         var = order_match.group(2)
-                        return f"\\frac{{d^{order}}}{{d{var}^{order}}} {function_part}"
-                    order_match = re.match(r'd(\d*)([xyz])', derivative_part)
-                    if order_match:
-                        order = order_match.group(1) or '1'
-                        var = order_match.group(2)
-                        return f"\\frac{{d^{order}}}{{d{var}^{order}}} {function_part}"
-
+                        return f"diff({function_part}, {var}, {order})"
+        
         result = cls.convert_exponential_expression(result)
         result = cls.convert_integral_expression(result)
         result = cls.convert_limit_expression(result)
@@ -213,28 +345,40 @@ class ExpressionShortcuts:
             pattern = '|'.join(map(re.escape, sorted(shortcuts.keys(), key=len, reverse=True)))
             result = re.sub(pattern, lambda m: shortcuts[m.group()], result)
         
+        # Insert an explicit multiplication operator between a closing parenthesis and a letter
+        result = re.sub(r'\)([a-zA-Z])', r')*\1', result)
+        
+        # Don't add multiplication operators after 'pd' patterns to preserve partial derivative notation
+        # This prevents patterns like pd2xy from becoming pd2*xy
+        def insert_mul_except_pd(match):
+            whole_text = match.string
+            match_start = match.start()
+            # Check if this match is preceded by 'pd'
+            if match_start >= 2 and whole_text[match_start-2:match_start] == 'pd':
+                # This is a partial derivative notation like pd2x, don't add multiplication
+                return f"{match.group(1)}{match.group(2)}"
+            else:
+                # Normal case, add multiplication
+                return f"{match.group(1)}*{match.group(2)}"
+                
+        result = re.sub(r'(\d+)([a-zA-Z_])', insert_mul_except_pd, result)
+        
         return result.replace('\\', '')
     
     @staticmethod
     def convert_integral_expression(text):
         """
-        Convert integral expressions to a format compatible with symbolic computation.
+        Convert integral expressions for symbolic computation.
         
-        Handles both definite integrals in the format:
-        - 'int (a to b) expression dx'
-        - 'int_{a}^{b} expression dx'
-        
-        And indefinite integrals in the format:
-        - 'int expression dx'
-        
-        The method also handles logarithmic and exponential expressions within the integration limits.
+        Handles definite integrals ('int (a to b) expr dx'),
+        indefinite integrals ('int expr dx'),
+        and multiple integrals (double/triple).
         
         Args:
-            text (str): The text containing integral expressions.
+            text (str): Text with integral expressions
             
         Returns:
-            str: The text with integral expressions converted to the format 'int(expression, var, lower, upper)' for
-                 definite integrals and 'int(expression, var)' for indefinite integrals.
+            str: Text with converted integral format
         """
         def replace_definite_integral(match):
             integral, limits, expr, var = match.groups()
@@ -275,7 +419,173 @@ class ExpressionShortcuts:
                 var = var[1:]
             
             return f"int({expr.strip()}, {var.strip()})"
+            
+        def replace_double_integral(match):
+            integral, limits, expr, var1, var2 = match.groups()
+            
+            # Process variables
+            var1 = var1.strip()
+            var2 = var2.strip()
+            if var1.startswith('d'):
+                var1 = var1[1:]
+            if var2.startswith('d'):
+                var2 = var2[1:]
+                
+            # Handle limits for double integral
+            if limits:
+                # Parse limits like (a to b, c to d) or _{a,c}^{b,d}
+                limits = limits.strip().strip('()')
+                
+                # Handle LaTeX style limits _{a,c}^{b,d}
+                if '_' in limits and '^' in limits:
+                    lower_match = re.search(r'_{([^}]*)}', limits)
+                    upper_match = re.search(r'\^{([^}]*)}', limits)
+                    
+                    if lower_match and upper_match:
+                        lower_limits = lower_match.group(1).split(',')
+                        upper_limits = upper_match.group(1).split(',')
+                        
+                        if len(lower_limits) >= 2 and len(upper_limits) >= 2:
+                            x_lower = lower_limits[0].strip()
+                            y_lower = lower_limits[1].strip()
+                            x_upper = upper_limits[0].strip()
+                            y_upper = upper_limits[1].strip()
+                        else:
+                            x_lower, y_lower = "0", "0"
+                            x_upper, y_upper = "1", "1"
+                # Handle simplified format (a to b, c to d)
+                elif ',' in limits:
+                    x_limits, y_limits = limits.split(',', 1)
+                    
+                    # Extract x limits
+                    if "to" in x_limits:
+                        x_lower, x_upper = x_limits.strip().split("to")
+                        x_lower = x_lower.strip()
+                        x_upper = x_upper.strip()
+                    else:
+                        x_lower, x_upper = "0", "1"
+                        
+                    # Extract y limits
+                    if "to" in y_limits:
+                        y_lower, y_upper = y_limits.strip().split("to")
+                        y_lower = y_lower.strip()
+                        y_upper = y_upper.strip()
+                    else:
+                        y_lower, y_upper = "0", "1"
+                else:
+                    # Default limits if not properly formatted
+                    x_lower, y_lower = "0", "0"
+                    x_upper, y_upper = "1", "1"
+                        
+                # Clean up limits
+                for limit_var in [x_lower, x_upper, y_lower, y_upper]:
+                    if "ln" in limit_var:
+                        limit_var = limit_var.replace("ln", "log")
+                    if "e^" in limit_var:
+                        limit_var = limit_var.replace("e^", "exp")
+                            
+                return f"int(int({expr.strip()}, {var2}, {y_lower}, {y_upper}), {var1}, {x_lower}, {x_upper})"
+            else:
+                # Indefinite double integral
+                return f"int(int({expr.strip()}, {var2}), {var1})"
+                
+        def replace_triple_integral(match):
+            integral, limits, expr, var1, var2, var3 = match.groups()
+            
+            # Process variables
+            var1 = var1.strip()
+            var2 = var2.strip()
+            var3 = var3.strip()
+            if var1.startswith('d'):
+                var1 = var1[1:]
+            if var2.startswith('d'):
+                var2 = var2[1:]
+            if var3.startswith('d'):
+                var3 = var3[1:]
+                
+            # Handle limits for triple integral
+            if limits:
+                # Parse limits like (a to b, c to d, e to f) or _{a,c,e}^{b,d,f}
+                limits = limits.strip().strip('()')
+                
+                # Handle LaTeX style limits _{a,c,e}^{b,d,f}
+                if '_' in limits and '^' in limits:
+                    lower_match = re.search(r'_{([^}]*)}', limits)
+                    upper_match = re.search(r'\^{([^}]*)}', limits)
+                    
+                    if lower_match and upper_match:
+                        lower_limits = lower_match.group(1).split(',')
+                        upper_limits = upper_match.group(1).split(',')
+                        
+                        if len(lower_limits) >= 3 and len(upper_limits) >= 3:
+                            x_lower = lower_limits[0].strip()
+                            y_lower = lower_limits[1].strip()
+                            z_lower = lower_limits[2].strip()
+                            x_upper = upper_limits[0].strip()
+                            y_upper = upper_limits[1].strip()
+                            z_upper = upper_limits[2].strip()
+                        else:
+                            x_lower, y_lower, z_lower = "0", "0", "0"
+                            x_upper, y_upper, z_upper = "1", "1", "1"
+                    else:
+                        x_lower, y_lower, z_lower = "0", "0", "0"
+                        x_upper, y_upper, z_upper = "1", "1", "1"
+                # Handle simplified format (a to b, c to d, e to f)
+                elif limits.count(',') >= 2:
+                    parts = limits.split(',', 2)
+                    x_limits = parts[0].strip()
+                    y_limits = parts[1].strip()
+                    z_limits = parts[2].strip()
+                    
+                    # Extract x limits
+                    if "to" in x_limits:
+                        x_lower, x_upper = x_limits.split("to")
+                        x_lower = x_lower.strip()
+                        x_upper = x_upper.strip()
+                    else:
+                        x_lower, x_upper = "0", "1"
+                        
+                    # Extract y limits
+                    if "to" in y_limits:
+                        y_lower, y_upper = y_limits.split("to")
+                        y_lower = y_lower.strip()
+                        y_upper = y_upper.strip()
+                    else:
+                        y_lower, y_upper = "0", "1"
+                        
+                    # Extract z limits
+                    if "to" in z_limits:
+                        z_lower, z_upper = z_limits.split("to")
+                        z_lower = z_lower.strip()
+                        z_upper = z_upper.strip()
+                    else:
+                        z_lower, z_upper = "0", "1"
+                else:
+                    # Default limits if not properly formatted
+                    x_lower, y_lower, z_lower = "0", "0", "0"
+                    x_upper, y_upper, z_upper = "1", "1", "1"
+                        
+                # Clean up limits
+                for limit_var in [x_lower, x_upper, y_lower, y_upper, z_lower, z_upper]:
+                    if "ln" in limit_var:
+                        limit_var = limit_var.replace("ln", "log")
+                    if "e^" in limit_var:
+                        limit_var = limit_var.replace("e^", "exp")
+                            
+                return f"int(int(int({expr.strip()}, {var3}, {z_lower}, {z_upper}), {var2}, {y_lower}, {y_upper}), {var1}, {x_lower}, {x_upper})"
+            else:
+                # Indefinite triple integral
+                return f"int(int(int({expr.strip()}, {var3}), {var2}), {var1})"
         
+        # Pattern for double integral with or without limits
+        pattern_double = r'(iint|\\iint|double_int)\s*(\([^)]+\))?\s*([^d]*)\s*(d[a-zA-Z])\s*(d[a-zA-Z])'
+        text = re.sub(pattern_double, replace_double_integral, text)
+        
+        # Pattern for triple integral with or without limits
+        pattern_triple = r'(iiint|\\iiint|triple_int)\s*(\([^)]+\))?\s*([^d]*)\s*(d[a-zA-Z])\s*(d[a-zA-Z])\s*(d[a-zA-Z])'
+        text = re.sub(pattern_triple, replace_triple_integral, text)
+        
+        # Original patterns for single integrals
         pattern_definite = r'(int)\s*(\([^)]+to[^)]+\)|_{[^}]*}\^{[^}]*})\s*([^d]*)\s*(d[a-zA-Z])'
         text = re.sub(pattern_definite, replace_definite_integral, text)
         
@@ -286,7 +596,7 @@ class ExpressionShortcuts:
 
     @staticmethod
     def _convert_logarithms(expr):
-        """Convert different logarithm notations to MATLAB format."""
+        """Convert logarithm notations to MATLAB format."""
 
         expr = re.sub(r'lg\s*\((.*?)\)', r'log10(\1)', expr)
         expr = re.sub(r'ln\s*\((.*?)\)', r'log(\1)', expr)
@@ -298,18 +608,18 @@ class ExpressionShortcuts:
     @classmethod
     def convert_log_with_base(cls, expr):
         """
-        Convert logarithms with arbitrary bases to the appropriate format for computation.
+        Convert logarithms with arbitrary bases.
         
-        This handles:
-        - logn(x) format (log with base n, e.g., log3(9))
-        - log_n(x) format (log with base n using underscore, e.g., log_3(9))
-        - log(base, x) format (log with explicit base parameter)
+        Handles:
+        - logn(x) format
+        - log_n(x) format
+        - log(base, x) format
         
         Args:
-            expr (str): Expression containing logarithmic terms
+            expr (str): Expression with logarithmic terms
             
         Returns:
-            str: Expression with logarithms converted to appropriate format
+            str: Expression with converted logarithms
         """
 
         expr = re.sub(r'log_(\d+)\s*\((.*?)\)', lambda m: f'log({m.group(2)})/log({m.group(1)})', expr)

@@ -1,5 +1,9 @@
 {
-    "theme": "light",
+    "theme": "anysphere",
     "input_mode": "LaTeX",
-    "angle_mode": "Degree"
+    "angle_mode": "Degree",
+    "font_settings": {
+        "family": "Monaspace Neon",
+        "size": 13
+    }
 }

@@ -3,6 +3,7 @@ import logging
 import numpy as np
 import re
 from sympy import Symbol, sympify
+import os
 
 class MathVisualizer:
     """Handles mathematical visualizations using Manim."""
@@ -50,176 +51,191 @@ class MathVisualizer:
             self.logger.error(f"Error checking LaTeX dependencies: {e}")
 
     class FunctionScene(Scene):
-        """Base scene for function visualization."""
+        """Scene for visualizing mathematical functions with manim."""
         def __init__(self, func_str, x_range=(-10, 10), y_range=(-5, 5), display_text=None, logger=None):
+            """Initialize the function scene with the provided parameters.
+            
+            Args:
+                func_str (str): The function string to visualize.
+                x_range (tuple): The range for x-axis.
+                y_range (tuple): The range for y-axis.
+                display_text (str): Optional text to display instead of the function.
+                logger: Logger for debug messages.
+            """
             super().__init__()
-            self.func_str = str(func_str)
-            self.display_text = str(display_text or func_str)
-            
-            try:
-                self.x_range = float(x_range[0]), float(x_range[1])
-                self.y_range = float(y_range[0]), float(y_range[1])
-            except:
-                self.logger.warning("Invalid x_range or y_range provided, using default (-10, 10) and (-5, 5)")
-                self.x_range = (-10, 10)
-                self.y_range = (-5, 5)
-            
+            self.func_str = func_str
+            self.x_range = x_range
+            self.y_range = y_range
+            self.display_text = display_text if display_text else func_str
             self.logger = logger
 
         def construct(self):
+            """Construct the scene with function graph and labels."""
+            # Create axes
+            axes = Axes(
+                x_range=[self.x_range[0], self.x_range[1], 1],
+                y_range=[self.y_range[0], self.y_range[1], 1],
+                x_length=10,
+                y_length=8,
+                axis_config={
+                    "include_numbers": False,
+                    "include_ticks": False
+                }
+            ).scale(0.8)
+
+            axes.center()
+            
+            x_label = axes.get_x_axis_label("x").scale(0.8)
+            y_label = axes.get_y_axis_label("y").scale(0.8)
+
             try:
-                if isinstance(self.func_str, tuple):
-                    self.func_str = str(self.func_str[0])
-
-                axes = Axes(
-                    x_range=[self.x_range[0], self.x_range[1], (self.x_range[1] - self.x_range[0]) / 10],
-                    y_range=[self.y_range[0], self.y_range[1], (self.y_range[1] - self.y_range[0]) / 10],
-                    tips=True,
-                    y_length=8,
-                    axis_config={"include_numbers": False}
-                ).scale(0.8)
-
-                axes.center()
+                # Prepare a clean display expression for LaTeX
+                display_expr = "y=" + self._prepare_display_text(self.display_text)
                 
-                x_label = axes.get_x_axis_label("x").scale(0.8)
-                y_label = axes.get_y_axis_label("y").scale(0.8)
-
+                if self.logger:
+                    self.logger.debug(f"LaTeX display expression: {display_expr}")
+                    
+                # Create the actual function for evaluation using SymPy
+                import sympy as sp
+                from sympy.abc import x
+                from sympy import sympify, lambdify
+                
+                # Import common mathematical functions to be available during evaluation
+                from sympy import sin, cos, tan, exp, log, sqrt
+                
+                # Clean up the expression for SymPy
+                expr_str = str(self.func_str).strip()
+                
+                if self.logger:
+                    self.logger.debug(f"Final expression for evaluation: '{expr_str}'")
+                
+                # Try to parse the expression directly without tokens
                 try:
-                    display_expr = str(self.func_str)
-                    display_expr = "y=" + display_expr
-                    
-                    display_expr = re.sub(r'e\^x', r'e^{x}', display_expr)
-                    display_expr = re.sub(r'exp\(x\)', r'e^{x}', display_expr)
-                    
-                    display_expr = re.sub(r'(\d+)\*([a-zA-Z])', r'\1\2', display_expr)
-                    
-                    display_expr = re.sub(r'log(\d+)\(([^)]+)\)', r'\\log_{\1} \2', display_expr)
-                    display_expr = re.sub(r'log\(([^)]+)\)', r'\\ln \1', display_expr)
-                    display_expr = re.sub(r'ln\(([^)]+)\)', r'\\ln \1', display_expr)
-
-                    trig_functions = {
-                        'arcsin': 'sin^{-1}',
-                        'arccos': 'cos^{-1}',
-                        'arctan': 'tan^{-1}',
-                        'arccot': 'cot^{-1}',
-                        'arcsec': 'sec^{-1}',
-                        'arccsc': 'csc^{-1}',
-                        'sin': 'sin',
-                        'cos': 'cos',
-                        'tan': 'tan',
-                        'cot': 'cot',
-                        'sec': 'sec',
-                        'csc': 'csc'
-                    }
-                    
-                    hyperbolic_functions = {
-                        'arcsinh': 'sinh^{-1}',
-                        'arccosh': 'cosh^{-1}',
-                        'arctanh': 'tanh^{-1}',
-                        'arccoth': 'coth^{-1}',
-                        'sinh': 'sinh',
-                        'cosh': 'cosh',
-                        'tanh': 'tanh',
-                        'coth': 'coth'
-                    }
-                    
-                    for func, latex_func in trig_functions.items():
-                        display_expr = re.sub(
-                            rf'{func}\(([^)]+)\)',
-                            rf'\\{latex_func} \1',
-                            display_expr
-                        )
-                    
-                    for func, latex_func in hyperbolic_functions.items():
-                        display_expr = re.sub(
-                            rf'{func}\(([^)]+)\)',
-                            rf'\\{latex_func} \1',
-                            display_expr
-                        )
-                    
-                    # Convert the expression for computation
-                    expr_str = re.sub(r'\\log_(\d+)\s+([^)]+)', r'log(\2)/log(\1)', display_expr)
-                    expr_str = re.sub(r'\\ln\s+([^)]+)', r'log(\1)', expr_str)
-                    
-                    # Handle equation case (contains '=')
-                    if '=' in expr_str:
-                        left_side, right_side = expr_str.split('=')
-                        expr_str = f"({left_side})-({right_side})"
-                    else:
-                        expr_str = self.func_str
-
-                    expr_str = re.sub(r'e\^(\([^)]+\)|\w+)', lambda m: f'exp{m.group(1)}', expr_str)
-                    expr_str = re.sub(r'log(\d+)\(([^)]+)\)', lambda m: f'log({m.group(2)})/log({m.group(1)})', expr_str)
-                    
-                    # Update expression string handling
-                    expr_str = str(self.func_str)
-                    expr_str = re.sub(r'e\^x', r'exp(x)', expr_str)
-                    
-                    x = Symbol('x')
+                    # First attempt: direct parsing
                     expr = sympify(expr_str)
+                    f = lambdify(x, expr, "numpy")
                     
-                    def safe_eval(x_val):
-                        try:
-                            result = float(expr.subs('x', float(x_val)))
-                            if np.isnan(result) or np.isinf(result):
-                                return None
-                            return result
-                        except Exception as e:
-                            self.logger.debug(f"Evaluation error at x={x_val}: {e}")
-                            return None
-
-                    x_vals = np.linspace(self.x_range[0], self.x_range[1], 2000)
-                    y_vals = [safe_eval(x_val) for x_val in x_vals]
-                    
-                    valid_points = [(x, y) for x, y in zip(x_vals, y_vals) if y is not None]
-                    if valid_points:
-                        x_coords, y_coords = zip(*valid_points)
-                        
-                        graph = VMobject()
-                        graph.set_points_smoothly([
-                            axes.c2p(x, y) for x, y in zip(x_coords, y_coords)
-                        ])
-                        graph.set_color(YELLOW)
-
-                        x_right = self.x_range[0] + (self.x_range[1] - self.x_range[0]) * 0.7
-                        try:
-                            y_right = safe_eval(x_right)
-                            if y_right is None:
-                                y_right = self.y_range[1] * 0.7
-                            y_offset = (self.y_range[1] - self.y_range[0]) * 0.1
-                            y_label_pos = min(y_right + y_offset, self.y_range[1] * 0.8)
-                        except:
-                            y_label_pos = self.y_range[1] * 0.7
-                        
-                        label = MathTex(display_expr).scale(0.8)
-                        label.next_to(graph, RIGHT, buff=0.5)
-                        
-                        self.add(axes, graph, label)
-
-                        self.play(Create(axes), run_time=1)
-                        self.play(Write(x_label), Write(y_label), run_time=0.5)
-                        self.play(Create(graph), run_time=2)
-                        self.play(Write(label), run_time=1)
-                        
-                        self.wait(2)
-                    else:
-                        raise ValueError("No valid points to plot")
-
+                    if self.logger:
+                        self.logger.debug(f"Successfully parsed expression: {expr}")
                 except Exception as e:
-                    self.logger.error(f"Error creating graph: {str(e)}")
-                    error_text = Text(f"Error: {str(e)}", color=RED).scale(0.6)
-                    self.add(error_text)
-                    self.wait(2)
-
+                    if self.logger:
+                        self.logger.error(f"Failed to parse expression '{expr_str}': {e}")
+                    # Fall back to a simple linear function
+                    expr = x
+                    f = lambdify(x, expr, "numpy")
+                
+                # Create a denser sampling for smooth plotting
+                num_samples = 2000  # Higher number for smoother curves
+                x_min, x_max = self.x_range
+                step = (x_max - x_min) / num_samples
+                
+                points = []
+                valid_points = 0
+                
+                for i in range(num_samples + 1):
+                    x_val = x_min + i * step
+                    try:
+                        y_val = float(f(x_val))
+                        if self.y_range[0] <= y_val <= self.y_range[1]:
+                            points.append((x_val, y_val, 0))
+                            valid_points += 1
+                    except Exception as e:
+                        if self.logger:
+                            self.logger.debug(f"Evaluation error at x={x_val}: {e}")
+                
+                if self.logger:
+                    self.logger.debug(f"Generated {valid_points} valid points out of {num_samples + 1} total points")
+                
+                if valid_points == 0:
+                    if self.logger:
+                        self.logger.warning("No valid points found. Creating default linear function.")
+                    # If no valid points are found, create a simple linear function
+                    expr = x
+                    f = lambdify(x, expr, "numpy")
+                    points = []
+                    for i in range(num_samples + 1):
+                        x_val = x_min + i * step
+                        try:
+                            y_val = float(f(x_val))
+                            if self.y_range[0] <= y_val <= self.y_range[1]:
+                                points.append((x_val, y_val, 0))
+                        except Exception as e:
+                            if self.logger:
+                                self.logger.debug(f"Evaluation error at x={x_val}: {e}")
+                
+                # Create the graph
+                graph = axes.plot_line_graph(
+                    x_values=[p[0] for p in points],
+                    y_values=[p[1] for p in points],
+                    line_color=BLUE,
+                    add_vertex_dots=False
+                )
+                
+                # Create label and position it in the top-right corner
+                func_tex = MathTex(display_expr).scale(0.8)
+                
+                # Position the equation in the top-right corner
+                func_tex.to_corner(UR, buff=0.5)
+                
+                # Add all elements to the scene
+                self.add(axes, x_label, y_label, graph, func_tex)
+                
+                # Animate the drawing of the graph
+                self.play(Create(axes), Create(x_label), Create(y_label))
+                self.play(Write(func_tex))
+                self.play(Create(graph))
+                self.wait(1)
+                
             except Exception as e:
-                self.logger.error(f"Error in visualization: {str(e)}")
-                error_text = Text("Error visualizing function", color=RED).scale(0.6)
-                self.add(error_text)
-                self.wait(2)
+                if self.logger:
+                    self.logger.error(f"Error in FunctionScene: {e}")
+                # Create fallback scene
+                text = Text("Error visualizing function").scale(0.8)
+                self.add(text)
+                self.play(Write(text))
+                self.wait(1)
+
+        def _prepare_display_text(self, text):
+            """Prepare text for LaTeX display by formatting mathematical functions and symbols.
+            
+            Args:
+                text (str): The text to prepare for LaTeX display.
+                
+            Returns:
+                str: The formatted text suitable for LaTeX display.
+            """
+            if text is None:
+                return ""
+            
+            # Convert to string if not already
+            text = str(text)
+            
+            # Replace ** with ^ for LaTeX
+            text = text.replace("**", "^")
+            
+            # Replace * with \cdot for LaTeX
+            text = text.replace("*", "\\cdot ")
+            
+            # Format common mathematical functions for LaTeX
+            for func in ["sin", "cos", "tan", "exp", "log", "sqrt", "ln", "arcsin", "arccos", "arctan"]:
+                # Replace func(x) with \func{x}
+                text = re.sub(r'{}(\([^)]*\))'.format(func), r'\\{}\1'.format(func), text)
+            
+            # Additional replacements for LaTeX display
+            text = text.replace("pi", "\\pi ")
+            text = text.replace("sqrt", "\\sqrt")
+            
+            # Remove any remaining token patterns that might have been left
+            text = re.sub(r'sympy_func_\d+', '', text)
+            text = re.sub(r'SYMPY_FUNC_\d+_', '', text)
+            text = re.sub(r'FUNCTOKEN\d+', '', text)
+            
+            return text
 
     def visualize_function(self, func_str: str, x_range: tuple = (-10, 10), y_range: tuple = (-5, 5)):
         """
         Create a visualization of a mathematical function.
+        Returns the path to the generated video file.
         """
         try:
             self.logger.info(f"Visualizing function: {func_str}")
@@ -229,54 +245,36 @@ class MathVisualizer:
             if not func_str:
                 raise ValueError("Empty function string")
             
-            # Handle implicit multiplication and clean up the expression
-            func_str = re.sub(r'(\d+)\s*([a-zA-Z])', r'\1*\2', func_str)
-            func_str = re.sub(r'(\d+)/(\d+)\s*([a-zA-Z])', r'(\1/\2)*\3', func_str)
-            func_str = re.sub(r'\s+', '', func_str)
+            # Note: We assume func_str is already properly formatted from _format_expression_for_sympy
             
-            replacements = {
-                '^': '**',
-                'sin': 'np.sin',
-                'cos': 'np.cos',
-                'tan': 'np.tan',
-                'exp': 'np.exp',
-                'log': 'np.log',
-                'ln': 'np.log',
-                'sqrt': 'np.sqrt',
-                'pi': 'np.pi'
-            }
+            # The media_dir is already configured by the VisualizationWindow before calling us
+            # We'll just make sure the video_dir is available
+            video_dir = os.path.join(config.media_dir, "videos", "1080p60")
+            os.makedirs(video_dir, exist_ok=True)
             
-            for old, new in replacements.items():
-                func_str = func_str.replace(old, new)
+            # Verify that we're using the correct directories
+            self.logger.debug(f"Using media_dir: {config.media_dir}")
+            self.logger.debug(f"Using video_dir: {video_dir}")
             
-            # Ensure the expression contains 'x'
-            if 'x' not in func_str:
-                func_str = f"{func_str}+0*x"
-                
-            self.logger.debug(f"Processed function string: {func_str}")
-            
-            safe_dict = {
-                "x": np.linspace(-1, 1, 10),
-                "np": np,
-                "sin": np.sin,
-                "cos": np.cos,
-                "tan": np.tan,
-                "exp": np.exp,
-                "log": np.log,
-                "sqrt": np.sqrt,
-                "pi": np.pi,
-                "e": np.e
-            }
-            
-            try:
-                eval(func_str, {"__builtins__": {}}, safe_dict)
-            except Exception as e:
-                self.logger.error(f"Invalid function syntax: {e}")
-                raise ValueError(f"Invalid function syntax: {e}")
-            
-            scene = self.FunctionScene(func_str, x_range, y_range, logger=self.logger)
+            # Create and render the scene
+            scene = self.FunctionScene(
+                func_str,
+                x_range=x_range,
+                y_range=y_range,
+                display_text=func_str,
+                logger=self.logger
+            )
             scene.render()
             
+            # Return the path to the generated video
+            video_path = os.path.join(video_dir, "FunctionScene.mp4")
+            if os.path.exists(video_path):
+                self.logger.info(f"Video file created at: {video_path}")
+                return os.path.abspath(video_path)
+            else:
+                self.logger.error("Video file not created")
+                return None
+            
         except Exception as e:
-            self.logger.error(f"Error visualizing function: {e}")
-            raise
+            self.logger.error(f"Error in visualization: {str(e)}")
+            return None

@@ -13,7 +13,7 @@ class PackageImporter:
     def import_pyqt5() -> NoReturn:
         try:
             print("Installing PyQt5 and related packages...")
-            packages = ["PyQt5", "sympy", "numpy"]
+            packages = ["PyQt5", "sympy", "numpy", "matplotlib"]
             for package in packages:
                 os.system(f"{sys.executable} -m pip install {package}")
 

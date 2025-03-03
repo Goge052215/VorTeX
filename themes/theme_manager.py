@@ -6,7 +6,8 @@ class ThemeManager:
         self.themes = {
             "tokyo_night": get_tokyo_night_theme(),
             "aura": get_aura_theme(),
-            "light": get_light_theme()
+            "light": get_light_theme(),
+            "anysphere": get_anysphere_theme()
         }
 
     def apply_theme(self, widget: QWidget, theme_name: str):
@@ -23,6 +24,7 @@ def get_tokyo_night_theme():
             QWidget {
                 background-color: #1a1b26;
                 color: #a9b1d6;
+                border: none;
             }
             QTextEdit, QComboBox {
                 background-color: #24283b;
@@ -39,15 +41,16 @@ def get_tokyo_night_theme():
                 height: 12px;
             }
             QPushButton {
-                background-color: #3d59a1;
+                background-color: transparent;
                 color: #ffffff;
-                border: none;
+                border: 1px solid #3d59a1;
                 padding: 8px 15px;
                 border-radius: 5px;
                 font-weight: bold;
             }
             QPushButton:hover {
-                background-color: #2ac3de;
+                background-color: rgba(61, 89, 161, 0.1);
+                border: 1px solid #2ac3de;
             }
             QLabel {
                 color: #a9b1d6;
@@ -55,13 +58,14 @@ def get_tokyo_night_theme():
         """,
         "theme_button": """
             QPushButton {
-                background-color: #3d59a1;
+                background-color: transparent;
                 color: #ffffff;
-                border: none;
+                border: 1px solid #3d59a1;
                 border-radius: 5px;
             }
             QPushButton:hover {
-                background-color: #2ac3de;
+                background-color: rgba(42, 195, 222, 0.1);
+                border: 1px solid #2ac3de;
             }
         """,
         "text_color": "#a9b1d6",
@@ -85,6 +89,7 @@ def get_aura_theme():
             QWidget {
                 background-color: #15141b;
                 color: #edecee;
+                border: none;
             }
             QTextEdit, QComboBox {
                 background-color: #15141b;
@@ -101,15 +106,16 @@ def get_aura_theme():
                 height: 12px;
             }
             QPushButton {
-                background-color: #a277ff;
-                color: #15141b;
-                border: none;
+                background-color: transparent;
+                color: #edecee;
+                border: 1px solid #a277ff;
                 padding: 8px 15px;
                 border-radius: 5px;
                 font-weight: bold;
             }
             QPushButton:hover {
-                background-color: #61ffca;
+                background-color: rgba(162, 119, 255, 0.1);
+                border: 1px solid #61ffca;
             }
             QLabel {
                 color: #edecee;
@@ -117,13 +123,14 @@ def get_aura_theme():
         """,
         "theme_button": """
             QPushButton {
-                background-color: #a277ff;
-                color: #15141b;
-                border: none;
+                background-color: transparent;
+                color: #edecee;
+                border: 1px solid #a277ff;
                 border-radius: 5px;
             }
             QPushButton:hover {
-                background-color: #61ffca;
+                background-color: rgba(97, 255, 202, 0.1);
+                border: 1px solid #61ffca;
             }
         """,
         "text_color": "#edecee",
@@ -133,7 +140,7 @@ def get_aura_theme():
             "background": "#15141b",
             "text": "#edecee",
             "button": "#a277ff",
-            "button_text": "#15141b",
+            "button_text": "#edecee",
             "button_hover": "#61ffca",
             "input_bg": "#15141b",
             "border": "#6d6d6d",
@@ -147,6 +154,7 @@ def get_light_theme():
             QWidget {
                 background-color: #f0f0f0;
                 color: #333333;
+                border: none;
             }
             QTextEdit, QComboBox {
                 background-color: #ffffff;
@@ -163,7 +171,7 @@ def get_light_theme():
                 height: 12px;
             }
             QPushButton {
-                background-color: #ffffff;
+                background-color: transparent;
                 color: #4a90e2;
                 border: 1px solid #4a90e2;
                 padding: 8px 15px;
@@ -171,7 +179,8 @@ def get_light_theme():
                 font-weight: bold;
             }
             QPushButton:hover {
-                background-color: #e6f0ff;
+                background-color: rgba(74, 144, 226, 0.1);
+                border: 1px solid #357abd;
             }
             QLabel {
                 color: #333333;
@@ -179,13 +188,14 @@ def get_light_theme():
         """,
         "theme_button": """
             QPushButton {
-                background-color: #4a90e2;
-                color: #ffffff;
-                border: none;
+                background-color: transparent;
+                color: #4a90e2;
+                border: 1px solid #4a90e2;
                 border-radius: 5px;
             }
             QPushButton:hover {
-                background-color: #357abd;
+                background-color: rgba(53, 122, 189, 0.1);
+                border: 1px solid #357abd;
             }
         """,
         "text_color": "#333333",
@@ -200,5 +210,70 @@ def get_light_theme():
             "input_bg": "#ffffff",
             "border": "#cccccc",
             "title": "#333333"
+        }
+    }
+
+def get_anysphere_theme():
+    return {
+        "main_widget": """
+            QWidget {
+                background-color: #0e1116;
+                color: #e6edf3;
+                border: none;
+            }
+            QTextEdit, QComboBox {
+                background-color: #0e1116;
+                color: #e6edf3;
+                border: 1px solid #30363d;
+                border-radius: 5px;
+            }
+            QComboBox::drop-down {
+                border: none;
+            }
+            QComboBox::down-arrow {
+                image: url(path/to/down_arrow.png);
+                width: 12px;
+                height: 12px;
+            }
+            QPushButton {
+                background-color: transparent;
+                color: #ffffff;
+                border: 1px solid #E6C895;
+                padding: 8px 15px;
+                border-radius: 5px;
+                font-weight: bold;
+            }
+            QPushButton:hover {
+                background-color: rgba(230, 200, 149, 0.1);
+                border: 1px solid #E6C895;
+            }
+            QLabel {
+                color: #e6edf3;
+            }
+        """,
+        "theme_button": """
+            QPushButton {
+                background-color: transparent;
+                color: #ffffff;
+                border: 1px solid #E6C895;
+                border-radius: 5px;
+            }
+            QPushButton:hover {
+                background-color: rgba(230, 200, 149, 0.1);
+                border: 1px solid #E6C895;
+            }
+        """,
+        "text_color": "#e6edf3",
+        "border_color": "#30363d",
+        "title_color": "#ffffff",
+        "colors": {
+            "background": "#0e1116",
+            "text": "#e6edf3",
+            "button": "#E6C895",
+            "button_text": "#ffffff",
+            "button_hover": "#E6C895",
+            "input_bg": "#0e1116",
+            "border": "#30363d",
+            "title": "#ffffff"
         }
     }

@@ -4,13 +4,13 @@
 
 > *Where Mathematics Converges*
 
-Are you tired of: \
-Juggling between multiple math applications? 📱 \
-Wrestling with complex $\LaTeX$ syntax? ⚔️ \
-Hitting the limitations of basic calculators? 🚫 \
-Running MATLAB for simple calculations? 💻
+Ever found yourself:  
+Juggling between multiple math applications? 📱  
+Wrestling with complex $\LaTeX$ syntax? ⚔️  
+Hitting the limitations of basic calculators? 🚫  
+Firing up MATLAB just for simple calculations? 💻
 
-**VorTeX** seamlessly fuses them all into one powerful solution.
+**VorTeX** brings them all together into one seamless experience.
 
 ![legend img](imgs/legend_img.png)
 
@@ -23,24 +23,55 @@ Running MATLAB for simple calculations? 💻
 
 ---
 
-A powerful mathematical workbench that fuses **MATLAB** and **SymPy**'s symbolic computation, **LaTeX**'s elegant notation, **PyQt5**'s modern interface, and **Manim**'s visualization capabilities into one seamless vortex. *VorTeX* brings together advanced mathematical tools for differentiation, integration, matrix operations, and symbolic computation in an intuitive environment.
+A powerful mathematical workbench that combines **MATLAB** and **SymPy**'s computational strength, **LaTeX**'s elegant notation, **PyQt5**'s sleek interface, and **Manim**'s stunning visualizations into one cohesive experience. *VorTeX* puts advanced tools for differentiation, integration, matrix operations, and symbolic computation right at your fingertips.
 
 ---
 
 </div>
 
+### Fresh New UI
+
+We're excited to introduce our redesigned UI and new settings window!
+
+![new_ui](imgs/legend_img_settings.png)
+
+Simply click the settings button when you launch the app to explore customization options for themes, fonts, and more.
+
+### Enhanced Math Capabilities
+
+Version 1.0.3 now handles multi-variable calculus with ease! Try expressions like:
+
+```latex
+\frac{\partial}{\partial x} \sin(x)\cos(y)
+\frac{\partial^{2}}{\partial x \partial y} \sin(x)\cos(y)
+```
+
+Just type `pdx sin(x)*cos(y)`, and VorTeX will instantly give you the correct result: $\cos(x)\cos(y)$
+
+We've also added differential equation solving! Enter something like:
+
+```latex
+\frac{d}{dx} y - 2y = 0
+```
+
+as `y'-2y=0`, and VorTeX will solve it for you: $y = C_{1}e^{2x}$.
+
+Check out the simplified $\LaTeX$ input table below for more shortcuts.
+
+### New Benchmark Results
+
+We've added a comprehensive benchmark for our testing phase, and this version aced all the test cases! Want to see what we tested? Check out the [benchmark.md](benchmark/benchmark.md)!
+
 ## Features
 
-- **$\LaTeX$ Input:** Enter mathematical expressions in $\LaTeX$ format for easy readability and input.
-- **MATLAB Integration:** Utilize MATLAB's symbolic toolbox for advanced computations, ensuring high precision and reliability.
-- **Trigonometric Functions:** Supports both Degree and Radian modes for trigonometric calculations.
-- **Symbolic Computation:** Handle derivatives and integrals symbolically, providing exact results where possible.
-- **Matrix Operations:** Perform operations such as determinant, inverse, eigenvalues, and more on matrices.
-- **SymPy Integration:** Utilize SymPy's symbolic computation for non-MATLAB users.
-- **Theming:** Multiple UI themes available to customize the appearance of the application.
-- **Logging:** Detailed logging of operations and errors for troubleshooting and analysis.
-- **Auto Simplify:** Automatically simplifies the result of the expression.
-- **Manim Visualization:** Visualize the expression using Manim. (Currently only limited function is supported)
+- **$\LaTeX$ Input:** Express your math in simplified $\LaTeX$ format for clarity and ease.
+- **MATLAB Integration:** Harness MATLAB's symbolic toolbox for powerful, precise computations.
+- **Matrix Operations:** Easily calculate determinants, inverses, eigenvalues, and more.
+- **SymPy Integration:** Enjoy symbolic computation even without MATLAB.
+- **Theming:** Personalize your experience with multiple UI themes.
+- **Logging:** Keep track of operations and troubleshoot with detailed logs.
+- **Auto Simplify:** Get cleaner results with automatic expression simplification.
+- **Manim Visualization:** See your math come to life with Manim visualizations (select functions supported).
 
 ## Getting Started
 
@@ -50,78 +81,65 @@ A powerful mathematical workbench that fuses **MATLAB** and **SymPy**'s symbolic
    git clone https://github.com/Goge052215/VorTeX.git
    ```
 
-2. **Install Required Fonts**
+2. **Install Dependencies:**
 
-   Thanks for developers of Monaspace font family! We are using the font [**Monaspace Neon**](https://monaspace.githubnext.com/) for the UI (partially).You can install the font by running the scripts in [fonts](fonts) folder.
-
-   The system will go through an [iP check](ip_check/ip_check.py) to see whether you can access GitHub easily, then we will check the font and automatically download for you :)
-
-   If automatic download does not work, try the manual way! So far, there are 2 scripts for following systems:
-   - [Windows](fonts/fonts_download.ps1)
-   - [MacOS](fonts/fonts_download.bash)
-
-   For Linux and other system users, please see the instructions in the [GitHub Monaspace repository](https://github.com/githubnext/monaspace?tab=readme-ov-file).
-
-4. **Install Dependencies:**
-
-   Ensure you have MATLAB installed and the MATLAB Engine API for Python set up. Please ensure you put your MATLAB app (e.g. MATLABr2024b.app) address in PATH!
+   Make sure you have MATLAB installed and the MATLAB Engine API for Python configured. Remember to add your MATLAB app (e.g., MATLABr2024b.app) to your PATH!
 
    ```bash
    pip install -r requirements.txt
    ```
 
-   For non-MATLAB users, you can use SymPy instead, we also provided SymPy calculation module for this calculator.
+   Don't have MATLAB? No problem! You can use our SymPy calculation module instead.
 
-   The requirement list is in [requirements.txt](requirements.txt)
+   Find the complete dependency list in [requirements.txt](requirements.txt)
 
-5. **Run the Application:**
+3. **Launch VorTeX:**
 
    ```bash
    python main.py
    ```
 
-## Usage
+## How to Use
 
-1. **Select Input Mode:**
-   - **$\LaTeX$:** Enter expressions in $\LaTeX$ format for symbolic computation.
-   - **MATLAB:** Enter raw MATLAB expressions for direct evaluation.
-   - **Matrix:** Perform matrix operations (e.g., determinant, inverse).
-   - **SymPy:** Enter Simplified $\LaTeX$ expressions (for non-MATLAB users).
+1. **Choose Your Input Mode:**
+   - **$\LaTeX$:** Perfect for symbolic computation with elegant notation.
+   - **MATLAB:** Direct evaluation using familiar MATLAB syntax.
+   - **Matrix:** Specialized tools for matrix operations.
+   - **SymPy:** Simplified $\LaTeX$ expressions for non-MATLAB users.
 
-2. **Select Angle Mode:**
-   - **Degree:** Use degree mode for trigonometric functions.
-   - **Radian:** Use radian mode for trigonometric functions.
+2. **Set Your Angle Mode:**
+   - **Degree:** When working with degrees in trigonometric functions.
+   - **Radian:** For radian-based calculations.
 
-3. **Enter Expression:**
-   - In the input field, type your mathematical expression.
+3. **Enter Your Expression:**
+   - Type your mathematical expression in the input field.
 
 4. **Calculate:**
-   - Click the "Calculate" button to evaluate the expression.
+   - Hit the "Calculate" button to see the magic happen.
 
-5. **View Result:**
-   - The result will be displayed below the calculate button.
+5. **View Your Result:**
+   - Find your answer displayed below the calculate button.
 
 6. **Visualize:**
-   - Click the "Visualize" button to visualize the expression.
-   - The expression will be processed under Manim module and displayed in .mp4 file
+   - Click "Visualize" to see your expression come to life.
+   - The visualization will be processed by Manim and saved as an .mp4 file.
 
-7. **Settings:**
-   - Click the "Settings" button to open the settings window.
-   - The settings window allows you to customize the application's behavior and appearance, also you can check the debug logs here.
+7. **Customize Settings:**
+   - Access the settings window to personalize VorTeX and check debug logs.
 
 ## Example Expressions
 
 - **Simplified $\LaTeX$ Mode, SymPy Mode:**
-  - **Differentiation:** `d/dx (x^2)`, `d2/dx2 (x^2)`, etc.
-  - **Integration:** `int e^(x) dx`, `int ln(x) dx`, `int x^2 dx`, etc.
-  - **Trigonometric:** `sin(30)`, `cos(30)`, `tan(30)`, etc.
+  - **Differentiation:** `d/dx (x^2)`, `d2/dx2 (x^2)`
+  - **Integration:** `int e^(x) dx`, `int ln(x) dx`, `int x^2 dx`
+  - **Trigonometric:** `sin(30)`, `cos(30)`, `tan(30)`
 
 - **MATLAB Mode:**
-  - **Differentiation:** `diff(x^2, x)`, `diff(x^2, x, 2)`, etc.
-  - **Integration:** `int(exp(x), x)`, `int(ln(x), x)`, `int(x^2, x)`, etc.
-  - **Trigonometric:** `sin(30)`, `cos(30)`, `tan(30)`, etc.
+  - **Differentiation:** `diff(x^2, x)`, `diff(x^2, x, 2)`
+  - **Integration:** `int(exp(x), x)`, `int(ln(x), x)`, `int(x^2, x)`
+  - **Trigonometric:** `sin(30)`, `cos(30)`, `tan(30)`
 
-*Note:* Simplified $\LaTeX$ input is recommended, for a guide of simplified $\LaTeX$ input, see the table below:
+*Pro tip:* We recommend using simplified $\LaTeX$ input for the best experience. Here's a handy reference:
 
 | $\LaTeX$ | Previous $\LaTeX$ Command | Simplified $\LaTeX$ Input |
 | ------------- | ----------------------- | ----------------------- |
@@ -143,10 +161,14 @@ A powerful mathematical workbench that fuses **MATLAB** and **SymPy**'s symbolic
 | $\displaystyle\lim_{x \to a^+} f(x)$       | `\lim_{x \to a^+} f(x)` | `lim (x to a+) f(x)`      |
 | $\displaystyle\lim_{x \to a^-} f(x)$       | `\lim_{x \to a^-} f(x)` | `lim (x to a-) f(x)`      |
 | $\pm\infty$       | `\pm\infty`    | `+infty` or `-infty`   |
+| $\displaystyle \frac{\partial}{\partial x} f(x)$ | `\frac{\partial}{\partial x} f(x,y)` | `pdx f(x,y)` |
+| $\displaystyle \frac{\partial^{2}}{\partial x \partial y} f(x)$ | `\frac{\partial^{2}}{\partial x \partial y} f(x,y)` | `pd2xy f(x,y)` |
+| $\displaystyle \iint f(x,y) \text{d}x\text{d}y$ | `\iint f(x,y)\text{d}x\text{d}y` | `iint f(x,y) dxdy` |
+| $\displaystyle \iiint f(x,y,z) \text{d}x\text{d}y\text{d}z$ | `\iiint f(x,y,z)\text{d}x\text{d}y\text{d}z` | `iint f(x,y) dxdy` |
 
-for more shortcuts, see [shortcut.py](latex_pack/shortcut.py)
+For more shortcuts, check out [shortcut.py](latex_pack/shortcut.py)
 
-### Example for $\LaTeX$ Mode, SymPy Mode
+### Examples in $\LaTeX$ Mode and SymPy Mode
 
 1. `int 1/x dx` $\rightarrow$ $\displaystyle \int \frac{1}{x} \text{d}x = \ln(x)$
 2. `int (1 to 3) x^3/(x^2 + 1) dx` $\rightarrow$ $\displaystyle \int_{1}^{3} \frac{x^3}{x^2 + 1} \text{d}x = 4 - \left(\frac{\ln 5}{2}\right)$
@@ -157,7 +179,11 @@ for more shortcuts, see [shortcut.py](latex_pack/shortcut.py)
 7. `prod (2 to 10) ln(x)` $\rightarrow$ $\displaystyle \prod_{i = 2}^{10} \ln(x) = 62.321650$
 8. `lim (x to 0) sin(x)/x` $\rightarrow$ $\displaystyle \lim_{x \to 0} \frac{\sin(x)}{x} = 1$
 
-### Example for Matrix Mode
+9.  `pdx sin(x)*cos(y)` $\rightarrow \cos(x)\cos(y)$
+
+10. `y''+ 4y = 0` $\rightarrow C_{1} \cos(2x) + C_{2} \sin(2x)$
+
+### Examples in Matrix Mode
 
 1. (Determinant Mode) `[1 2; 3 4]`
 ```math
@@ -202,28 +228,45 @@ Output: `[-0.37, 5.37]`
 ## Troubleshooting
 
 - **MATLAB Engine Not Starting:**
-  - Ensure that MATLAB is installed on your system.
-  - Verify that the MATLAB Engine API for Python is correctly installed.
-  - Check environment variables and MATLAB's path settings.
+  - Double-check that MATLAB is properly installed.
+  - Make sure the MATLAB Engine API for Python is correctly set up.
+  - Verify your environment variables and MATLAB's path settings.
+
+- **Output Errors:**
+  - First, review your input for common mistakes like missing `dx` in integrals.
+  - Check the debug logs in the settings page for more details.
+  - Still stuck? Open an issue on our GitHub—we're here to help!
 
 - **Invalid Expression Errors:**
-  - Ensure that your Simplified $\LaTeX$ or MATLAB expressions are correctly formatted.
-  - Verify that all necessary functions are supported and properly replaced.
+  - Ensure your Simplified $\LaTeX$ or MATLAB expressions follow the correct format.
+  - Verify that you're using supported functions and proper syntax.
 
-- More issues will be added in the future debugging.
+- We'll continue adding troubleshooting tips as we identify common issues.
 
-### Current TODO
+### Roadmap
 
-- [X] Fixing the limits handling
-- [X] Fixing the expression handling for $^n\text{C}_r$
-- [X] Fixing the series evaluation
-- [X] Adding 2D plot Manim for functions
+#### Pure Math
+
+- [X] Fixed limits handling
+- [X] Fixed expression handling for $^n\text{C}_r, ^n\text{P}_r$
+- [X] Fixed series evaluation
+- [X] Added 2D plot Manim for functions
+- [X] Added multivariable calculus calculation
+- [X] Added differential equation solving
+- [ ] Linear algebra module
+- [ ] Number theory module
+
+--------------------------------
+
+#### Application modules
+
+- [ ] Probability and modelling
 - [ ] 2D plot Manim for calculus
-- [ ] Adding 3D demonstration Manim
+- [ ] 3D demonstration Manim
 
 ## Contributing
 
-Contributions are welcome! Please open an issue or submit a pull request for any enhancements or bug fixes.
+We'd love your help making VorTeX even better! Feel free to open an issue or submit a pull request with enhancements or bug fixes.
 
 ## License
 

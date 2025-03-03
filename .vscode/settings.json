@@ -4,5 +4,6 @@
     "Codegeex.Comment.LanguagePreference": "English",
     "Codegeex.CommitMessage.LanguagePreference": "English",
     "Codegeex.CommitMessageStyle": "ConventionalCommits",
-    "Codegeex.SidebarUI.LanguagePreference": "English"
+    "Codegeex.SidebarUI.LanguagePreference": "English",
+    "workbench.activityBar.location": "default"
 }
