@@ -4668,3 +4668,181 @@ Unable to convert expression containing symbolic variables into double array. Ap
 2025-03-03 21:46:07,966 - __main__ - INFO - Initializing Calculator Application
 2025-03-03 21:46:16,442 - __main__ - INFO - MATLAB engine started successfully
 2025-03-03 21:47:35,327 - __main__ - INFO - MATLAB engine terminated
+2025-03-08 11:29:59,388 - __main__ - INFO - Initializing Calculator Application
+2025-03-08 11:30:26,718 - __main__ - WARNING - MATLAB engine not available: Unable to launch MVM server: License Error: Licensing shutdown
+2025-03-08 11:30:26,718 - __main__ - INFO - Switching to SymPy-only mode
+2025-03-08 11:32:24,958 - __main__ - INFO - Initializing Calculator Application
+2025-03-08 11:32:37,165 - __main__ - WARNING - MATLAB engine not available: Unable to launch MVM server: License Error: Licensing shutdown
+2025-03-08 11:32:37,165 - __main__ - INFO - Switching to SymPy-only mode
+2025-03-08 11:34:47,843 - __main__ - INFO - Initializing Calculator Application
+2025-03-08 11:34:53,147 - __main__ - INFO - MATLAB engine started successfully
+2025-03-08 11:35:41,024 - __main__ - DEBUG - Original expression: 'sum (1 to infty) (-1)^x/e^x'
+2025-03-08 11:35:41,025 - __main__ - DEBUG - Original expression: 'sum (1 to infty) (-1)^x/e^x'
+2025-03-08 11:35:41,026 - __main__ - DEBUG - After combinatorial conversion: sum (1 to infty) (-1)^x/e^x
+2025-03-08 11:35:41,028 - __main__ - DEBUG - Converted integral expression: 'sum (1 to infty) (-1)^x/e^x'
+2025-03-08 11:35:41,028 - __main__ - DEBUG - After explicit multiplication: 'sum (1 to infty) (-1)^x/e^x'
+2025-03-08 11:35:41,029 - __main__ - DEBUG - Final MATLAB expression: 'sum (1 to infty) (-1)^x/e^x'
+2025-03-08 11:35:41,029 - __main__ - DEBUG - Converted to MATLAB expression: 'sum (1 to infty) (-1)^x/e^x'
+2025-03-08 11:35:41,038 - __main__ - DEBUG - After shortcut conversion: sum (1 to infty) (-1)^x/exp(x)
+2025-03-08 11:35:41,040 - __main__ - DEBUG - Final MATLAB expression: 'sum (1 to infty) (-1)^x/exp(x)'
+2025-03-08 11:35:41,089 - __main__ - DEBUG - MATLAB numerical evaluation failed, continuing: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2025-03-08 11:35:41,115 - __main__ - DEBUG - Raw result from MATLAB: 'Error: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+'
+2025-03-08 11:35:41,118 - __main__ - DEBUG - Displayed Result: Error: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2025-03-08 11:37:21,417 - __main__ - INFO - MATLAB engine terminated
+2025-03-08 11:37:58,020 - __main__ - INFO - Initializing Calculator Application
+2025-03-08 11:38:02,737 - __main__ - INFO - MATLAB engine started successfully
+2025-03-08 11:38:15,609 - __main__ - DEBUG - Original expression: 'sum (1 to inf) (-1)^x/e^x'
+2025-03-08 11:38:15,609 - __main__ - DEBUG - Original expression: 'sum (1 to inf) (-1)^x/e^x'
+2025-03-08 11:38:15,611 - __main__ - DEBUG - After combinatorial conversion: sum (1 to inf) (-1)^x/e^x
+2025-03-08 11:38:15,612 - __main__ - DEBUG - Converted integral expression: 'sum (1 to inf) (-1)^x/e^x'
+2025-03-08 11:38:15,613 - __main__ - DEBUG - After explicit multiplication: 'sum (1 to inf) (-1)^x/e^x'
+2025-03-08 11:38:15,613 - __main__ - DEBUG - Final MATLAB expression: 'sum (1 to inf) (-1)^x/e^x'
+2025-03-08 11:38:15,613 - __main__ - DEBUG - Converted to MATLAB expression: 'sum (1 to inf) (-1)^x/e^x'
+2025-03-08 11:38:15,623 - __main__ - DEBUG - After shortcut conversion: limit(symsum((-1)^x/exp(x), x, 1, Inf), x, Inf)
+2025-03-08 11:38:15,625 - __main__ - DEBUG - Final MATLAB expression: 'limit(symsum((-1)^x/exp(x), x, 1, Inf), x, Inf)'
+2025-03-08 11:38:16,351 - __main__ - DEBUG - Direct MATLAB numerical evaluation result: -0.2689414213699951
+2025-03-08 11:41:00,268 - __main__ - INFO - MATLAB engine terminated
+2025-03-08 11:41:07,501 - __main__ - INFO - Initializing Calculator Application
+2025-03-08 11:41:15,059 - __main__ - INFO - MATLAB engine started successfully
+2025-03-08 11:42:09,663 - __main__ - DEBUG - Original expression: 'sum (1 to infty) (-1)^x/e^x'
+2025-03-08 11:42:09,663 - __main__ - DEBUG - Original expression: 'sum (1 to infty) (-1)^x/e^x'
+2025-03-08 11:42:09,665 - __main__ - DEBUG - After combinatorial conversion: sum (1 to infty) (-1)^x/e^x
+2025-03-08 11:42:09,666 - __main__ - DEBUG - Converted integral expression: 'sum (1 to infty) (-1)^x/e^x'
+2025-03-08 11:42:09,666 - __main__ - DEBUG - After explicit multiplication: 'sum (1 to infty) (-1)^x/e^x'
+2025-03-08 11:42:09,666 - __main__ - DEBUG - Final MATLAB expression: 'sum (1 to infty) (-1)^x/e^x'
+2025-03-08 11:42:09,666 - __main__ - DEBUG - Converted to MATLAB expression: 'sum (1 to infty) (-1)^x/e^x'
+2025-03-08 11:42:09,673 - __main__ - DEBUG - After shortcut conversion: limit(symsum((-1)^x/exp(x), x, 1, Inf), x, Inf)
+2025-03-08 11:42:09,676 - __main__ - DEBUG - Final MATLAB expression: 'limit(symsum((-1)^x/exp(x), x, 1, Inf), x, Inf)'
+2025-03-08 11:42:10,396 - __main__ - DEBUG - Direct MATLAB numerical evaluation result: -0.2689414213699951
+2025-03-08 11:42:13,261 - __main__ - DEBUG - Original expression: 'sum (1 to inf) (-1)^x/e^x'
+2025-03-08 11:42:13,262 - __main__ - DEBUG - Original expression: 'sum (1 to inf) (-1)^x/e^x'
+2025-03-08 11:42:13,262 - __main__ - DEBUG - After combinatorial conversion: sum (1 to inf) (-1)^x/e^x
+2025-03-08 11:42:13,262 - __main__ - DEBUG - Converted integral expression: 'sum (1 to inf) (-1)^x/e^x'
+2025-03-08 11:42:13,262 - __main__ - DEBUG - After explicit multiplication: 'sum (1 to inf) (-1)^x/e^x'
+2025-03-08 11:42:13,262 - __main__ - DEBUG - Final MATLAB expression: 'sum (1 to inf) (-1)^x/e^x'
+2025-03-08 11:42:13,262 - __main__ - DEBUG - Converted to MATLAB expression: 'sum (1 to inf) (-1)^x/e^x'
+2025-03-08 11:42:13,263 - __main__ - DEBUG - After shortcut conversion: limit(symsum((-1)^x/exp(x), x, 1, Inf), x, Inf)
+2025-03-08 11:42:13,263 - __main__ - DEBUG - Final MATLAB expression: 'limit(symsum((-1)^x/exp(x), x, 1, Inf), x, Inf)'
+2025-03-08 11:42:13,289 - __main__ - DEBUG - Direct MATLAB numerical evaluation result: -0.2689414213699951
+2025-03-08 11:42:27,127 - __main__ - DEBUG - Original expression: 'prod (1 to inf) (-1)^x/e^x'
+2025-03-08 11:42:27,127 - __main__ - DEBUG - Original expression: 'prod (1 to inf) (-1)^x/e^x'
+2025-03-08 11:42:27,128 - __main__ - DEBUG - After combinatorial conversion: prod (1 to inf) (-1)^x/e^x
+2025-03-08 11:42:27,128 - __main__ - DEBUG - Converted integral expression: 'prod (1 to inf) (-1)^x/e^x'
+2025-03-08 11:42:27,128 - __main__ - DEBUG - After explicit multiplication: 'prod (1 to inf) (-1)^x/e^x'
+2025-03-08 11:42:27,128 - __main__ - DEBUG - Final MATLAB expression: 'prod (1 to inf) (-1)^x/e^x'
+2025-03-08 11:42:27,128 - __main__ - DEBUG - Converted to MATLAB expression: 'prod (1 to inf) (-1)^x/e^x'
+2025-03-08 11:42:27,129 - __main__ - DEBUG - After shortcut conversion: limit(factorial(sym)/factorial(sym-rod)((-1)^x/exp(x), x, 1, Inf), x, Inf)
+2025-03-08 11:42:27,129 - __main__ - DEBUG - Final MATLAB expression: 'limit(factorial(sym)/factorial(sym-rod)((-1)^x/exp(x), x, 1, Inf), x, Inf)'
+2025-03-08 11:42:27,158 - __main__ - DEBUG - MATLAB numerical evaluation failed, continuing: Error:  Invalid array indexing.
+
+2025-03-08 11:42:27,186 - __main__ - DEBUG - Raw result from MATLAB: 'Error: Error:  Invalid array indexing.
+'
+2025-03-08 11:42:27,190 - __main__ - DEBUG - Displayed Result: Error: Error:  Invalid array indexing.
+
+2025-03-08 11:52:44,929 - __main__ - INFO - Initializing Calculator Application
+2025-03-08 11:52:52,245 - __main__ - INFO - MATLAB engine started successfully
+2025-03-08 12:05:54,044 - __main__ - INFO - MATLAB engine terminated
+2025-03-12 20:10:59,194 - __main__ - INFO - Initializing Calculator Application
+2025-03-12 20:11:15,760 - __main__ - WARNING - MATLAB engine not available: Unable to launch MVM server: License Error: Licensing shutdown
+2025-03-12 20:11:15,760 - __main__ - INFO - Switching to SymPy-only mode
+2025-03-12 20:12:33,298 - __main__ - INFO - Initializing Calculator Application
+2025-03-12 20:12:38,070 - __main__ - INFO - MATLAB engine started successfully
+2025-03-12 20:13:36,648 - __main__ - DEBUG - Original expression: 'pdx 2xy'
+2025-03-12 20:13:36,649 - __main__ - DEBUG - Original expression: 'pdx 2xy'
+2025-03-12 20:13:36,651 - __main__ - DEBUG - After combinatorial conversion: pdx 2xy
+2025-03-12 20:13:36,652 - __main__ - DEBUG - Converted integral expression: 'pdx 2xy'
+2025-03-12 20:13:36,653 - __main__ - DEBUG - After explicit multiplication: 'pdx 2*xy'
+2025-03-12 20:13:36,653 - __main__ - DEBUG - Final MATLAB expression: 'pdx 2*xy'
+2025-03-12 20:13:36,653 - __main__ - DEBUG - Converted to MATLAB expression: 'pdx 2*xy'
+2025-03-12 20:13:36,653 - __main__ - DEBUG - After shortcut conversion: diff(2*xy, x)
+2025-03-12 20:13:36,656 - __main__ - DEBUG - Final MATLAB expression: 'diff(2*xy, x)'
+2025-03-12 20:13:36,869 - __main__ - DEBUG - MATLAB numerical evaluation failed, continuing: Unrecognized function or variable 'xy'.
+
+2025-03-12 20:13:36,959 - __main__ - DEBUG - Raw result from MATLAB: ''
+2025-03-12 20:13:36,959 - __main__ - DEBUG - NumPy evaluation failed: name 'diff' is not defined
+2025-03-12 20:13:36,989 - __main__ - DEBUG - Displayed Result: Result not available
+2025-03-12 20:15:43,795 - __main__ - DEBUG - Original expression: 'int (-inf to inf) e^(-x^2) dx'
+2025-03-12 20:15:43,796 - __main__ - DEBUG - Original expression: 'int (-inf to inf) e^(-x^2) dx'
+2025-03-12 20:15:43,797 - __main__ - DEBUG - After combinatorial conversion: int (-inf to inf) e^(-x^2) dx
+2025-03-12 20:15:43,799 - __main__ - DEBUG - Converted integral expression: 'int(e^(-x^2), x, -inf, inf)'
+2025-03-12 20:15:43,799 - __main__ - DEBUG - After explicit multiplication: 'int(e^(-x^2), x, -inf, inf)'
+2025-03-12 20:15:43,799 - __main__ - DEBUG - Final MATLAB expression: 'int(e^(-x^2), x, -inf, inf)'
+2025-03-12 20:15:43,799 - __main__ - DEBUG - Converted to MATLAB expression: 'int(e^(-x^2), x, -inf, inf)'
+2025-03-12 20:15:43,808 - __main__ - DEBUG - After shortcut conversion: int(exp(-x^2), x, -inf, inf)
+2025-03-12 20:15:43,809 - __main__ - DEBUG - Final MATLAB expression: 'int(exp(-x^2), x, -inf, inf)'
+2025-03-12 20:15:44,056 - __main__ - DEBUG - Direct MATLAB numerical evaluation result: 1.772453850905516
+2025-03-12 20:17:02,046 - __main__ - INFO - Initializing Calculator Application
+2025-03-12 20:17:08,375 - __main__ - INFO - MATLAB engine started successfully
+2025-03-12 20:17:14,594 - __main__ - DEBUG - Original expression: 'pdx 2x*y'
+2025-03-12 20:17:14,594 - __main__ - DEBUG - Original expression: 'pdx 2x*y'
+2025-03-12 20:17:14,595 - __main__ - DEBUG - After combinatorial conversion: pdx 2x*y
+2025-03-12 20:17:14,597 - __main__ - DEBUG - Converted integral expression: 'pdx 2x*y'
+2025-03-12 20:17:14,598 - __main__ - DEBUG - After explicit multiplication: 'pdx 2*x*y'
+2025-03-12 20:17:14,598 - __main__ - DEBUG - Final MATLAB expression: 'pdx 2*x*y'
+2025-03-12 20:17:14,598 - __main__ - DEBUG - Converted to MATLAB expression: 'pdx 2*x*y'
+2025-03-12 20:17:14,598 - __main__ - DEBUG - After shortcut conversion: diff(2*x*y, x)
+2025-03-12 20:17:14,601 - __main__ - DEBUG - Final MATLAB expression: 'diff(2*x*y, x)'
+2025-03-12 20:17:14,704 - __main__ - DEBUG - MATLAB numerical evaluation failed, continuing: 
+  File /Applications/MATLAB_R2024b.app/toolbox/symbolic/symbolic/@mupadengine/mupadengine.p, line 0, in mupadengine.evalin2double
+
+  File /Applications/MATLAB_R2024b.app/toolbox/symbolic/symbolic/@mupadengine/mupadengine.p, line 0, in mupadengine.feval2double
+
+  File /Applications/MATLAB_R2024b.app/toolbox/symbolic/symbolic/@sym/sym.m, line 745, in sym.double
+Unable to convert expression containing symbolic variables into double array. Apply 'subs' function first to substitute values for variables.
+
+2025-03-12 20:17:14,751 - __main__ - DEBUG - Raw result from MATLAB: '2*y'
+2025-03-12 20:17:14,754 - __main__ - DEBUG - Displayed Result: 2*y
+2025-03-12 20:17:32,000 - __main__ - DEBUG - Original expression: 'pd2xy 2x*y'
+2025-03-12 20:17:32,001 - __main__ - DEBUG - Original expression: 'pd2xy 2x*y'
+2025-03-12 20:17:32,001 - __main__ - DEBUG - After combinatorial conversion: pd2xy 2x*y
+2025-03-12 20:17:32,003 - __main__ - DEBUG - Converted integral expression: 'pd2xy 2x*y'
+2025-03-12 20:17:32,003 - __main__ - DEBUG - After explicit multiplication: 'pd2*xy 2*x*y'
+2025-03-12 20:17:32,003 - __main__ - DEBUG - Final MATLAB expression: 'pd2*xy 2*x*y'
+2025-03-12 20:17:32,003 - __main__ - DEBUG - Converted to MATLAB expression: 'pd2*xy 2*x*y'
+2025-03-12 20:17:32,012 - __main__ - DEBUG - After shortcut conversion: pd2*x*y 2*x*y
+2025-03-12 20:17:32,014 - __main__ - DEBUG - Final MATLAB expression: 'pd2*x*y 2*x*y'
+2025-03-12 20:17:32,025 - __main__ - DEBUG - MATLAB numerical evaluation failed, continuing: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2025-03-12 20:17:32,065 - __main__ - DEBUG - Raw result from MATLAB: 'Error: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+'
+2025-03-12 20:17:32,068 - __main__ - DEBUG - Displayed Result: Error: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2025-03-15 23:01:03,831 - __main__ - INFO - Initializing Calculator Application
+2025-03-15 23:01:23,843 - __main__ - INFO - MATLAB engine started successfully
+2025-03-15 23:02:41,601 - __main__ - DEBUG - Original expression: 'pd2xy cos(x)sin(y)'
+2025-03-15 23:02:41,602 - __main__ - DEBUG - Original expression: 'pd2xy cos(x)sin(y)'
+2025-03-15 23:02:41,603 - __main__ - DEBUG - After combinatorial conversion: pd2xy cos(x)sin(y)
+2025-03-15 23:02:41,604 - __main__ - DEBUG - Converted integral expression: 'pd2xy cos(x)sin(y)'
+2025-03-15 23:02:41,605 - __main__ - DEBUG - After explicit multiplication: 'pd2*xy cos(x)sin(y)'
+2025-03-15 23:02:41,605 - __main__ - DEBUG - Final MATLAB expression: 'pd2*xy cos(x)sin(y)'
+2025-03-15 23:02:41,605 - __main__ - DEBUG - Converted to MATLAB expression: 'pd2*xy cos(x)sin(y)'
+2025-03-15 23:02:41,612 - __main__ - DEBUG - After shortcut conversion: pd2*x*y c*o*s(x)*s*i*n(y)
+2025-03-15 23:02:41,614 - __main__ - DEBUG - Final MATLAB expression: 'pd2*x*y c*o*s(x)*s*i*n(y)'
+2025-03-15 23:02:41,665 - __main__ - DEBUG - MATLAB numerical evaluation failed, continuing: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2025-03-15 23:02:41,707 - __main__ - DEBUG - Raw result from MATLAB: 'Error: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+'
+2025-03-15 23:02:41,711 - __main__ - DEBUG - Displayed Result: Error: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2025-03-15 23:03:49,942 - __main__ - INFO - MATLAB engine terminated
+2025-03-15 23:08:45,692 - __main__ - INFO - Initializing Calculator Application
+2025-03-15 23:08:54,453 - __main__ - INFO - MATLAB engine started successfully
+2025-03-15 23:09:09,538 - __main__ - DEBUG - Original expression: 'pd2xy cos(x)sin(y)*x^2'
+2025-03-15 23:09:09,540 - __main__ - DEBUG - Original expression: 'pd2xy cos(x)sin(y)*x^2'
+2025-03-15 23:09:09,541 - __main__ - DEBUG - After combinatorial conversion: pd2xy cos(x)sin(y)*x^2
+2025-03-15 23:09:09,542 - __main__ - DEBUG - Converted integral expression: 'pd2xy cos(x)sin(y)*x^2'
+2025-03-15 23:09:09,542 - __main__ - DEBUG - After explicit multiplication: 'pd2*xy cos(x)sin(y)*x^2'
+2025-03-15 23:09:09,542 - __main__ - DEBUG - Final MATLAB expression: 'pd2*xy cos(x)sin(y)*x^2'
+2025-03-15 23:09:09,542 - __main__ - DEBUG - Converted to MATLAB expression: 'pd2*xy cos(x)sin(y)*x^2'
+2025-03-15 23:09:09,548 - __main__ - DEBUG - After shortcut conversion: pd2*x*y cos(x)*sin(y)*x^2
+2025-03-15 23:09:09,549 - __main__ - DEBUG - Final MATLAB expression: 'pd2*x*y cosd(x)*sind(y)*x^2'
+2025-03-15 23:09:09,580 - __main__ - DEBUG - MATLAB numerical evaluation failed, continuing: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2025-03-15 23:09:09,615 - __main__ - DEBUG - Raw result from MATLAB: 'Error: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+'
+2025-03-15 23:09:09,620 - __main__ - DEBUG - Displayed Result: Error: Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices, use brackets instead of parentheses.
+
+2025-03-15 23:51:58,413 - __main__ - INFO - MATLAB engine terminated

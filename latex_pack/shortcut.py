@@ -218,9 +218,11 @@ class ExpressionShortcuts:
     def convert_shortcut(cls, text):
         result = text
         
-        # Handle partial derivatives with parentheses: pd2xy(sin(x)*cos(y))
+        # First, handle all partial derivative patterns before any other processing
+        
+        # 1. Handle partial derivatives with parentheses: pd2xy(sin(x)*cos(y))
         pd_paren_pattern = re.compile(r'pd(\d+)([a-zA-Z]+)\(([^)]+)\)')
-        if pd_paren_pattern.search(text):
+        if pd_paren_pattern.search(result):
             def replace_pd_paren(match):
                 order = match.group(1)
                 vars = match.group(2)
@@ -243,20 +245,8 @@ class ExpressionShortcuts:
                     return f"diff({expr}, {vars[0]}, {order})"
                 
             result = pd_paren_pattern.sub(replace_pd_paren, result)
-            return result
         
-        # Handle single variable partial derivatives without order number: pdx sin(x)*cos(y)
-        pd_single_pattern = re.compile(r'pd([a-zA-Z])\s+([^$]+)')
-        if pd_single_pattern.search(result):
-            def replace_pd_single(match):
-                var = match.group(1)
-                expr = match.group(2).strip()
-                return f"diff({expr}, {var})"
-                
-            result = pd_single_pattern.sub(replace_pd_single, result)
-            return result
-        
-        # Handle partial derivatives with space: pd2xy sin(x)*cos(y)
+        # 2. Handle partial derivatives with space: pd2xy sin(x)*cos(y)
         pd_space_pattern = re.compile(r'pd(\d+)([a-zA-Z]+)\s+([^$]+)')
         if pd_space_pattern.search(result):
             def replace_pd_space(match):
@@ -281,9 +271,18 @@ class ExpressionShortcuts:
                     return f"diff({expr}, {vars[0]}, {order})"
                 
             result = pd_space_pattern.sub(replace_pd_space, result)
-            return result
         
-        # Handle standard partial derivative notation: partial/dx sin(x)*cos(y)
+        # 3. Handle single variable partial derivatives without order number: pdx sin(x)*cos(y)
+        pd_single_pattern = re.compile(r'pd([a-zA-Z])\s+([^$]+)')
+        if pd_single_pattern.search(result):
+            def replace_pd_single(match):
+                var = match.group(1)
+                expr = match.group(2).strip()
+                return f"diff({expr}, {var})"
+                
+            result = pd_single_pattern.sub(replace_pd_single, result)
+        
+        # 4. Handle standard partial derivative notation: partial/dx sin(x)*cos(y)
         partial_pattern = re.compile(r'partial(\d*)/d([a-zA-Z])(\d*)\s+([^$]+)')
         if partial_pattern.search(result):
             def replace_partial(match):
@@ -295,9 +294,8 @@ class ExpressionShortcuts:
                 return f"diff({expr}, {var}, {order})"
                 
             result = partial_pattern.sub(replace_partial, result)
-            return result
         
-        # Handle mixed partial derivatives: partial2/dxdy sin(x)*cos(y)
+        # 5. Handle mixed partial derivatives: partial2/dxdy sin(x)*cos(y)
         mixed_partial_pattern = re.compile(r'partial(\d+)/d([a-zA-Z])d([a-zA-Z])\s+([^$]+)')
         if mixed_partial_pattern.search(result):
             def replace_mixed_partial(match):
@@ -309,9 +307,8 @@ class ExpressionShortcuts:
                 return f"diff(diff({expr}, {var1}), {var2})"
                 
             result = mixed_partial_pattern.sub(replace_mixed_partial, result)
-            return result
         
-        # Handle ordinary derivatives: d/dx sin(x)
+        # 6. Handle ordinary derivatives: d/dx sin(x)
         if result.startswith('d') and ('/' in result or result[1:2].isdigit()):
             parts = result.split(' ', 1)
             if len(parts) == 2:
@@ -330,6 +327,12 @@ class ExpressionShortcuts:
                         var = order_match.group(2)
                         return f"diff({function_part}, {var}, {order})"
         
+        # If we've processed a derivative pattern, return the result now
+        # This prevents further processing that could break the derivative syntax
+        if result != text:
+            return result
+        
+        # Now process other conversions
         result = cls.convert_exponential_expression(result)
         result = cls.convert_integral_expression(result)
         result = cls.convert_limit_expression(result)
@@ -348,20 +351,35 @@ class ExpressionShortcuts:
         # Insert an explicit multiplication operator between a closing parenthesis and a letter
         result = re.sub(r'\)([a-zA-Z])', r')*\1', result)
         
-        # Don't add multiplication operators after 'pd' patterns to preserve partial derivative notation
-        # This prevents patterns like pd2xy from becoming pd2*xy
-        def insert_mul_except_pd(match):
-            whole_text = match.string
-            match_start = match.start()
-            # Check if this match is preceded by 'pd'
-            if match_start >= 2 and whole_text[match_start-2:match_start] == 'pd':
-                # This is a partial derivative notation like pd2x, don't add multiplication
-                return f"{match.group(1)}{match.group(2)}"
-            else:
-                # Normal case, add multiplication
-                return f"{match.group(1)}*{match.group(2)}"
-                
-        result = re.sub(r'(\d+)([a-zA-Z_])', insert_mul_except_pd, result)
+        # Fix the issue with adjacent variables like 'xy' being treated as a single variable
+        # This regex looks for patterns where multiple letters are adjacent without operators
+        # But we need to be careful not to match common mathematical functions
+        common_funcs = ['sin', 'cos', 'tan', 'exp', 'log', 'ln', 'sqrt', 'abs']
+        
+        def separate_adjacent_variables(match):
+            var_sequence = match.group(0)
+            # Don't modify common mathematical functions
+            if var_sequence in common_funcs:
+                return var_sequence
+            # Don't modify single-letter variables
+            if len(var_sequence) == 1:
+                return var_sequence
+            # Insert multiplication between each letter
+            return '*'.join(var_sequence)
+        
+        # Apply the variable separation, but only for sequences of 2 or more letters
+        # Make sure we don't match 'pd' prefixes or common functions
+        for func in common_funcs:
+            result = re.sub(r'\b' + func + r'\b', f'__{func}__', result)
+        
+        result = re.sub(r'(?<![a-zA-Z0-9_])([a-zA-Z])([a-zA-Z]+)(?![a-zA-Z0-9_])', 
+                       lambda m: m.group(1) + '*' + '*'.join(m.group(2)), result)
+        
+        for func in common_funcs:
+            result = re.sub(f'__{func}__', func, result)
+        
+        # Add multiplication between numbers and variables
+        result = re.sub(r'(\d+)([a-zA-Z_])', r'\1*\2', result)
         
         return result.replace('\\', '')
     
@@ -667,7 +685,27 @@ class ExpressionShortcuts:
             expr = re.sub(harmonic_pattern, replace_harmonic, expr)
             return expr
 
-        finite_prod_pattern = r'prod\s*\(\s*([+-]?\d+|[+-]?inf)\s*to\s*([+-]?\d+|[+-]?inf)\s*\)\s*([^\n]+)'
+        # Fix the sum pattern to better match the format in the example
+        sum_pattern = r'sum\s*\(\s*([+-]?\d+|[+-]?inf(?:ty)?)\s*to\s*(inf(?:ty)?|Inf|[+-]?\d+)\s*\)\s*([^\n]+)'
+        def replace_sum(match):
+            start = match.group(1).strip()
+            end = match.group(2).strip().lower()
+            expr_part = match.group(3).strip()
+            var = extract_variable(expr_part)
+            
+            # Handle "infty" as well as "inf"
+            if 'inf' in start.lower():
+                start = '-Inf' if start.startswith('-') else 'Inf'
+            if 'inf' in end:
+                end = '-Inf' if end.startswith('-') else 'Inf'
+            
+            return f"symsum({expr_part}, {var}, {start}, {end})"
+        
+        # Apply the sum pattern replacement first
+        expr = re.sub(sum_pattern, replace_sum, expr)
+        
+        # Then handle product patterns
+        finite_prod_pattern = r'prod\s*\(\s*([+-]?\d+|[+-]?inf(?:ty)?)\s*to\s*([+-]?\d+|[+-]?inf(?:ty)?)\s*\)\s*([^\n]+)'
         def replace_finite_prod(match):
             start = match.group(1).strip()
             end = match.group(2).strip()
@@ -681,7 +719,7 @@ class ExpressionShortcuts:
             
             return f"prod(arrayfun(@(k) subs({expr_part}, {var}, k), {start}:{end}))"
         
-        inf_prod_pattern = r'prod\s*\(\s*([+-]?\d+|[+-]?inf)\s*to\s*(?:inf|Inf)\s*\)\s*([^\n]+)'
+        inf_prod_pattern = r'prod\s*\(\s*([+-]?\d+|[+-]?inf(?:ty)?)\s*to\s*(?:inf(?:ty)?|Inf)\s*\)\s*([^\n]+)'
         def replace_infinite_prod(match):
             start = match.group(1).strip()
             expr_part = match.group(2).strip()
@@ -692,23 +730,8 @@ class ExpressionShortcuts:
             
             return f"symprod({expr_part}, {var}, {start}, Inf)"
         
-        sum_pattern = r'sum\s*\(\s*([+-]?\d+|[+-]?inf)\s*to\s*(inf|Inf|[+-]?\d+)\s*\)\s*([^\n]+)'
-        def replace_sum(match):
-            start = match.group(1).strip()
-            end = match.group(2).strip().lower()
-            expr_part = match.group(3).strip()
-            var = extract_variable(expr_part)
-            
-            if 'inf' in start.lower():
-                start = '-Inf' if start.startswith('-') else 'Inf'
-            if 'inf' in end:
-                end = '-Inf' if end.startswith('-') else 'Inf'
-            
-            return f"symsum({expr_part}, {var}, {start}, {end})"
-        
         expr = re.sub(inf_prod_pattern, replace_infinite_prod, expr)
         expr = re.sub(finite_prod_pattern, replace_finite_prod, expr)
-        expr = re.sub(sum_pattern, replace_sum, expr)
 
         if 'Inf' in expr and not expr.strip().startswith('limit('):
             m = re.search(r'symsum\([^,]+,\s*([a-zA-Z]\w*)\s*,', expr)

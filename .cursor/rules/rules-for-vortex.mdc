@@ -1,0 +1,57 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Cursor Rules for AI Editing: VorTeX Multi-Language Codebase
+
+## I. General Principles
+
+1.  **Consistency**: Maintain consistent naming conventions, coding styles, and documentation practices across *all* languages (Python, MATLAB, Swift).
+2.  **Clarity**: Write clear, concise, and readable code. Use meaningful names for variables, functions, classes, and files.
+3.  **Modularity**: Keep components small and focused. Separate UI (SwiftUI), backend logic (Python), and core computation (MATLAB). Design functions/methods with single responsibilities.
+4.  **Documentation**:
+    *   Add comments to explain complex logic, assumptions, or non-obvious code sections.
+    *   Document public APIs, functions, and classes clearly (docstrings in Python, header comments in MATLAB, `///` doc comments in Swift).
+    *   Keep the main `README.md` updated with setup, usage, and architecture details.
+5.  **Version Control**: Follow standard Git practices. Write clear, descriptive commit messages explaining the *why* behind changes.
+6.  **Error Handling**: Implement robust error handling in all layers. Propagate errors appropriately between backend and frontend. Log errors effectively for debugging.
+7.  **Security**: Do not commit sensitive information (API keys, credentials). Use environment variables or secure configuration methods.
+
+## II. Python (Backend - `backend/python/`)
+
+1.  **Style**: Strictly adhere to the PEP 8 style guide. Use linters (like Flake8 or Pylint) and formatters (like Black).
+2.  **Type Hinting**: Use Python 3 type hints for all function signatures (arguments and return types) and variable declarations where beneficial.
+3.  **Docstrings**: Use Google-style or NumPy-style docstrings for all modules, classes, and functions.
+4.  **Dependencies**: Manage dependencies using `requirements.txt`. Keep it updated. Consider using virtual environments (`venv`).
+5.  **MATLAB Bridge (`matlab_bridge.py`)**: Ensure robust error handling when starting/communicating with the MATLAB engine. Clearly define the interface for calling MATLAB functions.
+6.  **API (`api.py`, if used)**: Follow RESTful principles if creating a web API. Define clear request/response schemas. Use appropriate HTTP status codes.
+
+## III. MATLAB (Computation - `backend/matlab/`)
+
+1.  **Style**: Follow common MATLAB coding conventions. Use meaningful variable names (avoid overly short names like `i`, `j` unless for simple loop counters).
+2.  **Comments**: Use `%` for comments. Add comments to explain mathematical algorithms, input/output parameters of functions, and complex sections. Add a header comment block to `.m` files explaining their purpose.
+3.  **Vectorization**: Prefer vectorized operations over loops where possible for performance.
+4.  **Functions**: Structure code into functions within `.m` files rather than long scripts.
+5.  **Error Handling**: Use `try-catch` blocks for operations that might fail (e.g., invalid inputs). Return meaningful error messages or codes.
+6.  **Interface**: Design functions with clear inputs and outputs, especially those called from Python. Avoid reliance on global state.
+
+## IV. SwiftUI (Frontend - `frontend/VorTeXApp/`)
+
+1.  **Style**: Adhere to the Swift API Design Guidelines. Use SwiftLint to enforce style.
+2.  **Architecture**: Follow MVVM (Model-View-ViewModel) or a similar state management pattern. Keep Views declarative and simple. Place business logic and state management in ViewModels.
+3.  **SwiftUI Best Practices**:
+    *   Use `@State`, `@Binding`, `@StateObject`, `@ObservedObject`, `@EnvironmentObject` appropriately for state management.
+    *   Compose complex views from smaller, reusable subviews.
+    *   Use `LazyVStack`, `LazyHStack` for long lists.
+    *   Ensure views adapt well to different screen sizes (iOS, iPadOS, macOS) and orientations using adaptive layouts.
+4.  **Documentation**: Use `///` documentation comments for public structs, classes, methods, and properties. Add `//` comments for implementation details.
+5.  **Networking (`NetworkClient.swift`, if used)**: Handle network requests asynchronously (using `async/await`). Manage loading states, errors, and data decoding robustly.
+6.  **Assets**: Manage images, colors, and other assets in `Assets.xcassets`.
+7.  **Platform Adaptation**: Use `#if os(macOS)` / `#if os(iOS)` / `#if targetEnvironment(macCatalyst)` sparingly for platform-specific adjustments when necessary. Strive for maximum code sharing.
+
+## V. Interaction Between Layers
+
+1.  **Data Format**: Use standard, simple data formats (like JSON) for communication between Python (API) and Swift (NetworkClient).
+2.  **API Contract (if API used)**: Clearly define and document the API endpoints, request parameters, and response structures. Keep frontend and backend synchronized with this contract.
+3.  **Error Propagation**: Ensure errors from MATLAB are caught by Python and potentially transformed into appropriate error responses for the Swift frontend to display to the user.
